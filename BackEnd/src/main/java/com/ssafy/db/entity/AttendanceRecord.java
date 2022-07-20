@@ -23,4 +23,6 @@ public class AttendanceRecord {
     Date attStartTime;
     @Temporal(TemporalType.TIME)
     Date attEndTime;
+
+
 }

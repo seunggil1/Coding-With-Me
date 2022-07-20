@@ -46,6 +46,9 @@ public class User {
     @Column(nullable = false)
     String role;
 
+    @Column
+    boolean is_deleted;
+
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;

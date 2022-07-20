@@ -1,11 +1,9 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.UserIdEmailReq;
-import com.ssafy.api.response.MailSenderRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -46,6 +44,7 @@ public class UserServiceImpl implements UserService {
 		user.setNickname(userRegisterInfo.getNickname());
 		user.setBirthDt(userRegisterInfo.getBirthDt());
 		user.setRole(userRegisterInfo.getRole());
+		user.set_deleted(false);
 
 		return userRepository.save(user);
 	}
@@ -62,6 +61,21 @@ public class UserServiceImpl implements UserService {
 		// 디비에 유저 정보 조회 (Id 를 통한 조회).
 		User user = userRepositorySupport.findUserById(id).get();
 		return user;
+	}
+
+	@Override
+	public User modifyUser(UserRegisterPostReq userRegisterInfo) {
+		//User user =userRepository.findByUserId(1L).get();
+		User user =userRepository.findById(userRegisterInfo.getId()).get();
+		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
+		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
+		user.setName(userRegisterInfo.getName());
+		user.setEmail(userRegisterInfo.getEmail());
+		user.setPhone(userRegisterInfo.getPhone());
+		user.setNickname(userRegisterInfo.getNickname());
+		user.setBirthDt(userRegisterInfo.getBirthDt());
+
+		return userRepository.save(user);
 	}
 
 	@Autowired
