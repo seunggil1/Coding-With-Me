@@ -1,7 +1,14 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.UserIdEmailReq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +34,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.mail.internet.MimeMessage;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -74,5 +83,31 @@ public class UserController {
 		User user = userService.getUserById(userId);
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
+	}
+
+
+	@Autowired
+	JavaMailSender mailSender;
+
+	@Value("${spring.mail.username}")
+	String sendFrom;
+
+	@Autowired
+	Environment env;
+
+	@PostMapping("/email")
+	@ApiOperation(value = "임시 비밀번호 발송", notes = "임시 비밀번호를 발송한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> sendMail(
+			@RequestBody @ApiParam(value="아이디, 이메일 정보", required = true) UserIdEmailReq user) {
+		boolean success = userService.sendMail(user);
+		if(success){
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		}else{
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Fail"));
+		}
 	}
 }
