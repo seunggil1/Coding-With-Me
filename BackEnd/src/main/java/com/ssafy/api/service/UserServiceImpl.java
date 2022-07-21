@@ -93,6 +93,11 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    public boolean checkUserEmail(String email) {
+        boolean result = userRepositorySupport.findByUserEmailEquals(email);
+        return result;
+    }
+
 
     @Autowired
     JavaMailSender mailSender;
