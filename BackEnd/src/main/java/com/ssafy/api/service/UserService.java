@@ -15,7 +15,7 @@ public interface UserService {
 
 	User modifyUser(UserRegisterPostReq userRegisterInfo);
 
-
+	boolean checkUserId(String id);
 
 	boolean sendMail(UserIdEmailReq userIE);
 }

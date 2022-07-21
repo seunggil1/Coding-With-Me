@@ -31,4 +31,11 @@ public class UserRepositorySupport {
         if(user == null) return Optional.empty();
         return Optional.ofNullable(user);
     }
+
+    public boolean findByUserIdEquals(String id) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.id.eq(id)).fetchOne();
+        if(user == null) return true;
+        return false;
+    }
 }

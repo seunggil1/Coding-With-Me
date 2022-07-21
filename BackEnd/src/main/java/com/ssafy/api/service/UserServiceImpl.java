@@ -17,6 +17,7 @@ import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
 
 import javax.mail.internet.MimeMessage;
+import java.util.Optional;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -77,6 +78,13 @@ public class UserServiceImpl implements UserService {
 
 		return userRepository.save(user);
 	}
+
+	@Override
+	public boolean checkUserId(String id) {
+		boolean result = userRepositorySupport.findByUserIdEquals(id);
+		return result;
+	}
+
 
 	@Autowired
 	JavaMailSender mailSender;
