@@ -18,6 +18,8 @@ public interface UserService {
 
 	boolean checkUserId(String id);
 
+	boolean checkUserEmail(String email);
+
 	boolean sendPasswordMail(UserIdEmailReq userIE);
 
 	boolean sendVerificationMail(UserIdEmailReq userIE);
