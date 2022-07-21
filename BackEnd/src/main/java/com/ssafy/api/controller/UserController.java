@@ -1,7 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.UserEmailCodeReq;
-import com.ssafy.api.request.UserIdEmailReq;
+import com.ssafy.api.request.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -14,8 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.api.request.UserLoginPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
@@ -98,6 +95,48 @@ public class UserController {
 		User user =userService.modifyUser(registerInfo);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@DeleteMapping
+	@ApiOperation(value = "회원 탈퇴", notes = "로그인한 회원 계정을 탈퇴시킨다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> deleteUser(
+			@RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
+
+		boolean success = userService.deleteUser(registerInfo);
+
+		if(success){
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		}else{
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+		}
+
+	}
+
+	@PostMapping("/id")
+	@ApiOperation(value = "아이디 찾기", notes = "<strong>이름과 전화번호</strong>를 통해 회원가입 한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> register(
+			@RequestBody @ApiParam(value="회원가입 정보", required = true)UserNamePhoneReq userNamePhoneReq) {
+
+		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
+		User user = userService.getUserByNameAndPhone(userNamePhoneReq.getName(), userNamePhoneReq.getPhone());
+		if(user != null){
+			String id = user.getId();
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, id));
+		}else{
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Fail"));
+		}
 	}
 
 	@GetMapping("/idcheck/{user_id}")
