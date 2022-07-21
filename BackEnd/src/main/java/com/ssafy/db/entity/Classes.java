@@ -22,6 +22,14 @@ public class Classes {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void setUser(User user){
+        this.user =user;
+        //무한 루프 주의
+        if(!user.getClasses().contains(this)){
+            user.getClasses().add(this);
+        }
+    }
+
     private int classNo;
 
 }
