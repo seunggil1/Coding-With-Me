@@ -14,6 +14,8 @@ public interface UserService {
 	User getUserByUserId(Long userId);
 	User getUserById(String Id);
 
+	User getUserByNameAndPhone(String name, String phone);
+
 	User modifyUser(UserRegisterPostReq userRegisterInfo);
 
 	boolean checkUserId(String id);
@@ -25,4 +27,6 @@ public interface UserService {
 	boolean sendVerificationMail(UserIdEmailReq userIE);
 
 	String sendVerificationCode(UserEmailCodeReq userEC);
+
+	boolean deleteUser(UserRegisterPostReq userRegisterInfo);
 }

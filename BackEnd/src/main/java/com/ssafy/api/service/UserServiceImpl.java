@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
         user.setNickname(userRegisterInfo.getNickname());
         user.setBirthDt(userRegisterInfo.getBirthDt());
         user.setRole(userRegisterInfo.getRole());
-        user.setDeleted(false);
 
         return userRepository.save(user);
     }
@@ -73,6 +72,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByNameAndPhone(String name, String phone) {
+        User user = userRepository.findByNameAndPhone(name, phone).get();
+        return user;
+    }
+
+    @Override
     public User modifyUser(UserRegisterPostReq userRegisterInfo) {
         //User user =userRepository.findByUserId(1L).get();
         User user = userRepository.findById(userRegisterInfo.getId()).get();
@@ -85,6 +90,20 @@ public class UserServiceImpl implements UserService {
         user.setBirthDt(userRegisterInfo.getBirthDt());
 
         return userRepository.save(user);
+    }
+    @Override
+    public boolean deleteUser(UserRegisterPostReq userRegisterInfo) {
+        boolean success = false;
+
+        try {
+            User user = userRepository.findById(userRegisterInfo.getId()).get();
+            userRepository.delete(user);
+            success = true;
+        }catch (Exception e){
+            success = false;
+        }
+
+        return success;
     }
 
     @Override
