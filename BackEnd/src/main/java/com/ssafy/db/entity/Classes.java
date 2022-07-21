@@ -24,6 +24,13 @@ public class Classes {
 
     @Column
     private String className;
+    public void setUser(User user){
+        this.user =user;
+        //무한 루프 주의
+        if(!user.getClasses().contains(this)){
+            user.getClasses().add(this);
+        }
+    }
 
     @Column
     private String classDescription;

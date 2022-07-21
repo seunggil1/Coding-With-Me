@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -52,4 +54,18 @@ public class User {
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Classes> classes = new ArrayList<>();
+
+
+    public void addClasses(Classes classes){
+        this.classes.add(classes);
+
+        if(classes.getUser() !=this) { //무한루프 방지
+            classes.setUser(this);
+        }
+
+    }
+
 }
