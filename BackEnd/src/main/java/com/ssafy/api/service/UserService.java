@@ -13,5 +13,9 @@ public interface UserService {
 	User getUserByUserId(Long userId);
 	User getUserById(String Id);
 
+	User modifyUser(UserRegisterPostReq userRegisterInfo);
+
+	boolean checkUserId(String id);
+
 	boolean sendMail(UserIdEmailReq userIE);
 }
