@@ -8,6 +8,7 @@ module.exports = {
 		'eslint:recommended',
 		'@vue/eslint-config-prettier',
 	],
+	// "parser": "@babel/eslint-parser",
 	env: {
 		node: true,
 		'vue/setup-compiler-macros': true,
