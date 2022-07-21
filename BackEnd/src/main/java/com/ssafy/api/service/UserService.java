@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UserEmailCodeReq;
 import com.ssafy.api.request.UserIdEmailReq;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.User;
@@ -17,5 +18,9 @@ public interface UserService {
 
 	boolean checkUserId(String id);
 
-	boolean sendMail(UserIdEmailReq userIE);
+	boolean sendPasswordMail(UserIdEmailReq userIE);
+
+	boolean sendVerificationMail(UserIdEmailReq userIE);
+
+	String sendVerificationCode(UserEmailCodeReq userEC);
 }

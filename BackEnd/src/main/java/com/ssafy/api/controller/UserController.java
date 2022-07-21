@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.UserEmailCodeReq;
 import com.ssafy.api.request.UserIdEmailReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -134,13 +135,46 @@ public class UserController {
 			@ApiResponse(code = 200, message = "성공"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<? extends BaseResponseBody> sendMail(
+	public ResponseEntity<? extends BaseResponseBody> sendPasswordMail(
 			@RequestBody @ApiParam(value="아이디, 이메일 정보", required = true) UserIdEmailReq user) {
-		boolean success = userService.sendMail(user);
+		boolean success = userService.sendPasswordMail(user);
 		if(success){
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		}else{
 			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Fail"));
+		}
+	}
+
+	@PostMapping("/vemail")
+	@ApiOperation(value = "이메일 인증 메일 발송", notes = "인증 코드를 발송한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> sendVerificationMail(
+			@RequestBody @ApiParam(value="아이디, 이메일 정보", required = true) UserIdEmailReq user) {
+		boolean success = userService.sendVerificationMail(user);
+		if(success){
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		}else{
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Fail"));
+		}
+	}
+
+	@PostMapping("/vemail/code")
+	@ApiOperation(value = "이메일 인증 코드 조회", notes = "인증 코드를 조회한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> sendVerificationCode(
+			@RequestBody @ApiParam(value="아이디, 이메일 정보", required = true) UserEmailCodeReq user) {
+		String verificationCode = userService.sendVerificationCode(user);
+
+		if(verificationCode.equals(user.getCode())){
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, verificationCode));
+		}else{
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, verificationCode));
 		}
 	}
 }

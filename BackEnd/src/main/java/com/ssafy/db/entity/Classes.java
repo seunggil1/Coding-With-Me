@@ -22,6 +22,9 @@ public class Classes {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private int classNo;
+    @Column
+    private String className;
 
+    @Column
+    private String classDescription;
 }

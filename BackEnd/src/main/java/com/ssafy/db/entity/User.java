@@ -47,10 +47,7 @@ public class User {
     String role;
 
     @Column
-    boolean is_deleted;
-
-    @Column
-    int verification_code;
+    boolean isDeleted;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
