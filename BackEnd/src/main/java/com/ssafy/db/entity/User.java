@@ -49,6 +49,9 @@ public class User {
     @Column
     boolean is_deleted;
 
+    @Column
+    int verification_code;
+
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
