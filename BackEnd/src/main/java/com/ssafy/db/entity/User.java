@@ -53,16 +53,37 @@ public class User {
     String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Classes> classes = new ArrayList<>();
+    private List<Classes> classlist = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<AttendanceRecord> attendanceRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<TestRecord> testRecords = new ArrayList<>();
 
     public void addClasses(Classes classes){
-        this.classes.add(classes);
+        this.classlist.add(classes);
 
         if(classes.getUser() !=this) { //무한루프 방지
             classes.setUser(this);
+
         }
 
     }
 
+    public void addAttendance(AttendanceRecord record){
+        this.attendanceRecords.add(record);
+
+        if(record.getUser()!=this) { //무한루프 방지
+            record.setUser(this);
+        }
+    }
+
+    public void addTestRecord(TestRecord record){
+        this.testRecords.add(record);
+
+        if(record.getUser()!=this) { //무한루프 방지
+            record.setUser(this);
+        }
+    }
 }
