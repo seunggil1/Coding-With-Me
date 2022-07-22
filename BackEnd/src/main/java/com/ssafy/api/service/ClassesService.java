@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 //import com.ssafy.api.request.ClassesModifyPostReq;
+import com.ssafy.api.request.ClassesAddStudentPostReq;
 import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
 import com.ssafy.db.entity.Classes;
@@ -13,6 +14,8 @@ public interface ClassesService {
     //User createClass(UserRegisterPostReq userRegisterInfo);
 
     Classes createClass(ClassesRegisterPostReq classesRegisterInfo);
+
+    boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
 
    Classes modifyClass(ClassesModifyPostReq classesModifyPostReq);
 

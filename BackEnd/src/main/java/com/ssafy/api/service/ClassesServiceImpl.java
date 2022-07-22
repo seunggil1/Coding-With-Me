@@ -1,12 +1,15 @@
 package com.ssafy.api.service;
 
 //import com.ssafy.api.request.ClassesModifyPostReq;
+import com.ssafy.api.request.ClassesAddStudentPostReq;
 import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
 
 import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.UserClass;
 import com.ssafy.db.repository.ClassesRepository;
+import com.ssafy.db.repository.UserClassRepository;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,28 @@ public class ClassesServiceImpl implements ClassesService {
         classes.setUser(user);
 
         return classesRepository.save(classes);
+    }
+
+    @Autowired
+    UserClassRepository userClassRepository;
+    @Override
+    public boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq) {
+        try{
+            Classes classes = classesRepository.findByUserUserIdAndClassName(classesAddStudentPostReq.getTutorId(), classesAddStudentPostReq.getClassName()).get();
+
+            UserClass uc = new UserClass();
+
+            User student = userRepository.findByUserId(classesAddStudentPostReq.getStudentId()).get();
+
+            uc.setClasses(classes);
+            uc.setStudentId(student.getUserId());
+
+            classes.getUserClassList().add(uc);
+            userClassRepository.save(uc);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
 
