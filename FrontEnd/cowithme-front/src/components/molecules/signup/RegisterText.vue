@@ -1,13 +1,10 @@
 <template>
-	<q-btn style="background: #00adb5"></q-btn>
-	<!-- 푸른색 버튼
-	label="버튼 텍스트"
-	-->
+	<p>회원가입</p>
 </template>
 
 <script>
 export default {
-	name: 'AtomButton',
+	name: 'RegisterText',
 	setup() {
 		return {};
 	},

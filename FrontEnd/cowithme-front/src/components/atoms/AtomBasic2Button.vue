@@ -1,5 +1,8 @@
 <template>
-	<q-btn style="background: #ff5722" label="주황색버튼"></q-btn>
+	<q-btn style="background: #ff5722"></q-btn>
+	<!-- 주황색 버튼
+	label="버튼 텍스트"
+	-->
 </template>
 
 <script>

@@ -1,13 +1,14 @@
 <template>
-	<q-btn style="background: #00adb5"></q-btn>
-	<!-- 푸른색 버튼
-	label="버튼 텍스트"
-	-->
+	<div>
+		<span>아이디</span>
+		<span> / </span>
+		<span>비밀번호 찾기</span>
+	</div>
 </template>
 
 <script>
 export default {
-	name: 'AtomButton',
+	name: 'FindIDPW',
 	setup() {
 		return {};
 	},

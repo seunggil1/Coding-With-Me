@@ -1,5 +1,5 @@
 <template>
-	<q-input filled color="brand"></q-input>
+	<q-input filled color="brand" bg-color="white"></q-input>
 </template>
 
 <script>
