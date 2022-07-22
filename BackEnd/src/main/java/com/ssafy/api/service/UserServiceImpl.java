@@ -97,7 +97,8 @@ public class UserServiceImpl implements UserService {
 
         try {
             User user = userRepository.findById(userRegisterInfo.getId()).get();
-            userRepository.delete(user);
+            user.getClasslist();
+
             success = true;
         }catch (Exception e){
             success = false;
@@ -105,7 +106,8 @@ public class UserServiceImpl implements UserService {
 
         return success;
     }
-
+    //강사가 특정 반의 학생 리스트를 조회할 때
+    // user.getClasslist().get(index).getUserClassList();
     @Override
     public boolean checkUserId(String id) {
         boolean result = userRepositorySupport.findByUserIdEquals(id);
