@@ -1,7 +1,8 @@
 package com.ssafy.api.service;
 
+//import com.ssafy.api.request.ClassesModifyPostReq;
+import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.Classes;
 
 
@@ -12,5 +13,7 @@ public interface ClassesService {
     //User createClass(UserRegisterPostReq userRegisterInfo);
 
     Classes createClass(ClassesRegisterPostReq classesRegisterInfo);
+
+   Classes modifyClass(ClassesModifyPostReq classesModifyPostReq);
 
 }

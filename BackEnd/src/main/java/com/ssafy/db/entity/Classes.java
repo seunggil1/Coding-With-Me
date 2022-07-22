@@ -22,7 +22,7 @@ public class Classes {
     private Long classId;
 
     @ManyToOne(fetch=LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "tutor_id")
     private User user;
 
     @Column

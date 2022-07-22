@@ -4,6 +4,8 @@ import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClassesRepository extends JpaRepository <Classes, Long>{
+import java.util.Optional;
 
+public interface ClassesRepository extends JpaRepository <Classes, Long>{
+    Optional<Classes> findByUserUserIdAndClassName(Long user, String classname);
 }
