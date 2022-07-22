@@ -22,6 +22,6 @@ public class UserClass {
     private Classes classes;
 
     @Column
-    int studentId;
+    Long studentId;
 
 }

@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 
 //import com.ssafy.api.request.ClassesModifyPostReq;
+import com.ssafy.api.request.ClassesAddStudentPostReq;
 import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
 import com.ssafy.api.request.UserRegisterPostReq;
@@ -57,5 +58,28 @@ public class ClassesController {
         Classes classes = classesService.modifyClass(classesModifyPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PostMapping("/classes/student")
+    @ApiOperation(value = "반 학생 추가", notes = "반에 학생을 추가한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> addStudent(
+            @RequestBody @ApiParam(value="반 정보", required = true) ClassesAddStudentPostReq classesAddStudentPostReq) {
+
+        //임의로 리턴된 classes 인스턴스.
+        boolean success = classesService.addStudent(classesAddStudentPostReq);
+
+        if(success){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
+        }else{
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "Fail"));
+
+        }
     }
 }
