@@ -82,4 +82,24 @@ public class ClassesController {
 
         }
     }
+    @DeleteMapping("/classes/student")
+    @ApiOperation(value = "반 학생 삭제", notes = "반에 학생을 삭제시킨다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteUser(
+            @RequestBody @ApiParam(value="반 정보", required = true) ClassesAddStudentPostReq classesAddStudentPostReq) {
+
+        boolean success = classesService.deleteStudent(classesAddStudentPostReq);
+
+        if(success){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        }else{
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+        }
+
+    }
 }

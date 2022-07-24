@@ -3,11 +3,13 @@ package com.ssafy.db.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 
+@ToString
 @Entity
 @Getter
 @Setter
@@ -23,5 +25,6 @@ public class UserClass {
 
     @Column
     Long studentId;
+
 
 }
