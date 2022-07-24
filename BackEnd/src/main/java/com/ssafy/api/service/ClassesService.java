@@ -17,6 +17,8 @@ public interface ClassesService {
 
     boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
 
-   Classes modifyClass(ClassesModifyPostReq classesModifyPostReq);
+    Classes modifyClass(ClassesModifyPostReq classesModifyPostReq);
+
+    boolean deleteStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
 
 }

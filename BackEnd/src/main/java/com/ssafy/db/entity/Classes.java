@@ -42,7 +42,7 @@ public class Classes {
     private List<Test> testList = new ArrayList<>();
     @OneToMany(mappedBy = "classes")
     private List<Conference> conferences = new ArrayList<>();
-    @OneToMany(mappedBy = "classes")
+    @OneToMany(mappedBy = "classes",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<UserClass> userClassList = new ArrayList<>();
 
     public void addTest(Test test){
