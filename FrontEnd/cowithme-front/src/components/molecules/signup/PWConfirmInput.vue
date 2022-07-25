@@ -2,7 +2,6 @@
 	<div>
 		<q-input
 			:type="isPwd ? 'password' : 'text'"
-			hint="Password with toggle"
 			label="PW Confirm"
 			placeholder="비밀번호를 한번 더 입력해주세요"
 			v-model="password"
