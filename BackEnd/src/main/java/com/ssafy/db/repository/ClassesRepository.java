@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ClassesRepository extends JpaRepository <Classes, Long>{
 
     Optional<Classes> findByUserUserIdAndClassName(Long user, String classname);
+
+
 }

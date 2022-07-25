@@ -15,9 +15,11 @@ public interface ClassesService {
 
     Classes createClass(ClassesRegisterPostReq classesRegisterInfo);
 
-    boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
+    boolean deleteClass(ClassesRegisterPostReq classesRegisterInfo);
 
     Classes modifyClass(ClassesModifyPostReq classesModifyPostReq);
+
+    boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
 
     boolean deleteStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
 
