@@ -115,5 +115,23 @@ public class ClassesServiceImpl implements ClassesService {
         return success;
     }
 
+    @Override
+    @Transactional
+    public List<Classes> getAllClassesInfo(Long userid) {
+
+        User user = userRepository.findByUserId(userid).get();
+        List<Classes> classes = classesRepository.findByUserUserId(user.getUserId()).get();
+
+        return classes;
+    }
+//    @Override
+//    public Classes getAllClassesInfo(Long userid) {
+//
+//        User user = userRepository.findByUserId(userid).get();
+//
+//        Classes classes = classesRepository.findByUserUserId(user.getUserId()).get();
+//
+//        return classes;
+//    }
 
 }

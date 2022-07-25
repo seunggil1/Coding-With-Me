@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 반 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -26,7 +28,7 @@ public class ClassesController {
     @Autowired
     ClassesService classesService;
 
-    @PostMapping("classes")
+    @PostMapping("/classes")
     @ApiOperation(value = "반 개설", notes = "<strong>반 이름과 설명을 입력하여</strong> 반을 개설한다..")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -43,7 +45,7 @@ public class ClassesController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @PutMapping("classes")
+    @PutMapping("/classes")
     @ApiOperation(value = "반 정보 수정", notes = "반 정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -60,7 +62,7 @@ public class ClassesController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @DeleteMapping("classes")
+    @DeleteMapping("/classes")
     @ApiOperation(value = "반 삭제", notes = "반을 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -122,5 +124,22 @@ public class ClassesController {
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
         }
 
+    }
+
+    @GetMapping("/{user_id}/classes")
+    @ApiOperation(value = "전체 반 조회", notes = "사용자가 개설한 반(방)을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> getAllClassInfo(@PathVariable("user_id") Long userId){
+        //boolean temp = userService.checkUserId(userId);
+        List<Classes> classes = classesService.getAllClassesInfo(userId);
+
+        //Classes classes = classesService.modifyClass(classesModifyPostReq);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(classes)));
     }
 }
