@@ -6,6 +6,8 @@ import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
 import com.ssafy.db.entity.Classes;
 
+import java.util.List;
+
 
 /**
  *	반 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
@@ -22,5 +24,9 @@ public interface ClassesService {
     boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
 
     boolean deleteStudent(ClassesAddStudentPostReq classesAddStudentPostReq);
+
+    List<Classes> getAllClassesInfo(Long userid);
+
+
 
 }
