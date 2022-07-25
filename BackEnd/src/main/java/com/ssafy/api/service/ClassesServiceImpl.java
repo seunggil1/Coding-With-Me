@@ -39,6 +39,24 @@ public class ClassesServiceImpl implements ClassesService {
         return classesRepository.save(classes);
     }
 
+    @Override
+    @Transactional
+    public boolean deleteClass(ClassesRegisterPostReq classesRegisterInfo) {
+        boolean success = false;
+
+        try {
+            //User user = userRepository.findById(userRegisterInfo.getId()).get();
+            //Classes classes = classesRepository.findByUserUserIdAndClassName(classesModifyPostReq.getTutorId(), classesModifyPostReq.getClassName()).get();
+            Classes classes = classesRepository.findByUserUserIdAndClassName(classesRegisterInfo.getTutorId(), classesRegisterInfo.getClassName()).get();
+            classesRepository.delete(classes);
+            success = true;
+        }catch (Exception e){
+            success = false;
+        }
+
+        return success;
+    }
+
     @Autowired
     UserClassRepository userClassRepository;
     @Override
