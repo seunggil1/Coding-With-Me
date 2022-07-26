@@ -12,11 +12,13 @@ import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.entity.UserClass;
 import com.ssafy.db.repository.ClassesRepository;
+import com.ssafy.db.repository.UserRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +33,12 @@ public class ClassesController {
     @Autowired
     ClassesService classesService;
 
+    @Autowired
+    UserRepository userRepository;
     @PostMapping("/classes")
     @ApiOperation(value = "반 개설", notes = "<strong>반 이름과 설명을 입력하여</strong> 반을 개설한다..")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> register(
@@ -52,14 +54,11 @@ public class ClassesController {
     @ApiOperation(value = "반 정보 수정", notes = "반 정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> ModifyClassesInfo(
             @RequestBody @ApiParam(value="반 정보", required = true) ClassesModifyPostReq classesModifyPostReq) {
 
-        //임의로 리턴된 classes 인스턴스.
         Classes classes = classesService.modifyClass(classesModifyPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
@@ -69,8 +68,6 @@ public class ClassesController {
     @ApiOperation(value = "반 삭제", notes = "반을 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> deleteUser(
@@ -90,8 +87,6 @@ public class ClassesController {
     @ApiOperation(value = "반 학생 추가", notes = "반에 학생을 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> addStudent(
@@ -112,8 +107,6 @@ public class ClassesController {
     @ApiOperation(value = "반 학생 삭제", notes = "반에 학생을 삭제시킨다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> deleteUser(
@@ -133,15 +126,11 @@ public class ClassesController {
     @ApiOperation(value = "전체 반 조회", notes = "사용자가 개설한 반(방)을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> getAllClassInfo(@PathVariable("user_id") Long userId){
-        //boolean temp = userService.checkUserId(userId);
-        List<Classes> classes = classesService.getAllClassesInfo(userId);
 
-        //Classes classes = classesService.modifyClass(classesModifyPostReq);
+        List<Classes> classes = classesService.getAllClassesInfo(userId);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(classes)));
     }
@@ -150,24 +139,22 @@ public class ClassesController {
     @ApiOperation(value = "반 정보 조회", notes = "반에 있는 학생들을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<Map<String,Object>> getClassInfo(
             @PathVariable("userId") Long userId, @PathVariable("className") String className){
-        //boolean temp = userService.checkUserId(userId);
-        List<UserClass> uc = classesService.getClassesInfo(userId,className);
 
-        for (UserClass userClass : uc) {
-            System.out.println("test ================"+userClass);
+        List<User> userList =  new ArrayList<>();
+
+        List<UserClass> userClasses = classesService.getClassesInfo(userId, className);
+
+        for (UserClass userClass : userClasses) {
+            User user = userRepository.findByUserId(userClass.getStudentId()).get();
+            userList.add(user);
         }
-        //Classes classes = classesService.modifyClass(classesModifyPostReq);
+
         Map<String,Object> map =new HashMap<>();
-
-        String str= "students";
-        map.put(str,classesService.getClassesInfo(userId,className));
-
+        map.put("students",userList);
         return ResponseEntity.status(200).body(map);
     }
 

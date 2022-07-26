@@ -49,8 +49,6 @@ public class UserController {
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공"),
-        @ApiResponse(code = 401, message = "인증 실패"),
-        @ApiResponse(code = 404, message = "사용자 없음"),
         @ApiResponse(code = 500, message = "서버 오류")
     })
 	public ResponseEntity<? extends BaseResponseBody> register(
@@ -66,8 +64,6 @@ public class UserController {
 	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.") 
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공"),
-        @ApiResponse(code = 401, message = "인증 실패"),
-        @ApiResponse(code = 404, message = "사용자 없음"),
         @ApiResponse(code = 500, message = "서버 오류")
     })
 	public ResponseEntity<Map<String, Object>> getUserInfo(@ApiIgnore Authentication authentication) {
@@ -81,7 +77,6 @@ public class UserController {
 		Map<String, Object> map = new HashMap();
 		map.put("user", user);
 
-//		return ResponseEntity.status(200).body(UserRes.of(user));
 		return ResponseEntity.status(200).body(map);
 	}
 
@@ -89,14 +84,11 @@ public class UserController {
 	@ApiOperation(value = "회원 본인 정보 수정", notes = "로그인한 회원 본인의 정보를 수정한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	public ResponseEntity<? extends BaseResponseBody> ModifyUserInfo(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
 
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		User user =userService.modifyUser(registerInfo);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
@@ -105,8 +97,7 @@ public class UserController {
 	@DeleteMapping
 	@ApiOperation(value = "회원 탈퇴", notes = "로그인한 회원 계정을 탈퇴시킨다.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
@@ -124,23 +115,20 @@ public class UserController {
 	}
 
 	@PostMapping("/id")
-	@ApiOperation(value = "아이디 찾기", notes = "<strong>이름과 전화번호</strong>를 통해 회원가입 한다.")
+	@ApiOperation(value = "아이디 찾기", notes = "<strong>이름과 전화번호</strong>를 통해 아이디를 검색 한다.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
+			@ApiResponse(code = 200, message = "user_id"),
+			@ApiResponse(code = 404, message = "Fail"),
 	})
 	public ResponseEntity<? extends BaseResponseBody> register(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true)UserNamePhoneReq userNamePhoneReq) {
 
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		User user = userService.getUserByNameAndPhone(userNamePhoneReq.getName(), userNamePhoneReq.getPhone());
 		if(user != null){
 			String id = user.getId();
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, id));
 		}else{
-			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Fail"));
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
 		}
 	}
 
@@ -148,8 +136,6 @@ public class UserController {
 	@ApiOperation(value = "회원 아이디 중복 체크", notes = "회원가입 시 회원 아이디 중복 체크 검사")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	public ResponseEntity<? extends BaseResponseBody> idCheck(@PathVariable("user_id") String userId){
@@ -159,7 +145,6 @@ public class UserController {
 		if(temp == true){
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 		}else {
-
 			return ResponseEntity.status(401).body(BaseResponseBody.of(401, "fail"));
 		}
 	}
@@ -168,8 +153,6 @@ public class UserController {
 	@ApiOperation(value = "회원 이메일 중복 체크", notes = "회원가입 시 회원 이메일 중복 체크 검사")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	public ResponseEntity<? extends BaseResponseBody> emailCheck(@PathVariable("email") String email){
