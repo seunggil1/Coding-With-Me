@@ -5,6 +5,7 @@ import com.ssafy.api.request.ClassesAddStudentPostReq;
 import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
 import com.ssafy.db.entity.Classes;
+import com.ssafy.db.entity.UserClass;
 
 import java.util.List;
 
@@ -27,6 +28,6 @@ public interface ClassesService {
 
     List<Classes> getAllClassesInfo(Long userid);
 
-
+    List<UserClass> getClassesInfo(Long userid,String classname);
 
 }

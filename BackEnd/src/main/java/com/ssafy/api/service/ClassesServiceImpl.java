@@ -14,6 +14,7 @@ import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -124,14 +125,15 @@ public class ClassesServiceImpl implements ClassesService {
 
         return classes;
     }
-//    @Override
-//    public Classes getAllClassesInfo(Long userid) {
-//
-//        User user = userRepository.findByUserId(userid).get();
-//
-//        Classes classes = classesRepository.findByUserUserId(user.getUserId()).get();
-//
-//        return classes;
-//    }
+
+    @Override
+    @Transactional
+    public List<UserClass> getClassesInfo(Long userid, String classname) {
+        Classes classes = classesRepository.findByUserUserIdAndClassName(userid,classname).get();
+
+        List<UserClass> uc =classes.getUserClassList();
+
+        return uc;
+    }
 
 }

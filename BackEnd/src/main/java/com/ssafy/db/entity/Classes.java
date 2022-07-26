@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,12 +38,14 @@ public class Classes {
 
     @Column
     private String classDescription;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "classes")
     private List<Test> testList = new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "classes")
     private List<Conference> conferences = new ArrayList<>();
-    @OneToMany(mappedBy = "classes",orphanRemoval = true,cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "classes")
     private List<UserClass> userClassList = new ArrayList<>();
 
     public void addTest(Test test){

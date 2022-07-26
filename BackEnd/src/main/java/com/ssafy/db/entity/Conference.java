@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class Conference {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long conferenceId;
 
-
+    @JsonIgnore
     @ManyToOne (fetch = LAZY)
     @JoinColumn(name="class_id")
     Classes classes;
@@ -37,7 +38,7 @@ public class Conference {
     boolean isActive;
 
     String rtc_token;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "conference")
     private List<AttendanceRecord> attendanceRecords = new ArrayList<>();
     public void addAttendance(AttendanceRecord record){
@@ -45,6 +46,14 @@ public class Conference {
 
         if(record.getConference()!=this) { //무한루프 방지
             record.setConference(this);
+        }
+    }
+
+    public void setClasses(Classes classes){
+        this.classes=classes;
+
+        if(!classes.getConferences().contains(this)){
+            classes.getConferences().add(this);
         }
     }
 }
