@@ -10,13 +10,16 @@ import com.ssafy.api.service.ClassesService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.UserClass;
 import com.ssafy.db.repository.ClassesRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 반 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -142,4 +145,31 @@ public class ClassesController {
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(classes)));
     }
+
+    @GetMapping("/{userId}/classes/{className}")
+    @ApiOperation(value = "반 정보 조회", notes = "반에 있는 학생들을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Map<String,Object>> getClassInfo(
+            @PathVariable("userId") Long userId, @PathVariable("className") String className){
+        //boolean temp = userService.checkUserId(userId);
+        List<UserClass> uc = classesService.getClassesInfo(userId,className);
+
+        for (UserClass userClass : uc) {
+            System.out.println("test ================"+userClass);
+        }
+        //Classes classes = classesService.modifyClass(classesModifyPostReq);
+        Map<String,Object> map =new HashMap<>();
+
+        String str= "students";
+        map.put(str,classesService.getClassesInfo(userId,className));
+
+        return ResponseEntity.status(200).body(map);
+    }
+
+
 }
