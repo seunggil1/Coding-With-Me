@@ -26,7 +26,10 @@ public class TestRecord {
     @JoinColumn(name = "test_id")
     Test test;
 
+    @Column
     int correctCount;
+
+    @Column
     String sourceCode;
 
     public void setUser(User user){
