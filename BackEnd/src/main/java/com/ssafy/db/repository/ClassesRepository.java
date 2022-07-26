@@ -12,7 +12,7 @@ public interface ClassesRepository extends JpaRepository <Classes, Long>{
 
     Optional<Classes> findByUserUserIdAndClassName(Long user, String classname);
 
-    Optional<List<Classes>> findByUserUserId(Long user);
+    Optional<Classes> findByClassId(Long user);
 
-    Optional<Classes> findByClassId(Long classId);
+    Optional<List<Classes>> findByUserUserId(Long user);
 }
