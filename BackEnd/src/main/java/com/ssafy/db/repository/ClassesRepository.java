@@ -12,5 +12,7 @@ public interface ClassesRepository extends JpaRepository <Classes, Long>{
 
     Optional<Classes> findByUserUserIdAndClassName(Long user, String classname);
 
+    Optional<Classes> findByClassId(Long user);
+
     Optional<List<Classes>> findByUserUserId(Long user);
 }
