@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 import { fetchWrapper } from 'src/helpers';
-import { router } from 'src/router';
+// import { router } from 'src/router';
 import { useAlertStore } from 'src/stores';
 
 const HOST = 'http://localhost:8080/api/v1';
