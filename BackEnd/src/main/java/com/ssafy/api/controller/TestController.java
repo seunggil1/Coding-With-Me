@@ -1,6 +1,8 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.ClassesModifyPostReq;
 import com.ssafy.api.request.ClassesRegisterPostReq;
+import com.ssafy.api.request.TestModifyPostReq;
 import com.ssafy.api.request.TestRegisterPostReq;
 import com.ssafy.api.service.TestService;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -10,10 +12,7 @@ import com.ssafy.db.repository.ClassesRepository;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(value = "시험 API", tags = {"Tests"})
 @RestController
@@ -40,4 +39,37 @@ public class TestController {
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
+    @PutMapping
+    @ApiOperation(value = "시험 정보 수정", notes = "시험 정보를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> ModifyTestInfo(
+            @RequestBody @ApiParam(value="수정 된 시험 정보", required = true) TestModifyPostReq testModifyPostReq) {
+
+        Test test= testService.modifyTest(testModifyPostReq);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+//    @DeleteMapping
+//    @ApiOperation(value = "시험 삭제", notes = "시험을 삭제한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<? extends BaseResponseBody> deleteUser(
+//            @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterInfo) {
+//
+//        boolean success = classesService.deleteClass(registerInfo);
+//
+//        if(success){
+//            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//        }else{
+//            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+//        }
+//
+//    }
 }

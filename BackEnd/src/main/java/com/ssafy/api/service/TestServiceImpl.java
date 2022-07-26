@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 
+import com.ssafy.api.request.TestModifyPostReq;
 import com.ssafy.api.request.TestRegisterPostReq;
 import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.Test;
@@ -34,5 +35,25 @@ public class TestServiceImpl implements TestService{
 
 
         return testRepository.save(test);
+    }
+
+
+
+
+    @Override
+    @Transactional
+    public Test modifyTest(TestModifyPostReq testModifyPostReq) {
+        Test test =testRepository.findByClassesClassIdAndTestName(testModifyPostReq.getClassId(),testModifyPostReq.getTestName()).get();
+        test.setTestName(testModifyPostReq.getNewtestName());
+        test.setTestQno(testModifyPostReq.getTestQno());
+        test.setTestPath(testModifyPostReq.getTestPath());
+        test.setTestcase(testModifyPostReq.getTestcase());
+
+        return testRepository.save(test);
+    }
+
+    @Override
+    public boolean deleteTest(TestRegisterPostReq testRegisterPostReq) {
+        return false;
     }
 }
