@@ -28,13 +28,6 @@ public class Classes {
 
     @Column
     private String className;
-    public void setUser(User user){
-        this.user =user;
-        //무한 루프 주의
-        if(!user.getClasslist().contains(this)){
-            user.getClasslist().add(this);
-        }
-    }
 
     @Column
     private String classDescription;
@@ -48,6 +41,13 @@ public class Classes {
     @OneToMany(mappedBy = "classes")
     private List<UserClass> userClassList = new ArrayList<>();
 
+    public void setUser(User user){
+        this.user =user;
+        //무한 루프 주의
+        if(!user.getClasslist().contains(this)){
+            user.getClasslist().add(this);
+        }
+    }
     public void addTest(Test test){
         this.testList.add(test);
 

@@ -28,15 +28,26 @@ public class Conference {
 
     @Temporal(TemporalType.DATE)
     Date date;
+
+    @Column
     String ownerId;
+
     @Temporal(TemporalType.TIME)
     Date confStartTime;
+
     @Temporal(TemporalType.TIME)
     Date confEndTime;
+
+    @Column
     String thumbnailPath;
+
+    @Column
     String conferenceName;
+
+    @Column
     boolean isActive;
 
+    @Column
     String rtc_token;
     @JsonIgnore
     @OneToMany(mappedBy = "conference")

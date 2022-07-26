@@ -25,9 +25,16 @@ public class Test {
     @JoinColumn(name="class_id")
     Classes classes;
 
+    @Column
     String testName;
+
+    @Column
     int testQno;
+
+    @Column
     String testPath;
+
+    @Column
     String testcase;
     @JsonIgnore
     @OneToMany(mappedBy = "test")
