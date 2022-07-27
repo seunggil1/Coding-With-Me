@@ -1,35 +1,31 @@
 <template>
 	<div class="right">
-		<div class="container">
-			<LoginText class="component"></LoginText>
-			<div class="card m-3">
-				<h4 class="card-header">Login</h4>
-				<div class="card-body">
-					<Form @submit="onSubmit" :validation-schema="schema">
-						<div class="form-group">
-							<label>Username</label>
-							<Field name="id" type="text" class="form-control" />
-						</div>
-						<div class="form-group">
-							<label>Password</label>
-							<Field name="password" type="password" class="form-control" />
-						</div>
-						<div class="form-group">
-							<button class="btn btn-primary" :disabled="isSubmitting">
-								<span
-									v-show="isSubmitting"
-									class="spinner-border spinner-border-sm mr-1"
-								></span>
-								Login
-							</button>
-							<router-link to="register" class="btn btn-link"
-								>Register</router-link
-							>
-						</div>
-					</Form>
-				</div>
+		<LoginText class="component"></LoginText>
+		<div class="card m-3">
+			<h4 class="card-header">Login</h4>
+			<div class="card-body">
+				<Form @submit="onSubmit" :validation-schema="schema">
+					<div class="form-group">
+						<label>Username</label>
+						<Field name="id" type="text" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<Field name="password" type="password" class="form-control" />
+					</div>
+					<div class="form-group">
+						<button class="btn btn-primary" :disabled="isSubmitting">
+							<span
+								v-show="isSubmitting"
+								class="spinner-border spinner-border-sm mr-1"
+							></span>
+							Login
+						</button>
+					</div>
+				</Form>
 			</div>
-			<!-- <div id="q-app" style="min-height: 100vh">
+		</div>
+		<!-- <div id="q-app" style="min-height: 100vh">
 				<div class="q-pa-md" style="max-width: 400px">
 					<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
 						<q-input
@@ -70,13 +66,12 @@
 				</div>
 			</div> -->
 
-			<!-- <div class="form-container">
+		<!-- <div class="form-container">
 				<IDInput name="id" class="component"></IDInput>
 				<PWInput name="password" class="component"></PWInput>
 			</div>
 			<FindIDPW class="find"></FindIDPW>
 			<LoginButton class="login-button"></LoginButton> -->
-		</div>
 	</div>
 </template>
 
@@ -86,6 +81,11 @@ import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
 import { useAuthStore } from 'src/stores';
 // import { ref } from 'vue';
+
+const schema = Yup.object().shape({
+	id: Yup.string().required('id is required'),
+	password: Yup.string().required('Password is required'),
+});
 
 import LoginText from 'src/components/molecules/login/LoginText.vue';
 // import IDInput from 'src/components/molecules/login/IDInput.vue';
@@ -97,11 +97,6 @@ import LoginText from 'src/components/molecules/login/LoginText.vue';
 export default {
 	name: 'RightForm',
 	setup() {
-		const schema = Yup.object().shape({
-			id: Yup.string().required('id is required'),
-			password: Yup.string().required('Password is required'),
-		});
-
 		(async function onSubmit(values) {
 			const authStore = useAuthStore();
 			const { id, password } = values;

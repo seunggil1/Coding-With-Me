@@ -5,7 +5,7 @@ import { useAuthStore } from 'src/stores';
 
 const HOST = 'http://localhost:8080/api/v1';
 
-const baseUrl = `${HOST}/users`;
+const baseUrl = `${HOST}`;
 
 export const useUsersStore = defineStore({
 	id: 'users',
