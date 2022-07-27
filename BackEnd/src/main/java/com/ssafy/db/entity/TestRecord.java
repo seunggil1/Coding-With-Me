@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.Date;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -31,6 +33,9 @@ public class TestRecord {
 
     @Column
     String sourceCode;
+
+    @Temporal(TemporalType.TIME)
+    Date date;
 
     public void setUser(User user){
         this.user =user;
