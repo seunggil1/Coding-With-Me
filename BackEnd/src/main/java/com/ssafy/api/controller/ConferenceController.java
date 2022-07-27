@@ -20,7 +20,7 @@ public class ConferenceController {
     @Autowired
     ConferenceService conferenceService;
 
-    @PostMapping("/tutor")
+    @PostMapping
     @ApiOperation(value = "[강사]강의실 개설", notes = "<strong>강사가 </strong> 강의실을 개설한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
