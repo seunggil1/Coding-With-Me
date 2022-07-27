@@ -54,22 +54,23 @@ public class TestController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-//    @DeleteMapping
-//    @ApiOperation(value = "시험 삭제", notes = "시험을 삭제한다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public ResponseEntity<? extends BaseResponseBody> deleteUser(
-//            @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterInfo) {
-//
-//        boolean success = classesService.deleteClass(registerInfo);
-//
-//        if(success){
-//            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//        }else{
-//            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
-//        }
-//
-//    }
+    @DeleteMapping
+    @ApiOperation(value = "시험 삭제", notes = "시험을 삭제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteUser(
+            @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterInfo) {
+
+        //boolean success = classesService.deleteClass(registerInfo);
+        boolean success =testService.deleteTest(testRegisterInfo);
+
+        if(success){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        }else{
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+        }
+
+    }
 }
