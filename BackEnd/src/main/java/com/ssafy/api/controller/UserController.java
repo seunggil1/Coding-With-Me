@@ -229,6 +229,7 @@ public class UserController {
         try{
             User user = userService.getUserByUserId(userId);
             map.put("user", user);
+
             return ResponseEntity.status(200).body(map);
         }catch (NoSuchElementException e){
             map.put("message", "Fail");

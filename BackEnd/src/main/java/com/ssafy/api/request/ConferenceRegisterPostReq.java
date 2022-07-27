@@ -12,8 +12,8 @@ public class ConferenceRegisterPostReq {
     @ApiModelProperty(name = "반 식별자", example = "1")
     Long classId;
 
-    @ApiModelProperty(name = "방장 사용자 식별자", example = "1")
-    Long ownerId;
+    @ApiModelProperty(name = "방장 아이디", example = "ssafy")
+    String ownerId;
 
     @ApiModelProperty(name = "썸네일 경로", example = "/path/..")
     String thumbnailPath;

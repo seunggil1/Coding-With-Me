@@ -8,18 +8,25 @@ import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ClassesRepository;
 import com.ssafy.db.repository.ConferenceRepository;
+import com.ssafy.db.repository.ConferenceRepositorySupport;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
 import java.util.Date;
+import java.util.List;
+
 @Service("conferenceService")
 @Transactional(readOnly = true)
 public class ConferenceServiceImpl implements ConferenceService{
 
     @Autowired
     ConferenceRepository conferenceRepository;
+
+    @Autowired
+    ConferenceRepositorySupport conferenceRepositorySupport;
     @Autowired
     ClassesRepository classesRepository;
 
@@ -49,7 +56,7 @@ public class ConferenceServiceImpl implements ConferenceService{
     @Override
     @Transactional
     public Conference modifyConference(ConferenceModifyPostReq conferenceModifyPostReq) {
-        Conference conference = conferenceRepository.findByClassesClassId(conferenceModifyPostReq.getClassId()).get();
+        Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(conferenceModifyPostReq.getClassId()).get();
         conference.setConferenceName(conferenceModifyPostReq.getConferenceName());
         User user = userRepository.findById(conferenceModifyPostReq.getOwnerId()).get();
         conference.setOwnerId(user.getId());
@@ -59,11 +66,42 @@ public class ConferenceServiceImpl implements ConferenceService{
     @Override
     @Transactional
     public Conference finishConference(ConferenceModifyPostReq conferenceModifyPostReq) {
-        Conference conference = conferenceRepository.findByClassesClassId(conferenceModifyPostReq.getClassId()).get();
+        Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(conferenceModifyPostReq.getClassId()).get();
         conference.setActive(false);
         Date date = new Date();
         conference.setConfEndTime(date);
         return conferenceRepository.save(conference);
+    }
+
+    @Override
+    public List<Conference> getAllConferenceByClassId(Long classId) {
+        List<Conference> conferences = conferenceRepository.findByClassesClassId(classId).get();
+
+        return conferences;
+    }
+
+    @Override
+    public Conference getActiveConference(Long classId) {
+        Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(classId).get();
+        return conference;
+    }
+
+    @Override
+    public List<Conference> getNotActiveConference(Long classId) {
+        List<Conference> conferences = conferenceRepositorySupport.findByClassesClassIdNotActive(classId).get();
+        return conferences;
+    }
+
+    @Override
+    public List<Conference> getConferencesByConferenceName(String conferenceName) {
+        List<Conference> conferences = conferenceRepositorySupport.findByConferenceName(conferenceName).get();
+        return conferences;
+    }
+
+    @Override
+    public Conference getConferencesById(String id) {
+        Conference conference = conferenceRepositorySupport.findById(id).get();
+        return conference;
     }
 
 }
