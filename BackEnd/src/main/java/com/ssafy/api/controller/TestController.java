@@ -1,12 +1,9 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.ClassesModifyPostReq;
-import com.ssafy.api.request.ClassesRegisterPostReq;
-import com.ssafy.api.request.TestModifyPostReq;
-import com.ssafy.api.request.TestRegisterPostReq;
+import com.google.gson.Gson;
+import com.ssafy.api.request.*;
 import com.ssafy.api.service.TestService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.Test;
 import com.ssafy.db.repository.ClassesRepository;
 import io.swagger.annotations.*;
@@ -49,8 +46,9 @@ public class TestController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> register(
-            @RequestBody @ApiParam(value="시험 정보", required = true)TestRegisterPostReq testRegisterInfo) {
-
+            @RequestBody @ApiParam(value="시험 정보", required = true) GsonTestRegister gsonTestRegister) {
+        String jsonData = gsonTestRegister.getJson();
+        TestRegisterPostReq testRegisterInfo = new Gson().fromJson(jsonData, TestRegisterPostReq.class);
         //임의로 리턴된 Classes 인스턴스.
         Test test = testService.createTest(testRegisterInfo);
 

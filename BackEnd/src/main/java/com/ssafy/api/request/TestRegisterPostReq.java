@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.Convert;
 import java.util.ArrayList;
@@ -56,9 +57,10 @@ public class TestRegisterPostReq {
 
     @Getter
     @Setter
+
     public static class testcase{
         int qno;
-        List<IO> IOList = new ArrayList<>();
+        List<IO> IOList;
     }
     @Getter
     @Setter
@@ -66,4 +68,6 @@ public class TestRegisterPostReq {
         String input;
         String output;
     }
+
+
 }
