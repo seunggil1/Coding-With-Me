@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(value = "시험 API", tags = {"Tests"})
 @RestController
 @RequestMapping("/api/v1/tests")
@@ -24,6 +26,21 @@ public class TestController {
 
     @Autowired
     ClassesRepository classesRepository;
+
+
+    @GetMapping("/{classId}")
+    @ApiOperation(value = "반시험 조회", notes = "해당 반의 시험정보를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> getAllTestInfo(@PathVariable("classId") Long classId){
+
+        List<Test> test = testService.getAllTestInfo(classId);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(test)));
+    }
+
 
     @PostMapping()
     @ApiOperation(value = "시험 생성", notes = "<strong>시험 정보를 입력하여</strong> 시험을 만든다.")

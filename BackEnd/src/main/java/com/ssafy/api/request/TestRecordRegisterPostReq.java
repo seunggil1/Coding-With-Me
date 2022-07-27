@@ -12,10 +12,15 @@ public class TestRecordRegisterPostReq {
     @ApiModelProperty(name = "사용자 식별자", example = "1")
     Long userId;
 
-    @ApiModelProperty(name = "시험 식별자", example = "1")
-    Long testId;
+    @ApiModelProperty(name = "반 식별자", example = "1")
+    Long classId;
+
+    @ApiModelProperty(name = "시험 이름", example = "1차시험")
+    String testName;
 
     @ApiModelProperty(name = "소스코드", example = "...")
     String sourceCode;
+
+
 
 }
