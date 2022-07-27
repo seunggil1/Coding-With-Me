@@ -8,10 +8,7 @@ import com.ssafy.db.entity.Conference;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(value = "강의 API", tags = {"Conference"})
 @RestController
@@ -20,7 +17,7 @@ public class ConferenceController {
     @Autowired
     ConferenceService conferenceService;
 
-    @PostMapping("/tutor")
+    @PostMapping
     @ApiOperation(value = "[강사]강의실 개설", notes = "<strong>강사가 </strong> 강의실을 개설한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -35,7 +32,7 @@ public class ConferenceController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @PostMapping
+    @PutMapping
     @ApiOperation(value = "강의 정보 수정", notes = "강의에 대한 정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
