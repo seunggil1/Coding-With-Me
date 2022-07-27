@@ -4,7 +4,7 @@ import { fetchWrapper } from 'src/helpers';
 // import { router } from 'src/router';
 import { useAlertStore } from 'src/stores';
 
-const HOST = 'http://localhost:8080/api/v1';
+const HOST = 'http://3.34.42.81:8080';
 
 const baseUrl = `${HOST}/users`;
 
@@ -30,7 +30,7 @@ export const useAuthStore = defineStore({
 				localStorage.setItem('user', JSON.stringify(user));
 
 				// redirect to previous url or default to home page
-				router.push(this.returnUrl || '/');
+				// router.push(this.returnUrl || '/');
 			} catch (error) {
 				const alertStore = useAlertStore();
 				alertStore.error(error);
