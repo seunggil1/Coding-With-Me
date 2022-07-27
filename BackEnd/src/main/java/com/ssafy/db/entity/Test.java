@@ -1,6 +1,8 @@
 package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.api.request.TestCase;
+import com.ssafy.api.service.TestcaseJsonConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,7 +37,8 @@ public class Test {
     String testPath;
 
     @Column
-    String testcase;
+    @Convert( converter = TestcaseJsonConverter.class)
+    TestCase testcase;
     @JsonIgnore
     @OneToMany(mappedBy = "test")
     private List<TestRecord> testRecords = new ArrayList<>();

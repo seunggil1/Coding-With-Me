@@ -4,7 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.persistence.Convert;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +25,42 @@ public class TestRegisterPostReq {
     @ApiModelProperty(name="경로", example= "/path/..")
     String testPath;
 
-    @ApiModelProperty(name="테스트케이스",example="..")
+    @ApiModelProperty(name="테스트케이스",example= "[\n" +
+            "        {\n" +
+            "            \"qno\": 1,\n" +
+            "            \"IOList\": [\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"qno\": 2,\n" +
+            "            \"IOList\": [\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    ]")
     List<testcase> testcaseList;
 
     @Getter
     @Setter
+
     public static class testcase{
         int qno;
-        List<IO> IOList = new ArrayList<>();
+        List<IO> IOList;
     }
     @Getter
     @Setter
@@ -38,4 +68,6 @@ public class TestRegisterPostReq {
         String input;
         String output;
     }
+
+
 }
