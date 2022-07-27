@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Convert;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,34 @@ public class TestRegisterPostReq {
     @ApiModelProperty(name="경로", example= "/path/..")
     String testPath;
 
-    @ApiModelProperty(name="테스트케이스",example="..")
+    @ApiModelProperty(name="테스트케이스",example= "[\n" +
+            "        {\n" +
+            "            \"qno\": 1,\n" +
+            "            \"IOList\": [\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"qno\": 2,\n" +
+            "            \"IOList\": [\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"input\": \"string\",\n" +
+            "                    \"output\": \"string\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    ]")
     List<testcase> testcaseList;
 
     @Getter

@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 
+import com.ssafy.api.request.TestCase;
 import com.ssafy.api.request.TestModifyPostReq;
 import com.ssafy.api.request.TestRegisterPostReq;
 import com.ssafy.db.entity.Classes;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service("testService")
 @Transactional(readOnly = true)
-public class TestServiceImpl implements TestService{
+public class TestServiceImpl implements TestService {
 
     @Autowired
     TestRepository testRepository;
@@ -27,11 +28,13 @@ public class TestServiceImpl implements TestService{
     @Override
     @Transactional
     public Test createTest(TestRegisterPostReq testRegisterInfo) {
-        Test test =new Test();
+        Test test = new Test();
         test.setTestName(testRegisterInfo.getTestName());
         test.setTestQno(testRegisterInfo.getTestQno());
         test.setTestPath(testRegisterInfo.getTestPath());
-        test.setTestcase(testRegisterInfo.getTestcase());
+        TestCase tc = new TestCase();
+        tc.setTestcaseList(testRegisterInfo.getTestcaseList());
+        test.setTestcase(tc);
 
         Classes classes = classesRepository.findByClassId(testRegisterInfo.getClassId()).get();
         test.setClasses(classes);
@@ -43,11 +46,11 @@ public class TestServiceImpl implements TestService{
     @Override
     @Transactional
     public Test modifyTest(TestModifyPostReq testModifyPostReq) {
-        Test test =testRepository.findByClassesClassIdAndTestName(testModifyPostReq.getClassId(),testModifyPostReq.getTestName()).get();
+        Test test = testRepository.findByClassesClassIdAndTestName(testModifyPostReq.getClassId(), testModifyPostReq.getTestName()).get();
         test.setTestName(testModifyPostReq.getNewtestName());
         test.setTestQno(testModifyPostReq.getTestQno());
         test.setTestPath(testModifyPostReq.getTestPath());
-        test.setTestcase(testModifyPostReq.getTestcase());
+//        test.setTestcase(testModifyPostReq.getTestcase());
 
         return testRepository.save(test);
     }
@@ -55,15 +58,15 @@ public class TestServiceImpl implements TestService{
     @Override
     @Transactional
     public boolean deleteTest(TestRegisterPostReq testRegisterPostReq) {
-        boolean success =false;
-        try{
-            Test test =testRepository.findByClassesClassIdAndTestName(testRegisterPostReq.getClassId(),testRegisterPostReq.getTestName()).get();
+        boolean success = false;
+        try {
+            Test test = testRepository.findByClassesClassIdAndTestName(testRegisterPostReq.getClassId(), testRegisterPostReq.getTestName()).get();
 
             testRepository.delete(test);
 
-            success=true;
-        }catch (Exception e){
-            success=false;
+            success = true;
+        } catch (Exception e) {
+            success = false;
         }
         return success;
     }
