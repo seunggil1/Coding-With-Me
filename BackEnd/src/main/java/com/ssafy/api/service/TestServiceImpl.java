@@ -37,9 +37,6 @@ public class TestServiceImpl implements TestService{
         return testRepository.save(test);
     }
 
-
-
-
     @Override
     @Transactional
     public Test modifyTest(TestModifyPostReq testModifyPostReq) {
@@ -53,7 +50,20 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
+    @Transactional
     public boolean deleteTest(TestRegisterPostReq testRegisterPostReq) {
-        return false;
+        boolean success =false;
+
+        try{
+            Test test =testRepository.findByClassesClassIdAndTestName(testRegisterPostReq.getClassId(),testRegisterPostReq.getTestName()).get();
+
+            testRepository.delete(test);
+
+            success=true;
+        }catch (Exception e){
+            success=false;
+        }
+//
+        return success;
     }
 }
