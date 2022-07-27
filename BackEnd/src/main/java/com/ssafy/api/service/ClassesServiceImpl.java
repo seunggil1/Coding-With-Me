@@ -46,8 +46,6 @@ public class ClassesServiceImpl implements ClassesService {
         boolean success = false;
 
         try {
-            //User user = userRepository.findById(userRegisterInfo.getId()).get();
-            //Classes classes = classesRepository.findByUserUserIdAndClassName(classesModifyPostReq.getTutorId(), classesModifyPostReq.getClassName()).get();
             Classes classes = classesRepository.findByUserUserIdAndClassName(classesRegisterInfo.getTutorId(), classesRegisterInfo.getClassName()).get();
             classesRepository.delete(classes);
             success = true;
