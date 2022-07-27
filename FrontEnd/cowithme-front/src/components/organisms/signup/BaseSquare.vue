@@ -1,24 +1,30 @@
 <script setup>
+import { ref } from 'vue';
 import { Form, Field } from 'vee-validate';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 
 import { useUsersStore, useAlertStore } from 'src/stores';
 
-// const schema = Yup.object().shape({
-// 	firstName: Yup.string().required('First Name is required'),
-// 	lastName: Yup.string().required('Last Name is required'),
-// 	username: Yup.string().required('Username is required'),
-// 	// password: Yup.string()
-// 	// 	.required('Password is required')
-// 	// 	.min(6, 'Password must be at least 6 characters'),
-// });
+const date = ref('');
+
+const schema = Yup.object().shape({
+	birthDt: Yup.string().required('Birthday is required'),
+	email: Yup.string().required('Email is required'),
+	id: Yup.string().required('Id is required'),
+	name: Yup.string().required('Name is required'),
+	nickname: Yup.string().required('Nickname is required'),
+	password: Yup.string()
+		.required('Password is required')
+		.min(6, 'Password must be at least 6 characters'),
+	phone: Yup.string().required('Phone number is required'),
+});
 
 async function onSubmit(values) {
 	const usersStore = useUsersStore();
 	const alertStore = useAlertStore();
 	try {
 		await usersStore.register(values);
-		await router.push('/account/login');
+		// await router.push('/account/login');
 		alertStore.success('Registration successful');
 	} catch (error) {
 		alertStore.error(error);
@@ -27,12 +33,52 @@ async function onSubmit(values) {
 </script>
 
 <template>
-	<div class="card m-3">
-		<h4 class="card-header">Register</h4>
+	<div class="q-pa-md" style="max-width: 400px">
+		<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+			<q-input
+				filled
+				v-model="date"
+				label="Your name *"
+				hint="Name and surname"
+				lazy-rules
+				:rules="[val => (val && val.length > 0) || 'Please type something']"
+			></q-input>
+
+			<q-input
+				filled
+				type="number"
+				v-model="age"
+				label="Your age *"
+				lazy-rules
+				:rules="[
+					val => (val !== null && val !== '') || 'Please type your age',
+					val => (val > 0 && val < 100) || 'Please type a real age',
+				]"
+			></q-input>
+
+			<q-toggle
+				v-model="accept"
+				label="I accept the license and terms"
+			></q-toggle>
+
+			<div>
+				<q-btn label="Submit" type="submit" color="primary"></q-btn>
+				<q-btn
+					label="Reset"
+					type="reset"
+					color="primary"
+					flat
+					class="q-ml-sm"
+				></q-btn>
+			</div>
+		</q-form>
+	</div>
+	<!-- <div class="card m-3">
+		<h4 class="card-header">회원가입</h4>
 		<div class="card-body">
 			<Form @submit="onSubmit" :validation-schema="schema">
 				<div class="form-group">
-					<label>birthDt</label>
+					<label>생년월일</label>
 					<Field name="birthDt" type="text" class="form-control" />
 				</div>
 				<div class="form-group">
@@ -79,5 +125,5 @@ async function onSubmit(values) {
 				</div>
 			</Form>
 		</div>
-	</div>
+	</div> -->
 </template>

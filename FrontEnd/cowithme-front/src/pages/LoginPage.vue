@@ -23,7 +23,7 @@ export default {
 .login {
 	height: 100vh;
 	width: 100vw;
-	background-color: grey;
+	background-color: #808080;
 }
 
 .login-box {

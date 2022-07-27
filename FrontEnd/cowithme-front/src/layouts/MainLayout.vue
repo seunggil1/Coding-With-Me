@@ -8,7 +8,7 @@
 		</q-header>
 
 		<q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-			<div class="navbar" style="background-color: #d9d9d9; height: 100vh">
+			<div class="navbar" style="background-color: #eeeeee; height: 100vh">
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-10">
