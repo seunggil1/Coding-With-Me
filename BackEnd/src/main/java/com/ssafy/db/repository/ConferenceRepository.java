@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConferenceRepository extends JpaRepository<Conference, Long> {
+
+
     Optional<List<Conference>> findByClassesClassId(Long classId);
 
+    @Query("select c from Conference c where c.isActive = 1")
+    Optional<Conference> findByConferenceId(Long conferenceId);
 }
