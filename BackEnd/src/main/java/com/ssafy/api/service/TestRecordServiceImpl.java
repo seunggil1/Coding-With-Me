@@ -28,6 +28,9 @@ public class TestRecordServiceImpl implements TestRecordService {
     ConferenceRepository conferenceRepository;
 
     @Autowired
+    UserClassRepository userClassRepository;
+
+    @Autowired
     UserRepository userRepository;
     @Autowired
     ConferenceRepositorySupport conferenceRepositorySupport;
@@ -43,16 +46,24 @@ public class TestRecordServiceImpl implements TestRecordService {
 
         User user = userRepository.findByUserId(testRecordRegisterInfo.getUserId()).get();
 
-        List<Classes> classes = classesRepository.findByUserUserId(user.getUserId()).get();
+        UserClass userClass = userClassRepository.findByStudentId(user.getUserId()).get();
 
-        List<Conference> conferences = conferenceRepository.findByClassesClassId(classes.get(0).getClassId()).get();
+        Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(userClass.getUserClassId()).get();
 
 
         testRecord.setUser(user);
         testRecord.setTest(test);
 
-        testRecord.setDate(conferences.get(0).getDate());
+        testRecord.setDate(conference.getDate());
         System.out.println("test======================="+testRecord.getDate());
         return testRecordRepository.save(testRecord);
+    }
+
+    @Override
+    public List<TestRecord> getAllTestRecordByUserId(Long userId) {
+
+        List<TestRecord> testRecords = testRecordRepository.findByUserUserId(userId).get();
+
+        return testRecords;
     }
 }
