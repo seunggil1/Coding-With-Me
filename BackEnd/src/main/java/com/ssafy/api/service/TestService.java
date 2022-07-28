@@ -2,7 +2,6 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.TestModifyPostReq;
 import com.ssafy.api.request.TestRegisterPostReq;
-import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.Test;
 
 import java.util.List;

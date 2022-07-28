@@ -15,4 +15,6 @@ public interface ClassesRepository extends JpaRepository <Classes, Long>{
     Optional<Classes> findByClassId(Long user);
 
     Optional<List<Classes>> findByUserUserId(Long user);
+
+
 }
