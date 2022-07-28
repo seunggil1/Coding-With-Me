@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.AttendanceRegisterPostReq;
+import com.ssafy.api.response.AttendanceRes;
 import com.ssafy.api.service.AttendanceService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.AttendanceRecord;
@@ -45,5 +46,20 @@ public class AttendanceController {
         AttendanceRecord attendanceRecord = attendanceService.updateAttendance(attendanceRegisterPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping("/{userId}/{year}/{month}")
+    @ApiOperation(value = "월별 출석 여부 호출", notes = "학생의 월 출입 기록을 호출한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<AttendanceRes> getAttendances(
+            @PathVariable @ApiParam(value="사용자 식별자", required = true) Long userId,
+            @PathVariable @ApiParam(value="연도", required = true) int year,
+            @PathVariable @ApiParam(value="월", required = true) int month) {
+
+        AttendanceRes res = attendanceService.getAttendances(userId, year, month);
+        return ResponseEntity.status(200).body(res);
     }
 }
