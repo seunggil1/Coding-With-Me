@@ -9,6 +9,7 @@ import com.ssafy.db.entity.Test;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ClassesRepository;
 import com.ssafy.db.repository.TestRepository;
+import com.ssafy.db.repository.TestRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,9 @@ public class TestServiceImpl implements TestService {
 
     @Autowired
     TestRepository testRepository;
+
+    @Autowired
+    TestRepositorySupport testRepositorySupport;
 
     @Autowired
     ClassesRepository classesRepository;
@@ -80,4 +84,11 @@ public class TestServiceImpl implements TestService {
         List<Test> test = testRepository.findByClassesClassId(classes.getClassId()).get();
         return test;
     }
+
+    @Override
+    public boolean checkTestName(String testName) {
+        boolean result = testRepositorySupport.findByTestNameEquals(testName);
+        return result;
+    }
+
 }
