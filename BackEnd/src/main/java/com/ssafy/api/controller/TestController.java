@@ -45,10 +45,6 @@ public class TestController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-//    public ResponseEntity<? extends BaseResponseBody> register(
-//            @RequestBody @ApiParam(value="시험 정보", required = true) GsonTestRegister gsonTestRegister) {
-//        String jsonData = gsonTestRegister.getJson();
-//        TestRegisterPostReq testRegisterInfo = new Gson().fromJson(jsonData, TestRegisterPostReq.class);
     public ResponseEntity<? extends BaseResponseBody> register(
             @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterinfo) {
         //임의로 리턴된 Classes 인스턴스.
@@ -90,4 +86,22 @@ public class TestController {
         }
 
     }
+
+    @GetMapping("/idcheck/{testName}")
+    @ApiOperation(value = "시험 명 중복 체크", notes = "시험 생성 시 시험 명 중복 체크 검사")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> testNameCheck(@PathVariable("testName") String testName) {
+
+        boolean temp = testService.checkTestName(testName);
+        System.out.println("Test ========="+temp);
+        if (temp == true) {
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        } else {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "fail"));
+        }
+    }
+
 }
