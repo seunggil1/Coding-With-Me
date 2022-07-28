@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class AttInfo {
-    Date date;
+    String date;
     String attendance;
 }

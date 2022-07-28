@@ -23,7 +23,8 @@ public class AttendanceRepositorySupport {
     public Optional<AttendanceRecord> findByUserIdAndConferenceIdLast(Long userId,Long conferenceId){
         AttendanceRecord attendanceRecord = jpaQueryFactory.select(qAttendanceRecord).from(qAttendanceRecord)
                 .where(qAttendanceRecord.attEndTime.isNull())
-                .where(qAttendanceRecord.conference.conferenceId.eq(conferenceId)).fetchOne();
+                .where(qAttendanceRecord.conference.conferenceId.eq(conferenceId))
+                .where(qAttendanceRecord.user.userId.eq(userId)).fetchOne();
         if(attendanceRecord == null) return Optional.empty();
         return Optional.ofNullable(attendanceRecord);
     };

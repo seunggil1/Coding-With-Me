@@ -29,7 +29,8 @@ public class ConferenceRepositorySupport {
     public Optional<List<Conference>> findByClassesClassIdNotActive(Long classId){
 
         List<Conference >conferences = jpaQueryFactory.select(qConference).from(qConference)
-                .where(qConference.isActive.eq(false)).fetch();
+                .where(qConference.isActive.eq(false))
+                .where(qConference.classes.classId.eq(classId)).fetch();
         if(conferences == null) return Optional.empty();
         return Optional.ofNullable(conferences);
     };
