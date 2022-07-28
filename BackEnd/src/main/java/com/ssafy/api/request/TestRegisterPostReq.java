@@ -2,16 +2,10 @@ package com.ssafy.api.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import javax.persistence.Convert;
-import java.util.ArrayList;
+import lombok.Data;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @ApiModel("TestPostReq")
 public class TestRegisterPostReq {
     @ApiModelProperty(name = "반 식별자", example = "1")
@@ -28,7 +22,7 @@ public class TestRegisterPostReq {
     @ApiModelProperty(name="테스트케이스",example= "[\n" +
             "        {\n" +
             "            \"qno\": 1,\n" +
-            "            \"IOList\": [\n" +
+            "            \"inputOutputList\": [\n" +
             "                {\n" +
             "                    \"input\": \"string\",\n" +
             "                    \"output\": \"string\"\n" +
@@ -41,7 +35,7 @@ public class TestRegisterPostReq {
             "        },\n" +
             "        {\n" +
             "            \"qno\": 2,\n" +
-            "            \"IOList\": [\n" +
+            "            \"inputOutputList\": [\n" +
             "                {\n" +
             "                    \"input\": \"string\",\n" +
             "                    \"output\": \"string\"\n" +
@@ -55,19 +49,15 @@ public class TestRegisterPostReq {
             "    ]")
     List<testcase> testcaseList;
 
-    @Getter
-    @Setter
-
+    @Data
     public static class testcase{
         int qno;
-        List<IO> IOList;
+        List<InputOutput> inputOutputList;
     }
-    @Getter
-    @Setter
-    public static class IO{
+
+    @Data
+    public static class InputOutput {
         String input;
         String output;
     }
-
-
 }
