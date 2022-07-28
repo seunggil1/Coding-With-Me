@@ -1,5 +1,5 @@
 <template>
-	<q-btn style="background: #ff5722"></q-btn>
+	<q-btn push style="background: #ff5722"></q-btn>
 	<!-- 주황색 버튼
 	label="버튼 텍스트"
 	-->

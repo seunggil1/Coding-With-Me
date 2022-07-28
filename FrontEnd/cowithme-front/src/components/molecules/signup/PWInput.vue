@@ -8,7 +8,6 @@
 			label="PW"
 			placeholder="비밀번호를 입력해주세요"
 			type="password"
-			hint="Password"
 		></q-input>
 	</div>
 </template>
