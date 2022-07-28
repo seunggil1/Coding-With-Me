@@ -45,12 +45,14 @@ public class TestController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
+//    public ResponseEntity<? extends BaseResponseBody> register(
+//            @RequestBody @ApiParam(value="시험 정보", required = true) GsonTestRegister gsonTestRegister) {
+//        String jsonData = gsonTestRegister.getJson();
+//        TestRegisterPostReq testRegisterInfo = new Gson().fromJson(jsonData, TestRegisterPostReq.class);
     public ResponseEntity<? extends BaseResponseBody> register(
-            @RequestBody @ApiParam(value="시험 정보", required = true) GsonTestRegister gsonTestRegister) {
-        String jsonData = gsonTestRegister.getJson();
-        TestRegisterPostReq testRegisterInfo = new Gson().fromJson(jsonData, TestRegisterPostReq.class);
+            @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterinfo) {
         //임의로 리턴된 Classes 인스턴스.
-        Test test = testService.createTest(testRegisterInfo);
+        Test test = testService.createTest(testRegisterinfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
