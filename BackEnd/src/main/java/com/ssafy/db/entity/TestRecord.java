@@ -34,7 +34,7 @@ public class TestRecord {
     @Column
     String sourceCode;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     Date date;
 
     public void setUser(User user){
