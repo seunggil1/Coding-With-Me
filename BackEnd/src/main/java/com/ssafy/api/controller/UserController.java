@@ -1,7 +1,9 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
+import com.ssafy.api.response.CompileRes;
 import com.ssafy.api.response.UserClassRes;
+import com.ssafy.common.Rest.RestAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -291,5 +293,12 @@ public class UserController {
             return ResponseEntity.status(404).body(map);
         }
 
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<CompileRes> test() {
+        RestAPI restAPI= new RestAPI();
+        CompileRes res =  restAPI.callAPI();
+        return ResponseEntity.status(200).body(res);
     }
 }

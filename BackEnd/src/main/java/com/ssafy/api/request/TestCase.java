@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 public class TestCase {
 
-    List<TestRegisterPostReq.testcase> testcaseList;
+    List<TestRegisterPostReq.TC> testcaseList;
 }

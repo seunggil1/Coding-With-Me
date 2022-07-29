@@ -188,7 +188,8 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
 
     implementation ("com.google.code.gson:gson:2.9.0")
-
+    implementation ("org.apache.httpcomponents:httpcore:4.4.15")
+    implementation ("org.apache.httpcomponents:httpclient:4.5.1")
     compile("javax.annotation:javax.annotation-api:1.2")
 
     implementation("org.projectlombok:lombok:1.18.20")
