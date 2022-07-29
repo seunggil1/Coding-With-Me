@@ -7,6 +7,7 @@ import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';
 // import AtomLogoTrans from 'src/components/atoms/AtomLogoTrans.vue';
 
+<<<<<<< HEAD
 const user_name = ref('');
 const id = ref('');
 const role = ref('');
@@ -16,6 +17,17 @@ const email = ref('');
 const phone = ref('');
 const nickname = ref('');
 const birth_DT = ref('');
+=======
+const name = ref('');
+const id = ref('');
+const role = ref('');
+const pw = ref('');
+const pwchk = ref('');
+const email = ref('');
+const phone = ref('');
+const nickname = ref('');
+const birthday = ref('');
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 
 async function onSubmit(values) {
 	const usersStore = useUsersStore();
@@ -67,11 +79,18 @@ function onReset() {
 			<div class="flex row">
 				<div class="col q-mr-sm">
 					<q-input
+<<<<<<< HEAD
 						name="user_name"
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
 						v-model="user_name"
+=======
+						class="q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						v-model="name"
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						label="이름"
 						placeholder="국문 5자 이내"
 						lazy-rules
@@ -80,7 +99,10 @@ function onReset() {
 					></q-input>
 					<div class="row q-pr-lg">
 						<q-input
+<<<<<<< HEAD
 							name="id"
+=======
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 							class="q-mx-lg col"
 							rounded
 							outlined
@@ -93,18 +115,29 @@ function onReset() {
 						<IDChkButton class="flex q-pr-lg q-py-sm"></IDChkButton>
 					</div>
 					<q-input
+<<<<<<< HEAD
 						name="password"
+=======
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
 						type="password"
+<<<<<<< HEAD
 						v-model="password"
+=======
+						v-model="pw"
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						label="비밀번호"
 						lazy-rules
 						color="brand"
 						bg-color="white"
 					></q-input>
+<<<<<<< HEAD
 					<!-- <q-input
+=======
+					<q-input
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						class="q-pr-lg q-ma-lg"
 						rounded
 						outlined
@@ -114,11 +147,18 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+<<<<<<< HEAD
 					></q-input> -->
 				</div>
 				<div class="col q-ml-sm">
 					<q-input
 						name="email"
+=======
+					></q-input>
+				</div>
+				<div class="col q-ml-sm">
+					<q-input
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
@@ -130,7 +170,10 @@ function onReset() {
 						bg-color="white"
 					></q-input>
 					<q-input
+<<<<<<< HEAD
 						name="phone"
+=======
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
@@ -143,7 +186,10 @@ function onReset() {
 						bg-color="white"
 					></q-input>
 					<q-input
+<<<<<<< HEAD
 						name="nickname"
+=======
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
@@ -154,12 +200,19 @@ function onReset() {
 						bg-color="white"
 					></q-input>
 					<q-input
+<<<<<<< HEAD
 						name="birth_DT"
+=======
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
 						type="date"
+<<<<<<< HEAD
 						v-model="birth_DT"
+=======
+						v-model="birthday"
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 						lazy-rules
 						color="brand"
 						bg-color="white"
@@ -190,7 +243,11 @@ function onReset() {
 							<q-radio
 								dark
 								v-model="role"
+<<<<<<< HEAD
 								val="teacher"
+=======
+								val="강사"
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 								label="강사"
 								color="brand"
 							></q-radio>
@@ -198,7 +255,11 @@ function onReset() {
 								dark
 								text-
 								v-model="role"
+<<<<<<< HEAD
 								val="student"
+=======
+								val="학생"
+>>>>>>> e421a2dc75558672f21519e0541b78d78a0cd883
 								label="학생"
 								color="brand"
 							></q-radio>
