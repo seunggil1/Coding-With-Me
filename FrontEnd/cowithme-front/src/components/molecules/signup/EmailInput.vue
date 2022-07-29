@@ -3,7 +3,8 @@
 		<q-input
 			v-model="email"
 			type="email"
-			hint="Email"
+			label="Email"
+			placeholder="이메일을 입력해주세요"
 			filled
 			color="brand"
 			bg-color="white"
