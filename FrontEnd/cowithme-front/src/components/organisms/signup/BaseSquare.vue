@@ -5,13 +5,12 @@ import { router } from 'src/router';
 
 import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';
-// import AtomLogoTrans from 'src/components/atoms/AtomLogoTrans.vue';
 
 const name = ref('');
 const id = ref('');
 const role = ref('');
 const password = ref('');
-// const pwchk = ref('');
+const passwordCheck = ref('');
 const email = ref('');
 const phone = ref('');
 const nickname = ref('');
@@ -44,7 +43,7 @@ function onReset() {
 	id.value = null;
 	role.value = null;
 	password.value = null;
-	// pwchk.value = null;
+	passwordCheck.value = null;
 	email.value = null;
 	phone.value = null;
 	nickname.value = null;
@@ -68,7 +67,12 @@ function onReset() {
 			<!-- <AtomLogoTrans></AtomLogoTrans> -->
 		</div>
 
-		<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md signup-form">
+		<q-form
+			@submit="onSubmit"
+			@reset="onReset"
+			class="q-gutter-md signup-form"
+			lazy-validation
+		>
 			<div class="flex row">
 				<div class="col q-mr-sm">
 					<q-input
@@ -111,17 +115,17 @@ function onReset() {
 						color="brand"
 						bg-color="white"
 					></q-input>
-					<!-- <q-input
+					<q-input
 						class="q-pr-lg q-ma-lg"
 						rounded
 						outlined
 						type="password"
-						v-model="pwchk"
+						v-model="passwordCheck"
 						label="비밀번호 확인"
 						lazy-rules
 						color="brand"
 						bg-color="white"
-					></q-input> -->
+					></q-input>
 				</div>
 				<div class="col q-ml-sm">
 					<q-input
