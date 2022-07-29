@@ -104,7 +104,7 @@ function onReset() {
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
-						type="text"
+						type="password"
 						v-model="password"
 						label="비밀번호"
 						lazy-rules
