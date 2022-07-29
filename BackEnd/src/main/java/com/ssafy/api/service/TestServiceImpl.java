@@ -77,6 +77,14 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public Test getTestInfo(Long classId, String testName) {
+
+        Test test = testRepository.findByClassesClassIdAndTestName(classId,testName).get();
+
+        return test;
+    }
+
+    @Override
     @Transactional
     public List<Test> getAllTestInfo(Long classId) {
 

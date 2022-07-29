@@ -13,6 +13,7 @@ public interface TestService {
 
     boolean deleteTest(TestRegisterPostReq testRegisterPostReq);
 
+    Test getTestInfo(Long classId, String testName);
     List<Test> getAllTestInfo(Long classId);
 
     boolean checkTestName(String testName);
