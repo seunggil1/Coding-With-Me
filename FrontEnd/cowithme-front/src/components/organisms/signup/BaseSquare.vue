@@ -15,7 +15,7 @@ const password = ref('');
 const email = ref('');
 const phone = ref('');
 const nickname = ref('');
-const birth_DT = ref('');
+const birthDt = ref('');
 
 async function onSubmit(values) {
 	const usersStore = useUsersStore();
@@ -30,7 +30,7 @@ async function onSubmit(values) {
 }
 // form 리셋 함수
 function onReset() {
-	user_name.value = null;
+	name.value = null;
 	id.value = null;
 	role.value = null;
 	password.value = null;
@@ -38,7 +38,7 @@ function onReset() {
 	email.value = null;
 	phone.value = null;
 	nickname.value = null;
-	birth_DT.value = null;
+	birthDt.value = null;
 }
 </script>
 
@@ -144,6 +144,7 @@ function onReset() {
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
+						type="text"
 						v-model="nickname"
 						label="닉네임"
 						lazy-rules
@@ -151,12 +152,13 @@ function onReset() {
 						bg-color="white"
 					></q-input>
 					<q-input
-						name="birthDT"
+						name="birthDt"
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
 						label="생일"
-						v-model="birthDT"
+						type="text"
+						v-model="birthDt"
 						lazy-rules
 						color="brand"
 						bg-color="white"
@@ -166,6 +168,7 @@ function onReset() {
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
+						type="text"
 						label="role"
 						v-model="role"
 						lazy-rules
@@ -221,59 +224,6 @@ function onReset() {
 			</div>
 		</q-form>
 	</div>
-	<!-- <div class="card m-3">
-		<h4 class="card-header">회원가입</h4>
-		<div class="card-body">
-			<Form @submit="onSubmit" :validation-schema="schema">
-				<div class="form-group">
-					<label>생년월일</label>
-					<Field name="birthDt" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>email</label>
-					<Field name="email" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>id</label>
-					<Field name="id" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>name</label>
-					<Field name="name" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<button class="btn btn-primary" :disabled="isSubmitting">
-						<span
-							v-show="isSubmitting"
-							class="spinner-border spinner-border-sm mr-1"
-						></span>
-						Register
-					</button>
-					<router-link to="login" class="btn btn-link">Cancel</router-link>
-				</div>
-				<div class="form-group">
-					<label>nickname</label>
-					<Field name="nickname" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>Username</label>
-					<Field name="username" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>password</label>
-					<Field name="password" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>phone</label>
-					<Field name="phone" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>role</label>
-					<Field name="role" type="text" class="form-control" />
-				</div>
-			</Form>
-		</div>
-	</div> -->
 </template>
 
 <style>
