@@ -73,46 +73,46 @@ public class TestController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @PostMapping("/upload")
-    @ApiOperation(value = "시험지 업로드", notes = "<strong>시험지 업로드한다.</strong>")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<? extends BaseResponseBody> uploadFile(
-            @RequestPart MultipartFile files) throws IOException {
-        //임의로 리턴된 Classes 인스턴스.
-
-        Files file = new Files();
-
-        String sourceFileName = files.getOriginalFilename();
-
-        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-
-        FilenameUtils.removeExtension(sourceFileName);
-
-        File destinationFile;
-        String destinationFileName;
-        String fileUrl="C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
-
-        do{
-            destinationFileName =RandomStringUtils.randomAlphanumeric(32)+"."+sourceFileNameExtension;
-            destinationFile=new File(files+destinationFileName);
-        }while(destinationFile.exists());
-
-        destinationFile.getParentFile().mkdir();
-        files.transferTo(destinationFile);
-
-        file.setFilename(destinationFileName);
-        file.setFileOriName(sourceFileName);
-        file.setFileUrl(fileUrl);
-
-        filesService.save(file);
-
-
-
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-    }
+//    @PostMapping("/upload")
+//    @ApiOperation(value = "시험지 업로드", notes = "<strong>시험지 업로드한다.</strong>")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<? extends BaseResponseBody> uploadFile(
+//            @RequestPart MultipartFile files) throws IOException {
+//        //임의로 리턴된 Classes 인스턴스.
+//
+//        Files file = new Files();
+//
+//        String sourceFileName = files.getOriginalFilename();
+//
+//        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
+//
+//        FilenameUtils.removeExtension(sourceFileName);
+//
+//        File destinationFile;
+//        String destinationFileName;
+//        String fileUrl="C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
+//
+//        do{
+//            destinationFileName =RandomStringUtils.randomAlphanumeric(32)+"."+sourceFileNameExtension;
+//            destinationFile=new File(files+destinationFileName);
+//        }while(destinationFile.exists());
+//
+//        destinationFile.getParentFile().mkdir();
+//        files.transferTo(destinationFile);
+//
+//        file.setFilename(destinationFileName);
+//        file.setFileOriName(sourceFileName);
+//        file.setFileUrl(fileUrl);
+//
+//        filesService.save(file);
+//
+//
+//
+//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//    }
 
 
     @PutMapping
