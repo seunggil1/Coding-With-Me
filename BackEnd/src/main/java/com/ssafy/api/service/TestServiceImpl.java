@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-
 import com.ssafy.api.request.TestCase;
 import com.ssafy.api.request.TestModifyPostReq;
 import com.ssafy.api.request.TestRegisterPostReq;
@@ -35,7 +34,9 @@ public class TestServiceImpl implements TestService {
         Test test = new Test();
         test.setTestName(testRegisterInfo.getTestName());
         test.setTestQno(testRegisterInfo.getTestQno());
-        test.setTestPath(testRegisterInfo.getTestPath());
+        //test.setTestPath(testRegisterInfo.getTestPath());
+        //String fileUrl = "C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
+        //test.setTestPath(fileUrl);
         TestCase tc = new TestCase();
         tc.setTestcaseList(testRegisterInfo.getTestcaseList());
         test.setTestcase(tc);
@@ -53,7 +54,7 @@ public class TestServiceImpl implements TestService {
         Test test = testRepository.findByClassesClassIdAndTestName(testModifyPostReq.getClassId(), testModifyPostReq.getTestName()).get();
         test.setTestName(testModifyPostReq.getNewtestName());
         test.setTestQno(testModifyPostReq.getTestQno());
-        test.setTestPath(testModifyPostReq.getTestPath());
+        //test.setTestPath(testModifyPostReq.getTestPath());
 //        test.setTestcase(testModifyPostReq.getTestcase());
 
         return testRepository.save(test);
@@ -90,5 +91,4 @@ public class TestServiceImpl implements TestService {
         boolean result = testRepositorySupport.findByTestNameEquals(testName);
         return result;
     }
-
 }
