@@ -175,7 +175,7 @@ function onReset() {
 						color="brand"
 						bg-color="white"
 					></q-input>
-					<q-input
+					<!-- <q-input
 						name="role"
 						class="q-ma-lg q-pr-lg"
 						rounded
@@ -185,7 +185,7 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
-					></q-input>
+					></q-input> -->
 				</div>
 			</div>
 			<div class="flex justify-center">
@@ -193,20 +193,21 @@ function onReset() {
 					<q-btn
 						label="가입하기"
 						type="submit"
-						color="white"
-						text-color="brand"
+						text-color="white"
 						class="q-px-md q-mr-sm"
+						style="background: #00adb5"
 						push
 					></q-btn>
 					<q-btn
 						label="Reset"
 						type="reset"
-						color="white"
-						flat
+						text-color="white"
+						style="background-color: orangered"
+						push
 						class="q-ml-sm"
 					></q-btn>
 				</div>
-				<!-- <div id="q-app" class="q-mt-lg">
+				<div id="q-app" class="q-mt-lg">
 					<div class="q-pa-md text-white">
 						<div class="flex justify-center q-mr-md">
 							<q-radio
@@ -231,66 +232,13 @@ function onReset() {
 							>(으)로 가입합니다.
 						</div>
 					</div>
-				</div> -->
+				</div>
 			</div>
 		</q-form>
 	</div>
-	<!-- <div class="card m-3">
-		<h4 class="card-header">회원가입</h4>
-		<div class="card-body">
-			<Form @submit="onSubmit" :validation-schema="schema">
-				<div class="form-group">
-					<label>생년월일</label>
-					<Field name="birthDt" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>email</label>
-					<Field name="email" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>id</label>
-					<Field name="id" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>name</label>
-					<Field name="name" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<button class="btn btn-primary" :disabled="isSubmitting">
-						<span
-							v-show="isSubmitting"
-							class="spinner-border spinner-border-sm mr-1"
-						></span>
-						Register
-					</button>
-					<router-link to="login" class="btn btn-link">Cancel</router-link>
-				</div>
-				<div class="form-group">
-					<label>nickname</label>
-					<Field name="nickname" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>Username</label>
-					<Field name="username" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>password</label>
-					<Field name="password" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>phone</label>
-					<Field name="phone" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label>role</label>
-					<Field name="role" type="text" class="form-control" />
-				</div>
-			</Form>
-		</div>
-	</div> -->
 </template>
 
-<style>
+<style scoped>
 @font-face {
 	font-family: 'GmarketSansLight';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')

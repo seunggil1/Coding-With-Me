@@ -1,7 +1,9 @@
 <template>
-	<div class="login flex">
-		<div class="login-box row justify-center">
+	<div class="login flex row">
+		<div class="col-6">
 			<LeftLogo></LeftLogo>
+		</div>
+		<div class="col">
 			<RightForm></RightForm>
 		</div>
 	</div>
@@ -21,12 +23,6 @@ export default {
 
 <style>
 .login {
-	height: 100vh;
-	width: 100vw;
-	background-color: #808080;
-}
-
-.login-box {
-	margin: auto;
+	background-color: #eeeeee;
 }
 </style>

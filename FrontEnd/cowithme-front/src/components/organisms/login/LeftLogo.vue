@@ -1,5 +1,11 @@
 <template>
-	<div class="left row justify-center">
+	<div
+		class="left flex justify-center"
+		style="
+			background-color: #303841;
+			background-image: linear-gradient(to right, #303841 0%, #596164 100%);
+		"
+	>
 		<AtomLogo></AtomLogo>
 	</div>
 </template>
@@ -16,8 +22,6 @@ export default {
 
 <style lang="scss" scoped>
 .left {
-	height: 800px;
-	width: 500px;
 	background-color: #303841;
 }
 </style>
