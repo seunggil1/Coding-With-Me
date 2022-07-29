@@ -2,9 +2,7 @@ package com.ssafy.db.repository;
 
 
 
-import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.Test;
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
