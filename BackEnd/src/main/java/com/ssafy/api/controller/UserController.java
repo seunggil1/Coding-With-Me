@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
+import com.ssafy.api.response.UserClassRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -22,6 +23,7 @@ import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -65,6 +67,37 @@ public class UserController {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserById(userId);
+        Map<String, Object> map = new HashMap();
+        map.put("user", user);
+
+        return ResponseEntity.status(200).body(map);
+    }
+
+    @GetMapping("/name/{name}")
+    @ApiOperation(value = "회원 정보 조회", notes = "해당 이름을 가진 학생의 회원 정보를 응답한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Map<String, Object>> getUserInfoByName(
+            @PathVariable @ApiParam(value = "사용자 이름", required = true) String name
+    ) {
+        List<User> userList = userService.getUserByName(name);
+        Map<String, Object> map = new HashMap();
+        map.put("users", userList);
+
+        return ResponseEntity.status(200).body(map);
+    }
+
+    @GetMapping("/id/{id}")
+    @ApiOperation(value = "회원 정보 조회", notes = "해당 아이디를 가진 회원 정보를 응답한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Map<String, Object>> getUserInfoById(
+            @PathVariable @ApiParam(value = "사용자 아이디", required = true) String id) {
+        User user = userService.getUserById(id);
         Map<String, Object> map = new HashMap();
         map.put("user", user);
 
@@ -230,6 +263,28 @@ public class UserController {
             User user = userService.getUserByUserId(userId);
             map.put("user", user);
 
+            return ResponseEntity.status(200).body(map);
+        }catch (NoSuchElementException e){
+            map.put("message", "Fail");
+            return ResponseEntity.status(404).body(map);
+        }
+
+    }
+
+    @GetMapping("/{userId}/class")
+    @ApiOperation(value = "회원의 반정보 조회", notes = "사용자 식별자를 통해 사용자가 속한 반 정보를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Map<String, Object>> getClassByUserId(
+            @PathVariable @ApiParam(value = "아이디, 이메일 정보", required = true) Long userId) {
+        Map<String, Object> map = new HashMap();
+        try{
+            UserClassRes res = userService.getClassInfoByUserId(userId);
+            map.put("message", "Success");
+            map.put("result", res);
             return ResponseEntity.status(200).body(map);
         }catch (NoSuchElementException e){
             map.put("message", "Fail");
