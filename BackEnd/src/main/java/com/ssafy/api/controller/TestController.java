@@ -42,7 +42,7 @@ public class TestController {
 
 
     @GetMapping("/{classId}")
-    @ApiOperation(value = "반시험 조회", notes = "해당 반의 시험정보를 조회한다.")
+    @ApiOperation(value = "반시험 조회", notes = "해당 반의 등록된 시험정보 모두를 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
@@ -50,6 +50,20 @@ public class TestController {
     public ResponseEntity<? extends BaseResponseBody> getAllTestInfo(@PathVariable("classId") Long classId){
 
         List<Test> test = testService.getAllTestInfo(classId);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(test)));
+    }
+
+    @GetMapping("/{classId}/{testName}")
+    @ApiOperation(value = "시험 조회", notes = "해당 반의 해당 시험정보를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> getTestInfo(@PathVariable("classId") Long classId,
+                                                                     @PathVariable("testName") String testName){
+
+        Test test = testService.getTestInfo(classId,testName);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(test)));
     }
