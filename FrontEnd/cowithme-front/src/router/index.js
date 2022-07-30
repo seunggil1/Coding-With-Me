@@ -7,8 +7,6 @@ import {
 } from 'vue-router';
 import routes from './routes';
 
-export * as router from './routes.js';
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
