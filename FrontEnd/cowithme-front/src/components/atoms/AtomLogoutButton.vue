@@ -7,6 +7,7 @@
 			flat
 			label="로그아웃"
 			icon="logout"
+			style="font-family: 'Elice Digital Baeum'"
 		></q-btn>
 	</div>
 </template>

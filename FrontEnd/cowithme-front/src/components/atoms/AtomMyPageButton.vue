@@ -7,6 +7,7 @@
 			flat
 			label="마이페이지"
 			icon="account_circle"
+			style="font-family: 'Elice Digital Baeum'"
 		></q-btn>
 	</div>
 </template>

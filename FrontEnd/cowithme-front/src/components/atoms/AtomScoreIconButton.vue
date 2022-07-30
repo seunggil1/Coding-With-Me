@@ -7,6 +7,7 @@
 			flat
 			label="성적 조회"
 			icon="history_edu"
+			style="font-family: 'Elice Digital Baeum'"
 		></q-btn>
 	</div>
 </template>

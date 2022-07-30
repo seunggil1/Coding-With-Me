@@ -1,7 +1,7 @@
 <template>
 	<q-layout view="lHh Lpr lFf">
 		<q-header elevated>
-			<q-toolbar>
+			<q-toolbar style="background-color: #00adb5">
 				<TestComp @click="toggleLeftDrawer" flat></TestComp>
 				<!-- <q-toolbar-title> CowithMe 코윗미~ </q-toolbar-title> -->
 			</q-toolbar>
@@ -19,13 +19,17 @@
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col">
-						<ClassText></ClassText>
+						<ClassText
+							style="font-size: 18px; font-family: 'GmarketSansLight'"
+						></ClassText>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col">
-						<WelcomeText></WelcomeText>
+						<WelcomeText
+							style="font-size: 24px; font-family: 'GmarketSansMedium'"
+						></WelcomeText>
 					</div>
 				</div>
 				<div class="row">
@@ -110,7 +114,6 @@ export default defineComponent({
 	name: 'MainLayout',
 
 	components: {
-		// EssentialLink,
 		TestComp,
 		AtomLogo2,
 		WelcomeText,
@@ -134,3 +137,20 @@ export default defineComponent({
 	},
 });
 </script>
+
+<style>
+@font-face {
+	font-family: 'GmarketSansLight';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'GmarketSansMedium';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>

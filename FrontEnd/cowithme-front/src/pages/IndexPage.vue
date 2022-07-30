@@ -2,9 +2,11 @@
 	<div>
 		<ClassInfo></ClassInfo>
 		<div class="row">
-			<CalendarInfo></CalendarInfo>
+			<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
 			<div class="col-8">
-				<LectureTimeHistory></LectureTimeHistory>
+				<LectureTimeHistory
+					style="font-family: 'GmarketSansMedium'"
+				></LectureTimeHistory>
 			</div>
 		</div>
 	</div>
