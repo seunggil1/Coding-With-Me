@@ -8,7 +8,7 @@
 		</q-header>
 
 		<q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-			<div class="navbar" style="background-color: #eeeeee; height: 100vh">
+			<div class="navbar" style="background-color: #00adb5; height: 100vh">
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-10">
@@ -112,7 +112,6 @@ import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
 
 export default defineComponent({
 	name: 'MainLayout',
-
 	components: {
 		TestComp,
 		AtomLogo2,
