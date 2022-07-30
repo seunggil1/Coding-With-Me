@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { router } from 'src/router';
+import { useRouter } from 'vue-router';
 // import * as Yup from 'yup';
 
 import { useUsersStore, useAlertStore } from 'src/stores';
@@ -16,6 +16,8 @@ const phone = ref('');
 const nickname = ref('');
 const birthDt = ref('');
 
+const router = useRouter();
+
 async function onSubmit() {
 	let user = {
 		name: name.value,
@@ -27,12 +29,14 @@ async function onSubmit() {
 		birthDt: birthDt.value,
 		role: role.value,
 	};
+
 	const usersStore = useUsersStore();
 	const alertStore = useAlertStore();
 	try {
 		await usersStore.register(user);
-		await router.push('/login');
+		await router.push({ path: '/login' });
 		alertStore.success('Registration successful');
+		console.log('Registration successful');
 	} catch (error) {
 		alertStore.error(error);
 	}
