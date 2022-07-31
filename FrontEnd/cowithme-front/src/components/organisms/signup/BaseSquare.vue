@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Form, Field } from 'vee-validate';
-import * as Yup from 'yup';
+// import { Form, Field } from 'vee-validate';
+// import * as Yup from 'yup';
 
 import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';

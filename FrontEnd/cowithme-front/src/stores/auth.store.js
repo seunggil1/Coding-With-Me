@@ -7,7 +7,7 @@ const router = useRouter();
 
 const HOST = 'http://localhost:8080/api/v1';
 
-const baseUrl = `${HOST}/users`;
+const baseUrl = `${HOST}`;
 
 export const useAuthStore = defineStore({
 	id: 'auth',
@@ -31,7 +31,7 @@ export const useAuthStore = defineStore({
 				localStorage.setItem('user', JSON.stringify(user));
 
 				// redirect to previous url or default to home page
-				router.push(`${baseUrl}`);
+				router.push('/join');
 			} catch (error) {
 				const alertStore = useAlertStore();
 				alertStore.error(error);

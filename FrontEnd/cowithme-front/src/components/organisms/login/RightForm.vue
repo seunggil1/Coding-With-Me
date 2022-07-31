@@ -19,10 +19,9 @@ async function onSubmit() {
 	};
 	const authStore = useAuthStore();
 	// console.log(_value);
-	const id = user.id;
-	const pw = user.password;
-	console.log(id, pw);
-	await authStore.login(id, pw);
+	const idid = user.id;
+	const pwpw = user.password;
+	await authStore.login(idid, pwpw);
 }
 </script>
 
