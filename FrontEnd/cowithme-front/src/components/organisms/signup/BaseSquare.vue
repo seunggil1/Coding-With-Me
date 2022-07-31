@@ -180,17 +180,6 @@ function onReset() {
 						color="brand"
 						bg-color="white"
 					></q-input>
-					<!-- <q-input
-						name="role"
-						class="q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						label="role"
-						v-model="role"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input> -->
 				</div>
 			</div>
 			<div class="flex justify-center">

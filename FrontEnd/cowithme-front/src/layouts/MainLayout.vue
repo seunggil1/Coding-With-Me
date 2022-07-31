@@ -84,7 +84,7 @@ export default defineComponent({
 		const router = useRouter();
 		const authStore = useAuthStore();
 		if (authStore.user) {
-			router.push('/');
+			router.push({ path: '/' });
 		}
 		const leftDrawerOpen = ref(false);
 		return {
