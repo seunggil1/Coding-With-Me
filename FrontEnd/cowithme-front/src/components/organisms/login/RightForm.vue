@@ -1,18 +1,28 @@
 <script setup>
+import { ref } from 'vue';
+import { useAuthStore } from 'src/stores';
+
 // import { Form, Field } from 'vee-validate';
 // import * as Yup from 'yup';
-
-import { useAuthStore } from 'src/stores';
 
 // const schema = Yup.object().shape({
 // 	id: Yup.string().required('id is required'),
 // 	password: Yup.string().required('Password is required'),
 // });
+const id = ref('');
+const password = ref('');
 
-async function onSubmit(values) {
+async function onSubmit() {
+	let user = {
+		id: id.value,
+		password: password.value,
+	};
 	const authStore = useAuthStore();
-	const { id, password } = values;
-	await authStore.login(id, password);
+	// console.log(_value);
+	const id = user.id;
+	const pw = user.password;
+	console.log(id, pw);
+	await authStore.login(id, pw);
 }
 </script>
 
