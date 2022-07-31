@@ -64,7 +64,7 @@ import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue'
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
 import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
-import { useAuthStore } from '@/stores';
+import { useAuthStore } from 'src/stores';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({

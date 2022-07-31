@@ -1,5 +1,7 @@
 <template>
-	<div>
+	<div v-if="user">
+		<p>Hi {{ user.name }}!</p>
+		<p>You're logged in!</p>
 		<ClassInfo></ClassInfo>
 		<div class="row">
 			<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
@@ -13,6 +15,10 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia';
+
+import { useAuthStore } from 'src/stores';
+
 import { defineComponent } from 'vue';
 import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
@@ -22,16 +28,12 @@ import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory
 export default defineComponent({
 	name: 'IndexPage',
 	components: { CalendarInfo, ClassInfo, LectureTimeHistory },
+	setup() {
+		const authStore = useAuthStore();
+		const { user } = storeToRefs(authStore);
+		return { user };
+	},
 });
 </script>
 
-<style>
-/* LoginPage {
-	height: 100vh;
-	width: 100vw;
-	background-color: red;
-	background-size: cover;
-	background-position: center;
-	margin: 0;
-} */
-</style>
+<style></style>
