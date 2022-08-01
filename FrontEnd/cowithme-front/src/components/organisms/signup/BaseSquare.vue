@@ -16,6 +16,7 @@ const email = ref('');
 const phone = ref('');
 const nickname = ref('');
 const birthDt = ref('');
+const profilePath = ref('');
 
 const router = useRouter();
 
@@ -29,12 +30,14 @@ async function onSubmit() {
 		nickname: nickname.value,
 		birthDt: birthDt.value,
 		role: role.value,
+		profilePath: profilePath.value,
 	};
 
 	const usersStore = useUsersStore();
 	const alertStore = useAlertStore();
 	try {
 		await usersStore.register(user);
+		// console.log(user);
 		await router.push({ path: '/login' });
 		alertStore.success('Registration successful');
 		console.log('Registration successful');
@@ -109,6 +112,18 @@ function onReset() {
 						<IDChkButton class="flex q-pr-lg q-py-sm"></IDChkButton>
 					</div>
 					<q-input
+						name="profilePath"
+						class="q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						type="text"
+						v-model="profilePath"
+						label="profilePath"
+						lazy-rules
+						color="brand"
+						bg-color="white"
+					></q-input>
+					<q-input
 						name="password"
 						class="q-ma-lg q-pr-lg"
 						rounded
@@ -180,6 +195,17 @@ function onReset() {
 						color="brand"
 						bg-color="white"
 					></q-input>
+					<q-input
+						name="role"
+						class="q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						label="생일"
+						v-model="role"
+						lazy-rules
+						color="brand"
+						bg-color="white"
+					></q-input>
 				</div>
 			</div>
 			<div class="flex justify-center">
@@ -202,7 +228,7 @@ function onReset() {
 					></q-btn>
 				</div>
 				<div id="q-app" class="q-mt-lg">
-					<div class="q-pa-md text-white">
+					<!-- <div class="q-pa-md text-white">
 						<div class="flex justify-center q-mr-md">
 							<q-radio
 								dark
@@ -225,7 +251,7 @@ function onReset() {
 							<strong>{{ role }}</strong
 							>(으)로 가입합니다.
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</q-form>

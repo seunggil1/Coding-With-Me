@@ -1,6 +1,6 @@
 <template>
 	<div v-if="user">
-		<p>Hi {{ user.name }}!</p>
+		<p>Hi {{ user }}!</p>
 		<p>You're logged in!</p>
 		<ClassInfo></ClassInfo>
 		<div class="row">

@@ -1,76 +1,67 @@
 <script setup>
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import { useAuthStore } from 'src/stores';
+import { useRouter } from 'vue-router';
 
-// import { Form, Field } from 'vee-validate';
-// import * as Yup from 'yup';
+import { Form, Field } from 'vee-validate';
+import * as Yup from 'yup';
 
-// const schema = Yup.object().shape({
-// 	id: Yup.string().required('id is required'),
-// 	password: Yup.string().required('Password is required'),
-// });
-const id = ref('');
-const password = ref('');
+const schema = Yup.object().shape({
+	id: Yup.string().required('id is required'),
+	password: Yup.string().required('Password is required'),
+});
+// const id = ref('');
+// const password = ref('');
+const router = useRouter();
 
-async function onSubmit() {
-	let user = {
-		id: id.value,
-		password: password.value,
-	};
+async function onSubmit(values) {
 	const authStore = useAuthStore();
-	// console.log(_value);
-	const idid = user.id;
-	const pwpw = user.password;
-	await authStore.login(idid, pwpw);
+	const { id, password } = values;
+	await authStore.login(id, password);
+	await router.push({ path: '/' });
 }
 </script>
 
 <template>
-	<div class="q-ma-xl flex">
-		<div class="q-mt-xl">
-			<p class="q-mb-xl" style="font-size: 100px; color: #808080">Login</p>
-			<!-- <AtomLogoTrans></AtomLogoTrans> -->
-			<q-form
+	<div class="card m-3">
+		<h4 class="card-header">Login</h4>
+		<div class="card-body">
+			<Form
 				@submit="onSubmit"
-				@reset="onReset"
-				class="q-gutter-md signup-form"
-				lazy-validation
+				:validation-schema="schema"
+				v-slot="{ errors, isSubmitting }"
 			>
-				<div class="q-my-lg">
-					<q-input
-						class="q-my-lg"
-						type="text"
+				<div class="form-group">
+					<label>id</label>
+					<Field
 						name="id"
-						rounded
-						outlined
-						v-model="id"
-						label="아이디"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
-					<q-input
-						class="q-mb-lg"
-						name="password"
-						rounded
-						outlined
-						type="password"
-						v-model="password"
-						label="비밀번호"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
+						type="text"
+						class="form-control"
+						:class="{ 'is-invalid': errors.id }"
+					/>
+					<div class="invalid-feedback">{{ errors.id }}</div>
 				</div>
-
-				<q-btn
-					label="로그인"
-					type="submit"
-					text-color="white"
-					style="background: #00adb5"
-					push
-				></q-btn>
-			</q-form>
+				<div class="form-group">
+					<label>Password</label>
+					<Field
+						name="password"
+						type="password"
+						class="form-control"
+						:class="{ 'is-invalid': errors.password }"
+					/>
+					<div class="invalid-feedback">{{ errors.password }}</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary" :disabled="isSubmitting">
+						<span
+							v-show="isSubmitting"
+							class="spinner-border spinner-border-sm mr-1"
+						></span>
+						Login
+					</button>
+					<router-link to="register" class="btn btn-link">Register</router-link>
+				</div>
+			</Form>
 		</div>
 	</div>
 </template>
