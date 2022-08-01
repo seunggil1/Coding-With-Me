@@ -1,19 +1,21 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.TestCase;
-import com.ssafy.api.request.TestModifyPostReq;
-import com.ssafy.api.request.TestRegisterPostReq;
+import com.ssafy.api.request.*;
+import com.ssafy.api.response.CompileRes;
+import com.ssafy.common.Rest.RestAPI;
 import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.Test;
+import com.ssafy.db.entity.TestRecord;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ClassesRepository;
+import com.ssafy.db.repository.TestRecordRepository;
 import com.ssafy.db.repository.TestRepository;
 import com.ssafy.db.repository.TestRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service("testService")
 @Transactional(readOnly = true)
@@ -27,6 +29,9 @@ public class TestServiceImpl implements TestService {
 
     @Autowired
     ClassesRepository classesRepository;
+
+    @Autowired
+    TestRecordRepository testRecordRepository;
 
     @Override
     @Transactional
@@ -99,4 +104,73 @@ public class TestServiceImpl implements TestService {
         boolean result = testRepositorySupport.findByTestNameEquals(testName);
         return result;
     }
+    @Override
+    public CompileRes problemCompile(CodeCompilePostReq codeCompilePostReq) {
+
+        String lang = codeCompilePostReq.getLang();
+        String code = codeCompilePostReq.getCode();
+
+        Test test = testRepository.findById(codeCompilePostReq.getTestId()).get();
+        TestCase testCase = test.getTestcase();
+        List<InputOutput> ios = testCase.getTestcaseList().get(codeCompilePostReq.getQno()-1).getTestcase();
+
+        RestAPI api = new RestAPI();
+        CompileRes res = api.callAPI(lang, code, ios);
+
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public boolean testCompile(TestCompilePostReq testCompilePostReq) {
+
+        Long testId = testCompilePostReq.getTestId();
+        Long userId = testCompilePostReq.getUserId();
+        Test test = testRepository.findById(testId).get();
+        TestCase testcase = test.getTestcase();
+        List<TC> testcaseList = testcase.getTestcaseList();
+
+
+        TestRecord testRecord = testRecordRepository.findByTestTestIdAndUserUserId(testId, userId).get();
+
+        String lang = testRecord.getLang();
+
+        RestAPI api = new RestAPI();
+
+        List<Answer> answers = testRecord.getSourceCode().getAnswers();
+        Collections.sort(answers);
+        Collections.sort(testcaseList);
+
+        int count = 0;
+
+        for (int qno = 0; qno < test.getTestQno(); qno++){
+
+            Answer answer = answers.get(qno);
+            String code = answer.getCode();
+            List<InputOutput> ios = testcaseList.get(qno).getTestcase();
+            CompileRes res = api.callAPI(lang,code, ios);
+
+            List<Comp> results = res.getResult();
+
+            boolean success = true;
+
+            for (Comp result : results) {
+                if(!result.isSuccess()){
+                    success = false;
+                }
+            }
+
+            if(success){
+                count++;
+            }
+
+        }
+
+        testRecord.setCorrectCount(count);
+
+        testRecordRepository.save(testRecord);
+
+        return true;
+    }
+
 }

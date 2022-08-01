@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface TestRecordRepository extends JpaRepository <TestRecord,Long> {
     Optional<List<TestRecord>> findByUserUserId(Long userId);
 
+    Optional<TestRecord> findByTestTestIdAndUserUserId(Long testId, Long userId);
 
 
 }

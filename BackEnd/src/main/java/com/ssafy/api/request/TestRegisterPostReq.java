@@ -3,9 +3,13 @@ package com.ssafy.api.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @ApiModel("TestPostReq")
 public class TestRegisterPostReq {
     @ApiModelProperty(name = "반 식별자", example = "1")
@@ -13,7 +17,7 @@ public class TestRegisterPostReq {
     @ApiModelProperty(name = "제목", example = "다익스트라 응용문제")
     String testName;
 
-    @ApiModelProperty(name = "문항 수", example = "3")
+    @ApiModelProperty(name = "문항 수", example = "2")
     int testQno;
 
     @ApiModelProperty(name="테스트케이스",example= "[\n" +
@@ -46,15 +50,7 @@ public class TestRegisterPostReq {
             "  ]")
     List<TC> testcaseList;
 
-    @Data
-    public static class TC{
-        int qno;
-        List<InputOutput> testcase;
-    }
 
-    @Data
-    public static class InputOutput {
-        String input;
-        String output;
-    }
+
+
 }

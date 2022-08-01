@@ -7,7 +7,8 @@ import com.ssafy.db.entity.TestRecord;
 import java.util.List;
 
 public interface TestRecordService {
-    TestRecord createTestRecord(TestRecordRegisterPostReq testRecordRegisterPostReq);
+    TestRecord createOrUpdateTestRecord(TestRecordRegisterPostReq testRecordRegisterPostReq);
 
     List<TestRecord> getAllTestRecordByUserId(Long userId);
+
 }

@@ -295,10 +295,10 @@ public class UserController {
 
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<CompileRes> test() {
-        RestAPI restAPI= new RestAPI();
-        CompileRes res =  restAPI.callAPI();
-        return ResponseEntity.status(200).body(res);
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<CompileRes> test() {
+//        RestAPI restAPI= new RestAPI();
+//        CompileRes res =  restAPI.callAPI("java","2", null);
+//        return ResponseEntity.status(200).body(res);
+//    }
 }

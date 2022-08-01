@@ -15,9 +15,4 @@ public class CompilePostReq {
     String lang;
     String code;
     List<InputOutput> testcase;
-    @Data
-    public static class InputOutput {
-        String input;
-        String output;
-    }
 }

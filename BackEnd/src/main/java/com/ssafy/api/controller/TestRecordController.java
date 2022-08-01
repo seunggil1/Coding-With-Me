@@ -27,7 +27,7 @@ public class TestRecordController {
     @Autowired
     TestRepository testRepository;
     @PostMapping("/tests")
-    @ApiOperation(value = "시험이력 개설", notes = "<strong>시험에 대한</strong> 이력을 만든다.")
+    @ApiOperation(value = "시험이력 개설/수정", notes = "<strong>시험에 대한</strong> 이력을 만든다./수정한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
@@ -36,7 +36,7 @@ public class TestRecordController {
             @RequestBody @ApiParam(value="시험 이력 정보", required = true) TestRecordRegisterPostReq testRecordRegisterInfo) {
 
         //임의로 리턴된 testRecord 인스턴스.
-        TestRecord testRecord = testRecordService.createTestRecord(testRecordRegisterInfo);
+        TestRecord testRecord = testRecordService.createOrUpdateTestRecord(testRecordRegisterInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
