@@ -16,6 +16,7 @@ export const useAuthStore = defineStore({
 		// initialize state from local storage to enable user to stay logged in
 		token: localStorage.getItem('token'),
 		user: JSON.parse(localStorage.getItem('user')),
+		info: null,
 		returnUrl: null,
 	}),
 	actions: {
@@ -26,28 +27,29 @@ export const useAuthStore = defineStore({
 					password,
 				});
 				var token_message = user;
-				console.log(token_message);
 				var token = token_message.accessToken;
 
 				// update pinia state
 				this.token = token;
 				var decoded = jwt_decode(token);
-				console.log(decoded);
-				alert(typeof decoded);
-				// this.user = JSON.stringify(decoded);
 
 				// store user details and jwt in local storage to keep user logged in between page refreshes
 				localStorage.setItem('token', token);
 				localStorage.setItem('user', JSON.stringify(decoded));
-				console.log(localStorage);
 				this.user = JSON.stringify(decoded);
-				console.log(this.user);
 
 				// redirect to previous url or default to home page
 				// router.push(this.returnUrl || '/');
 
 				// redirect to previous url or default to home page
 				// await router.push({ path: '/' });
+			} catch (error) {
+				const alertStore = useAlertStore();
+				alertStore.error(error);
+			}
+			try {
+				const info = await fetchWrapper.get(`${baseUrl}/users/id/${id}`);
+				this.info = info;
 			} catch (error) {
 				const alertStore = useAlertStore();
 				alertStore.error(error);

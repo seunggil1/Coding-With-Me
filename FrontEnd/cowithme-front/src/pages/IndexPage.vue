@@ -1,6 +1,6 @@
 <template>
 	<div v-if="user">
-		<p>Hi {{ name }}!</p>
+		<p>Hi {{ info.user.name }}!</p>
 		<p>You're logged in!</p>
 		<ClassInfo></ClassInfo>
 		<div class="row">
@@ -16,12 +16,12 @@
 
 <script>
 import { storeToRefs } from 'pinia';
-import { api } from 'src/boot/axios.js';
+// import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
 
 import { useAuthStore } from 'src/stores';
 
-import { defineComponent, onBeforeMount } from 'vue';
+import { defineComponent } from 'vue';
 import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
 import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
@@ -31,24 +31,27 @@ export default defineComponent({
 	name: 'IndexPage',
 	components: { CalendarInfo, ClassInfo, LectureTimeHistory },
 	setup() {
-		const name = ref(null);
+		// const name = ref(null);
 		const authStore = useAuthStore();
-		const { user } = storeToRefs(authStore);
-		console.log(user);
-		const val = JSON.stringify(user.value);
-		console.log(val.id);
-		onBeforeMount(() => {
-			api
-				.get(`/users/id/${val.id}`)
-				.then(res => {
-					name.value = res.data.name;
-					console.log(res.data.name);
-				})
-				.catch(err => {
-					console.log(err);
-				});
-		});
-		return { user, name };
+		const { user, info } = storeToRefs(authStore);
+		console.log(user.value);
+		const target_copy = Object.assign({}, user.value);
+		console.log(target_copy);
+		// const val = JSON.stringify(user.value);
+
+		// onMounted(() => {
+		// 	api
+		// 		.get(`/users/id/${target_copy.id}`)
+		// 		.then(res => {
+		// 			console.log(res.data);
+		// 			name.value = res.data.user.name;
+		// 			console.log(name);
+		// 		})
+		// 		.catch(err => {
+		// 			console.log(err);
+		// 		});
+		// });
+		return { user, info };
 	},
 });
 </script>
