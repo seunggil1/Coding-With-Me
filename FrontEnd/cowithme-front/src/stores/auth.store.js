@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import jwt_decode from 'jwt-decode';
 
 import { fetchWrapper } from 'src/helpers';
 // import { useRouter } from 'vue-router';
@@ -13,7 +14,7 @@ export const useAuthStore = defineStore({
 	id: 'auth',
 	state: () => ({
 		// initialize state from local storage to enable user to stay logged in
-		token: JSON.parse(localStorage.getItem('token')),
+		token: localStorage.getItem('token'),
 		user: JSON.parse(localStorage.getItem('user')),
 		returnUrl: null,
 	}),
@@ -27,18 +28,20 @@ export const useAuthStore = defineStore({
 				var token_message = user;
 				console.log(token_message);
 				var token = token_message.accessToken;
-				console.log(token);
 
 				// update pinia state
 				this.token = token;
-
-				var payload = Buffer.from(token, 'base64');
-				var result = JSON.parse(payload.toString());
+				var decoded = jwt_decode(token);
+				console.log(decoded);
+				alert(typeof decoded);
+				// this.user = JSON.stringify(decoded);
 
 				// store user details and jwt in local storage to keep user logged in between page refreshes
 				localStorage.setItem('token', token);
-				localStorage.setItem('user', result);
+				localStorage.setItem('user', JSON.stringify(decoded));
 				console.log(localStorage);
+				this.user = JSON.stringify(decoded);
+				console.log(this.user);
 
 				// redirect to previous url or default to home page
 				// router.push(this.returnUrl || '/');
