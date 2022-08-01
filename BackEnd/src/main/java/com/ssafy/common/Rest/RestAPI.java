@@ -1,5 +1,6 @@
 package com.ssafy.common.Rest;
 
+import com.ssafy.api.request.InputOutput;
 import com.ssafy.api.request.TestRegisterPostReq;
 import com.ssafy.api.response.CompileRes;
 import org.apache.tomcat.util.json.JSONParser;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class RestAPI {
 
-    public CompileRes callAPI() {
+    public CompileRes callAPI(String lang, String code, List<InputOutput> ios) {
 
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectTimeout(10000);
@@ -28,19 +29,21 @@ public class RestAPI {
         header.setContentType(MediaType.APPLICATION_JSON);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("lang", "java");
-        map.put("code", "import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}");
+//        map.put("lang", "java");
+        map.put("lang", lang);
+//        map.put("code", "import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}");
+        map.put("code",code);
 
-        List<TestRegisterPostReq.InputOutput> ios = new ArrayList<>();
-        TestRegisterPostReq.InputOutput io1 = new TestRegisterPostReq.InputOutput();
-        io1.setInput("5\n10");
-        io1.setOutput("15");
-        TestRegisterPostReq.InputOutput io2 = new TestRegisterPostReq.InputOutput();
-        io2.setInput("1\n5");
-        io2.setOutput("6");
-
-        ios.add(io1);
-        ios.add(io2);
+//        ios = new ArrayList<>();
+//        InputOutput io1 = new InputOutput();
+//        io1.setInput("5\n10");
+//        io1.setOutput("15");
+//        InputOutput io2 = new InputOutput();
+//        io2.setInput("1\n5");
+//        io2.setOutput("6");
+//
+//        ios.add(io1);
+//        ios.add(io2);
 
         map.put("testcase", ios);
 

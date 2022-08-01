@@ -3,11 +3,10 @@ package com.ssafy.api.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class TestCase {
-
-    List<TC> testcaseList;
+public class Comp{
+    int time;
+    String output;
+    boolean success;
 }

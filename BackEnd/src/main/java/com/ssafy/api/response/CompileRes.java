@@ -1,5 +1,6 @@
 package com.ssafy.api.response;
 
+import com.ssafy.api.request.Comp;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +13,4 @@ import java.util.List;
 public class CompileRes {
     String status;
     List<Comp> result;
-
-    @Getter
-    @Setter
-    public static class Comp{
-        int time;
-        String output;
-        boolean success;
-    }
 }

@@ -1,27 +1,20 @@
 package com.ssafy.api.controller;
 
-import com.google.gson.Gson;
 import com.ssafy.api.request.*;
+import com.ssafy.api.response.CompileRes;
 import com.ssafy.api.service.FilesService;
 import com.ssafy.api.service.TestService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.Files;
 import com.ssafy.db.entity.Test;
 import com.ssafy.db.repository.ClassesRepository;
 import com.ssafy.db.repository.TestRepository;
 import io.swagger.annotations.*;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 @Api(value = "시험 API", tags = {"Tests"})
 @RestController
@@ -87,48 +80,6 @@ public class TestController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-//    @PostMapping("/upload")
-//    @ApiOperation(value = "시험지 업로드", notes = "<strong>시험지 업로드한다.</strong>")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public ResponseEntity<? extends BaseResponseBody> uploadFile(
-//            @RequestPart MultipartFile files) throws IOException {
-//        //임의로 리턴된 Classes 인스턴스.
-//
-//        Files file = new Files();
-//
-//        String sourceFileName = files.getOriginalFilename();
-//
-//        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-//
-//        FilenameUtils.removeExtension(sourceFileName);
-//
-//        File destinationFile;
-//        String destinationFileName;
-//        String fileUrl="C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
-//
-//        do{
-//            destinationFileName =RandomStringUtils.randomAlphanumeric(32)+"."+sourceFileNameExtension;
-//            destinationFile=new File(files+destinationFileName);
-//        }while(destinationFile.exists());
-//
-//        destinationFile.getParentFile().mkdir();
-//        files.transferTo(destinationFile);
-//
-//        file.setFilename(destinationFileName);
-//        file.setFileOriName(sourceFileName);
-//        file.setFileUrl(fileUrl);
-//
-//        filesService.save(file);
-//
-//
-//
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//    }
-
-
     @PutMapping
     @ApiOperation(value = "시험 정보 수정", notes = "시험 정보를 수정한다.")
     @ApiResponses({
@@ -178,5 +129,29 @@ public class TestController {
         } else {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "fail"));
         }
+    }
+
+    @PostMapping("/compile")
+    @ApiOperation(value = "문제 채점", notes = "문제에 대한 학생의 소스코드를 실행하고 결과를 반환한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<CompileRes> problemCompile(
+            @RequestBody @ApiParam(value="시험 정보", required = true) CodeCompilePostReq codeCompilePostReq) {
+        CompileRes res = testService.problemCompile(codeCompilePostReq);
+        return ResponseEntity.status(200).body(res);
+    }
+
+    @PostMapping("/compile/test")
+    @ApiOperation(value = "시험 전체 채점", notes = "시험의 전체 문제에 대한 학생의 소스코드를 실행하고 결과를 반환한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> testCompile(
+            @RequestBody @ApiParam(value="시험 정보", required = true) TestCompilePostReq testCompilePostReq) {
+        boolean success = testService.testCompile(testCompilePostReq);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }
