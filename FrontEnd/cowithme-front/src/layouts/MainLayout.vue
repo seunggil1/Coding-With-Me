@@ -19,17 +19,28 @@
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col">
+						<!-- 반 API 들어올 곳 -->
 						<ClassText
-							style="font-size: 18px; font-family: 'GmarketSansLight'"
+							style="font-size: 18px; font-family: 'OTWelcomeBA'"
 						></ClassText>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col">
-						<WelcomeText
-							style="font-size: 24px; font-family: 'GmarketSansMedium'"
-						></WelcomeText>
+						<div class="row">
+							<div
+								class="col-3"
+								style="font-size: 24px; font-family: 'OTWelcomeBA'"
+							>
+								{{ info.user.name }}
+							</div>
+							<div class="col-9">
+								<WelcomeText
+									style="font-size: 24px; font-family: 'OTWelcomeBA'"
+								></WelcomeText>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -64,8 +75,10 @@ import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue'
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
 import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
+
+import { storeToRefs } from 'pinia';
 import { useAuthStore } from 'src/stores';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 
 export default defineComponent({
 	name: 'MainLayout',
@@ -81,14 +94,17 @@ export default defineComponent({
 	},
 
 	setup() {
-		const router = useRouter();
 		const authStore = useAuthStore();
-		if (authStore.user) {
-			router.push({ path: '/' });
-		}
+		const { user, info } = storeToRefs(authStore);
+		// const router = useRouter();
+		// const authStore = useAuthStore();
+		// if (authStore.user) {
+		// 	router.push({ path: '/' });
+		// }
 		const leftDrawerOpen = ref(false);
 		return {
-			// essentialLinks: linksList,/
+			user,
+			info,
 			leftDrawerOpen,
 			toggleLeftDrawer() {
 				leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -100,16 +116,9 @@ export default defineComponent({
 
 <style>
 @font-face {
-	font-family: 'GmarketSansLight';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'GmarketSansMedium';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
-		format('woff');
+	font-family: 'OTWelcomeBA';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
+		format('woff2');
 	font-weight: normal;
 	font-style: normal;
 }

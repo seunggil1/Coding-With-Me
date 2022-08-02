@@ -1,13 +1,13 @@
 <template>
 	<div class="q-py-xs q-gutter-sm">
 		<q-btn
-			size="24px"
+			size="23px"
 			class="btn-size"
 			align="left"
 			flat
 			label="로그아웃"
 			icon="logout"
-			style="font-family: 'Elice Digital Baeum'"
+			style="font-family: 'OTWelcomeBA'"
 			@click="onLogout"
 		>
 		</q-btn>
@@ -35,5 +35,12 @@ export default {
 <style>
 .btn-size {
 	width: 299px;
+}
+@font-face {
+	font-family: 'OTWelcomeBA';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
 </style>

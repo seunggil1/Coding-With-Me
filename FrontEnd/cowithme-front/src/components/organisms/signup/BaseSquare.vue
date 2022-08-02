@@ -16,7 +16,6 @@ const email = ref('');
 const phone = ref('');
 const nickname = ref('');
 const birthDt = ref('');
-const profilePath = ref('');
 
 const router = useRouter();
 
@@ -30,7 +29,6 @@ async function onSubmit() {
 		nickname: nickname.value,
 		birthDt: birthDt.value,
 		role: role.value,
-		profilePath: profilePath.value,
 	};
 
 	const usersStore = useUsersStore();
@@ -112,18 +110,6 @@ function onReset() {
 						<IDChkButton class="flex q-pr-lg q-py-sm"></IDChkButton>
 					</div>
 					<q-input
-						name="profilePath"
-						class="q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						type="text"
-						v-model="profilePath"
-						label="profilePath"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
-					<q-input
 						name="password"
 						class="q-ma-lg q-pr-lg"
 						rounded
@@ -189,19 +175,8 @@ function onReset() {
 						class="q-ma-lg q-pr-lg"
 						rounded
 						outlined
-						label="생일"
+						type="date"
 						v-model="birthDt"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
-					<q-input
-						name="role"
-						class="q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						label="생일"
-						v-model="role"
 						lazy-rules
 						color="brand"
 						bg-color="white"
@@ -228,20 +203,23 @@ function onReset() {
 					></q-btn>
 				</div>
 				<div id="q-app" class="q-mt-lg">
-					<!-- <div class="q-pa-md text-white">
+					<div class="q-pa-md text-white">
 						<div class="flex justify-center q-mr-md">
 							<q-radio
 								dark
+								checked-icon="task_alt"
+								unchecked-icon="panorama_fish_eye"
 								v-model="role"
-								val="teacher"
+								val="강사"
 								label="강사"
 								color="brand"
 							></q-radio>
 							<q-radio
 								dark
-								text-
+								checked-icon="task_alt"
+								unchecked-icon="panorama_fish_eye"
 								v-model="role"
-								val="student"
+								val="학생"
 								label="학생"
 								color="brand"
 							></q-radio>
@@ -251,7 +229,7 @@ function onReset() {
 							<strong>{{ role }}</strong
 							>(으)로 가입합니다.
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</q-form>

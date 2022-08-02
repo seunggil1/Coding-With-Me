@@ -1,5 +1,5 @@
 <template>
-	<p>홍길동 님, 환영합니다!</p>
+	<p>님, 환영합니다!</p>
 </template>
 
 <script>

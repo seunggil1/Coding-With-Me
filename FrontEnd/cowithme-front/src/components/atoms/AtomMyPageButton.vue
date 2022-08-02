@@ -1,13 +1,13 @@
 <template>
 	<div class="q-py-xs q-gutter-sm">
 		<q-btn
-			size="24px"
+			size="23px"
 			class="btn-size"
 			align="left"
 			flat
 			label="마이페이지"
 			icon="account_circle"
-			style="font-family: 'Elice Digital Baeum'"
+			style="font-family: 'OTWelcomeBA'"
 		></q-btn>
 	</div>
 </template>
@@ -24,5 +24,12 @@ export default {
 <style>
 .btn-size {
 	width: 299px;
+}
+@font-face {
+	font-family: 'OTWelcomeBA';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
 </style>

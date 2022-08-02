@@ -1,14 +1,19 @@
 <template>
-	<div v-if="user">
-		<p>Hi {{ info.user.name }}!</p>
-		<p>You're logged in!</p>
-		<ClassInfo></ClassInfo>
-		<div class="row">
-			<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
-			<div class="col-8">
-				<LectureTimeHistory
-					style="font-family: 'GmarketSansMedium'"
-				></LectureTimeHistory>
+	<div>
+		<div v-if="info3.role == '강사'">
+			<p>강사</p>
+		</div>
+		<div v-if="info3.role == '학생'">
+			<!-- <p>Hi {{ info.user.name }}!</p>
+		<p>You're logged in!</p> -->
+			<ClassInfo></ClassInfo>
+			<div class="row">
+				<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
+				<div class="col-8">
+					<LectureTimeHistory
+						style="font-family: 'GmarketSansMedium'"
+					></LectureTimeHistory>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -17,7 +22,7 @@
 <script>
 import { storeToRefs } from 'pinia';
 // import { api } from 'src/boot/axios.js';
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 import { useAuthStore } from 'src/stores';
 
@@ -34,24 +39,12 @@ export default defineComponent({
 		// const name = ref(null);
 		const authStore = useAuthStore();
 		const { user, info } = storeToRefs(authStore);
-		console.log(user.value);
-		const target_copy = Object.assign({}, user.value);
-		console.log(target_copy);
-		// const val = JSON.stringify(user.value);
-
-		// onMounted(() => {
-		// 	api
-		// 		.get(`/users/id/${target_copy.id}`)
-		// 		.then(res => {
-		// 			console.log(res.data);
-		// 			name.value = res.data.user.name;
-		// 			console.log(name);
-		// 		})
-		// 		.catch(err => {
-		// 			console.log(err);
-		// 		});
-		// });
-		return { user, info };
+		// console.log(user.value);
+		// console.log(info.value);
+		const info2 = Object.assign({}, info.value);
+		const info3 = JSON.parse(JSON.stringify(info2.user));
+		console.log(info3);
+		return { user, info3 };
 	},
 });
 </script>
