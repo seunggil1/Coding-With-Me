@@ -72,8 +72,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceRes getAttendances(Long userId, int year, int month) {
         AttendanceRes res = new AttendanceRes();
 
-        Date from = getDate(year, month, 1);
-        Date to = getDate(year, month, 30);
+        Calendar cal = new GregorianCalendar(year, month, 1);
+        int daysOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+       Date from = getDate(year, month, 1);
+       Date to = getDate(year, month, daysOfMonth);
 
         List<AttendanceRecord> attendances = attendanceRepositorySupport.findAttendances(userId, from, to).get();
 
@@ -83,7 +86,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         Long classId = userClassRepository.findByStudentId(userId).get().getClasses().getClassId();
 
-        List<Conference> conferences = conferenceRepositorySupport.findByClassesClassIdNotActive(classId).get();
+        List<Conference> conferences = conferenceRepositorySupport.findByClassesClassIdNotActiveMonth(classId, from, to).get();
 
         //하루에 강의가 몇 시간 진행되었는지
         // userId - classId - 강의들 조회 가능
