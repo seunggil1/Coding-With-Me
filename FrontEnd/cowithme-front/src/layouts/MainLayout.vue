@@ -33,7 +33,7 @@
 								class="col-3"
 								style="font-size: 24px; font-family: 'OTWelcomeBA'"
 							>
-								{{ info.user.name }}
+								{{ info2.name }}
 							</div>
 							<div class="col-9">
 								<WelcomeText
@@ -76,8 +76,8 @@ import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
 import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
 
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from 'src/stores';
+// import { storeToRefs } from 'pinia';
+// import { useAuthStore } from 'src/stores';
 // import { useRouter } from 'vue-router';
 
 export default defineComponent({
@@ -94,17 +94,37 @@ export default defineComponent({
 	},
 
 	setup() {
-		const authStore = useAuthStore();
-		const { user, info } = storeToRefs(authStore);
-		// const router = useRouter();
 		// const authStore = useAuthStore();
-		// if (authStore.user) {
-		// 	router.push({ path: '/' });
+		// const { user, info } = storeToRefs(authStore);
+		// console.log(user);
+		// console.log(info);
+		// const infoinfo = Object.assign({}, user);
+		// console.log(infoinfo);
+		// const info3 = JSON.parse(JSON.stringify(infoinfo.user));
+		// console.log(info3);
+		// if (typeof user !== 'undefined') {
+		// 	this.user2 = JSON.parse(user);
 		// }
+		// // if (typeof info !== 'undefined') {
+		// // 	this.info2 = JSON.parse(info);
+		// // }
+		var user2 = null;
+		var info2 = null;
+		const user = localStorage.getItem('user');
+		const info = localStorage.getItem('info');
+		if (typeof user !== 'undefined') {
+			user2 = JSON.parse(user);
+		}
+		if (typeof info !== 'undefined') {
+			info2 = JSON.parse(info);
+		}
+		console.log(user2);
+		console.log(info2);
+
 		const leftDrawerOpen = ref(false);
 		return {
-			user,
-			info,
+			user2,
+			info2,
 			leftDrawerOpen,
 			toggleLeftDrawer() {
 				leftDrawerOpen.value = !leftDrawerOpen.value;

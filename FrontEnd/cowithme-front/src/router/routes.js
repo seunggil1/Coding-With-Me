@@ -2,7 +2,13 @@ const routes = [
 	{
 		path: '/',
 		component: () => import('layouts/MainLayout.vue'),
-		children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+		children: [
+			{ path: '', component: () => import('pages/IndexPage.vue') },
+			{
+				path: '/makeClass',
+				component: () => import('pages/teacher/MakeClassPage.vue'),
+			},
+		],
 	},
 	// 로그인/회원가입
 	{
@@ -26,6 +32,7 @@ const routes = [
 		path: '/home',
 		component: () => import('pages/StudentHomePage.vue'),
 	},
+	// 반
 	// Always leave this as last one,
 	// but you can also remove it
 	{
