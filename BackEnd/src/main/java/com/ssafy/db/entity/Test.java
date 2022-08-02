@@ -35,9 +35,10 @@ public class Test {
 //    @Column
 //    String testPath;
 
-    @Column
+    @Column(length = 1000)
     @Convert( converter = TestcaseJsonConverter.class)
     TestCase testcase;
+
     @JsonIgnore
     @OneToMany(mappedBy = "test")
     private List<TestRecord> testRecords = new ArrayList<>();
