@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { SmartWidget, SmartWidgetGrid } from 'src/boot/smart.js';
+// import { SmartWidget, SmartWidgetGrid } from 'src/boot/smart.js';
 
 const layout = [
 	{ x: 0, y: 0, w: 4, h: 4, i: '0' },
