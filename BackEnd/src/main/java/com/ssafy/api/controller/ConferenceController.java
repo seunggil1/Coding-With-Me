@@ -31,7 +31,7 @@ public class ConferenceController {
             @RequestBody @ApiParam(value="강의실 등록 정보", required = true) ConferenceRegisterPostReq registerInfo) {
 
         //임의로 리턴된 Conference 인스턴스.
-        Conference conference = conferenceService.createConference(registerInfo);
+        conferenceService.createConference(registerInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -46,7 +46,7 @@ public class ConferenceController {
             @RequestBody @ApiParam(value="강의실 정보", required = true) ConferenceModifyPostReq modifyInfo) {
 
         //임의로 리턴된 Conference 인스턴스.
-        Conference conference = conferenceService.modifyConference(modifyInfo);
+        conferenceService.modifyConference(modifyInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -60,7 +60,7 @@ public class ConferenceController {
             @RequestBody @ApiParam(value="강의실 정보", required = true) ConferenceModifyPostReq modifyInfo) {
 
         //임의로 리턴된 Conference 인스턴스.
-        Conference conference = conferenceService.finishConference(modifyInfo);
+        conferenceService.finishConference(modifyInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }

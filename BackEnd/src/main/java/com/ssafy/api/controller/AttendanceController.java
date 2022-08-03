@@ -28,7 +28,7 @@ public class AttendanceController {
             @RequestBody @ApiParam(value="출입 정보", required = true) AttendanceRegisterPostReq attendanceRegisterPostReq) {
 
         //임의로 리턴된 Classes 인스턴스.
-        AttendanceRecord attendanceRecord = attendanceService.createAttendance(attendanceRegisterPostReq);
+        attendanceService.createAttendance(attendanceRegisterPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -43,7 +43,7 @@ public class AttendanceController {
             @RequestBody @ApiParam(value="출입 정보", required = true) AttendanceRegisterPostReq attendanceRegisterPostReq) {
 
         //임의로 리턴된 Classes 인스턴스.
-        AttendanceRecord attendanceRecord = attendanceService.updateAttendance(attendanceRegisterPostReq);
+        attendanceService.updateAttendance(attendanceRegisterPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }

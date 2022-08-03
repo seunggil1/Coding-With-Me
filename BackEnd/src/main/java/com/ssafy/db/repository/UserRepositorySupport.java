@@ -42,15 +42,6 @@ public class UserRepositorySupport {
         return Optional.ofNullable(userList);
     }
 
-//    public Optional<User> findUserByUserIdAndPhone(String id, String phone) {
-//        User user = jpaQueryFactory.select(qUser).from(qUser)
-//                .where(qUser.id.eq(id))
-//                .where(qUser.phone.eq(phone))
-//                .fetchOne();
-//        if(user == null) return Optional.empty();
-//        return Optional.ofNullable(user);
-//    }
-
     public boolean findByUserIdEquals(String id) {
         User user = jpaQueryFactory.select(qUser).from(qUser)
                 .where(qUser.id.eq(id)).fetchOne();

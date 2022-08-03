@@ -45,7 +45,7 @@ public class ClassesController {
             @RequestBody @ApiParam(value="반 정보", required = true) ClassesRegisterPostReq registerInfo) {
 
         //임의로 리턴된 Classes 인스턴스.
-        Classes classes = classesService.createClass(registerInfo);
+        classesService.createClass(registerInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -59,7 +59,7 @@ public class ClassesController {
     public ResponseEntity<? extends BaseResponseBody> ModifyClassesInfo(
             @RequestBody @ApiParam(value="반 정보", required = true) ClassesModifyPostReq classesModifyPostReq) {
 
-        Classes classes = classesService.modifyClass(classesModifyPostReq);
+        classesService.modifyClass(classesModifyPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }

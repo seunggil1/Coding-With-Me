@@ -73,7 +73,7 @@ public class TestController {
         //임의로 리턴된 Classes 인스턴스.
 
 
-        Test test = testService.createTest(testRegisterinfo);
+        testService.createTest(testRegisterinfo);
 
 
 
@@ -89,7 +89,7 @@ public class TestController {
     public ResponseEntity<? extends BaseResponseBody> ModifyTestInfo(
             @RequestBody @ApiParam(value="수정 된 시험 정보", required = true) TestModifyPostReq testModifyPostReq) {
 
-        Test test= testService.modifyTest(testModifyPostReq);
+        testService.modifyTest(testModifyPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -103,7 +103,7 @@ public class TestController {
     public ResponseEntity<? extends BaseResponseBody> deleteUser(
             @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterInfo) {
 
-        //boolean success = classesService.deleteClass(registerInfo);
+
         boolean success =testService.deleteTest(testRegisterInfo);
 
         if(success){
@@ -152,7 +152,7 @@ public class TestController {
     })
     public ResponseEntity<? extends BaseResponseBody> testCompile(
             @RequestBody @ApiParam(value="시험 정보", required = true) TestCompilePostReq testCompilePostReq) {
-        boolean success = testService.testCompile(testCompilePostReq);
+        testService.testCompile(testCompilePostReq);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }
