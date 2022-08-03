@@ -36,7 +36,7 @@ public class TestRecordController {
             @RequestBody @ApiParam(value="시험 이력 정보", required = true) TestRecordRegisterPostReq testRecordRegisterInfo) {
 
         //임의로 리턴된 testRecord 인스턴스.
-        TestRecord testRecord = testRecordService.createOrUpdateTestRecord(testRecordRegisterInfo);
+        testRecordService.createOrUpdateTestRecord(testRecordRegisterInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -55,7 +55,7 @@ public class TestRecordController {
 
         Map<String,Object> map=new HashMap<>();
         map.put("records",testRecordsList);
-       // return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(testRecordsList)));
+
         return ResponseEntity.status(200).body(map);
     }
 }
