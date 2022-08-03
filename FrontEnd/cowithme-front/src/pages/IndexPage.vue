@@ -11,6 +11,7 @@
 								<p style="font-size: 40px">예시 반(없어질 거)</p>
 								<p style="font-size: 18px">제목: 프로젝트 1</p>
 								<p style="font-size: 18px">날짜: 2022.07.25</p>
+								<q-btn>학생 정보</q-btn>
 							</div>
 						</div>
 						<div class="col">

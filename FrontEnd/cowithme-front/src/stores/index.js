@@ -4,6 +4,7 @@ import { createPinia } from 'pinia';
 export * from './alert.store';
 export * from './auth.store';
 export * from './users.store';
+export * from './class.store';
 
 /*
  * If not building with SSR mode, you can
