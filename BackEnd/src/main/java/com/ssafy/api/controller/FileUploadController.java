@@ -59,7 +59,7 @@ public class FileUploadController {
 
         File destinationFile;
         String destinationFileName;
-        String fileUrl="../";
+        String fileUrl="/home/ubuntu/upload/";
 
         do{
             destinationFileName = RandomStringUtils.randomAlphanumeric(32)+"."+sourceFileNameExtension;
