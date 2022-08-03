@@ -128,11 +128,13 @@ public class ClassesController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getAllClassInfo(@PathVariable("user_id") Long userId){
+    public ResponseEntity<Map<String, Object>> getAllClassInfo(@PathVariable("user_id") Long userId){
 
         List<Classes> classes = classesService.getAllClassesInfo(userId);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(classes)));
+        Map<String, Object> map = new HashMap<>();
+        map.put("classes", classes);
+        return ResponseEntity.status(200).body(map);
     }
 
     @GetMapping("/{userId}/classes/{className}")
