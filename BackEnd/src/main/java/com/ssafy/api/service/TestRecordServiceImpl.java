@@ -66,6 +66,7 @@ public class TestRecordServiceImpl implements TestRecordService {
             sourceCode.setAnswers(testRecordRegisterInfo.getAnswers());
             testRecord.setSourceCode(sourceCode);
 
+            //테이블 3개 조인
             User user = userRepository.findByUserId(testRecordRegisterInfo.getUserId()).get();
 
             UserClass userClass = userClassRepository.findByStudentId(user.getUserId()).get();

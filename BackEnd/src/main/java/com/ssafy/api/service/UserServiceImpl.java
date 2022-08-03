@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserClassRes getClassInfoByUserId(Long userId) throws NoSuchElementException{
         UserClassRes userClassRes = new UserClassRes();
+        //테이블 3개 조인
         User user = userRepository.findByUserId(userId).get();
         UserClass uc = userClassRepository.findByStudentId(userId).get();
         Classes classes = uc.getClasses();

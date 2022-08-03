@@ -93,6 +93,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     public List<Test> getAllTestInfo(Long classId) {
 
+        //테이블 2개 조인
         Classes classes = classesRepository.findByClassId(classId).get();
 
         List<Test> test = testRepository.findByClassesClassId(classes.getClassId()).get();
