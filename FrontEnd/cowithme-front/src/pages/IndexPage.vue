@@ -3,24 +3,16 @@
 		<div v-if="info2.role == '강사'">
 			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
 				<AtomPlusButton @click="makeClass" flat></AtomPlusButton>
-				<div class="q-gutter-md">
+				<div class="q-gutter-md q-ml-sm">
 					<div class="class-info">
-						<div class="col q-ma-lg">
+						<div class="q-ma-lg">
 							<!-- 반, 강의제목, 날짜 -->
-							<div class="info" style="margin-bottom: 20px">
+							<div class="info q-ma-md" style="margin-top: 20px">
 								<p style="font-size: 40px">예시 반(없어질 거)</p>
 								<p style="font-size: 18px">제목: 프로젝트 1</p>
 								<p style="font-size: 18px">날짜: 2022.07.25</p>
-								<q-btn>학생 정보</q-btn>
+								<q-btn>학생 관리</q-btn>
 							</div>
-						</div>
-						<div class="col">
-							<AtomBasic1Button
-								class="button"
-								push
-								label="강의 입장"
-								style="font-family: 'Elice Digital Baeum'"
-							></AtomBasic1Button>
 						</div>
 					</div>
 				</div>
@@ -107,7 +99,7 @@ export default defineComponent({
 	width: 700px;
 	background-color: white;
 	border-radius: 10px;
-	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 
 .button {

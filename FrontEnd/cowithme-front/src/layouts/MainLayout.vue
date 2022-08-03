@@ -18,12 +18,6 @@
 				</div>
 				<div class="row">
 					<div class="col-1"></div>
-					<div class="col">
-						<!-- 반 API 들어올 곳 -->
-						<ClassText
-							style="font-size: 18px; font-family: 'OTWelcomeBA'"
-						></ClassText>
-					</div>
 				</div>
 				<div class="row">
 					<div class="col-1"></div>
@@ -33,7 +27,7 @@
 								class="col-3"
 								style="font-size: 24px; font-family: 'OTWelcomeBA'"
 							>
-								{{ info2.name }}
+								{{ info2.name }}<span v-if="info2.role == '강사'">(강사)</span>
 							</div>
 							<div class="col-9">
 								<WelcomeText
@@ -43,10 +37,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div v-if="info2.role == 학생" class="row">
 					<AtomSearchIconButton></AtomSearchIconButton>
 				</div>
-				<div class="row">
+				<div v-if="info2.role == 학생" class="row">
 					<AtomScoreIconButton></AtomScoreIconButton>
 				</div>
 				<div class="row">
@@ -70,7 +64,7 @@ import { defineComponent, ref } from 'vue';
 import TestComp from 'src/components/TestComp.vue';
 import AtomLogo2 from 'src/components/atoms/AtomLogo2.vue';
 import WelcomeText from 'src/components/molecules/home/WelcomeText.vue';
-import ClassText from 'src/components/molecules/home/ClassText.vue';
+// import ClassText from 'src/components/molecules/home/ClassText.vue';
 import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue';
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
@@ -86,7 +80,6 @@ export default defineComponent({
 		TestComp,
 		AtomLogo2,
 		WelcomeText,
-		ClassText,
 		AtomSearchIconButton,
 		AtomScoreIconButton,
 		AtomMyPageButton,
@@ -94,20 +87,6 @@ export default defineComponent({
 	},
 
 	setup() {
-		// const authStore = useAuthStore();
-		// const { user, info } = storeToRefs(authStore);
-		// console.log(user);
-		// console.log(info);
-		// const infoinfo = Object.assign({}, user);
-		// console.log(infoinfo);
-		// const info3 = JSON.parse(JSON.stringify(infoinfo.user));
-		// console.log(info3);
-		// if (typeof user !== 'undefined') {
-		// 	this.user2 = JSON.parse(user);
-		// }
-		// // if (typeof info !== 'undefined') {
-		// // 	this.info2 = JSON.parse(info);
-		// // }
 		var user2 = null;
 		var info2 = null;
 		const user = localStorage.getItem('user');

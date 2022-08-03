@@ -7,13 +7,10 @@ const baseUrl = 'http://i7a304.p.ssafy.io:8080/api/v1';
 
 export const useClassStore = defineStore({
 	id: 'class',
-	state: () => ({
-		classes: {},
-	}),
+	state: () => ({}),
 	actions: {
 		async makeClass(classInformation) {
 			await fetchWrapper.post(`${baseUrl}/tutor/classes`, classInformation);
 		},
-    async getAllClasses(tutorId) {
 	},
 });
