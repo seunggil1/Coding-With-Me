@@ -17,10 +17,13 @@ export const useAuthStore = defineStore({
 		token: localStorage.getItem('token'),
 		user: localStorage.getItem('user'),
 		info: localStorage.getItem('info'),
-		returnUrl: null,
+		classes: {},
+		// returnUrl: null,
 	}),
 	actions: {
+		// 로그인 함수
 		async login(id, password) {
+			// 로그인 및 토큰 저장 후 홈 화면으로 이동
 			try {
 				const user = await fetchWrapper.post(`${baseUrl}/auth/login`, {
 					id,
@@ -29,35 +32,44 @@ export const useAuthStore = defineStore({
 				var token_message = user;
 				var token = token_message.accessToken;
 
-				// update pinia state
 				var decoded = jwt_decode(token);
 
 				// store user details and jwt in local storage to keep user logged in between page refreshes
 				localStorage.setItem('token', token);
 				localStorage.setItem('user', JSON.stringify(decoded));
-
-				// redirect to previous url or default to home page
-				// router.push(this.returnUrl || '/');
-
-				// redirect to previous url or default to home page
-				// await router.push({ path: '/' });
 			} catch (error) {
 				const alertStore = useAlertStore();
 				alertStore.error(error);
 			}
+			// 로그인과 동시에 유저 정보 받아오기
 			try {
 				const info = await fetchWrapper.get(`${baseUrl}/users/id/${id}`);
 				localStorage.setItem('info', JSON.stringify(info.user));
-				// console.log(info.user);
+				// console.log(this.info);
+				// console.log(info);
 			} catch (error) {
 				const alertStore = useAlertStore();
 				alertStore.error(error);
 			}
+			if (this.info.includes('강사')) {
+				// 강사일 경우 반 정보를 불러옴
+				try {
+					const userId = JSON.parse(this.info).userId;
+					// console.log(userId);
+					this.classes = await fetchWrapper.get(
+						`${baseUrl}/tutor/${userId}/classes`,
+					);
+					console.log(this.classes);
+				} catch (error) {
+					const alertStore = useAlertStore();
+					alertStore.error(error);
+				}
+			}
 		},
+		// 로그아웃 함수
 		logout() {
 			this.user = null;
 			localStorage.removeItem('user');
-			// router.push({ path: '/login' });
 		},
 	},
 });
