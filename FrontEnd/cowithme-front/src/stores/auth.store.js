@@ -51,25 +51,29 @@ export const useAuthStore = defineStore({
 				const alertStore = useAlertStore();
 				alertStore.error(error);
 			}
-			if (this.info.includes('강사')) {
-				// 강사일 경우 반 정보를 불러옴
-				try {
-					const userId = JSON.parse(this.info).userId;
-					// console.log(userId);
-					this.classes = await fetchWrapper.get(
-						`${baseUrl}/tutor/${userId}/classes`,
-					);
-					console.log(this.classes);
-				} catch (error) {
-					const alertStore = useAlertStore();
-					alertStore.error(error);
-				}
-			}
+			// if (this.info.includes('강사')) {
+			// 	// 강사일 경우 반 정보를 불러옴
+			// 	try {
+			// 		const userId = JSON.parse(this.info).userId;
+			// 		// console.log(userId);
+			// 		this.classes = await fetchWrapper.get(
+			// 			`${baseUrl}/tutor/${userId}/classes`,
+			// 		);
+			// 		console.log(this.classes);
+			// 	} catch (error) {
+			// 		const alertStore = useAlertStore();
+			// 		alertStore.error(error);
+			// 	}
+			// }
 		},
 		// 로그아웃 함수
 		logout() {
 			this.user = null;
+			this.token = null;
+			this.info = null;
 			localStorage.removeItem('user');
+			localStorage.removeItem('token');
+			localStorage.removeItem('info');
 		},
 	},
 });

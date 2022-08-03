@@ -51,7 +51,6 @@
 				</div>
 			</div>
 		</q-drawer>
-
 		<q-page-container>
 			<router-view />
 		</q-page-container>
@@ -60,11 +59,9 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-// import EssentialLink from 'components/EssentialLink.vue';
 import TestComp from 'src/components/TestComp.vue';
 import AtomLogo2 from 'src/components/atoms/AtomLogo2.vue';
 import WelcomeText from 'src/components/molecules/home/WelcomeText.vue';
-// import ClassText from 'src/components/molecules/home/ClassText.vue';
 import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue';
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';

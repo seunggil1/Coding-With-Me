@@ -3,6 +3,9 @@
 		<div v-if="info2.role == '강사'">
 			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
 				<AtomPlusButton @click="makeClass" flat></AtomPlusButton>
+				<div>
+					{{ classes }}
+				</div>
 				<div class="q-gutter-md q-ml-sm">
 					<div class="class-info">
 						<div class="q-ma-lg">
@@ -40,6 +43,8 @@
 // import { ref } from 'vue';
 
 // import { useAuthStore } from 'src/stores';
+import { onBeforeMount } from 'vue';
+import { fetchWrapper } from 'src/helpers';
 
 import { defineComponent } from 'vue';
 import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
@@ -54,16 +59,18 @@ export default defineComponent({
 	name: 'IndexPage',
 	components: { CalendarInfo, ClassInfo, LectureTimeHistory, AtomPlusButton },
 	setup() {
+		var classes = null;
+		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
+
+		const baseUrl = `${HOST}`;
+
+		// const authStore = useAuthStore();
+		// const { auth } = storeToRefs(authStore);
 		const router = useRouter();
 
 		async function makeClass() {
 			await router.push({ path: '/makeClass' });
 		}
-		// const name = ref(null);
-		// const authStore = useAuthStore();
-		// const { user, info } = storeToRefs(authStore);
-		// console.log(user.value);
-		// console.log(info.value);
 		var user2 = null;
 		var info2 = null;
 		const user = localStorage.getItem('user');
@@ -77,10 +84,29 @@ export default defineComponent({
 		console.log(user2);
 		console.log(info2);
 
+		onBeforeMount(async () => {
+			if (info2.role == '강사') {
+				// 강사일 경우 반 정보를 불러옴
+				try {
+					const userId = info2.userId;
+					console.log(userId);
+					classes = await fetchWrapper.get(
+						`${baseUrl}/tutor/${userId}/classes`,
+					);
+					console.log(classes);
+					console.log(classes[0]);
+					// console.log(this.classes);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		});
+
 		return {
 			user2,
 			info2,
 			makeClass,
+			classes,
 		};
 	},
 });
