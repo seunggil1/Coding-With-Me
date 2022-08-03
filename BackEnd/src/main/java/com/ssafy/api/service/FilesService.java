@@ -19,6 +19,7 @@ public class FilesService {
         f.setFilename(files.getFilename());
         f.setFileOriName(files.getFileOriName());
         f.setFileUrl(files.getFileUrl());
+        f.setTest(files.getTest());
 
         filesRepository.save(f);
     }

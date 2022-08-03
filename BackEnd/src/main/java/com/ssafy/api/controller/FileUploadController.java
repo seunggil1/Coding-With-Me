@@ -1,20 +1,21 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.FileRegisterPostReq;
-import com.ssafy.api.request.TestRegisterPostReq;
 import com.ssafy.api.service.FilesService;
 import com.ssafy.api.service.TestService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Files;
 import com.ssafy.db.entity.Test;
+import com.ssafy.db.repository.FilesRepository;
 import com.ssafy.db.repository.TestRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +31,9 @@ public class FileUploadController {
 
     @Autowired
     FilesService filesService;
+
+    @Autowired
+    FilesRepository filesRepository;
 
     @Autowired
     TestService testService;
@@ -50,7 +54,7 @@ public class FileUploadController {
         Files file = new Files();
 
         Test test= testRepository.findByTestId(testId).get();
-        file.setTest(test);
+        System.out.println(test.getTestId());
         String sourceFileName = files.getOriginalFilename();
         System.out.println("test============="+sourceFileName);
         String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
@@ -72,12 +76,9 @@ public class FileUploadController {
 
         files.transferTo(destinationFile);
 
-
-
+        file.setTest(test);
         file.setFilename(destinationFileName);
-
         file.setFileOriName(sourceFileName);
-
         file.setFileUrl(fileUrl);
 
         filesService.save(file);
@@ -85,5 +86,23 @@ public class FileUploadController {
 
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping("/upload/{testId}")
+    @ApiOperation(value = "시험지 다운로드", notes = "<strong>시험지를 다운로드한다.</strong>")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @ResponseBody
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long testId) throws IOException {
+        //임의로 리턴된 Classes 인스턴스.
+
+        Files file = filesRepository.findByTestTestId(testId).get();
+        String filePath = file.getFileUrl() + file.getFilename();
+
+        FileSystemResource imgFile = new FileSystemResource(filePath);
+
+        return ResponseEntity.status(200).body(IOUtils.toByteArray(imgFile.getInputStream()));
     }
 }
