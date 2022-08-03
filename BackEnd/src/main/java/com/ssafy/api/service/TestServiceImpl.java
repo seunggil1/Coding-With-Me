@@ -39,9 +39,6 @@ public class TestServiceImpl implements TestService {
         Test test = new Test();
         test.setTestName(testRegisterInfo.getTestName());
         test.setTestQno(testRegisterInfo.getTestQno());
-        //test.setTestPath(testRegisterInfo.getTestPath());
-        //String fileUrl = "C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
-        //test.setTestPath(fileUrl);
         TestCase tc = new TestCase();
         tc.setTestcaseList(testRegisterInfo.getTestcaseList());
         test.setTestcase(tc);
@@ -59,8 +56,6 @@ public class TestServiceImpl implements TestService {
         Test test = testRepository.findByClassesClassIdAndTestName(testModifyPostReq.getClassId(), testModifyPostReq.getTestName()).get();
         test.setTestName(testModifyPostReq.getNewtestName());
         test.setTestQno(testModifyPostReq.getTestQno());
-        //test.setTestPath(testModifyPostReq.getTestPath());
-//        test.setTestcase(testModifyPostReq.getTestcase());
 
         return testRepository.save(test);
     }
@@ -90,13 +85,10 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    @Transactional
     public List<Test> getAllTestInfo(Long classId) {
 
-        //테이블 2개 조인
         Classes classes = classesRepository.findByClassId(classId).get();
-
-        List<Test> test = testRepository.findByClassesClassId(classes.getClassId()).get();
+        List<Test> test = classes.getTestList();
         return test;
     }
 

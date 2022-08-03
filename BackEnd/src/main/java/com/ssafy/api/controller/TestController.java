@@ -10,11 +10,14 @@ import com.ssafy.db.repository.ClassesRepository;
 import com.ssafy.db.repository.TestRepository;
 import io.swagger.annotations.*;
 
+import org.graalvm.compiler.word.ObjectAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "시험 API", tags = {"Tests"})
 @RestController
@@ -40,11 +43,13 @@ public class TestController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getAllTestInfo(@PathVariable("classId") Long classId){
+    public ResponseEntity<Map<String, Object>> getAllTestInfo(@PathVariable("classId") Long classId){
 
         List<Test> test = testService.getAllTestInfo(classId);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(test)));
+        Map<String, Object> map = new HashMap<>();
+        map.put("testList", test);
+        return ResponseEntity.status(200).body(map);
     }
 
     @GetMapping("/{classId}/{testName}")
