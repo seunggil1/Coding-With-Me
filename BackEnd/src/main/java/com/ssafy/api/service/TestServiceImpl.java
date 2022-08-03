@@ -101,8 +101,8 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public boolean checkTestName(String testName) {
-        boolean result = testRepositorySupport.findByTestNameEquals(testName);
+    public boolean checkTestName(String testName,Long classId) {
+        boolean result = testRepositorySupport.findByTestNameEquals(testName,classId);
         return result;
     }
     @Override

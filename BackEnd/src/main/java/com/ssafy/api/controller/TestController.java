@@ -114,15 +114,16 @@ public class TestController {
 
     }
 
-    @GetMapping("/idcheck/{testName}")
+    @GetMapping("/idcheck/{testName}/{classId}")
     @ApiOperation(value = "시험 명 중복 체크", notes = "시험 생성 시 시험 명 중복 체크 검사")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> testNameCheck(@PathVariable("testName") String testName) {
+    public ResponseEntity<? extends BaseResponseBody> testNameCheck(@PathVariable("testName") String testName,
+                                                                    @PathVariable("classId") Long classId) {
 
-        boolean temp = testService.checkTestName(testName);
+        boolean temp = testService.checkTestName(testName,classId);
         System.out.println("Test ========="+temp);
         if (temp == true) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));

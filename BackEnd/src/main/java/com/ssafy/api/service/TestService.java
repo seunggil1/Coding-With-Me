@@ -18,7 +18,7 @@ public interface TestService {
 
     Test getTestInfo(Long classId, String testName);
     List<Test> getAllTestInfo(Long classId);
-    boolean checkTestName(String testName);
+    boolean checkTestName(String testName,Long classId);
     CompileRes problemCompile(CodeCompilePostReq codeCompilePostReq);
 
     boolean testCompile(TestCompilePostReq testCompilePostReq);
