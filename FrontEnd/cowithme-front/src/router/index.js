@@ -6,6 +6,7 @@ import {
 	createWebHashHistory,
 } from 'vue-router';
 import routes from './routes';
+import { useAuthStore } from 'src/stores';
 
 /*
  * If not building with SSR mode, you can
@@ -31,6 +32,18 @@ export default route(function (/* { store, ssrContext } */) {
 		// quasar.conf.js -> build -> vueRouterMode
 		// quasar.conf.js -> build -> publicPath
 		history: createHistory(process.env.VUE_ROUTER_BASE),
+	});
+
+	Router.beforeEach(async to => {
+		// redirect to login page if not logged in and trying to access a restricted page
+		const publicPages = ['/login'];
+		const authRequired = !publicPages.includes(to.path);
+		const auth = useAuthStore();
+
+		if (authRequired && !auth.user) {
+			auth.returnUrl = to.fullPath;
+			return '/login';
+		}
 	});
 
 	return Router;
