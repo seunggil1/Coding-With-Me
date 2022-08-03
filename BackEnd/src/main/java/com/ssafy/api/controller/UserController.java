@@ -24,10 +24,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -261,12 +258,12 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getUserByUserId(
             @PathVariable @ApiParam(value = "아이디, 이메일 정보", required = true) Long userId) {
         Map<String, Object> map = new HashMap();
-        try{
+        try {
             User user = userService.getUserByUserId(userId);
             map.put("user", user);
 
             return ResponseEntity.status(200).body(map);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             map.put("message", "Fail");
             return ResponseEntity.status(404).body(map);
         }
@@ -283,16 +280,27 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getClassByUserId(
             @PathVariable @ApiParam(value = "아이디, 이메일 정보", required = true) Long userId) {
         Map<String, Object> map = new HashMap();
-        try{
+        try {
             UserClassRes res = userService.getClassInfoByUserId(userId);
             map.put("message", "Success");
             map.put("result", res);
             return ResponseEntity.status(200).body(map);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             map.put("message", "Fail");
             return ResponseEntity.status(404).body(map);
         }
 
+    }
+
+    @GetMapping("/compile")
+    public ResponseEntity<CompileRes> sourceCompile(SourceCompilePostReq sourceCompilePostReq) {
+        RestAPI restAPI = new RestAPI();
+        List<InputOutput> ios = new ArrayList<>();
+        ios.add(sourceCompilePostReq.getTestcase());
+        CompileRes res = restAPI.callAPI(sourceCompilePostReq.getLang()
+                , sourceCompilePostReq.getCode()
+                , ios);
+        return ResponseEntity.status(200).body(res);
     }
 
 }

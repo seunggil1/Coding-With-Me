@@ -97,7 +97,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserClassRes getClassInfoByUserId(Long userId) throws NoSuchElementException{
         UserClassRes userClassRes = new UserClassRes();
-        //테이블 3개 조인
         User user = userRepository.findByUserId(userId).get();
         UserClass uc = userClassRepository.findByStudentId(userId).get();
         Classes classes = uc.getClasses();
@@ -144,8 +143,6 @@ public class UserServiceImpl implements UserService {
 
         return success;
     }
-    //강사가 특정 반의 학생 리스트를 조회할 때
-    // user.getClasslist().get(index).getUserClassList();
     @Override
     public boolean checkUserId(String id) {
         boolean result = userRepositorySupport.findByUserIdEquals(id);
