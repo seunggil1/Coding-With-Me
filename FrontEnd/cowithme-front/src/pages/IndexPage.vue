@@ -89,9 +89,9 @@ export default defineComponent({
 						`${baseUrl}/tutor/${userId}/classes`,
 					);
 					classes.value.push(...temp.classes);
-					console.log(temp.classes);
-					console.log(classes.value);
-					console.log(classes.value[0]);
+					// console.log(temp.classes);
+					// console.log(classes.value);
+					// console.log(classes.value[0]);
 				} catch (error) {
 					console.log(error);
 				}

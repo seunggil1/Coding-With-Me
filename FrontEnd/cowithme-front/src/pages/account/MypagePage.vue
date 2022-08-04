@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<div>{{ myInfo[0].phone }}</div>
 		<q-btn @click="goDelete">회원탈퇴</q-btn>
 	</div>
 </template>
@@ -7,13 +8,21 @@
 <script>
 import { useRouter } from 'vue-router';
 import { useUsersStore } from 'src/stores';
-// import { onBeforeMount } from 'vue';
+import { onBeforeMount } from 'vue';
+import { ref } from 'vue';
 
 export default {
 	name: 'MypagePage',
 	setup() {
+		const myInfo = ref([]);
 		const router = useRouter();
 		const info = JSON.parse(localStorage.getItem('info'));
+
+		onBeforeMount(async () => {
+			myInfo.value.push(info);
+			console.log(myInfo);
+		});
+		console.log(myInfo.value);
 		async function goDelete() {
 			let user = {
 				name: info.name,
@@ -27,9 +36,9 @@ export default {
 			};
 			const usersStore = useUsersStore();
 			await usersStore.delete(user);
-			await router.push({ path: '/login' });
+			await router.push({ path: '/join' });
 		}
-		return { goDelete };
+		return { goDelete, info, myInfo };
 	},
 };
 </script>
