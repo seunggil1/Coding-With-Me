@@ -106,10 +106,8 @@ public class ClassesServiceImpl implements ClassesService {
             User student = userRepository.findByUserId(classesAddStudentPostReq.getStudentId()).get();
 
             UserClass uc = userClassRepository.findByStudentId(student.getUserId()).get();
-            System.out.println(uc);
 //            userClassRepository.delete(uc);
             //classes-UserClass
-            System.out.println(classes.getUserClassList());
             classes.getUserClassList().remove(uc);
             success = true;
         }catch (Exception e){
