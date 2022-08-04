@@ -43,11 +43,11 @@
 				<div v-if="info2.role == 학생" class="row">
 					<AtomScoreIconButton></AtomScoreIconButton>
 				</div>
-				<div class="row">
+				<div class="row" @click="goToMypage">
 					<AtomMyPageButton></AtomMyPageButton>
 				</div>
 				<div class="row fixed-bottom">
-					<AtomLogoutButton @click="goToMypage"></AtomLogoutButton>
+					<AtomLogoutButton @click="goLogout"></AtomLogoutButton>
 				</div>
 			</div>
 		</q-drawer>
@@ -67,9 +67,8 @@ import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
 import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
 import { useRouter } from 'vue-router';
-
 // import { storeToRefs } from 'pinia';
-// import { useAuthStore } from 'src/stores';
+import { useAuthStore } from 'src/stores';
 
 export default defineComponent({
 	name: 'MainLayout',
@@ -103,11 +102,17 @@ export default defineComponent({
 			await router.push({ path: '/mypage' });
 		}
 
+		async function goLogout() {
+			const authStore = useAuthStore();
+			await authStore.logout();
+		}
+
 		return {
 			user2,
 			info2,
 			leftDrawerOpen,
 			goToMypage,
+			goLogout,
 			toggleLeftDrawer() {
 				leftDrawerOpen.value = !leftDrawerOpen.value;
 			},
