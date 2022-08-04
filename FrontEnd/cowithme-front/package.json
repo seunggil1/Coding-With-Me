@@ -4,7 +4,6 @@
   "description": "CowithMe",
   "productName": "CowithMe",
   "author": "te44382 <te44382@gmail.com>",
-  "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
