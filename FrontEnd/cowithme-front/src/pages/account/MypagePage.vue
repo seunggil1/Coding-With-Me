@@ -1,5 +1,7 @@
 <template>
-	<div></div>
+	<div>
+		<q-btn>회원탈퇴</q-btn>
+	</div>
 </template>
 
 <script>

@@ -3,20 +3,14 @@
 		<div v-if="info2.role == '강사'">
 			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
 				<AtomPlusButton @click="makeClass" flat></AtomPlusButton>
-				<div>
-					{{ classes }}
-				</div>
 				<div class="q-gutter-md q-ml-sm">
-					<div class="class-info">
-						<div class="q-ma-lg">
-							<!-- 반, 강의제목, 날짜 -->
-							<div class="info q-ma-md" style="margin-top: 20px">
-								<p style="font-size: 40px">예시 반(없어질 거)</p>
-								<p style="font-size: 18px">제목: 프로젝트 1</p>
-								<p style="font-size: 18px">날짜: 2022.07.25</p>
-								<q-btn>학생 관리</q-btn>
-							</div>
-						</div>
+					<div class="">
+						<ul>
+							<li v-for="clas in classes" :key="clas.classId">
+								{{ clas.className }}
+								<q-btn @click="goAddStudent">학생 추가</q-btn>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -40,7 +34,7 @@
 <script>
 // import { storeToRefs } from 'pinia';
 // import { api } from 'src/boot/axios.js';
-// import { ref } from 'vue';
+import { ref } from 'vue';
 
 // import { useAuthStore } from 'src/stores';
 import { onBeforeMount } from 'vue';
@@ -59,7 +53,7 @@ export default defineComponent({
 	name: 'IndexPage',
 	components: { CalendarInfo, ClassInfo, LectureTimeHistory, AtomPlusButton },
 	setup() {
-		var classes = null;
+		const classes = ref([]);
 		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
 
 		const baseUrl = `${HOST}`;
@@ -84,28 +78,34 @@ export default defineComponent({
 		console.log(user2);
 		console.log(info2);
 
+		// var classes2 = [];
+		// let classes2 = [];
 		onBeforeMount(async () => {
 			if (info2.role == '강사') {
 				// 강사일 경우 반 정보를 불러옴
 				try {
 					const userId = info2.userId;
-					console.log(userId);
-					classes = await fetchWrapper.get(
+					const temp = await fetchWrapper.get(
 						`${baseUrl}/tutor/${userId}/classes`,
 					);
-					console.log(classes);
-					console.log(classes[0]);
-					// console.log(this.classes);
+					classes.value.push(...temp.classes);
+					console.log(temp.classes);
+					console.log(classes.value);
+					console.log(classes.value[0]);
 				} catch (error) {
 					console.log(error);
 				}
 			}
 		});
+		async function goAddStudent() {
+			await router.push({ path: '/addStudent' });
+		}
 
 		return {
 			user2,
 			info2,
 			makeClass,
+			goAddStudent,
 			classes,
 		};
 	},

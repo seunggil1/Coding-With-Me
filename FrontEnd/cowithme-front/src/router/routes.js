@@ -8,6 +8,14 @@ const routes = [
 				path: '/makeClass',
 				component: () => import('pages/teacher/MakeClassPage.vue'),
 			},
+			{
+				path: '/mypage',
+				component: () => import('pages/account/MyPagePage.vue'),
+			},
+			{
+				path: '/addStudent',
+				component: () => import('pages/teacher/AddStudentPage.vue'),
+			},
 		],
 	},
 	// 로그인/회원가입

@@ -47,7 +47,7 @@
 					<AtomMyPageButton></AtomMyPageButton>
 				</div>
 				<div class="row fixed-bottom">
-					<AtomLogoutButton></AtomLogoutButton>
+					<AtomLogoutButton @click="goToMypage"></AtomLogoutButton>
 				</div>
 			</div>
 		</q-drawer>
@@ -66,10 +66,10 @@ import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue'
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
 import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
+import { useRouter } from 'vue-router';
 
 // import { storeToRefs } from 'pinia';
 // import { useAuthStore } from 'src/stores';
-// import { useRouter } from 'vue-router';
 
 export default defineComponent({
 	name: 'MainLayout',
@@ -98,10 +98,16 @@ export default defineComponent({
 		console.log(info2);
 
 		const leftDrawerOpen = ref(false);
+		const router = useRouter();
+		async function goToMypage() {
+			await router.push({ path: '/mypage' });
+		}
+
 		return {
 			user2,
 			info2,
 			leftDrawerOpen,
+			goToMypage,
 			toggleLeftDrawer() {
 				leftDrawerOpen.value = !leftDrawerOpen.value;
 			},
