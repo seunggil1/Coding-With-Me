@@ -2,7 +2,6 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.CompileRes;
-import com.ssafy.api.service.FilesService;
 import com.ssafy.api.service.TestService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Test;
@@ -10,7 +9,6 @@ import com.ssafy.db.repository.ClassesRepository;
 import com.ssafy.db.repository.TestRepository;
 import io.swagger.annotations.*;
 
-import org.graalvm.compiler.word.ObjectAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +31,7 @@ public class TestController {
     @Autowired
     TestRepository testRepository;
 
-    @Autowired
-    FilesService filesService;
+
 
 
     @GetMapping("/{classId}")

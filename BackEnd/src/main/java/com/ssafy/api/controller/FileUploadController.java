@@ -48,17 +48,14 @@ public class FileUploadController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> uploadFile(@PathVariable Long testId,
-            @RequestPart MultipartFile files) throws IOException {
+                                                                 @RequestPart MultipartFile files) throws IOException {
         //임의로 리턴된 Classes 인스턴스.
 
         Files file = new Files();
 
         Test test= testRepository.findByTestId(testId).get();
-        System.out.println(test.getTestId());
         String sourceFileName = files.getOriginalFilename();
-        System.out.println("test============="+sourceFileName);
         String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-
         FilenameUtils.removeExtension(sourceFileName);
 
         File destinationFile;
@@ -70,9 +67,9 @@ public class FileUploadController {
             destinationFile=new File(fileUrl+destinationFileName);
         }while(destinationFile.exists());
 
-        System.out.println("test="+destinationFile.getParentFile());
+
         destinationFile.getParentFile().mkdirs();
-        System.out.println("test="+destinationFile.getParentFile());
+
 
         files.transferTo(destinationFile);
 
