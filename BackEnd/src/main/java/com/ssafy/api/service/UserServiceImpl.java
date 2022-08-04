@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User modifyUser(UserRegisterPostReq userRegisterInfo) {
-        //User user =userRepository.findByUserId(1L).get();
+
         User user = userRepository.findById(userRegisterInfo.getId()).get();
         // 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
         user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
