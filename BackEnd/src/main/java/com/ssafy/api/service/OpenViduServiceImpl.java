@@ -146,7 +146,6 @@ public class OpenViduServiceImpl implements OpenViduService {
             SessionInfoMap.remove(sessionId);
         }catch (OpenViduException e){
             System.out.println("OpenViduService close Error : " + e.getMessage());
-            return false;
         }
 
         return true;

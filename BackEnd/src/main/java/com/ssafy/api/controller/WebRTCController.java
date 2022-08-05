@@ -21,7 +21,6 @@ public class WebRTCController {
     @Autowired
     OpenViduService openViduService;
 
-    @RequestMapping(value = "/getToken", method = RequestMethod.POST)
     @ApiOperation(value = "화상회의 토큰 발급", notes = "사용자의 정보를 통해 맞는 수업의 토큰을 발급한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -29,6 +28,7 @@ public class WebRTCController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
+    @RequestMapping(value = "/getToken", method = RequestMethod.POST)
     // TODO: 2022-08-04 : Request 형식 정하기
     public String joinUser(@RequestParam(name = "userId") String userId,
                            @RequestParam(name = "classID") String classId,
@@ -133,7 +133,6 @@ public class WebRTCController {
         return "success";
     }
 
-    @GetMapping("/status/{classID}")
     @ApiOperation(value = "해당 반의 conference status", notes = "요청한 반의 class Conference가 열려있는지 찾아서 반환한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -141,7 +140,8 @@ public class WebRTCController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    // TODO: 2022-08-05 : Request 형식 정하기 
+    @GetMapping("/status/{classID}")
+    // TODO: 2022-08-05 : Request 형식 정하기
     public String conferenceStatus(@PathVariable String classID){
 
         // TODO: 2022-08-05 : 요청한 user가 해당 classID 소속인지 check
