@@ -21,6 +21,13 @@ export const useVideoStore = defineStore('video', () => {
     screenOV: undefined,
     screenSession: undefined,
     screenShareName: '',  // 나중에 처리
+    chatting : [],
+    
+    // true면 내가 선생.
+    isTeacher : false,
+    // 웹 IDE 데이터도 여기서 처리함.
+    teacherCode : '',
+    myCode : ''
   })
 
   const isChat = ref(false); // 채팅창 보여줄까 말까
@@ -44,6 +51,22 @@ export const useVideoStore = defineStore('video', () => {
 
     state.value.session.on('exception', ({ exception }) => {
       console.error(exception);
+    });
+
+    state.value.session.on('signal:chat', (event) => {
+      console.log('received chat : ', event.data);
+      state.value.chatting.push({
+        sender : event.data.sender,
+        message : event.data.message
+      });
+      console.log(event.data); // Message
+      console.log(event.from); // Connection object of the sender
+      console.log(event.type); // The type of message ("my-chat")
+    });
+
+    state.value.session.on('signal:code', (event) => {
+      console.log('received code : ', event.data);
+      state.value.teacherCode = event.data.code;
     });
 
     getToken(state.value.mySessionId).then(token => {
@@ -196,6 +219,48 @@ export const useVideoStore = defineStore('video', () => {
 
   function setScreenShareName() {
     state.value.screenShareName = state.value.myUserName + "'S screen";
+  }
+
+  function sendMessage(message){
+    if(state.value.session == undefined){
+      console.log('session is not connected. sendMessage is canceled.');
+      return;
+    }
+    state.value.session.singal({
+      data: {
+        sender : state.value.myUserName,
+        message : message
+      },  // Any string (optional)
+      to: [],         
+      type: 'chat'             // The type of message (optional)
+    })
+    .then(() => {
+        console.log('Message successfully sent');
+    })
+    .catch(error => {
+        console.error(error);
+    });
+  }
+
+  function sendCode(code){
+    if(state.value.session == undefined){
+      console.log('session is not connected. sendCode is canceled.');
+      return;
+    }
+    state.value.session.singal({
+      data: {
+        sender : state.value.myUserName,
+        message : code
+      },  // Any string (optional)
+      to: [],         
+      type: 'code'             // The type of message (optional)
+    })
+    .then(() => {
+        console.log('Code successfully sent');
+    })
+    .catch(error => {
+        console.error(error);
+    });
   }
 
   return {
