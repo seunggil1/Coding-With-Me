@@ -1,9 +1,14 @@
 const routes = [
 	{
 		path: '/',
+		name: 'home',
 		component: () => import('layouts/MainLayout.vue'),
 		children: [
-			{ path: '', component: () => import('pages/IndexPage.vue') },
+			{
+				path: '/',
+				name: 'home',
+				component: () => import('pages/IndexPage.vue'),
+			},
 			{
 				path: '/makeClass',
 				component: () => import('pages/teacher/MakeClassPage.vue'),
@@ -51,7 +56,8 @@ const routes = [
 	},
 	// home
 	{
-		path: '/home',
+		path: '/homepage',
+		name: 'homepage',
 		component: () => import('pages/StudentHomePage.vue'),
 	},
 	// 반

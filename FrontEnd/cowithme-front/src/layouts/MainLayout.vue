@@ -3,8 +3,13 @@
 		<q-header elevated>
 			<q-toolbar style="background-color: #00adb5">
 				<TestComp @click="toggleLeftDrawer" flat></TestComp>
-				<q-toolbar-title style="font-family: 'OTWelcomeBA'; font-size: 20px">
-					코딩 수업을 더 쉽게, 코윗미</q-toolbar-title
+				<router-link
+					:to="{ name: 'home' }"
+					style="text-decoration: none; color: inherit"
+				>
+					<q-toolbar-title style="font-family: 'OTWelcomeBA'; font-size: 20px">
+						코딩 수업을 더 쉽게, 코윗미</q-toolbar-title
+					></router-link
 				>
 			</q-toolbar>
 		</q-header>
@@ -19,7 +24,12 @@
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-10">
-						<AtomLogo2 class="test" style="width: 90%"></AtomLogo2>
+						<router-link
+							:to="{ name: 'home' }"
+							style="text-decoration: none; color: inherit"
+						>
+							<AtomLogo2 class="test" style="width: 90%"></AtomLogo2>
+						</router-link>
 					</div>
 					<div class="col"></div>
 				</div>
@@ -44,10 +54,10 @@
 						</div>
 					</div>
 				</div>
-				<div v-if="info2.role == 학생" class="row">
+				<div v-if="info2.role == '학생'" class="row">
 					<AtomSearchIconButton style="font-size: 30px"></AtomSearchIconButton>
 				</div>
-				<div v-if="info2.role == 학생" class="row">
+				<div v-if="info2.role == '학생'" class="row">
 					<AtomScoreIconButton></AtomScoreIconButton>
 				</div>
 				<div class="row" @click="goToMypage">
