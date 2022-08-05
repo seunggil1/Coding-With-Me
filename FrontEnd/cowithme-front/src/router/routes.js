@@ -19,7 +19,14 @@ const routes = [
 			{
 				path: '/classDetail/:classId',
 				name: 'classDetail',
+				props: true,
 				component: () => import('pages/teacher/classDetailPage.vue'),
+			},
+			{
+				path: '/makeExam/:classId',
+				name: 'makeExam',
+				props: true,
+				component: () => import('pages/teacher/MakeExamPage.vue'),
 			},
 		],
 	},

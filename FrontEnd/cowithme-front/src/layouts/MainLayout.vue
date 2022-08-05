@@ -7,12 +7,17 @@
 			</q-toolbar>
 		</q-header>
 
-		<q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+		<q-drawer
+			v-model="leftDrawerOpen"
+			show-if-above
+			bordered
+			style="box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2)"
+		>
 			<div class="navbar" style="background-color: #eeeeee; height: 100vh">
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-10">
-						<AtomLogo2 style="width: 90%"></AtomLogo2>
+						<AtomLogo2 class="test" style="width: 90%"></AtomLogo2>
 					</div>
 					<div class="col"></div>
 				</div>
@@ -128,5 +133,10 @@ export default defineComponent({
 		format('woff2');
 	font-weight: normal;
 	font-style: normal;
+}
+.test {
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
+	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
+	/* Similar syntax to box-shadow */
 }
 </style>
