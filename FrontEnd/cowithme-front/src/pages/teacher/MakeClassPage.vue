@@ -3,7 +3,7 @@
 		<div>선생님이 흠냐뤼 반을 만들 수 있다.</div>
 		<div id="q-app" style="min-height: 100vh">
 			<div class="q-pa-md" style="max-width: 400px">
-				<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+				<q-form @submit="goMakeClass" @reset="onReset" class="q-gutter-md">
 					<q-input
 						filled
 						v-model="className"
@@ -63,7 +63,7 @@ if (typeof tutor !== 'undefined') {
 	tutorParsed = JSON.parse(tutor);
 }
 // const accept = ref(false);
-async function onSubmit() {
+async function goMakeClass() {
 	let classInformation = {
 		className: className.value,
 		classDescription: classDescription.value,
