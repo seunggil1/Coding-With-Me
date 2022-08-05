@@ -126,7 +126,6 @@ public class TestController {
                                                                     @PathVariable("classId") Long classId) {
 
         boolean temp = testService.checkTestName(testName,classId);
-        System.out.println("Test ========="+temp);
         if (temp == true) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         } else {

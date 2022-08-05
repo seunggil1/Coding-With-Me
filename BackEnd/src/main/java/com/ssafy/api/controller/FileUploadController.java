@@ -60,7 +60,6 @@ public class FileUploadController {
     })
     @ResponseBody
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long testId) throws IOException {
-        //임의로 리턴된 Classes 인스턴스.
 
         Files file = filesRepository.findByTestTestId(testId).get();
         String filePath = file.getFileUrl() + file.getFilename();

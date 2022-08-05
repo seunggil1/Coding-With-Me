@@ -27,7 +27,7 @@ public class AttendanceController {
     public ResponseEntity<? extends BaseResponseBody> register(
             @RequestBody @ApiParam(value="출입 정보", required = true) AttendanceRegisterPostReq attendanceRegisterPostReq) {
 
-        //임의로 리턴된 Classes 인스턴스.
+        //임의로 리턴된 attendance 인스턴스.
         attendanceService.createAttendance(attendanceRegisterPostReq);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
