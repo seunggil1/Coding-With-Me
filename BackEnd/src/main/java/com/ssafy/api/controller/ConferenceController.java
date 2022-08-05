@@ -51,7 +51,7 @@ public class ConferenceController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
     @PutMapping("/end")
-    @ApiOperation(value = "강의 정보 수정", notes = "강의가 종료되고 정보를 수정한다.")
+    @ApiOperation(value = "강의 정보 종료 시 수정", notes = "강의가 종료되고 정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
