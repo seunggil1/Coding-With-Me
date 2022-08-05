@@ -32,6 +32,8 @@ export const useVideoStore = defineStore('video', () => {
 
   const isChat = ref(false); // 채팅창 보여줄까 말까
   const isParti = ref(false); // 참가자 보여줄까 말까
+  const isAudio = ref(true); // 자기 비디오 켜져있는지 여부. true면 on
+  const isVideo = ref(true); // 자기 비디오 꺼져있는지 여부. true면 on
 
   function joinSession() {
     state.value.OV = new OpenVidu();
@@ -116,9 +118,47 @@ export const useVideoStore = defineStore('video', () => {
     state.value.OV = undefined;
     state.value.screenOV = undefined;
 
+    // Todo : axios로 api 호출 필요.
     window.removeEventListener('beforeunload', leaveSession);
   }
 
+  function muteAudio() {
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. muteAudio is canceled.');
+      return;
+    }
+    state.value.publisher.publishAudio(false);
+    isAudio = ref(false);
+  }
+
+  function unmuteAudio(){
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. umMuteAudio is canceled.');
+      return;
+    }
+    state.value.publisher.publishAudio(true);
+    isAudio = ref(true);
+  }
+
+  function muteVideo(){
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. muteVideo is canceled.');
+      return;
+    }
+    state.value.publisher.publishVideo(false);
+    isVideo = ref(false);
+  }
+
+  function unmuteVideo(){
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. unmutedVideo is canceled.');
+      return;
+    }
+    state.value.publisher.publishVideo(true);
+    isVideo = ref(true);
+  }
+
+  // serverSide start. Backend가 완성되면 변경 필요.
   async function getToken(mySessionId) {
     const id = await createSession(mySessionId);
     return await createToken(id);
@@ -166,6 +206,8 @@ export const useVideoStore = defineStore('video', () => {
         });
     });
   }
+
+  // serverSide end.
 
   function startScreenShare() {
     state.value.screenOV = new OpenVidu();
@@ -265,6 +307,10 @@ export const useVideoStore = defineStore('video', () => {
 
   return {
     state,
+    isChat,
+    isParti,
+    isAudio,
+    isVideo,
     joinSession,
     leaveSession,
     getToken,
@@ -275,5 +321,11 @@ export const useVideoStore = defineStore('video', () => {
     updateMainVideoStreamManager,
     setMyUserName,
     setScreenShareName,
+    sendMessage,
+    sendCode,
+    muteAudio,
+    unmuteAudio,
+    muteVideo,
+    unmuteVideo
   }
 })
