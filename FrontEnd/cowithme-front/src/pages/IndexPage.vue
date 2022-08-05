@@ -4,19 +4,21 @@
 			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
 				<AtomPlusButton @click="makeClass" flat></AtomPlusButton>
 				<div class="q-gutter-md q-ml-sm">
-					<div class="">
-						<ul>
-							<li v-for="clas in classes" :key="clas.classId">
-								<p>{{ clas.className }}</p>
-								<router-link
-									:to="{
-										name: 'classDetail',
-										params: { classId: clas.classId },
-									}"
-									><q-btn>반 관리하기</q-btn></router-link
-								>
-							</li>
-						</ul>
+					<div
+						class="flex column justify-between box q-pa-lg"
+						v-for="clas in classes"
+						:key="clas.classId"
+					>
+						<h3>{{ clas.className }}</h3>
+						<p>{{ clas.classDescription }}</p>
+						<router-link
+							:to="{
+								name: 'classDetail',
+								params: { classId: clas.classId },
+							}"
+							style="text-decoration: none; color: inherit"
+							><q-btn push>반 관리하기</q-btn>
+						</router-link>
 					</div>
 				</div>
 			</div>
@@ -122,7 +124,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 @font-face {
 	font-family: 'GmarketSansLight';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
@@ -141,5 +143,13 @@ export default defineComponent({
 .button {
 	margin-top: 60px;
 	margin-left: 20px;
+}
+.box {
+	height: 300px;
+	width: 60%;
+	min-width: 700px;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 </style>
