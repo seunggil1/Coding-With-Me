@@ -7,7 +7,14 @@
 					<div class="">
 						<ul>
 							<li v-for="clas in classes" :key="clas.classId">
-								{{ clas.className }}
+								<p>{{ clas.className }}</p>
+								<router-link
+									:to="{
+										name: 'classDetail',
+										params: { classId: clas.classId },
+									}"
+									><q-btn>반 디테일</q-btn></router-link
+								>
 								<q-btn @click="goAddStudent">학생 추가</q-btn>
 							</li>
 						</ul>
@@ -100,6 +107,12 @@ export default defineComponent({
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
+		// async function goClassDetail() {
+		// 	await router.push({
+		// 		path: '/classDetail',
+		// 		params: { classId: clas.classId },
+		// 	});
+		// }
 
 		return {
 			user2,
@@ -107,6 +120,7 @@ export default defineComponent({
 			makeClass,
 			goAddStudent,
 			classes,
+			// goClassDetail,
 		};
 	},
 });

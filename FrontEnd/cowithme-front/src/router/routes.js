@@ -17,8 +17,9 @@ const routes = [
 				component: () => import('pages/teacher/AddStudentPage.vue'),
 			},
 			{
-				path: '/classDetail',
-				component: () => import('pages/teacher/classDetail.vue'),
+				path: '/classDetail/:classId',
+				name: 'classDetail',
+				component: () => import('pages/teacher/classDetailPage.vue'),
 			},
 		],
 	},
