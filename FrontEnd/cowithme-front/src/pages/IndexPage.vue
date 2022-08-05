@@ -13,9 +13,8 @@
 										name: 'classDetail',
 										params: { classId: clas.classId },
 									}"
-									><q-btn>반 디테일</q-btn></router-link
+									><q-btn>반 관리하기</q-btn></router-link
 								>
-								<q-btn @click="goAddStudent">학생 추가</q-btn>
 							</li>
 						</ul>
 					</div>
@@ -104,9 +103,7 @@ export default defineComponent({
 				}
 			}
 		});
-		async function goAddStudent() {
-			await router.push({ path: '/addStudent' });
-		}
+
 		// async function goClassDetail() {
 		// 	await router.push({
 		// 		path: '/classDetail',
@@ -118,7 +115,6 @@ export default defineComponent({
 			user2,
 			info2,
 			makeClass,
-			goAddStudent,
 			classes,
 			// goClassDetail,
 		};

@@ -6,7 +6,10 @@
 			<q-btn>강의 시작(WebRTC 토큰 설정되면)</q-btn>
 		</div>
 		<div class="row box">
-			<div class="col-6">학생 목록 및 추가</div>
+			<div class="col-6">
+				학생 목록 및 추가
+				<q-btn @click="goAddStudent">학생 추가</q-btn>
+			</div>
 			<div class="col-6">
 				시험 목록 및 생성
 				<router-link :to="{ name: 'makeExam', params: { classId: classId } }">
@@ -18,6 +21,8 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+
 export default {
 	name: 'ClassDetailPage',
 	props: {
@@ -27,7 +32,12 @@ export default {
 		},
 	},
 	setup() {
-		return {};
+		const router = useRouter();
+
+		async function goAddStudent() {
+			await router.push({ path: '/addStudent' });
+		}
+		return { goAddStudent };
 	},
 };
 </script>
