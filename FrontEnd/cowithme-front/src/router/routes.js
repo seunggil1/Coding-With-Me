@@ -16,6 +16,10 @@ const routes = [
 				path: '/addStudent',
 				component: () => import('pages/teacher/AddStudentPage.vue'),
 			},
+			{
+				path: '/classDetail',
+				component: () => import('pages/teacher/classDetail.vue'),
+			},
 		],
 	},
 	// 로그인/회원가입

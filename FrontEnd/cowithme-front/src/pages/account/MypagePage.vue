@@ -2,6 +2,8 @@
 	<div>
 		<div>{{ myInfo[0].phone }}</div>
 		<q-btn @click="goDelete">회원탈퇴</q-btn>
+		<p>이제 되나</p>
+		<p>여기만 안되나</p>
 	</div>
 </template>
 

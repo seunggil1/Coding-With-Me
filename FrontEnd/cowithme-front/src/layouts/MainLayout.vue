@@ -8,7 +8,7 @@
 		</q-header>
 
 		<q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-			<div class="navbar" style="background-color: #00adb5; height: 100vh">
+			<div class="navbar" style="background-color: #eeeeee; height: 100vh">
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-10">
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div v-if="info2.role == 학생" class="row">
-					<AtomSearchIconButton></AtomSearchIconButton>
+					<AtomSearchIconButton style="font-size: 30px"></AtomSearchIconButton>
 				</div>
 				<div v-if="info2.role == 학생" class="row">
 					<AtomScoreIconButton></AtomScoreIconButton>

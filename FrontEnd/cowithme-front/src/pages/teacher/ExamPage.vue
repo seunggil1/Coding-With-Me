@@ -1,9 +1,12 @@
 <template>
-	<q-btn dense round icon="menu" aria-label="Menu" />
+	<div>
+		<p>과목 별 시험 페이지</p>
+	</div>
 </template>
 
 <script>
 export default {
+	name: 'ExamPage',
 	setup() {
 		return {};
 	},

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>선생님이 반을 만들 수 있다.</div>
+		<div>선생님이 흠냐뤼 반을 만들 수 있다.</div>
 		<div id="q-app" style="min-height: 100vh">
 			<div class="q-pa-md" style="max-width: 400px">
 				<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
