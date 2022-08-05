@@ -3,7 +3,7 @@ import { useAuthStore } from 'src/stores';
 export const fetchWrapper = {
 	get: request('GET'),
 	post: request('POST'),
-	// put: request('PUT'),
+	put: request('PUT'),
 	delete: request('DELETE'),
 };
 

@@ -3,7 +3,9 @@
 		<q-header elevated>
 			<q-toolbar style="background-color: #00adb5">
 				<TestComp @click="toggleLeftDrawer" flat></TestComp>
-				<!-- <q-toolbar-title> CowithMe 코윗미~ </q-toolbar-title> -->
+				<q-toolbar-title style="font-family: 'OTWelcomeBA'; font-size: 20px">
+					코딩 수업을 더 쉽게, 코윗미</q-toolbar-title
+				>
 			</q-toolbar>
 		</q-header>
 
@@ -137,6 +139,5 @@ export default defineComponent({
 .test {
 	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
-	/* Similar syntax to box-shadow */
 }
 </style>
