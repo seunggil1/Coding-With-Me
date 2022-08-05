@@ -46,6 +46,7 @@ const routes = [
 	},
 	{
 		path: '/join',
+		name: 'join',
 		component: () => import('pages/account/SignUpPage.vue'),
 	},
 	// home

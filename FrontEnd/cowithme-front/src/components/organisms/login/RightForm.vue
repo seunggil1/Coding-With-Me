@@ -46,23 +46,22 @@ function onReset() {
 		>
 			<div class="flex row">
 				<div class="col q-mr-sm">
-					<div class="row q-pr-lg">
-						<q-input
-							name="password"
-							class="q-ma-lg q-pr-lg"
-							rounded
-							outlined
-							type="text"
-							v-model="id"
-							label="아이디"
-							lazy-rules
-							color="brand"
-							bg-color="white"
-						></q-input>
-					</div>
 					<q-input
 						name="password"
-						class="q-ma-lg q-pr-lg"
+						class="loginInput q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						type="text"
+						v-model="id"
+						label="아이디"
+						lazy-rules
+						color="brand"
+						bg-color="white"
+					></q-input>
+
+					<q-input
+						name="password"
+						class="loginInput q-ma-lg q-pr-lg"
 						rounded
 						outlined
 						type="password"
@@ -72,71 +71,35 @@ function onReset() {
 						color="brand"
 						bg-color="white"
 					></q-input>
-				</div>
-			</div>
-			<div class="flex justify-center">
-				<div>
-					<q-btn
-						label="로그인"
-						type="submit"
-						text-color="white"
-						class="q-px-md q-mr-sm"
-						style="background: #00adb5"
-						push
-					></q-btn>
-					<q-btn
-						label="Reset"
-						type="reset"
-						text-color="white"
-						style="background-color: orangered"
-						push
-						class="q-ml-sm"
-					></q-btn>
+					<div
+						class="q-ma-lg q-pr-lg"
+						style="margin-top: 100px; margin-left: 30px"
+					>
+						<q-btn
+							label="로그인"
+							type="submit"
+							text-color="white"
+							class=""
+							style="background: #00adb5"
+							push
+						></q-btn>
+						<router-link
+							:to="{ name: 'join' }"
+							style="text-decoration: none; color: inherit"
+						>
+							<q-btn
+								label="회원가입"
+								text-color="white"
+								style="background-color: #ff5722"
+								push
+								class="q-ml-sm"
+							></q-btn
+						></router-link>
+					</div>
 				</div>
 			</div>
 		</q-form>
 	</div>
-	<!-- <div class="card m-3">
-		<h4 class="card-header">Login</h4>
-		<div class="card-body">
-			<Form
-				@submit="onSubmit"
-				:validation-schema="schema"
-				v-slot="{ errors, isSubmitting }"
-			>
-				<div class="form-group">
-					<label>id</label>
-					<Field
-						name="id"
-						type="text"
-						class="form-control"
-						:class="{ 'is-invalid': errors.id }"
-					/>
-					<div class="invalid-feedback">{{ errors.id }}</div>
-				</div>
-				<div class="form-group">
-					<label>Password</label>
-					<Field
-						name="password"
-						type="password"
-						class="form-control"
-						:class="{ 'is-invalid': errors.password }"
-					/>
-					<div class="invalid-feedback">{{ errors.password }}</div>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-primary" :disabled="isSubmitting">
-						<span
-							v-show="isSubmitting"
-							class="spinner-border spinner-border-sm mr-1"
-						></span>
-						Login
-					</button>
-					<router-link to="register" class="btn btn-link">Register</router-link>
-				</div>
-			</Form>
-		</div>
-	</div> -->
 </template>
 
 <style scoped>
@@ -163,5 +126,8 @@ function onReset() {
 }
 .shadow {
 	box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
+}
+.loginInput {
+	width: 50%;
 }
 </style>
