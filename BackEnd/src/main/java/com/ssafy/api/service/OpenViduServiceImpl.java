@@ -152,7 +152,7 @@ public class OpenViduServiceImpl implements OpenViduService {
     }
 
     @Override
-    public boolean sessionExist(String sessionId) {
+    public boolean sessionExist(Long sessionId) {
         SessionInfo targetSessionInfo = SessionInfoMap.get(sessionId);
 
         if(targetSessionInfo == null){
