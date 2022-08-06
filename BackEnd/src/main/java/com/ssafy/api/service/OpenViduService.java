@@ -10,7 +10,7 @@ public interface OpenViduService {
      * @return
      * @throws OpenViduException
      */
-    public String getToken(String sessionId, String userId, String displayName) throws OpenViduException;
+    public String getToken(Long sessionId, Long userId, String displayName) throws OpenViduException;
 
     /**
      *
@@ -23,14 +23,14 @@ public interface OpenViduService {
      *  <li>사용자의 토큰을 삭제하고, 세션이 비었을 경우 해당 세션도 삭제처리합니다.</li>
      * </ul>
      */
-    public boolean removeUser(String sessionId, String token);
+    public boolean removeUser(Long sessionId, String token);
 
     /**
      * 해당 세션을 강제로 닫습니다.
      * @param sessionId
      * @return 성공시 true, 실패시 false
      */
-    public boolean closeSession(String sessionId);
+    public boolean closeSession(Long sessionId);
     /**
      * openVidu 서버와 통신을 통해 session이 존재하는지 확인한다.
      * @param sessionId
@@ -44,5 +44,8 @@ public interface OpenViduService {
      * @param token
      * @return userID, 없으면 null 반환
      */
-    public String findUser(String sessionId, String token);
+    public Long findUser(Long sessionId, String token);
+
+
+    public Session makeSession(Long sessionId) throws OpenViduException;
 }
