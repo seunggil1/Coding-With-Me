@@ -175,7 +175,8 @@ public class OpenViduServiceImpl implements OpenViduService {
         return true;
     }
 
-    private Session makeSession(Long sessionId) throws OpenViduException{
+    @Override
+    public Session makeSession(Long sessionId) throws OpenViduException{
         try{
             // 화면 녹화 설정
 //            RecordingProperties recordingProperties = new RecordingProperties.Builder()

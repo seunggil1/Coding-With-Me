@@ -45,4 +45,7 @@ public interface OpenViduService {
      * @return userID, 없으면 null 반환
      */
     public Long findUser(Long sessionId, String token);
+
+
+    public Session makeSession(Long sessionId) throws OpenViduException;
 }
