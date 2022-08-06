@@ -7,10 +7,7 @@ import com.ssafy.db.entity.Classes;
 import com.ssafy.db.entity.Test;
 import com.ssafy.db.entity.TestRecord;
 import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.ClassesRepository;
-import com.ssafy.db.repository.TestRecordRepository;
-import com.ssafy.db.repository.TestRepository;
-import com.ssafy.db.repository.TestRepositorySupport;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +26,9 @@ public class TestServiceImpl implements TestService {
 
     @Autowired
     ClassesRepository classesRepository;
+
+    @Autowired
+    ClassesRepositorySupport classesRepositorySupport;
 
     @Autowired
     TestRecordRepository testRecordRepository;
@@ -87,7 +87,7 @@ public class TestServiceImpl implements TestService {
     @Override
     public List<Test> getAllTestInfo(Long classId) {
 
-        Classes classes = classesRepository.findByClassId(classId).get();
+        Classes classes = classesRepositorySupport.findByClassIdWithTestList(classId).get();
         List<Test> test = classes.getTestList();
         return test;
     }

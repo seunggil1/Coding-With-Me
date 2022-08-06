@@ -21,7 +21,9 @@ public class AttendanceRepositorySupport {
     QAttendanceRecord qAttendanceRecord = QAttendanceRecord.attendanceRecord;
 
     public Optional<AttendanceRecord> findByUserIdAndConferenceIdLast(Long userId,Long conferenceId){
-        AttendanceRecord attendanceRecord = jpaQueryFactory.select(qAttendanceRecord).from(qAttendanceRecord)
+        AttendanceRecord attendanceRecord = jpaQueryFactory
+                .select(qAttendanceRecord)
+                .from(qAttendanceRecord)
                 .where(qAttendanceRecord.attEndTime.isNull())
                 .where(qAttendanceRecord.conference.conferenceId.eq(conferenceId))
                 .where(qAttendanceRecord.user.userId.eq(userId)).fetchOne();
