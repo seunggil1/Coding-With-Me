@@ -21,6 +21,4 @@ public class ConferenceRegisterPostReq {
     @ApiModelProperty(name = "방제", example = "1주차 알고리즘 수업")
     String conferenceName;
 
-    @ApiModelProperty(name = "WebRTC 토큰 정보", example = "exerwq1zvc")
-    String rtcToken;
 }
