@@ -33,6 +33,12 @@ const routes = [
 				props: true,
 				component: () => import('pages/teacher/MakeExamPage.vue'),
 			},
+			{
+				path: '/reportCard/:userId',
+				name: 'reportCard',
+				props: true,
+				component: () => import('pages/student/ScorePage.vue'),
+			},
 		],
 	},
 	// 로그인/회원가입

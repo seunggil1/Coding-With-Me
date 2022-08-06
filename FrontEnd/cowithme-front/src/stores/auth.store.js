@@ -17,7 +17,9 @@ export const useAuthStore = defineStore({
 		token: localStorage.getItem('token'),
 		user: localStorage.getItem('user'),
 		info: localStorage.getItem('info'),
-		classes: {},
+		// classes: {
+		// 	userClassInfo: null,
+		// },
 		// returnUrl: null,
 	}),
 	actions: {

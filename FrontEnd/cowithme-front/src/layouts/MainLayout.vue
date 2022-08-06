@@ -58,7 +58,12 @@
 					<AtomSearchIconButton style="font-size: 30px"></AtomSearchIconButton>
 				</div>
 				<div v-if="info2.role == '학생'" class="row">
-					<AtomScoreIconButton></AtomScoreIconButton>
+					<router-link
+						:to="{ name: 'reportCard', params: { userId: info2.userId } }"
+						style="text-decoration: none; color: inherit"
+					>
+						<AtomScoreIconButton></AtomScoreIconButton>
+					</router-link>
 				</div>
 				<div class="row" @click="goToMypage">
 					<AtomMyPageButton></AtomMyPageButton>

@@ -24,9 +24,9 @@
 			</div>
 		</div>
 		<div v-if="info2.role == '학생'">
-			<!-- <p>Hi {{ info.user.name }}!</p>
-		<p>You're logged in!</p> -->
 			<ClassInfo></ClassInfo>
+			<!-- <div>{{ classStore.userClass.className }}</div> -->
+			<div>{{ testTest.value }}</div>
 			<div class="row">
 				<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
 				<div class="col-8">
@@ -40,34 +40,28 @@
 </template>
 
 <script>
-// import { storeToRefs } from 'pinia';
-// import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
-
-// import { useAuthStore } from 'src/stores';
 import { onBeforeMount } from 'vue';
 import { fetchWrapper } from 'src/helpers';
-
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
+// import { useClassStore } from 'src/stores';
+
 import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
 import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
-import { useRouter } from 'vue-router';
-
-// import AtomLogo from 'src/components/atoms/AtomLogo.vue';
 
 export default defineComponent({
 	name: 'IndexPage',
 	components: { CalendarInfo, ClassInfo, LectureTimeHistory, AtomPlusButton },
 	setup() {
+		// const classStore = useClassStore();
 		const classes = ref([]);
 		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
-
 		const baseUrl = `${HOST}`;
+		const testTest = ref([]);
 
-		// const authStore = useAuthStore();
-		// const { auth } = storeToRefs(authStore);
 		const router = useRouter();
 
 		async function makeClass() {
@@ -83,11 +77,9 @@ export default defineComponent({
 		if (typeof info !== 'undefined') {
 			info2 = JSON.parse(info);
 		}
-		console.log(user2);
-		console.log(info2);
+		// console.log(user2);
+		// console.log(info2);
 
-		// var classes2 = [];
-		// let classes2 = [];
 		onBeforeMount(async () => {
 			if (info2.role == '강사') {
 				// 강사일 경우 반 정보를 불러옴
@@ -106,6 +98,17 @@ export default defineComponent({
 			}
 		});
 
+		onBeforeMount(async () => {
+			try {
+				var res = await fetchWrapper.get(`${baseUrl}/users/2/class`);
+				testTest.value.push(res.value);
+				// console.log(testTest);
+			} catch (error) {
+				console.log(error);
+			}
+			// classStore.getClass(info2.userId);
+		});
+
 		// async function goClassDetail() {
 		// 	await router.push({
 		// 		path: '/classDetail',
@@ -118,6 +121,7 @@ export default defineComponent({
 			info2,
 			makeClass,
 			classes,
+			testTest,
 			// goClassDetail,
 		};
 	},

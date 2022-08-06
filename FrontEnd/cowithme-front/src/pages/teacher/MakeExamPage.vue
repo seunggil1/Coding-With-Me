@@ -206,7 +206,7 @@ export default {
 	},
 	name: 'MakeExamPage',
 	setup(props) {
-		// 현대 보여줄 탭. 0은 가이드, 1부터 각각 문제 번호.
+		// 현재 보여줄 탭. 0은 가이드, 1부터 각각 문제 번호.
 		let problemTab = ref('0');
 
 		// 문제 번호| 테스트 케이스 나누는 간격 (드래그로 조절 가능)
