@@ -99,29 +99,4 @@ public class WebRTCController {
         }
     }
 
-    @GetMapping("/status/{classID}")
-    @ApiOperation(value = "해당 반의 conference status", notes = "요청한 반의 class Conference가 열려있는지 찾아서 반환한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public String conferenceStatus(@PathVariable String classID) {
-
-        // TODO: 2022-08-05 : 요청한 user가 해당 classID 소속인지 check
-
-        // TODO: 2022-08-05 : is_active = true이고 classID가 일치하는 conference이 있는지 check. 없으면 Exist 반환
-
-        // TODO: 2022-08-05 : conference가 존재하면 sessionID를 받아와서 openvidu에서 check
-        String sessionId = "";
-        if (openViduService.sessionExist(sessionId)) {
-            return "Exist";
-        } else {
-            // TODO: 2022-08-05 : 해당 confernce is_active = false 처리.
-
-            return "Not Exist";
-        }
-    }
-
 }
