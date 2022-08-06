@@ -36,7 +36,7 @@ public interface OpenViduService {
      * @param sessionId
      * @return 존재하면 true, 존재하지 않으면 false
      */
-    public boolean sessionExist(String sessionId);
+    public boolean sessionExist(Long sessionId);
 
     /**
      * 특정 session에서 토큰에 해당하는 userID 반환
