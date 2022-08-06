@@ -39,6 +39,11 @@ const routes = [
 				props: true,
 				component: () => import('pages/student/ScorePage.vue'),
 			},
+			{
+				path: '/studyRooms',
+				name: 'studyRoom',
+				component: () => import('pages/student/StudyRoomSearchPage.vue'),
+			},
 		],
 	},
 	// 로그인/회원가입

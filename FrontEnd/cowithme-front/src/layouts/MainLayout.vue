@@ -55,7 +55,14 @@
 					</div>
 				</div>
 				<div v-if="info2.role == '학생'" class="row">
-					<AtomSearchIconButton style="font-size: 30px"></AtomSearchIconButton>
+					<router-link
+						:to="{ name: 'studyRoom' }"
+						style="text-decoration: none; color: inherit"
+					>
+						<AtomSearchIconButton
+							style="font-size: 30px"
+						></AtomSearchIconButton>
+					</router-link>
 				</div>
 				<div v-if="info2.role == '학생'" class="row">
 					<router-link
