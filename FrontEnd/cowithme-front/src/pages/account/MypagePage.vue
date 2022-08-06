@@ -37,61 +37,22 @@
 							color="brand"
 							bg-color="white"
 						></q-input>
-						<IDChkButton class="flex q-pr-lg q-py-sm"></IDChkButton>
+						<q-input
+							class="q-ma-lg q-pr-lg"
+							rounded
+							outlined
+							name="email"
+							type="email"
+							clearable
+							v-model="email"
+							label="이메일"
+							lazy-rules
+							color="brand"
+							bg-color="white"
+						></q-input>
 					</div>
-					<q-input
-						name="password"
-						class="q-ma-lg q-pr-lg"
-						rounded
-						clearable
-						outlined
-						type="password"
-						v-model="password"
-						label="비밀번호"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
-					<q-input
-						name="role"
-						class="q-ma-lg q-pr-lg"
-						rounded
-						clearable
-						outlined
-						type="text"
-						v-model="role"
-						label="역할"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
-					<q-input
-						class="q-pr-lg q-ma-lg"
-						rounded
-						outlined
-						type="password"
-						v-model="passwordCheck"
-						label="비밀번호 확인"
-						lazy-rules
-						clearable
-						color="brand"
-						bg-color="white"
-					></q-input>
 				</div>
 				<div class="col q-ml-sm">
-					<q-input
-						class="q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						name="email"
-						type="email"
-						clearable
-						v-model="email"
-						label="이메일"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
 					<q-input
 						name="phone"
 						class="q-ma-lg q-pr-lg"
@@ -118,17 +79,6 @@
 						bg-color="white"
 					></q-input>
 					<q-input
-						name="profilePath"
-						class="q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						clearable
-						v-model="profilePath"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-					></q-input>
-					<q-input
 						name="birthDt"
 						class="q-ma-lg q-pr-lg"
 						rounded
@@ -139,6 +89,23 @@
 						clearable
 						color="brand"
 						bg-color="white"
+					></q-input>
+					<q-input
+						name="profilePath"
+						class="q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						clearable
+						type="file"
+						lazy-rules
+						hint="프로필 사진 등록"
+						color="brand"
+						bg-color="white"
+						@update:model-value="
+							val => {
+								file = val[0];
+							}
+						"
 					></q-input>
 				</div>
 			</div>
@@ -177,7 +144,7 @@ const phone = ref(`${info.phone}`);
 const nickname = ref(`${info.nickname}`);
 const birthDt = ref(`${info.birthDt}`);
 const password = ref('');
-const profilePath = ref(`${info.profilePath}`);
+const file = ref(null);
 const role = ref(`${info.role}`);
 
 async function goEditInfo() {
@@ -189,7 +156,7 @@ async function goEditInfo() {
 		nickname: nickname.value,
 		birthDt: birthDt.value,
 		password: password.value,
-		profilePath: profilePath.value,
+		profilePath: file.value,
 		role: role.value,
 	};
 	const usersStore = useUsersStore();
