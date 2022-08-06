@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @ApiModel("WebTokenPostReq")
 public class WebTokenPostReq {
-    @ApiModelProperty(name = "사용자 식별자", example = "ssafy")
-    String id;
-    @ApiModelProperty(name = "반 이름", example = "서울 1반")
-    String className;
+    @ApiModelProperty(name = "사용자 식별자", example = "1")
+    Long id;
+    @ApiModelProperty(name = "반 식별자", example = "1")
+    Long classId;
     @ApiModelProperty(name = "방 닉네임", example = "짱구")
     String displayName;
 }

@@ -44,6 +44,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         Long conferenceId = attendanceRegisterPostReq.getConferenceId();
 
         Conference conference = conferenceRepository.findByConferenceId(conferenceId).get();
+
         User user = userRepository.findByUserId(userId).get();
         Date date = new Date();
 

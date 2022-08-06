@@ -2,8 +2,11 @@ package com.ssafy.api.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.ssafy.api.request.ForceClosePostReq;
+import com.ssafy.api.request.LeaveSessionPostReq;
 import com.ssafy.api.request.WebTokenPostReq;
 import com.ssafy.api.service.OpenViduService;
+import com.ssafy.api.service.WebRTCService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -27,6 +31,9 @@ public class WebRTCController {
     @Autowired
     OpenViduService openViduService;
 
+    @Autowired
+    WebRTCService webRTCService;
+
     @PostMapping("/getToken")
     @ApiOperation(value = "화상회의 토큰 발급", notes = "사용자의 정보를 통해 맞는 수업의 토큰을 발급한다.")
     @ApiResponses({
@@ -37,11 +44,20 @@ public class WebRTCController {
     })
     public ResponseEntity<Map<String, Object>> joinUser(
             @RequestBody @ApiParam(value = "토큰 발급 정보", required = true) WebTokenPostReq webTokenPostReq
-        ) {
-
+    ) {
+        Map<String, Object> map =new HashMap<>();
+        try {
+           String token =  webRTCService.joinUser(webTokenPostReq);
+           map.put("message", "Success");
+           map.put("token", token);
+            return ResponseEntity.status(200).body(map);
+        } catch (Exception e) {
+            map.put("message", e.getMessage());
+            return ResponseEntity.status(404).body(map);
+        }
     }
 
-    @RequestMapping(value = "/leaveSession", method = RequestMethod.POST)
+    @PostMapping("/leaveSession")
     @ApiOperation(value = "화상회의 종료", notes = "사용자가 수업에서 나갈때 호출하는 API. DB에 관련 내용을 업데이트 한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -49,50 +65,41 @@ public class WebRTCController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    // TODO: 2022-08-04 : Request 형식 정하기
-    public String removeUser(
-            @RequestParam(name = "conferenceID") String conferenceID,
-            @RequestParam(name = "token") String token) throws Exception {
-
-        // 해당 토큰이 누구의 토큰인지 찾는다.
-        String user = openViduService.findUser(conferenceID, token);
-        // TODO: 2022-08-05 : 출입기록에 퇴장시간 기록
-
-
-        // 방에서 해당 유저를 제거한 뒤, 해당 방에 더 이상 아무도 남지 않았으면 true 반환
-        boolean isEmpty = openViduService.removeUser(conferenceID, token);
-        if (isEmpty) {
-            // TODO: 2022-08-05 : DB에 해당 confernce is_active = false 처리.
+    public ResponseEntity<Map<String, Object>> removeUser(
+            @RequestBody @ApiParam(value = "화상 회의 종료 정보", required = true) LeaveSessionPostReq leaveSessionPostReq
+    ) throws Exception {
+        Map<String, Object> map =new HashMap<>();
+        try {
+            map.put("message", "Success");
+            return ResponseEntity.status(200).body(map);
+        }catch (Exception e){
+            map.put("message", e.getMessage());
+            return ResponseEntity.status(500).body(map);
         }
 
-        return "success";
     }
 
-    @RequestMapping(value = "/forceCloseSession", method = RequestMethod.POST)
-    @ApiOperation(value = "화상회의 강제종료", notes = "해당 방을 강제로 종료하고 모든 유저를 밖으로 내보내는 API.")
+    @PostMapping("/forceCloseSession")
+    @ApiOperation(value = "화상회의 전체종료", notes = "해당 방을 전체 종료하고 모든 유저를 밖으로 내보내는 API.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    // TODO: 2022-08-04 : Request 형식 정하기
-    public String forceCloseSession(
-            @RequestParam(name = "ConferenceID") String ConferenceID,
-            @RequestParam(name = "token") String token) throws Exception {
+    public ResponseEntity<Map<String, Object>>  forceCloseSession(
+            @RequestBody @ApiParam(value = "회의 전체 종료 정보", required = true)ForceClosePostReq forceClosePostReq
+    ) throws Exception {
 
-        // TODO: 2022-08-05 : is_active = true인 해당 conference가 존재하는지 check
-        // TODO: 2022-08-05 : 요청한 user가 해당 conference의 owner_id와 일치 하는지 check
-
-        if (ConferenceID != null) {
-            openViduService.closeSession(ConferenceID);
-            // TODO: 2022-08-05 : DB에 해당 confernce is_active = false 처리.
-            // TODO: 2022-08-05 : 출입 기록 받아와서 퇴장시간이 null인 데이터를 현재 시간으로 변경
+        Map<String, Object> map =new HashMap<>();
+        try {
+            map.put("message", "Success");
+            return ResponseEntity.status(200).body(map);
+        }catch (Exception e){
+            map.put("message", e.getMessage());
+            return ResponseEntity.status(500).body(map);
         }
-
-        return "success";
     }
 
+    @GetMapping("/status/{classID}")
     @ApiOperation(value = "해당 반의 conference status", notes = "요청한 반의 class Conference가 열려있는지 찾아서 반환한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -100,8 +107,6 @@ public class WebRTCController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    @GetMapping("/status/{classID}")
-    // TODO: 2022-08-05 : Request 형식 정하기
     public String conferenceStatus(@PathVariable String classID) {
 
         // TODO: 2022-08-05 : 요청한 user가 해당 classID 소속인지 check
