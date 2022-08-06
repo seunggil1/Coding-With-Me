@@ -12,9 +12,9 @@ import io.openvidu.java.client.*;
 class SessionInfo{
     Session session;
     // UserID, Connection
-    Map<String, Connection> connectionIDMap = new ConcurrentHashMap<>();
+    Map<Long, Connection> connectionIDMap = new ConcurrentHashMap<>();
     // Token, userId
-    Map<String,String> tokenIDMap = new ConcurrentHashMap<>();
+    Map<String,Long> tokenIDMap = new ConcurrentHashMap<>();
 
     SessionInfo(Session session){
         this.session = session;
@@ -24,7 +24,7 @@ class SessionInfo{
 public class OpenViduServiceImpl implements OpenViduService {
 
     // Session ID
-    private Map<String, SessionInfo> SessionInfoMap = new ConcurrentHashMap<>();
+    private Map<Long, SessionInfo> SessionInfoMap = new ConcurrentHashMap<>();
     // Map<SessionID, Map<토큰, 유저 ID>
 
     private OpenVidu openVidu;
@@ -36,7 +36,7 @@ public class OpenViduServiceImpl implements OpenViduService {
 
 
     @Override
-    public String getToken(String sessionId, String userId, String displayName) throws OpenViduException {
+    public String getToken(Long sessionId, Long userId, String displayName) throws OpenViduException {
         String serverData = "{\"serverData\": \"" + displayName + "\"}";
 
         // Role은 3가지
@@ -98,7 +98,7 @@ public class OpenViduServiceImpl implements OpenViduService {
     }
 
     @Override
-    public boolean removeUser(String sessionId, String token) {
+    public boolean removeUser(Long sessionId, String token) {
         SessionInfo targetSessionInfo = SessionInfoMap.get(sessionId);
 
         // 이미 방이 존재하지 않음.
@@ -107,7 +107,7 @@ public class OpenViduServiceImpl implements OpenViduService {
         }
 
         // If the session exists ("TUTORIAL" in this case)
-        String userID = targetSessionInfo.tokenIDMap.get(token);
+        Long userID = targetSessionInfo.tokenIDMap.get(token);
         if(userID != null){
             Connection connection = targetSessionInfo.connectionIDMap.get(userID);
             if(connection != null){
@@ -135,7 +135,7 @@ public class OpenViduServiceImpl implements OpenViduService {
     }
 
     @Override
-    public boolean closeSession(String sessionId) {
+    public boolean closeSession(Long sessionId) {
         SessionInfo targetSession = SessionInfoMap.get(sessionId);
 
         if(targetSession == null){
@@ -175,7 +175,7 @@ public class OpenViduServiceImpl implements OpenViduService {
         return true;
     }
 
-    private Session makeSession(String sessionId) throws OpenViduException{
+    private Session makeSession(Long sessionId) throws OpenViduException{
         try{
             // 화면 녹화 설정
 //            RecordingProperties recordingProperties = new RecordingProperties.Builder()
@@ -199,7 +199,7 @@ public class OpenViduServiceImpl implements OpenViduService {
     }
 
     @Override
-    public String findUser(String sessionId, String token){
+    public Long findUser(Long sessionId, String token){
         SessionInfo targetSessionInfo = SessionInfoMap.get(sessionId);
 
         if(targetSessionInfo == null){
