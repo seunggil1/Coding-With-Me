@@ -8,7 +8,9 @@
 			</div>
 		</q-form>
 		<div v-for="res in studentResult" :key="res.userId">
-			{{ res.name }}
+			<q-btn @click="addStudent(res.userId)">
+				{{ res.name }}
+			</q-btn>
 		</div>
 	</div>
 </template>
@@ -28,8 +30,19 @@ export default {
 				studentResult.value = res.data.users;
 			});
 		}
-		console.log(studentResult.value);
-		return { name, goSearchStudent, studentResult };
+
+		function addStudent(userId) {
+			api
+				.post(`/tutor/classes/student`, {
+					className: JSON.parse(localStorage.getItem('className')),
+					studentId: userId,
+					tutorId: 1,
+				})
+				.then(res => {
+					console.log(res.message);
+				});
+		}
+		return { name, goSearchStudent, studentResult, addStudent };
 	},
 };
 </script>
