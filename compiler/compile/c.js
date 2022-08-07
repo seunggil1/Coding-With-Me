@@ -8,7 +8,7 @@ exports.check = async (code,inputData,answerData) => {
   try {
     sourceFile = await fs.writeFile('main.c',code);
     await fs.writeFile('./input.in', inputData);
-  } catch (error) { // ÆÄÀÏ ¾²±â ½ÇÆÐ
+  } catch (error) { // íŒŒì¼ ì“°ê¸° ì‹¤íŒ¨
     console.log(error);
     return {
       time : 0,
@@ -17,13 +17,14 @@ exports.check = async (code,inputData,answerData) => {
     };
   }
 
+  const compileOption = require('./compile/compileOption.js');
   try {
     await exec("gcc -finput-charset=UTF-8 main.c");
     let pre_time = Date.now();
-    let run = await exec(`./a.out < ./input.in`);
+    let run = await exec(`./a.out < ./input.in`, { timeout: compileOption.timeLimit });
     let cur_time = Date.now();
 
-    try { // »ç¿ëÇÑ ÆÄÀÏ Á¦°Å
+    try { // ì‚¬ìš©í•œ íŒŒì¼ ì œê±°
       await fs.unlink('main.c');
       await fs.unlink('a.out');
       await fs.unlink('input.in');
@@ -35,7 +36,7 @@ exports.check = async (code,inputData,answerData) => {
       success : (run.stdout.trim() == answerData)
     };
 
-  } catch (error) { // ÄÄÆÄÀÏ, ·±Å¸ÀÓ ¿À·ù
+  } catch (error) { // ì‹œê°„ ì´ˆê³¼ or ì»´íŒŒì¼, ëŸ°íƒ€ìž„ ì˜¤ë¥˜
     console.log(error);
     try {
       await fs.unlink('main.c');
@@ -45,11 +46,18 @@ exports.check = async (code,inputData,answerData) => {
       console.log(error);
      }
 
-    return {
-      time : 0,
-      output : error.stderr,
-      success : false
-    };
-
+    if(error.killed){
+      return {
+        time : compileOption.timeLimit,
+        output : compileOption.timeLimitMessage,
+        success : false
+      };
+    }else{
+      return {
+        time : 0,
+        output : error.stderr,
+        success : false
+      };
+    }
   }
 }
