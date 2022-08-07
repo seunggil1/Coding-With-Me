@@ -32,6 +32,7 @@ export const useAuthStore = defineStore({
 					password,
 				});
 				var token_message = user;
+				console.log(token_message);
 				var token = token_message.accessToken;
 
 				var decoded = jwt_decode(token);
@@ -70,12 +71,7 @@ export const useAuthStore = defineStore({
 		},
 		// 로그아웃 함수
 		logout() {
-			this.user = null;
-			this.token = null;
-			this.info = null;
-			localStorage.removeItem('user');
-			localStorage.removeItem('token');
-			localStorage.removeItem('info');
+			localStorage.clear();
 		},
 	},
 });

@@ -1,6 +1,6 @@
 <template>
 	<div class="q-pa-md">
-		<q-btn push>{{ className2 }}의 강의 생성하기</q-btn>
+		<q-btn push>{{ className }}의 강의 생성하기</q-btn>
 		<!-- <VueLogo></VueLogo> -->
 		<div class="box2 q-mb-md">
 			<q-btn push>강의 시작</q-btn>
@@ -25,7 +25,7 @@
 // import VueLogo from 'src/assets/logo/logo2.svg';
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
-import { onBeforeMount } from 'vue';
+// import { onBeforeMount } from 'vue';
 import { ref } from 'vue';
 
 export default {
@@ -33,7 +33,7 @@ export default {
 	// components: { VueLogo },
 	props: {
 		classId: {
-			type: String,
+			type: Number,
 			// required: true,
 		},
 		className: {
@@ -53,23 +53,21 @@ export default {
 		const students = ref([]);
 		const router = useRouter();
 
-		onBeforeMount(async () => {
-			const userId = props.userId;
-			const className = props.className;
-			try {
-				// console.log(props.className);
-				const temp = await api.get(`/tutor/${userId}/classes/${className}`);
-				students.value.push(temp.students);
-				localStorage.setItem('students', JSON.stringify(students.value));
-				localStorage.setItem('className', JSON.stringify(props.className));
-				localStorage.setItem('classId', JSON.stringify(props.classId));
+		localStorage.setItem('students', JSON.stringify(students.value));
+		localStorage.setItem('className', JSON.stringify(props.className));
+		localStorage.setItem('classId', JSON.stringify(props.classId));
+		localStorage.setItem('userId', props.userId);
+
+		api
+			.get(`/tutor/${props.userId}/classes/${props.className}`)
+			.then(res => {
+				students.value = res.data.students;
 				console.log(students.value);
-			} catch (error) {
-				console.log(error);
-			}
-		});
-		// function () {
-		// 	api
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		// students.value.push(temp.students);
 
 		// 		.get(`/tutor/${userId}/classes/${className}`)
 		// 		.then(res => {
@@ -85,9 +83,8 @@ export default {
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
-		const className2 = JSON.parse(localStorage.getItem('className'));
 
-		return { goAddStudent, className2 };
+		return { goAddStudent };
 	},
 };
 </script>

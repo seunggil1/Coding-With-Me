@@ -45,9 +45,10 @@
 </template>
 
 <script>
+import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
-import { onBeforeMount } from 'vue';
-import { fetchWrapper } from 'src/helpers';
+// import { onBeforeMount } from 'vue';
+// import { fetchWrapper } from 'src/helpers';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 // import { useClassStore } from 'src/stores';
@@ -63,15 +64,12 @@ export default defineComponent({
 	setup() {
 		// const classStore = useClassStore();
 		const classes = ref([]);
+		const testTest = ref([]);
 		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
 		const baseUrl = `${HOST}`;
-		const testTest = ref([]);
 
 		const router = useRouter();
 
-		async function makeClass() {
-			await router.push({ path: '/makeClass' });
-		}
 		var user2 = null;
 		var info2 = null;
 		const user = localStorage.getItem('user');
@@ -82,46 +80,44 @@ export default defineComponent({
 		if (typeof info !== 'undefined') {
 			info2 = JSON.parse(info);
 		}
+
 		// console.log(user2);
 		// console.log(info2);
+		const userId = info2.userId;
+		console.log(userId);
+		if (info2.role == '강사') {
+			// 강사일 경우 반 정보를 불러옴
+			api
+				.get(`${baseUrl}/tutor/${userId}/classes`)
+				.then(res => {
+					console.log(res);
+					console.log(res.data);
+					classes.value = res.data.classes;
+					localStorage.setItem('classes', JSON.stringify(res.data.classes));
+				})
+				.catch(err => {
+					console.log(err);
+				});
+			// classes.value.push(...temp.classes);
+			// console.log(temp.classes);
+			// console.log(classes.value);
+			// console.log(classes.value[0]);
+		}
 
-		onBeforeMount(async () => {
-			if (info2.role == '강사') {
-				// 강사일 경우 반 정보를 불러옴
-				try {
-					const userId = info2.userId;
-					const temp = await fetchWrapper.get(
-						`${baseUrl}/tutor/${userId}/classes`,
-					);
-					classes.value.push(...temp.classes);
-					localStorage.setItem('classes', JSON.stringify(temp.classes));
-					// console.log(temp.classes);
-					// console.log(classes.value);
-					// console.log(classes.value[0]);
-				} catch (error) {
-					console.log(error);
-				}
-			}
-		});
-
-		onBeforeMount(async () => {
-			try {
-				var res = await fetchWrapper.get(`${baseUrl}/users/2/class`);
-				testTest.value.push(res.value);
-				localStorage.setItem('testTest', JSON.stringify(res.value));
-				// console.log(testTest);
-			} catch (error) {
-				console.log(error);
-			}
-			// classStore.getClass(info2.userId);
-		});
-
-		// async function goClassDetail() {
-		// 	await router.push({
-		// 		path: '/classDetail',
-		// 		params: { classId: clas.classId },
-		// 	});
-		// }
+		if (info2.role == '학생') {
+			api
+				.get(`${baseUrl}/users/${userId}/class`)
+				.then(res => {
+					testTest.value = res.value;
+					localStorage.setItem('testTest', JSON.stringify(res.value));
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
+		async function makeClass() {
+			await router.push({ path: '/makeClass' });
+		}
 
 		return {
 			user2,

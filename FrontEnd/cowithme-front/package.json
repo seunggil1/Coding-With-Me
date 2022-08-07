@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@vueuse/core": "^9.1.0",
     "axios": "^0.27.2",
+    "iconv-lite": "^0.6.3",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.17",
     "quasar": "^2.6.0",

@@ -31,8 +31,9 @@
 </template>
 
 <script>
-import { fetchWrapper } from 'src/helpers';
-import { onBeforeMount } from 'vue';
+// import { fetchWrapper } from 'src/helpers';
+// import { onBeforeMount } from 'vue';
+import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
 
 export default {
@@ -46,19 +47,14 @@ export default {
 	setup(props) {
 		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
 		const baseUrl = `${HOST}`;
-		const records = ref([]);
-		onBeforeMount(async () => {
-			try {
-				const userId = props.userId;
-				const temp = await fetchWrapper.get(
-					`${baseUrl}/records/${userId}/tests`,
-				);
-				records.value.push(...temp.records);
-			} catch (error) {
-				console.log(error);
-			}
+		const records = ref({});
+
+		api.get(`${baseUrl}/records/${props.userId}/tests`).then(res => {
+			records.value = res.data;
+			localStorage.setItem('records', JSON.stringify(res.data.records));
+			console.log(records.value);
 		});
-		console.log(records);
+
 		return { records };
 	},
 };

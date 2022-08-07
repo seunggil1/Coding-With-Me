@@ -8,7 +8,9 @@ const baseUrl = 'http://i7a304.p.ssafy.io:8080/api/v1';
 export const useClassStore = defineStore({
 	id: 'class',
 	state: () => ({
-		userClass: null,
+		userClass: localStorage.getItem('userClass')
+			? JSON.parse(localStorage.getItem('userClass'))
+			: [],
 	}),
 	getters: {
 		getUserClassInfo(state) {
@@ -25,8 +27,9 @@ export const useClassStore = defineStore({
 				const userClassInfo = await fetchWrapper.get(
 					`${baseUrl}/users/2/class`,
 				);
-				this.userClass = userClassInfo.result;
-				console.log(this.userClass);
+				localStorage.setItem('userClass', JSON.stringify(userClassInfo.result));
+				// this.userClass = userClassInfo.result;
+				// console.log(this.userClass);
 			} catch (error) {
 				console.log(error);
 			}

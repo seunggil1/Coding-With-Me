@@ -8,6 +8,7 @@ const routes = [
 				path: '/',
 				name: 'home',
 				component: () => import('pages/IndexPage.vue'),
+				// redirect: '/',
 			},
 			{
 				path: '/makeClass',
@@ -26,6 +27,7 @@ const routes = [
 				name: 'classDetail',
 				props: true,
 				component: () => import('pages/teacher/classDetailPage.vue'),
+				// redirect: '/classDetail/:classId',
 			},
 			{
 				path: '/makeExam/:classId',
