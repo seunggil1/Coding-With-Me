@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-videos" v-show="sub">
+  <div class="sub-videos">
     <!-- <div class="sub-video">
       <UserVideo :streamManager="props.streamManager"></UserVideo>
     </div> -->

@@ -1,5 +1,7 @@
 import MainLayout from 'layouts/MainLayout.vue';
 import VideoLayout from 'layouts/VideoLayout.vue';
+import LectureLayout from 'layouts/LectureLayout.vue';
+import ExamLayout from 'src/layouts/TeacherExamLayout.vue';
 
 const routes = [
   {
@@ -10,7 +12,14 @@ const routes = [
     path: '/video',
     component: VideoLayout,
   },
-
+  {
+    path: '/lecture',
+    component: LectureLayout,
+  },
+  {
+    path: '/exam',
+    component: ExamLayout,
+  },
   {
 		path: '/layout',
 		component: () => import('layouts/GoldenLayout.vue')

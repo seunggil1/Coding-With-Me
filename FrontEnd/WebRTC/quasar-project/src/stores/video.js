@@ -1,7 +1,7 @@
 import { OpenVidu } from "openvidu-browser";
 import { defineStore } from "pinia";
 import axios from "axios";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -30,10 +30,88 @@ export const useVideoStore = defineStore('video', () => {
     myCode : ''
   })
 
-  const isChat = ref(false); // 채팅창 보여줄까 말까
-  const isParti = ref(false); // 참가자 보여줄까 말까
+  const rightDrawerOpen = ref(true); // 참여자 + 채팅창. ture면 on
+  function setRightDrawer() {
+    rightDrawerOpen.value =! rightDrawerOpen.value;
+  }
+
   const isAudio = ref(true); // 자기 비디오 켜져있는지 여부. true면 on
+  function muteAudio() {
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. muteAudio is canceled.');
+      return;
+    }
+    state.value.publisher.publishAudio(false);
+    isAudio.value = !isAudio.value;
+  }
+
+  function unmuteAudio(){
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. umMuteAudio is canceled.');
+      return;
+    }
+    state.value.publisher.publishAudio(true);
+    isAudio.value = !isAudio.value;
+  }
   const isVideo = ref(true); // 자기 비디오 꺼져있는지 여부. true면 on
+  function muteVideo(){
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. muteVideo is canceled.');
+      return;
+    }
+    state.value.publisher.publishVideo(false);
+    isVideo.value = !isVideo.value;
+  }
+
+  function unmuteVideo(){
+    if(state.value.publisher == undefined){
+      console.log('session is not connected. unmutedVideo is canceled.');
+      return;
+    }
+    state.value.publisher.publishVideo(true);
+    isVideo.value = !isVideo.value;
+  }
+
+  const isScreen = ref(false);
+  function startScreenShare() {
+    state.value.screenOV = new OpenVidu();
+    state.value.screenSession = state.value.screenOV.initSession();
+
+    getToken(state.value.mySessionId).then(token =>{
+      state.value.screenSession.connect(token, { clientData: state.value.screenShareName }).then(()=>{
+          let publisher = state.value.screenOV.initPublisher("html-element-id", { videoSource: "screen", publishAudio: false });
+          isScreen.value = !isScreen.value;
+          try {
+            publisher.once('accessAllowed', () => {
+            publisher.stream.getMediaStream().getVideoTracks()[0].addEventListener('ended', () => {
+              console.log('User pressed the "Stop sharing" button');
+              stopScreenShare();
+            });
+              state.value.screenSession.publish(publisher);
+            });
+
+            publisher.once('accessDenied', (event) => {
+              console.error(event, 'ScreenShare: Access Denied');
+              stopScreenShare();
+            });
+          } catch (error) {
+            console.log(error);
+          }
+      })
+    }).catch(error => {
+      console.error(error);
+      state.value.screenOV = undefined;
+      state.value.screenSession = undefined;
+    })
+    // let last = state.value.subscribers[state.value.subscribers.length - 1];
+  }
+
+  function stopScreenShare() {
+    state.value.screenSession.disconnect();
+    state.value.screenOV = undefined;
+    state.value.screenSession = undefined;
+    isScreen.value = !isScreen.value;
+  }
 
   function joinSession() {
     state.value.OV = new OpenVidu();
@@ -122,42 +200,6 @@ export const useVideoStore = defineStore('video', () => {
     window.removeEventListener('beforeunload', leaveSession);
   }
 
-  function muteAudio() {
-    if(state.value.publisher == undefined){
-      console.log('session is not connected. muteAudio is canceled.');
-      return;
-    }
-    state.value.publisher.publishAudio(false);
-    isAudio = ref(false);
-  }
-
-  function unmuteAudio(){
-    if(state.value.publisher == undefined){
-      console.log('session is not connected. umMuteAudio is canceled.');
-      return;
-    }
-    state.value.publisher.publishAudio(true);
-    isAudio = ref(true);
-  }
-
-  function muteVideo(){
-    if(state.value.publisher == undefined){
-      console.log('session is not connected. muteVideo is canceled.');
-      return;
-    }
-    state.value.publisher.publishVideo(false);
-    isVideo = ref(false);
-  }
-
-  function unmuteVideo(){
-    if(state.value.publisher == undefined){
-      console.log('session is not connected. unmutedVideo is canceled.');
-      return;
-    }
-    state.value.publisher.publishVideo(true);
-    isVideo = ref(true);
-  }
-
   // serverSide start. Backend가 완성되면 변경 필요.
   async function getToken(mySessionId) {
     const id = await createSession(mySessionId);
@@ -208,45 +250,6 @@ export const useVideoStore = defineStore('video', () => {
   }
 
   // serverSide end.
-
-  function startScreenShare() {
-    state.value.screenOV = new OpenVidu();
-    state.value.screenSession = state.value.screenOV.initSession();
-
-    getToken(state.value.mySessionId).then(token =>{
-      state.value.screenSession.connect(token, { clientData: state.value.screenShareName }).then(()=>{
-          let publisher = state.value.screenOV.initPublisher("html-element-id", { videoSource: "screen", publishAudio: false });
-
-          try {
-            publisher.once('accessAllowed', () => {
-            publisher.stream.getMediaStream().getVideoTracks()[0].addEventListener('ended', () => {
-              console.log('User pressed the "Stop sharing" button');
-              stopScreenShare();
-            });
-              state.value.screenSession.publish(publisher);
-            });
-
-            publisher.once('accessDenied', (event) => {
-              console.error(event, 'ScreenShare: Access Denied');
-              stopScreenShare();
-            });
-          } catch (error) {
-            console.log(error);
-          }
-          
-      })
-    }).catch(error => {
-      console.error(error);
-      state.value.screenOV = undefined;
-      state.value.screenSession = undefined;
-    })
-  }
-
-  function stopScreenShare() {
-    state.value.screenSession.disconnect();
-    state.value.screenOV = undefined;
-    state.value.screenSession = undefined;
-  }
 
   function updateMainVideoStreamManager(stream) {
     if (state.value.mainStreamManager === stream) {
@@ -307,10 +310,11 @@ export const useVideoStore = defineStore('video', () => {
 
   return {
     state,
-    isChat,
-    isParti,
+    rightDrawerOpen,
+    setRightDrawer,
     isAudio,
     isVideo,
+    isScreen,
     joinSession,
     leaveSession,
     getToken,

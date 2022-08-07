@@ -6,7 +6,6 @@
 <script>
 
 import { reactive, ref, computed, onMounted, onUpdated } from 'vue';
-import { useVideoStore } from 'src/stores/video.js'
 
 export default {
     name : 'UserVideo',
@@ -16,9 +15,6 @@ export default {
 	},
 
     setup(props) {
-
-        const video = useVideoStore(); // store 가져오기
-        const sub = video.state.subscribers;
 
         const state = reactive({
             clientData : computed(() =>{
@@ -34,13 +30,13 @@ export default {
 
         const videoStream = ref(null);
         onMounted(() => {
-            console.log(videoStream);
-            console.log(videoStream.value);
+            console.log('onMounted: ', videoStream);
+            console.log('onMounted: ', videoStream.value);
             props.streamManager.addVideoElement(videoStream.value);
         });
 
         onUpdated(() => {
-            console.log(videoStream.value);
+            console.log('onUpdated: ', videoStream.value);
             props.streamManager.addVideoElement(videoStream.value);
         });
         

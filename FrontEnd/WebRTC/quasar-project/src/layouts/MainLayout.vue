@@ -61,7 +61,11 @@ export default {
 
 		const joinSession = () => {
 			video.joinSession(); // 세션 시작
-			router.push('/video');
+
+			// 세션에서 정보 받아오는게 컴포넌트 로딩되는 것보다 오래 걸려서 강제 시간 걸리게 설정
+			setTimeout(() => {
+				router.push('/lecture');
+			}, 3000);
 		}
 
 		return {
