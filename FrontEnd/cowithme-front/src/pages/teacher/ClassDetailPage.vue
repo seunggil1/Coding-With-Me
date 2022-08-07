@@ -42,6 +42,7 @@
 <script>
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
+import { onMounted } from 'vue';
 
 import { ref } from 'vue';
 // import AtomBasic2Button from 'src/components/atoms/AtomBasic2Button.vue';
@@ -65,6 +66,12 @@ export default {
 	setup(props) {
 		const students = ref([]);
 		const router = useRouter();
+		onMounted(async () => {
+			localStorage.setItem('students', students.value);
+			localStorage.setItem('className', props.className);
+			localStorage.setItem('classId', props.classId);
+			localStorage.setItem('userId', props.userId);
+		});
 		localStorage.setItem('students', students.value);
 		localStorage.setItem('className', props.className);
 		localStorage.setItem('classId', props.classId);
