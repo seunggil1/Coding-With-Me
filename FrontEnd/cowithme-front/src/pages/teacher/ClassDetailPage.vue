@@ -9,11 +9,9 @@
 		<div class="flex row">
 			<div class="box col-6">
 				<div v-for="student in students" :key="student.userId">
-					{{ student.name }}
+					{{ student.name }}({{ student.nickname }})
 				</div>
-				<router-link
-					:to="{ path: '/addStudent', params: { classId: classId } }"
-				>
+				<router-link :to="{ name: 'addStudent', params: { classId: classId } }">
 					<q-btn push>학생 추가</q-btn>
 				</router-link>
 			</div>

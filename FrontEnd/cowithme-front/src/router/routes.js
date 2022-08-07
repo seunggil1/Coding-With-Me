@@ -20,6 +20,7 @@ const routes = [
 			},
 			{
 				path: '/addStudent',
+				name: 'addStudent',
 				component: () => import('pages/teacher/AddStudentPage.vue'),
 			},
 			{

@@ -7,6 +7,9 @@
 				<q-btn push label="검색하기" type="submit" color="primary" />
 			</div>
 		</q-form>
+		<div v-for="res in studentResult" :key="res.userId">
+			{{ res.name }}
+		</div>
 	</div>
 </template>
 
@@ -20,12 +23,12 @@ export default {
 		const name = ref('');
 		const studentResult = ref([]);
 
-		function goSearchStudent(name) {
-			api.get(`users/name/${name}`).then(res => {
+		function goSearchStudent() {
+			api.get(`users/name/${name.value}`).then(res => {
 				studentResult.value = res.data.users;
-				console.log(studentResult.value);
 			});
 		}
+		console.log(studentResult.value);
 		return { name, goSearchStudent, studentResult };
 	},
 };
