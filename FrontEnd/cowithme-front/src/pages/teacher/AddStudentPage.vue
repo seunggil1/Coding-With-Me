@@ -72,7 +72,6 @@ export default {
 <style lang="scss" scoped>
 .box {
 	min-height: 300px;
-	/* width: 100%; */
 	background-color: #eeeeee;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);

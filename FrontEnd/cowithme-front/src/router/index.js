@@ -33,6 +33,7 @@ export default route(function (/* { store, ssrContext } */) {
 		// quasar.conf.js -> build -> publicPath
 		history: createHistory(process.env.VUE_ROUTER_BASE),
 	});
+	// 로그인 되어있지 않을 시 조치하는 부분
 
 	// Router.beforeEach(async to => {
 	// 	// redirect to login page if not logged in and trying to access a restricted page

@@ -50,7 +50,6 @@ const routes = [
 		],
 	},
 	// 로그인/회원가입
-	// { path: '/test', component: () => import('components/TestComp.vue') },
 	{
 		path: '/login',
 		component: () => import('pages/account/LoginPage.vue'),
@@ -74,7 +73,6 @@ const routes = [
 		name: 'homepage',
 		component: () => import('pages/StudentHomePage.vue'),
 	},
-	// 반
 	// Always leave this as last one,
 	// but you can also remove it
 	{

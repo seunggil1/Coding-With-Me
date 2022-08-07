@@ -7,7 +7,7 @@
 			<q-btn push>만들어져 있는 강의들 리스트(아직 연결 안 됨)</q-btn>
 		</div>
 		<div class="flex row">
-			<div class="box col-6">
+			<div class="box q-pa-md col-5">
 				<div v-for="student in students" :key="student.userId">
 					{{ student.name }}({{ student.nickname }})
 				</div>
@@ -22,11 +22,13 @@
 						},
 					}"
 				>
-					<q-btn push>학생 추가</q-btn>
+					<q-btn style="text-decoration: none; color: inherit" push>
+						학생 추가
+					</q-btn>
 				</router-link>
 			</div>
 			<div class=""></div>
-			<div class="box col-6">
+			<div class="box col-5 q-pa-md">
 				시험 목록 및 생성
 				<router-link
 					:to="{ name: 'makeExam', params: { classId: classId } }"
@@ -42,10 +44,7 @@
 <script>
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
-import { onMounted } from 'vue';
-
 import { ref } from 'vue';
-// import AtomBasic2Button from 'src/components/atoms/AtomBasic2Button.vue';
 
 export default {
 	name: 'ClassDetailPage',
@@ -66,16 +65,12 @@ export default {
 	setup(props) {
 		const students = ref([]);
 		const router = useRouter();
-		onMounted(async () => {
-			localStorage.setItem('students', students.value);
-			localStorage.setItem('className', props.className);
-			localStorage.setItem('classId', props.classId);
-			localStorage.setItem('userId', props.userId);
-		});
+
 		localStorage.setItem('students', students.value);
 		localStorage.setItem('className', props.className);
 		localStorage.setItem('classId', props.classId);
 		localStorage.setItem('userId', props.userId);
+
 		// 해당 반의 학생 리스트를 불러옵니다.
 		api
 			.get(`/tutor/1/classes/${props.className}`)

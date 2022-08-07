@@ -3,7 +3,6 @@
 		<div class="q-gutter-md">
 			<div class="class-info">
 				<div class="col q-ma-lg">
-					<!-- 반, 강의제목, 날짜 -->
 					<div class="info" style="margin-bottom: 20px">
 						<p style="font-size: 40px">개나리반의 강의</p>
 						<p style="font-size: 18px">제목: 프로젝트 1</p>
@@ -54,8 +53,4 @@ export default {
 	margin-top: 60px;
 	margin-left: 20px;
 }
-
-// .info {
-// 	margin-top: 150px;
-// }
 </style>

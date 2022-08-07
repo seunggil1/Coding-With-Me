@@ -1,11 +1,19 @@
 <template>
 	<div>
-		<div>선생님이 흠냐뤼 반을 만들 수 있다.</div>
-		<div id="q-app" style="min-height: 100vh">
-			<div class="q-pa-md" style="max-width: 400px">
+		<div
+			id="q-app"
+			class="q-pb-md q-pl-md"
+			style="font-family: 'Elice Digital Baeum', sans-serif"
+		>
+			<div class="q-pa-md" style="max-width: 700px">
+				<h2>새로운 반 만들기</h2>
 				<q-form @submit="goMakeClass" @reset="onReset" class="q-gutter-md">
 					<q-input
 						filled
+						name="className"
+						rounded
+						outlined
+						bg-color="white"
 						v-model="className"
 						label="반 이름"
 						lazy-rules
@@ -15,27 +23,30 @@
 					></q-input>
 
 					<q-input
+						rounded
+						outlined
 						filled
 						type="text"
 						v-model="classDescription"
 						label="반 설명"
+						bg-color="white"
 						lazy-rules
 						:rules="[
 							val => (val && val.length > 0) || '반 설명은 필수값입니다.',
 						]"
 					></q-input>
-
-					<!-- <q-toggle
-						v-model="accept"
-						label="I accept the license and terms"
-					></q-toggle> -->
-
 					<div>
-						<q-btn label="Submit" type="submit" color="primary"></q-btn>
+						<q-btn
+							push
+							label="Submit"
+							type="submit"
+							text-color="white"
+							style="background: #00adb5"
+						></q-btn>
 						<q-btn
 							label="Reset"
 							type="reset"
-							color="primary"
+							color="red"
 							flat
 							class="q-ml-sm"
 						></q-btn>
@@ -48,11 +59,9 @@
 
 <script setup>
 import { ref } from 'vue';
-// import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useAlertStore, useClassStore } from 'src/stores';
 
-// const $q = useQuasar();
 const router = useRouter();
 
 const className = ref(null);
@@ -62,7 +71,6 @@ var tutorParsed = null;
 if (typeof tutor !== 'undefined') {
 	tutorParsed = JSON.parse(tutor);
 }
-// const accept = ref(false);
 async function goMakeClass() {
 	let classInformation = {
 		className: className.value,
@@ -98,12 +106,6 @@ async function goMakeClass() {
 // 		});
 // 	}
 // }
-
-function onReset() {
-	// name.value = null;
-	className.value = null;
-	classDescription.value = false;
-}
 </script>
 
 <style scoped></style>

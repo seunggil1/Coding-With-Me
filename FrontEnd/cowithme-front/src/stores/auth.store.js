@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia';
 import jwt_decode from 'jwt-decode';
-
 import { fetchWrapper } from 'src/helpers';
-// import { useRouter } from 'vue-router';
 import { useAlertStore } from 'src/stores';
-// const router = useRouter();
 
 const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
 
@@ -17,10 +14,6 @@ export const useAuthStore = defineStore({
 		token: localStorage.getItem('token'),
 		user: localStorage.getItem('user'),
 		info: localStorage.getItem('info'),
-		// classes: {
-		// 	userClassInfo: null,
-		// },
-		// returnUrl: null,
 	}),
 	actions: {
 		// 로그인 함수
@@ -48,26 +41,10 @@ export const useAuthStore = defineStore({
 			try {
 				const info = await fetchWrapper.get(`${baseUrl}/users/id/${id}`);
 				localStorage.setItem('info', JSON.stringify(info.user));
-				// console.log(this.info);
-				// console.log(info);
 			} catch (error) {
 				const alertStore = useAlertStore();
 				alertStore.error(error);
 			}
-			// if (this.info.includes('강사')) {
-			// 	// 강사일 경우 반 정보를 불러옴
-			// 	try {
-			// 		const userId = JSON.parse(this.info).userId;
-			// 		// console.log(userId);
-			// 		this.classes = await fetchWrapper.get(
-			// 			`${baseUrl}/tutor/${userId}/classes`,
-			// 		);
-			// 		console.log(this.classes);
-			// 	} catch (error) {
-			// 		const alertStore = useAlertStore();
-			// 		alertStore.error(error);
-			// 	}
-			// }
 		},
 		// 로그아웃 함수
 		logout() {

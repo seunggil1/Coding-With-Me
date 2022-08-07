@@ -32,8 +32,6 @@
 	</div>
 </template>
 <script>
-// import { fetchWrapper } from 'src/helpers';
-// import { onBeforeMount } from 'vue';
 import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
 
@@ -42,7 +40,6 @@ export default {
 	props: {
 		userId: {
 			type: Number,
-			// required: true,
 		},
 	},
 	setup(props) {

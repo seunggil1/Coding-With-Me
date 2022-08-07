@@ -22,7 +22,9 @@
 								},
 							}"
 							style="text-decoration: none; color: inherit"
-							><q-btn push>반 관리하기</q-btn>
+							><q-btn style="background: #00adb5; color: white" push
+								>반 관리하기</q-btn
+							>
 						</router-link>
 					</div>
 				</div>
@@ -51,7 +53,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div>{{ classStore.userClass.className }}</div> -->
 			<div class="row">
 				<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
 				<div class="col-8">
@@ -67,14 +68,10 @@
 <script>
 import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
-// import { onBeforeMount } from 'vue';
-// import { fetchWrapper } from 'src/helpers';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-// import { useClassStore } from 'src/stores';
 
 import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
-// import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
 import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
@@ -83,13 +80,11 @@ export default defineComponent({
 	name: 'IndexPage',
 	components: {
 		CalendarInfo,
-		// ClassInfo,
 		LectureTimeHistory,
 		AtomPlusButton,
 		AtomBasic1Button,
 	},
 	setup() {
-		// const classStore = useClassStore();
 		const classes = ref([]);
 		const testTest = ref([]);
 		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
@@ -108,8 +103,6 @@ export default defineComponent({
 			info2 = JSON.parse(info);
 		}
 
-		// console.log(user2);
-		// console.log(info2);
 		const userId = info2.userId;
 		console.log(userId);
 		if (info2.role == '강사') {
@@ -125,10 +118,6 @@ export default defineComponent({
 				.catch(err => {
 					console.log(err);
 				});
-			// classes.value.push(...temp.classes);
-			// console.log(temp.classes);
-			// console.log(classes.value);
-			// console.log(classes.value[0]);
 		}
 
 		if (info2.role == '학생') {
@@ -153,7 +142,6 @@ export default defineComponent({
 			makeClass,
 			classes,
 			testTest,
-			// goClassDetail,
 		};
 	},
 });

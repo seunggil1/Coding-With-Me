@@ -23,34 +23,32 @@
 						color="brand"
 						bg-color="white"
 					></q-input>
-					<div class="row q-pr-lg">
-						<q-input
-							type="text"
-							name="id"
-							clearable
-							class="q-mx-lg col"
-							rounded
-							outlined
-							v-model="id"
-							label="아이디"
-							lazy-rules
-							color="brand"
-							bg-color="white"
-						></q-input>
-						<q-input
-							class="q-ma-lg q-pr-lg"
-							rounded
-							outlined
-							name="email"
-							type="email"
-							clearable
-							v-model="email"
-							label="이메일"
-							lazy-rules
-							color="brand"
-							bg-color="white"
-						></q-input>
-					</div>
+					<q-input
+						type="text"
+						name="id"
+						clearable
+						rounded
+						class="q-ma-lg q-pr-lg"
+						outlined
+						v-model="id"
+						label="아이디"
+						lazy-rules
+						color="brand"
+						bg-color="white"
+					></q-input>
+					<q-input
+						class="q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						name="email"
+						type="email"
+						clearable
+						v-model="email"
+						label="이메일"
+						lazy-rules
+						color="brand"
+						bg-color="white"
+					></q-input>
 				</div>
 				<div class="col q-ml-sm">
 					<q-input
@@ -122,7 +120,7 @@
 				</div>
 			</div>
 		</q-form>
-		<q-btn @click="goDelete" push>회원탈퇴</q-btn>
+		<q-btn style="background: red" @click="goDelete" push>회원탈퇴</q-btn>
 	</div>
 </template>
 
@@ -167,22 +165,6 @@ async function goEditInfo() {
 		console.log(error);
 	}
 }
-// const { data } = await api.post('/users', {
-// 	name,
-// 	id,
-// 	email,
-// 	phone,
-// 	nickname,
-// 	birthDt,
-// 	password,
-// 	profilePath,
-// 	role,
-// });
-// if (data.result) {
-// 	localStorage.clear();
-// 	router.push('/login');
-// }
-
 onBeforeMount(async () => {
 	myInfo.value.push(info);
 	console.log(myInfo);

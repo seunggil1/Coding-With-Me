@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-
 import { fetchWrapper } from 'src/helpers';
 import { useAuthStore } from 'src/stores';
 
