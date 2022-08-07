@@ -34,8 +34,7 @@ exports.check = async (code,inputData,answerData) => {
       success : (run.stdout.trim() == answerData)
     };
 
-  } catch (error) { // 시간 초과 or 컴파일, 런타임 오류
-    console.log(error);
+  } catch (error) { // 시간 초과 or 런타임 오류
     try {
       await fs.unlink('main.js');
       await fs.unlink('input.in');
@@ -45,7 +44,7 @@ exports.check = async (code,inputData,answerData) => {
 
     if(error.killed){
         return {
-            time : 0,
+            time : compileOption.timeLimit,
             output : compileOption.timeLimitMessage,
             success : false
         };

@@ -36,7 +36,6 @@ exports.check = async (code,inputData,answerData) => {
     };
 
   } catch (error) { // 시간 초과 or 컴파일, 런타임 오류
-    console.log(error);
     try {
       await fs.unlink('Main.java');
       await fs.unlink('Main.class');
