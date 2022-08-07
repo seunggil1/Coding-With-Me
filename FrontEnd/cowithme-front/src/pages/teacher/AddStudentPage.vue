@@ -18,10 +18,27 @@
 <script>
 import { api } from 'src/boot/axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
 	name: 'AddStudentPage',
+	props: {
+		classId: {
+			type: Number,
+		},
+		className: {
+			type: String,
+		},
+		userId: {
+			type: String,
+		},
+		clas: {
+			type: String,
+		},
+	},
 	setup() {
+		const router = useRouter();
+
 		const name = ref('');
 		const studentResult = ref([]);
 
@@ -34,12 +51,17 @@ export default {
 		function addStudent(userId) {
 			api
 				.post(`/tutor/classes/student`, {
-					className: JSON.parse(localStorage.getItem('className')),
+					className: localStorage.getItem('className'),
 					studentId: userId,
 					tutorId: 1,
 				})
 				.then(res => {
 					console.log(res.message);
+					console.log(JSON.parse(localStorage.getItem('classId')));
+					router.push({
+						name: 'classDetail',
+						params: { classId: JSON.parse(localStorage.getItem('classId')) },
+					});
 				});
 		}
 		return { name, goSearchStudent, studentResult, addStudent };

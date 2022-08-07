@@ -21,6 +21,7 @@ const routes = [
 			{
 				path: '/addStudent',
 				name: 'addStudent',
+				props: true,
 				component: () => import('pages/teacher/AddStudentPage.vue'),
 			},
 			{
@@ -28,7 +29,6 @@ const routes = [
 				name: 'classDetail',
 				props: true,
 				component: () => import('pages/teacher/classDetailPage.vue'),
-				// redirect: '/classDetail/:classId',
 			},
 			{
 				path: '/makeExam/:classId',

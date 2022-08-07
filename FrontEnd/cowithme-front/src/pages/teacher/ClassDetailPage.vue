@@ -11,7 +11,17 @@
 				<div v-for="student in students" :key="student.userId">
 					{{ student.name }}({{ student.nickname }})
 				</div>
-				<router-link :to="{ name: 'addStudent', params: { classId: classId } }">
+				<router-link
+					:to="{
+						name: 'addStudent',
+						params: {
+							classId: classId,
+							className: className,
+							userId: userId,
+							clas: clas,
+						},
+					}"
+				>
 					<q-btn push>학생 추가</q-btn>
 				</router-link>
 			</div>
@@ -40,7 +50,7 @@ export default {
 	name: 'ClassDetailPage',
 	props: {
 		classId: {
-			type: String,
+			type: Number,
 		},
 		className: {
 			type: String,
@@ -55,9 +65,9 @@ export default {
 	setup(props) {
 		const students = ref([]);
 		const router = useRouter();
-		localStorage.setItem('students', JSON.stringify(students.value));
-		localStorage.setItem('className', JSON.stringify(props.className));
-		localStorage.setItem('classId', JSON.stringify(props.classId));
+		localStorage.setItem('students', students.value);
+		localStorage.setItem('className', props.className);
+		localStorage.setItem('classId', props.classId);
 		localStorage.setItem('userId', props.userId);
 		// 해당 반의 학생 리스트를 불러옵니다.
 		api

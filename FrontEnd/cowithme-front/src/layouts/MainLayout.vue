@@ -25,7 +25,7 @@
 					<div class="col"></div>
 					<div class="col-10">
 						<router-link
-							:to="{ name: 'home' }"
+							:to="{ path: '/' }"
 							style="text-decoration: none; color: inherit"
 						>
 							<AtomLogo2 class="test" style="width: 90%"></AtomLogo2>

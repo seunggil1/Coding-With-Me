@@ -16,7 +16,7 @@
 								name: 'classDetail',
 								params: {
 									clas: JSON.stringify(clas),
-									classId: clas.classId,
+									classId: Number(clas.classId),
 									className: clas.className,
 									userId: info2.userId,
 								},
