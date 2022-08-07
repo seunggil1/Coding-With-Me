@@ -1,10 +1,9 @@
 <template>
 	<div class="q-pa-md">
-		<q-btn>{{ className }}의 강의 생성하기</q-btn>
+		<q-btn push>{{ className2 }}의 강의 생성하기</q-btn>
 		<!-- <VueLogo></VueLogo> -->
 		<div class="box2 q-mb-md">
-			<p>강의 목록</p>
-			<q-btn>강의 시작(WebRTC 토큰 설정되면)</q-btn>
+			<q-btn push>강의 시작</q-btn>
 		</div>
 		<div class="flex row">
 			<div class="box col-6">
@@ -25,9 +24,9 @@
 <script>
 // import VueLogo from 'src/assets/logo/logo2.svg';
 import { useRouter } from 'vue-router';
-// import { api } from 'src/boot/axios.js';
-// import { onBeforeMount } from 'vue';
-// import { ref } from 'vue';
+import { api } from 'src/boot/axios.js';
+import { onBeforeMount } from 'vue';
+import { ref } from 'vue';
 
 export default {
 	name: 'ClassDetailPage',
@@ -45,23 +44,30 @@ export default {
 			type: String,
 			// required: true,
 		},
+		clas: {
+			type: Object,
+			// required: true,
+		},
 	},
-	setup() {
-		// const students = ref([]);
+	setup(props) {
+		const students = ref([]);
 		const router = useRouter();
 
-		// onBeforeMount(async () => {
-		// 	const userId = props.userId;
-		// 	const className = props.className;
-		// 	try {
-		// 		console.log(props.className);
-
-		// 		const temp = await api.get(`/tutor/${userId}/classes/${className}`);
-		// 		students.value.push(...temp.students);
-		// 	} catch (error) {
-		// 		console.log(error);
-		// 	}
-		// });
+		onBeforeMount(async () => {
+			const userId = props.userId;
+			const className = props.className;
+			try {
+				// console.log(props.className);
+				const temp = await api.get(`/tutor/${userId}/classes/${className}`);
+				students.value.push(temp.students);
+				localStorage.setItem('students', JSON.stringify(students.value));
+				localStorage.setItem('className', JSON.stringify(props.className));
+				localStorage.setItem('classId', JSON.stringify(props.classId));
+				console.log(students.value);
+			} catch (error) {
+				console.log(error);
+			}
+		});
 		// function () {
 		// 	api
 
@@ -79,8 +85,9 @@ export default {
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
+		const className2 = JSON.parse(localStorage.getItem('className'));
 
-		return { goAddStudent };
+		return { goAddStudent, className2 };
 	},
 };
 </script>

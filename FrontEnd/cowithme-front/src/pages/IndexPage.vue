@@ -15,6 +15,7 @@
 							:to="{
 								name: 'classDetail',
 								params: {
+									clas: clas,
 									classId: clas.classId,
 									className: clas.className,
 									userId: info2.userId,
@@ -93,6 +94,7 @@ export default defineComponent({
 						`${baseUrl}/tutor/${userId}/classes`,
 					);
 					classes.value.push(...temp.classes);
+					localStorage.setItem('classes', JSON.stringify(temp.classes));
 					// console.log(temp.classes);
 					// console.log(classes.value);
 					// console.log(classes.value[0]);
@@ -106,6 +108,7 @@ export default defineComponent({
 			try {
 				var res = await fetchWrapper.get(`${baseUrl}/users/2/class`);
 				testTest.value.push(res.value);
+				localStorage.setItem('testTest', JSON.stringify(res.value));
 				// console.log(testTest);
 			} catch (error) {
 				console.log(error);
