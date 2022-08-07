@@ -29,9 +29,29 @@
 			</div>
 		</div>
 		<div v-if="info2.role == '학생'">
-			<ClassInfo></ClassInfo>
+			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
+				<div class="q-gutter-md">
+					<div class="class-info">
+						<div class="col q-ma-lg">
+							<!-- 반, 강의제목, 날짜 -->
+							<div class="info" style="margin-bottom: 20px">
+								<p style="font-size: 40px">{{ testTest.className }} 의 강의</p>
+								<p style="font-size: 18px">교수: {{ testTest.tutorName }}</p>
+							</div>
+						</div>
+						<div class="col">
+							<p>강의 리스트와 강의 입장 버튼들</p>
+							<AtomBasic1Button
+								class="button"
+								push
+								label="강의 입장"
+								style="font-family: 'Elice Digital Baeum'"
+							></AtomBasic1Button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- <div>{{ classStore.userClass.className }}</div> -->
-			<div>{{ testTest.value }}</div>
 			<div class="row">
 				<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
 				<div class="col-8">
@@ -54,13 +74,20 @@ import { useRouter } from 'vue-router';
 // import { useClassStore } from 'src/stores';
 
 import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
-import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
+// import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
 import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
+import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 
 export default defineComponent({
 	name: 'IndexPage',
-	components: { CalendarInfo, ClassInfo, LectureTimeHistory, AtomPlusButton },
+	components: {
+		CalendarInfo,
+		// ClassInfo,
+		LectureTimeHistory,
+		AtomPlusButton,
+		AtomBasic1Button,
+	},
 	setup() {
 		// const classStore = useClassStore();
 		const classes = ref([]);
@@ -108,8 +135,9 @@ export default defineComponent({
 			api
 				.get(`${baseUrl}/users/${userId}/class`)
 				.then(res => {
-					testTest.value = res.value;
-					localStorage.setItem('testTest', JSON.stringify(res.value));
+					testTest.value = res.data.result;
+					console.log(res.data);
+					localStorage.setItem('testTest', JSON.stringify(res.data));
 				})
 				.catch(err => {
 					console.log(err);
@@ -139,12 +167,19 @@ export default defineComponent({
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'GmarketSansLight';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 .class-info {
 	height: 300px;
 	width: 700px;
 	background-color: white;
 	border-radius: 10px;
-	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .button {

@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<div>{{ records.value }}</div>
+		<div></div>
 		<div
 			v-for="record in records"
 			:key="record.testRecordId"
@@ -29,7 +31,6 @@
 		</div>
 	</div>
 </template>
-
 <script>
 // import { fetchWrapper } from 'src/helpers';
 // import { onBeforeMount } from 'vue';
@@ -45,15 +46,16 @@ export default {
 		},
 	},
 	setup(props) {
-		const HOST = 'http://i7a304.p.ssafy.io:8080/api/v1';
-		const baseUrl = `${HOST}`;
 		const records = ref({});
 
-		api.get(`${baseUrl}/records/${props.userId}/tests`).then(res => {
-			records.value = res.data;
-			localStorage.setItem('records', JSON.stringify(res.data.records));
+		api.get(`/records/${props.userId}/tests`).then(res => {
+			records.value = res.data.records;
 			console.log(records.value);
+			localStorage.setItem('records', JSON.stringify(res.data.records));
+			// console.log(records.value);
 		});
+		console.log(records);
+		console.log(records.value);
 
 		return { records };
 	},
