@@ -1,11 +1,10 @@
 <template>
-	<div>
-		<p>시험 생성 form</p>
-		<p>{{ classId }}</p>
+	<div class="q-pa-md q-gutter-md">
 		<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
 			<div class="q-pa-md" style="max-width: 400px">
 				<q-input
 					filled
+					class="q-mb-sm"
 					v-model="examInfo.testName"
 					label="Exam name"
 					hint="시험 이름을 입력해주세요"
@@ -182,13 +181,6 @@
 
 			<div>
 				<q-btn label="Submit" type="submit" color="primary"></q-btn>
-				<q-btn
-					label="Reset"
-					type="reset"
-					color="primary"
-					flat
-					class="q-ml-sm"
-				></q-btn>
 			</div>
 		</q-form>
 	</div>
@@ -274,9 +266,6 @@ export default {
 			await examStore.makeExam(examInfo);
 			// await router.push({ path: '/classDetail/' + props.classId });
 		};
-		const onReset = () => {
-			console.error('Reset버튼에는 아무것도 안만들었어요!');
-		};
 		return {
 			splitterModel,
 			problemTab,
@@ -285,7 +274,6 @@ export default {
 			addTestCase,
 			deleteTestCase,
 			onSubmit,
-			onReset,
 		};
 	},
 };

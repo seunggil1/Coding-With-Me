@@ -59,8 +59,7 @@ export default {
 					console.log(res.message);
 					console.log(JSON.parse(localStorage.getItem('classId')));
 					router.push({
-						name: 'classDetail',
-						params: { classId: JSON.parse(localStorage.getItem('classId')) },
+						name: 'addStudent',
 					});
 				});
 		}
