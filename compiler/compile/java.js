@@ -17,7 +17,7 @@ exports.check = async (code,inputData,answerData) => {
     };
   }
 
-  const compileOption = require('./compile/compileOption.js');
+  const compileOption = require('./compileOption.js');
   try {
     await exec("javac -d . -encoding UTF-8 -g:lines -g:vars -g:source -Xlint:deprecation Main.java");
     let pre_time = Date.now();

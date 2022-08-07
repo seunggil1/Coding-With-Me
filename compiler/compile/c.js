@@ -17,7 +17,7 @@ exports.check = async (code,inputData,answerData) => {
     };
   }
 
-  const compileOption = require('./compile/compileOption.js');
+  const compileOption = require('./compileOption.js');
   try {
     await exec("gcc -finput-charset=UTF-8 main.c");
     let pre_time = Date.now();

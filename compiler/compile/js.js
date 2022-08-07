@@ -17,7 +17,7 @@ exports.check = async (code,inputData,answerData) => {
     };
   }
 
-  const compileOption = require('./compile/compileOption.js');
+  const compileOption = require('./compileOption.js');
   try {
     let pre_time = Date.now();
     let run = await exec(`node ./main.js < ./input.in`, { timeout: compileOption.timeLimit });
