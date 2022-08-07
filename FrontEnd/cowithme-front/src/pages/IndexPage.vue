@@ -14,7 +14,11 @@
 						<router-link
 							:to="{
 								name: 'classDetail',
-								params: { classId: clas.classId },
+								params: {
+									classId: clas.classId,
+									className: clas.className,
+									userId: info2.userId,
+								},
 							}"
 							style="text-decoration: none; color: inherit"
 							><q-btn push>반 관리하기</q-btn>

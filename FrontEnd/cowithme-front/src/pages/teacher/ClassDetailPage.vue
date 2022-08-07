@@ -1,6 +1,7 @@
 <template>
-	<div class="q-pa-md">
-		<q-btn>개나리반 의 강의 생성</q-btn>
+	<div class="q-pa-md q-gutter-md">
+		<q-btn>개나리반 의 강의 생성하자 룰루</q-btn>
+		<!-- <VueLogo></VueLogo> -->
 		<div class="box2">
 			<p>강의 목록</p>
 			<q-btn>강의 시작(WebRTC 토큰 설정되면)</q-btn>
@@ -21,22 +22,63 @@
 </template>
 
 <script>
+// import VueLogo from 'src/assets/logo/logo2.svg';
 import { useRouter } from 'vue-router';
+// import { api } from 'src/boot/axios.js';
+// import { onBeforeMount } from 'vue';
+// import { ref } from 'vue';
 
 export default {
 	name: 'ClassDetailPage',
+	// components: { VueLogo },
 	props: {
 		classId: {
 			type: String,
 			// required: true,
 		},
+		className: {
+			type: String,
+			// required: true,
+		},
+		userId: {
+			type: String,
+			// required: true,
+		},
 	},
 	setup() {
+		// const students = ref([]);
 		const router = useRouter();
+
+		// onBeforeMount(async () => {
+		// 	const userId = props.userId;
+		// 	const className = props.className;
+		// 	try {
+		// 		console.log(props.className);
+
+		// 		const temp = await api.get(`/tutor/${userId}/classes/${className}`);
+		// 		students.value.push(...temp.students);
+		// 	} catch (error) {
+		// 		console.log(error);
+		// 	}
+		// });
+		// function () {
+		// 	api
+
+		// 		.get(`/tutor/${userId}/classes/${className}`)
+		// 		.then(res => {
+		// 			students.value = res.data.students;
+		// 			console.log(students.value);
+		// 		})
+		// 		.catch(err => {
+		// 			console.log(err);
+		// 		});
+		// },
+		// // const userId = localStorage.getItem('userId');
 
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
+
 		return { goAddStudent };
 	},
 };
