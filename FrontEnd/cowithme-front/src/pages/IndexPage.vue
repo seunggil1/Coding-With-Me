@@ -15,7 +15,7 @@
 							:to="{
 								name: 'classDetail',
 								params: {
-									clas: clas,
+									clas: JSON.stringify(clas),
 									classId: clas.classId,
 									className: clas.className,
 									userId: info2.userId,

@@ -1,20 +1,30 @@
 <template>
-	<div class="q-pa-md">
-		<q-btn push>{{ className }}의 강의 생성하기</q-btn>
-		<!-- <VueLogo></VueLogo> -->
+	<div class="q-pa-md" style="font-family: 'Elice Digital Baeum">
+		<q-btn class="q-mb-md" push style="background: #ff5722"
+			>{{ className }}의 강의 만들기</q-btn
+		>
 		<div class="box2 q-mb-md">
-			<q-btn push>강의 시작</q-btn>
+			<q-btn push>만들어져 있는 강의들 리스트(아직 연결 안 됨)</q-btn>
 		</div>
 		<div class="flex row">
 			<div class="box col-6">
-				학생 목록 및 추가
-				<q-btn @click="goAddStudent">학생 추가</q-btn>
+				<div v-for="student in students" :key="student.userId">
+					{{ student.name }}
+				</div>
+				<router-link
+					:to="{ path: '/addStudent', params: { classId: classId } }"
+				>
+					<q-btn push>학생 추가</q-btn>
+				</router-link>
 			</div>
-			<div class="q-ma-sm"></div>
+			<div class=""></div>
 			<div class="box col-6">
 				시험 목록 및 생성
-				<router-link :to="{ name: 'makeExam', params: { classId: classId } }">
-					<q-btn>시험 생성</q-btn>
+				<router-link
+					:to="{ name: 'makeExam', params: { classId: classId } }"
+					style="text-decoration: none; color: inherit"
+				>
+					<q-btn push>시험 생성</q-btn>
 				</router-link>
 			</div>
 		</div>
@@ -22,69 +32,50 @@
 </template>
 
 <script>
-// import VueLogo from 'src/assets/logo/logo2.svg';
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
-// import { onBeforeMount } from 'vue';
+
 import { ref } from 'vue';
+// import AtomBasic2Button from 'src/components/atoms/AtomBasic2Button.vue';
 
 export default {
 	name: 'ClassDetailPage',
-	// components: { VueLogo },
 	props: {
 		classId: {
-			type: Number,
-			// required: true,
+			type: String,
 		},
 		className: {
 			type: String,
-			// required: true,
 		},
 		userId: {
 			type: String,
-			// required: true,
 		},
 		clas: {
-			type: Object,
-			// required: true,
+			type: String,
 		},
 	},
 	setup(props) {
 		const students = ref([]);
 		const router = useRouter();
-
 		localStorage.setItem('students', JSON.stringify(students.value));
 		localStorage.setItem('className', JSON.stringify(props.className));
 		localStorage.setItem('classId', JSON.stringify(props.classId));
 		localStorage.setItem('userId', props.userId);
-
+		// 해당 반의 학생 리스트를 불러옵니다.
 		api
-			.get(`/tutor/${props.userId}/classes/${props.className}`)
+			.get(`/tutor/1/classes/${props.className}`)
 			.then(res => {
 				students.value = res.data.students;
-				console.log(students.value);
+				console.log(res.data);
 			})
 			.catch(err => {
 				console.log(err);
 			});
-		// students.value.push(temp.students);
-
-		// 		.get(`/tutor/${userId}/classes/${className}`)
-		// 		.then(res => {
-		// 			students.value = res.data.students;
-		// 			console.log(students.value);
-		// 		})
-		// 		.catch(err => {
-		// 			console.log(err);
-		// 		});
-		// },
-		// // const userId = localStorage.getItem('userId');
-
+		console.log(students);
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
-
-		return { goAddStudent };
+		return { goAddStudent, students };
 	},
 };
 </script>
@@ -93,14 +84,14 @@ export default {
 .box {
 	min-height: 300px;
 	/* width: 100%; */
-	background-color: white;
+	background-color: #eeeeee;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 .box2 {
 	height: 300px;
 	width: 100%;
-	background-color: white;
+	background-color: #eeeeee;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
