@@ -29,11 +29,11 @@
       <div class="column sub-container">
         <div class="col-10 row sub-cams justify-center items-center" style="border: 1px solid red;">
           <div class="col-2 sub-cam row justify-center items-center" v-if="pub">
-            <user-video class="video" :stream-manager="pub"></user-video>
+            <UserVideo class="video" :stream-manager="pub"></UserVideo>
           </div>
           <template v-if="subs">
             <div class="col-2 sub-cam row justify-center items-center" v-for="sub in subs" :key="sub">
-              <user-video class="video" :stream-manager="sub"></user-video>
+              <UserVideo class="video" :stream-manager="sub"></UserVideo>
             </div>
           </template>
         </div>
@@ -57,116 +57,19 @@
         </q-scroll-area>
       </div> -->
       <!-- 좌우로 나누기 -->
-      <q-card class="my-card">
-        <q-card-section>
-          <div class="column main-container">
-            <q-scroll-area style="width: 100%; height: 100%;">
-              <div class="column" style="height: 70.42vh; border: 1px solid green;">
-                <div class="col-6" style="background-color: teal;">
-
-                  <!-- 좌우 분리 -->
-                  <div class="row" style="width: 100%; height: 100%;">
-                    <div class="col-6" style="background-color: antiquewhite;">
-
-                      <q-card flat bordered class="my-card">
-                        <q-card-section>
-                          <div class="text-h6">강사 IDE</div>
-                        </q-card-section>
-
-                        <q-separator inset />
-
-                        <q-card-section>
-                          <div style="height: 70.42vh">
-                            <web-editor :code="video.state.teacherCode" language="java" :readOnly="true"></web-editor>
-                          </div>
-                        </q-card-section>
-                      </q-card>
-                      <!-- <div class="column" style="width: 100%; height: 100%;">
-                        <div class="col">
-                          <h6>강사 IDE</h6>
-                        </div>
-                        <div class="col-10">
-                          <web-editor :code="video.state.teacherCode" language="java" :readOnly="true"></web-editor>
-                        </div>
-                      </div> -->
-
-                    </div>
-                    <div class="col-6" style="background-color: beige;">
-                      <q-card falat bordered class="my-card full-height">
-                        <q-card-section>
-                          <div class="text-h6">IDE</div>
-                        </q-card-section>
-                        <q-separator inset />
-
-                        <q-card-section class="column full-height">
-                          <div class="column full-height" style="border: 1px solid green;">
-                            <div class="col-8" >
-                              <web-editor code="import java.util.*" language="java" :readOnly="false"></web-editor>
-                            </div>
-                            <div class="col-1 ">
-                              <div class="row justify-end">
-                                <div class="col">
-                                  <q-btn color="primary" icon-right="send" label="Run" />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-3">
-                              <!-- s -->
-
-                              <div class="row">
-                                <div class="col">
-                                  <q-card flat bordered class="my-card full-height">
-                                    <q-card-section>
-                                      <div class="text-h6">Input</div>
-                                    </q-card-section>
-
-                                    <q-card-section class="q-pt-none">
-                                      <q-input
-                                        type="textarea"
-                                        float-label="Textarea"
-                                        :max-height="50"
-                                        :min-rows="1"
-                                      />
-                                    </q-card-section>
-                                  </q-card>
-                                </div>
-                                <div class="col">
-                                  <q-card flat bordered class="my-card">
-                                    <q-card-section>
-                                      <div class="text-h6">Output</div>
-                                    </q-card-section>
-
-                                    <q-card-section class="q-pt-none">
-                                      <q-input
-                                        type="textarea"
-                                        float-label="Textarea"
-                                        :max-height="50"
-                                        :min-rows="1"
-                                      />
-                                    </q-card-section>
-                                  </q-card>
-                                </div>
-                              </div>
-
-                              <!--  -->
-                            </div>
-                          </div>
-                        </q-card-section>
-                      </q-card>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="col-6" style="background-color: tan;">
-                
-                </div>
+      <div class="column main-container">
+        <q-scroll-area style="width: 100%; height: 100%;">
+          <div class="column" style="height: 149.42vh; border: 1px solid green;">
+            <div class="col-6" style="background-color: teal;">
+              <div class="row" style="width: 100%; height: 100%;">
+                <div class="col-6" style="background-color: antiquewhite;"></div>
+                <div class="col-6" style="background-color: beige;"></div>
               </div>
-            </q-scroll-area>
+            </div>
+            <div class="col-6" style="background-color: tan;"></div>
           </div>
-        </q-card-section>
-      </q-card>
-    
-      
+        </q-scroll-area>
+      </div>
     </q-page-container>
     <!-- 서브캠 + 메인캠 부분 end -->
 
@@ -194,92 +97,58 @@
   </q-layout>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import { useVideoStore } from 'src/stores/video.js'
 import { useRouter } from 'vue-router';
-import WebEditor from 'src/components/lectures/WebEditor.vue';
 
-export default{
-  props : {
+  const router = useRouter();
+  const video = useVideoStore(); // store 가져오기
+  const session = video.state.session;
+	const pub = video.state.publisher;
+	const subs = video.state.subscribers;
+	const main = video.state.mainStreamManager;
 
-  },
-
-  components : {
-    UserVideo,
-    WebEditor
-  },
-
-  setup(props) {
-    const router = useRouter();
-    const video = useVideoStore(); // store 가져오기
-    const session = video.state.session;
-    const pub = video.state.publisher;
-    const subs = video.state.subscribers;
-    const main = video.state.mainStreamManager;
-
-    // 우측 바 펼치기, 접기
-    const clickRightDrawer = () => {
-      video.setRightDrawer();
-    }
-
-    // 마이크 켜기, 끄기
-    const clickMic = () => {
-      if(video.isAudio) {
-        video.muteAudio();
-      } else {
-        video.unmuteAudio();
-      }
-    }
-
-    // 카메라 켜기, 끄기
-    const clickVideo = () => {
-      if(video.isVideo) {
-        video.muteVideo();
-      } else {
-        video.unmuteVideo();
-      }
-    }
-
-    // 화면 공유 켜기, 끄기
-    const clickScreenShare = () => {
-      if(video.isScreen) {
-        video.stopScreenShare();
-      } else {
-        video.startScreenShare();
-      }
-    }
-
-    // 세션 나가기
-    const leaveSession = () => {
-      video.leaveSession();
-      router.push('/');
-    }
-
-    // 시험 시작
-    const startExam = () => {
-      router.push('/exam')
-    }
-
-    return {
-      router,
-      video,
-      session,
-      pub,
-      subs,
-      main,
-
-      clickRightDrawer,
-      clickMic,
-      clickVideo,
-      clickScreenShare,
-      leaveSession,
-      startExam
-    }
-
+  // 우측 바 펼치기, 접기
+  const clickRightDrawer = () => {
+    video.setRightDrawer();
   }
-}
+  // 마이크 켜기, 끄기
+  const clickMic = () => {
+    if(video.isAudio) {
+      video.muteAudio();
+    } else {
+      video.unmuteAudio();
+    }
+  }
+  // 카메라 켜기, 끄기
+  const clickVideo = () => {
+    if(video.isVideo) {
+      video.muteVideo();
+    } else {
+      video.unmuteVideo();
+    }
+  }
+  // 화면 공유 켜기, 끄기
+  const clickScreenShare = () => {
+    if(video.isScreen) {
+      video.stopScreenShare();
+    } else {
+      video.startScreenShare();
+    }
+  }
+  // 세션 나가기
+  const leaveSession = () => {
+    video.leaveSession();
+    router.push('/');
+  }
+
+  // 시험 시작
+  const startExam = () => {
+    router.push('/exam')
+  }
+
 </script>
 
 <style>

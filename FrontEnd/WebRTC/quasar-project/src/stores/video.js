@@ -26,7 +26,7 @@ export const useVideoStore = defineStore('video', () => {
     // true면 내가 선생.
     isTeacher : false,
     // 웹 IDE 데이터도 여기서 처리함.
-    teacherCode : 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
+    teacherCode : '',
     myCode : ''
   })
 

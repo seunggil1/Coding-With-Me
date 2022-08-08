@@ -11,11 +11,9 @@
 
 const { configure } = require('quasar/wrappers');
 
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = configure(function (/* ctx */) {
   return {
-    plugins: [new MonacoWebpackPlugin()],
     eslint: {
       // fix: true,
       // include = [],
