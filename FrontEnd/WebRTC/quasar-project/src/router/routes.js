@@ -3,11 +3,12 @@ import VideoLayout from 'layouts/VideoLayout.vue';
 import TeacherLectureLayout from 'src/layouts/TeacherLectureLayout.vue';
 import TeacherExamLayout from 'src/layouts/TeacherExamLayout.vue';
 import StudentExamLayout from 'src/layouts/StudentExamLayout.vue';
+import TestLayout from 'src/layouts/TestLayout.vue';
 
 const routes = [
   {
     path: '/',
-    component: MainLayout,
+    component: TestLayout,
   },
   {
     path: '/video',

@@ -66,7 +66,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
   }
 
   function unmuteVideo(){
-    if(statealue.publisher == undefined){
+    if(state.publisher == undefined){
       console.log('session is not connected. unmutedVideo is canceled.');
       return;
     }

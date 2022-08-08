@@ -1,6 +1,6 @@
 <template>
     <!-- <div><p>{{ clientData }}</p></div> -->
-    <video v-if="streamManager" ref="videoStream" autoplay/>
+    <video ref="videoStream" style="width:100%" autoplay/>
 </template>
 
 <script>
@@ -28,11 +28,13 @@ export default {
 			return JSON.parse(connection.data);
         }
 
-        const videoStream = ref(null);
+        const videoStream = ref(undefined);
         onMounted(() => {
             console.log('onMounted: ', videoStream);
             console.log('onMounted: ', videoStream.value);
-            props.streamManager.addVideoElement(videoStream.value);
+            console.log(props);
+            if(videoStream.value && props.streamManager)
+                props.streamManager.addVideoElement(videoStream.value);
         });
 
         onUpdated(() => {
