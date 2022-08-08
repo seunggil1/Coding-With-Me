@@ -9,9 +9,11 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 const { configure } = require('quasar/wrappers');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = configure(function (/* ctx */) {
 	return {
+		plugins: [new MonacoWebpackPlugin()],
 		// https://v2.quasar.dev/quasar-cli/prefetch-feature
 		// preFetch: true,
 
