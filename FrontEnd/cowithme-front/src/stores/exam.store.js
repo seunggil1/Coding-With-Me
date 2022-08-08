@@ -10,5 +10,8 @@ export const useExamStore = defineStore({
 		async makeExam(examInfo) {
 			await fetchWrapper.post(`${baseUrl}/tests`, examInfo);
 		},
+		async uploadExam(testId, files) {
+			await fetchWrapper.post(`${baseUrl}/tests/upload/${testId}`, files);
+		},
 	},
 });

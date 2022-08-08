@@ -211,11 +211,18 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
 import { reactive, ref, watch } from 'vue';
 import { useExamStore } from 'src/stores';
+import { api } from 'src/boot/axios';
+// import { api } from 'src/boot/axios';
 export default {
 	name: 'MakeExamPage',
 	setup() {
+		// pdf 제출 관련 메서드
+		const file = ref(null);
+		// const router = useRouter();
+
 		const classId = localStorage.getItem('classId');
 		// 현재 보여줄 탭. 0은 가이드, 1부터 각각 문제 번호.
 		let problemTab = ref('0');
@@ -276,15 +283,41 @@ export default {
 		// 몇 번 문제에 몇 번째 testCase 삭제해주세요!
 		const deleteTestCase = (testQno, testCaseNo) => {
 			examInfo.testcaseList[testQno - 1].testcase.splice(testCaseNo, 1);
-			console.log(examInfo.testcaseList[testQno - 1].testcase);
+			// console.log(examInfo.testcaseList[testQno - 1].testcase);
 		};
 
-		const onSubmit = async () => {
-			const examStore = useExamStore();
-			examInfo['classId'] = classId * 1;
-			await examStore.makeExam(examInfo);
-			// await router.push({ path: '/classDetail/' + props.classId });
-		};
+		// const onSubmit = async () => {
+		// 	const examStore = useExamStore();
+		// 	examInfo['classId'] = classId * 1;
+		// 	var testId = await examStore.makeExam(examInfo);
+		// 	var res = await examStore.uploadExam(testId, file.value);
+		// 	console.log(res);
+		// };
+		// async function onSubmit() {
+		// 	const examStore = useExamStore();
+		// 	examInfo['classId'] = classId * 1;
+		// 	const res = await examStore.makeExam(examInfo);
+		// 	console.log(res);
+		// 	// router.push({ path: '/classDetail/' + classId });
+		// }
+
+		// PDF 업로드
+		examInfo['classId'] = classId * 1;
+		function onSubmit() {
+			api.post(`/tests`, examInfo).then(res => {
+				console.log(res.data);
+				var testId = res.data.testId;
+				api
+					.post(`/tests/${testId}/upload`, file.value)
+					.then(res => {
+						console.log(res.data);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			});
+		}
+
 		return {
 			splitterModel,
 			problemTab,
