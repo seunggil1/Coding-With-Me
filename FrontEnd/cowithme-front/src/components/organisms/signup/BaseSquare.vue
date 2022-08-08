@@ -3,7 +3,9 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';
+import { api } from 'src/boot/axios.js';
 
+// 회원가입 정보
 const name = ref('');
 const id = ref('');
 const role = ref('');
@@ -14,8 +16,10 @@ const phone = ref('');
 const nickname = ref('');
 const birthDt = ref('');
 
+// router 사용 선언
 const router = useRouter();
 
+// 회원가입하러 가자
 async function onSubmit() {
 	let user = {
 		name: name.value,
@@ -27,12 +31,10 @@ async function onSubmit() {
 		birthDt: birthDt.value,
 		role: role.value,
 	};
-
 	const usersStore = useUsersStore();
 	const alertStore = useAlertStore();
 	try {
 		await usersStore.register(user);
-		// console.log(user);
 		await router.push({ path: '/login' });
 		alertStore.success('Registration successful');
 		console.log('Registration successful');
@@ -40,6 +42,34 @@ async function onSubmit() {
 		alertStore.error(error);
 	}
 }
+function idCheck() {
+	api
+		.get(`/users/idcheck/${id.value}`)
+		.then(res => {
+			console.log(res.data.message);
+			openGood('bottom');
+		})
+		.catch(err => {
+			console.log(err);
+			openBad('bottom');
+		});
+}
+
+// id check dialog
+const dialogGood = ref(false);
+const dialogBad = ref(false);
+
+const position = ref('top');
+
+function openGood(pos) {
+	position.value = pos;
+	dialogGood.value = true;
+}
+function openBad(pos) {
+	position.value = pos;
+	dialogBad.value = true;
+}
+
 // form 리셋 함수
 function onReset() {
 	name.value = null;
@@ -65,6 +95,25 @@ function onReset() {
 		"
 		class="q-pa-lg shadow"
 	>
+		<!-- 중복되지 않은 id일 때 -->
+		<q-dialog v-model="dialogGood" :position="position">
+			<q-card style="width: 350px; background-color: green">
+				<q-card-section class="row items-center no-wrap">
+					<div style="color: white">사용해도 좋은 id입니다.</div>
+				</q-card-section>
+			</q-card>
+		</q-dialog>
+		<!-- 중복된 id일 때 -->
+		<q-dialog v-model="dialogBad" :position="position">
+			<q-card style="width: 350px; background-color: orangered">
+				<q-card-section class="row items-center no-wrap">
+					<div style="color: white">
+						중복된 id입니다. 다른 id를 입력해주세요.
+					</div>
+				</q-card-section>
+			</q-card>
+		</q-dialog>
+
 		<div class="q-ma-lg">
 			<p class="col" style="font-size: 100px; color: white">Register</p>
 		</div>
@@ -103,7 +152,10 @@ function onReset() {
 							color="brand"
 							bg-color="white"
 						></q-input>
-						<IDChkButton class="flex q-pr-lg q-py-sm"></IDChkButton>
+						<IDChkButton
+							@click="idCheck"
+							class="flex q-pr-lg q-py-sm"
+						></IDChkButton>
 					</div>
 					<q-input
 						name="password"
