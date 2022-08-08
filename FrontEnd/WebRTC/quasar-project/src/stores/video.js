@@ -30,9 +30,25 @@ export const useVideoStore = defineStore('video', () => {
     myCode : ''
   })
 
+  const mode = ref(1);
+  function setMode() {
+    if(mode.value === 1) {
+      mode.value = 2;
+    } else if(mode.value === 2) {
+      mode.value = 1;
+    } else {
+      console.log('mode switch error');
+    }
+  }
+
   const rightDrawerOpen = ref(true); // 참여자 + 채팅창. ture면 on
   function setRightDrawer() {
-    rightDrawerOpen.value =! rightDrawerOpen.value;
+    rightDrawerOpen.value = !rightDrawerOpen.value;
+  }
+
+  const subCamsOpen = ref(true);
+  function setSubCams() {
+    subCamsOpen.value = !subCamsOpen.value;
   }
 
   const isAudio = ref(true); // 자기 비디오 켜져있는지 여부. true면 on
@@ -310,26 +326,32 @@ export const useVideoStore = defineStore('video', () => {
 
   return {
     state,
+    mode,
+    setMode,
     rightDrawerOpen,
     setRightDrawer,
+    subCamsOpen,
+    setSubCams,
     isAudio,
+    muteAudio,
+    unmuteAudio,
     isVideo,
+    muteVideo,
+    unmuteVideo,
     isScreen,
+    startScreenShare,
+    stopScreenShare,
+
     joinSession,
     leaveSession,
     getToken,
     createToken,
     createSession,
-    startScreenShare,
-    stopScreenShare,
+
     updateMainVideoStreamManager,
     setMyUserName,
     setScreenShareName,
     sendMessage,
     sendCode,
-    muteAudio,
-    unmuteAudio,
-    muteVideo,
-    unmuteVideo
   }
 })

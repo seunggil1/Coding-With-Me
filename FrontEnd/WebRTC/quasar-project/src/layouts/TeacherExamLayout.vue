@@ -6,7 +6,7 @@
       <div class="row parti-chat-box">
         <div class="col-5 column" style="border: 1px solid red;">
           <div class="col-2" style="border: 1px solid red;">
-            <p>참여자 목록</p>
+            <p>타이머</p>
             <p>총 인원 (25/25)</p>
           </div>
           <div class="col-5" style="border: 1px solid red;">
@@ -18,24 +18,22 @@
             <p>제출 미완료</p>
           </div>
         </div>
-        <div class="col-7 column justify-center items-center" style="border: 1px solid red;">
-          <div class="column side-caht-box">
-            <div class="col-9 chat-box" style="border: 1px solid red;">
-              <p>채팅 내역</p>
-            </div>
-            <div class="col-1 select-chat-box" style="border: 1px solid red;">
-              <p>dm 선택</p>
-            </div>
-            <div class="col-2 input-chat-box" style="border: 1px solid red;">
-              <p>textarea</p>
-            </div>
+        <div class="col-7 column" style="border: 1px solid red;">
+          <div class="col-9" style="border: 1px solid red;">
+            <p>채팅 내역</p>
+          </div>
+          <div class="col-1" style="border: 1px solid red;">
+            <p>dm 선택</p>
+          </div>
+          <div class="col-2" style="border: 1px solid red;">
+            <p>textarea</p>
           </div>
         </div>
       </div>
     </q-drawer>
     <!-- 오른쪽 참여자 + 채팅 부분 end -->
 
-    <!-- 서브캠 + 메인캠 부분 start -->
+    <!-- 메인캠 부분 start -->
     <q-page-container>
       <div class="row main-container justify-center items-center">
         <div class="main-cam-box row justify-center items-center">
@@ -50,7 +48,7 @@
         </div>
       </div>
     </q-page-container>
-    <!-- 서브캠 + 메인캠 부분 end -->
+    <!-- 메인캠 부분 end -->
 
     <!-- 하단바 부분 start -->
     <q-footer elevated class="bg-grey-8 text-white">
@@ -130,10 +128,6 @@ div {
 .parti-chat-box {
   height: 94.71vh;
   border: 1px solid black;
-}
-.side-caht-box {
-  width: 95%;
-  height: 95%;
 }
 .drawer-container, .main-container {
   height: 94.71vh;

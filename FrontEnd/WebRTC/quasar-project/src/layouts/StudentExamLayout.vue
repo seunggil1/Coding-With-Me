@@ -4,15 +4,12 @@
     <!-- 오른쪽 참여자 + 채팅 부분 start -->
     <q-drawer show-if-above v-model="video.rightDrawerOpen" side="right" elevated>
       <div class="column drawer-container">
-        <div class="col-4 column justify-center items-center" style="border: 1px solid blue;">
+        <div class="col-2 column justify-center items-center" style="border: 1px solid blue;">
           <div class="participant-box">
-            <p>참여자 목록</p>
-            <p>총 인원 (25/25)</p>
-            <p>오프라인</p>
-            <p>온라인</p>
+            <p>남은 시간</p>
           </div>
         </div>
-        <div class="col-8 column justify-center items-center" style="border: 1px solid blue;">
+        <div class="col-10 column justify-center items-center" style="border: 1px solid blue;">
           <div class="chat-box column">
             <div class="col-10" style="border: 1px solid blue;"></div>
             <div class="col-2">
@@ -24,54 +21,68 @@
     </q-drawer>
     <!-- 오른쪽 참여자 + 채팅 부분 end -->
 
-    <!-- 서브캠 + 메인캠 부분 start -->
+    <!-- 시험 부분 start -->
     <q-page-container>
-      <div class="column sub-container">
-        <div class="col-10 row sub-cams justify-center items-center" style="border: 1px solid red;">
-          <div class="col-2 sub-cam row justify-center items-center" v-if="pub">
-            <UserVideo class="video" :stream-manager="pub"></UserVideo>
-          </div>
-          <template v-if="subs">
-            <div class="col-2 sub-cam row justify-center items-center" v-for="sub in subs" :key="sub">
-              <UserVideo class="video" :stream-manager="sub"></UserVideo>
+      <div v-if="video.subCamsOpen" class="column main-container">
+        <div class="col-2">
+          <div class="col-12 row justify-center items-center" style="border: 1px solid red;">
+            <div class="col-2 sub-cam row justify-center items-center" v-if="pub">
+              <UserVideo class="video" :stream-manager="pub"></UserVideo>
             </div>
-          </template>
+            <template v-if="subs">
+              <div class="col-2 sub-cam row justify-center items-center" v-for="sub in subs" :key="sub">
+                <UserVideo class="video" :stream-manager="sub"></UserVideo>
+              </div>
+            </template>
+          </div>
         </div>
-        <div class="col-2 q-gutter-x-xs" style="border: 1px solid red">
-          <q-btn size="xs" color="primary" label="모드1" />
-          <q-btn size="xs" color="primary" label="모드2" />
+        <div class="col-10 row">
+          <div>
+            <q-splitter
+              v-model="splitterModel"
+              style="height: 78.9vh"
+            >
+              <template v-slot:before>
+                <div class="q-pa-md">
+                  <div class="text-h4 q-mb-md">Pdf 뷰어 부분</div>
+                  <div v-for="n in 20" :key="n" class="q-my-md">{{ n }}. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</div>
+                </div>
+              </template>
+              <template v-slot:after>
+                <div class="q-pa-md">
+                  <div class="text-h4 q-mb-md">웹 IDE 부분</div>
+                  <div v-for="n in 20" :key="n" class="q-my-md">{{ n }}. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</div>
+                </div>
+              </template>
+            </q-splitter>
+          </div>
         </div>
       </div>
-
-      <!-- <router-view /> -->
-      <!-- 모드에 따라 라우터 뷰로 전환? -->
-
-      <!-- 상하로 나눈거 -->
-      <!-- <div class="column main-container">
-        <q-scroll-area style="width: 100%; height: 100%;">
-          <div class="column" style="height: 112.065vh; border: 1px solid green;">
-            <div class="col-4" style="background-color: teal;"></div>
-            <div class="col-4" style="background-color: tan;"></div>
-            <div class="col-4" style="background-color: yellow;"></div>
+      <div v-else class="column main-container">
+        <div class="col-12 row">
+          <div>
+            <q-splitter
+              v-model="splitterModel"
+              style="height: 94.71vh"
+            >
+              <template v-slot:before>
+                <div class="q-pa-md">
+                  <div class="text-h4 q-mb-md">Pdf 뷰어 부분</div>
+                  <div v-for="n in 20" :key="n" class="q-my-md">{{ n }}. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</div>
+                </div>
+              </template>
+              <template v-slot:after>
+                <div class="q-pa-md">
+                  <div class="text-h4 q-mb-md">웹 IDE 부분</div>
+                  <div v-for="n in 20" :key="n" class="q-my-md">{{ n }}. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</div>
+                </div>
+              </template>
+            </q-splitter>
           </div>
-        </q-scroll-area>
-      </div> -->
-      <!-- 좌우로 나누기 -->
-      <div class="column main-container">
-        <q-scroll-area style="width: 100%; height: 100%;">
-          <div class="column" style="height: 149.42vh; border: 1px solid green;">
-            <div class="col-6" style="background-color: teal;">
-              <div class="row" style="width: 100%; height: 100%;">
-                <div class="col-6" style="background-color: antiquewhite;"></div>
-                <div class="col-6" style="background-color: beige;"></div>
-              </div>
-            </div>
-            <div class="col-6" style="background-color: tan;"></div>
-          </div>
-        </q-scroll-area>
+        </div>
       </div>
     </q-page-container>
-    <!-- 서브캠 + 메인캠 부분 end -->
+    <!-- 시험 부분 end -->
 
     <!-- 하단바 부분 start -->
     <q-footer elevated class="bg-grey-8 text-white">
@@ -81,14 +92,13 @@
           <q-btn v-else class="micBtn" rounded push icon="mic_off" label="음소거 해제" @click="clickMic"></q-btn>
           <q-btn v-if="video.isVideo" class="camBtn" rounded push icon="videocam" label="카메라 끄기" @click="clickVideo"></q-btn>
           <q-btn v-else class="camBtn" rounded push icon="videocam_off" label="카메라 켜기" @click="clickVideo"></q-btn>
-          <q-btn v-if="video.isScreen" class="screenBtn" rounded push icon="screen_share" label="화면공유 중지" @click="clickScreenShare"></q-btn>
-          <q-btn v-else class="screenBtn" rounded push icon="screen_share" label="화면공유" @click="clickScreenShare"></q-btn>
-          <q-btn class="examBtn" rounded push icon="quiz" label="시험 시작" @click="startExam"></q-btn>
           <q-btn class="leaveBtn" rounded push color="red" icon="logout" label="나가기" @click="leaveSession"></q-btn>
         </div>
         <div class="col-1" align="end">
-          <q-btn v-if="!video.rightDrawerOpen" flat @click="clickRightDrawer" round icon="keyboard_double_arrow_left"></q-btn>
-          <q-btn v-else flat @click="clickRightDrawer" round icon="keyboard_double_arrow_right"></q-btn>
+          <q-btn v-if="video.subCamsOpen" class="subCamBtn" flat round icon="view_agenda" @click="clickSubCams"></q-btn>
+          <q-btn v-else class="subCamBtn" flat round icon="o_view_agenda" @click="clickSubCams"></q-btn>
+          <q-btn v-if="video.rightDrawerOpen" class="drawerBtn" flat @click="clickRightDrawer" round icon="keyboard_double_arrow_right"></q-btn>
+          <q-btn v-else class="drawerBtn" flat @click="clickRightDrawer" round icon="keyboard_double_arrow_left"></q-btn>
         </div>
       </q-toolbar>
     </q-footer>
@@ -110,9 +120,15 @@ import { useRouter } from 'vue-router';
 	const subs = video.state.subscribers;
 	const main = video.state.mainStreamManager;
 
+  const splitterModel = ref(50);
+
   // 우측 바 펼치기, 접기
   const clickRightDrawer = () => {
     video.setRightDrawer();
+  }
+  // 서브캠 펼치기, 접기
+  const clickSubCams = () => {
+    video.setSubCams();
   }
   // 마이크 켜기, 끄기
   const clickMic = () => {
@@ -155,24 +171,20 @@ import { useRouter } from 'vue-router';
 div {
   box-sizing: border-box;
 }
-.sub-container {
-  height: 20vh;
-}
 .drawer-container {
   height: 94.71vh;
 }
 .main-container {
-  height: 74.71vh;
-}
-.sub-cams {
-  border: 1px solid red;
-  height: 100%;
+  height: 94.71vh;
 }
 .sub-cam {
   height: 100%;
 }
 .micBtn, .camBtn, .screenBtn, .leaveBtn, .examBtn {
   margin-left: 20px;
+}
+.subCamBtn, .drawerBtn {
+  margin-left: 10px;
 }
 .participant-box, .chat-box {
   width: 95%;
@@ -184,6 +196,6 @@ div {
   resize: none;
 }
 video {
-  width: 205px;
+  width: 195px;
 }
 </style>

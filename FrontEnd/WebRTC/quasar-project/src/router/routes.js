@@ -1,7 +1,8 @@
 import MainLayout from 'layouts/MainLayout.vue';
 import VideoLayout from 'layouts/VideoLayout.vue';
 import LectureLayout from 'layouts/LectureLayout.vue';
-import ExamLayout from 'src/layouts/TeacherExamLayout.vue';
+import TeacherExamLayout from 'src/layouts/TeacherExamLayout.vue';
+import StudentExamLayout from 'src/layouts/StudentExamLayout.vue';
 
 const routes = [
   {
@@ -18,7 +19,11 @@ const routes = [
   },
   {
     path: '/exam',
-    component: ExamLayout,
+    component: TeacherExamLayout,
+  },
+  {
+    path: '/exam2',
+    component: StudentExamLayout,
   },
   {
 		path: '/layout',
