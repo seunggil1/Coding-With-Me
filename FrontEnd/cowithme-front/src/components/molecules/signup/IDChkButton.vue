@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<AtomBasic2Button label="중복확인"></AtomBasic2Button>
+		<AtomBasic2Button label="중복확인" style="color: white"></AtomBasic2Button>
 	</div>
 </template>
 

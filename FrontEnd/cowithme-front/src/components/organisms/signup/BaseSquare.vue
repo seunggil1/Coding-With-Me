@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';
 import { api } from 'src/boot/axios.js';
+import EmailChkButton from 'src/components/molecules/signup/EmailChkButton.vue';
 
 // 회원가입 정보
 const name = ref('');
@@ -54,6 +55,12 @@ function idCheck() {
 			openBad('bottom');
 		});
 }
+// 이메일 인증
+// function emailCheck() {
+// 	api.get(`/users/vemail/code`);.then(res=> {console.log(res.data.message)};
+//   )
+//     .catch(err => {console.log(err)});
+// }
 
 // id check dialog
 const dialogGood = ref(false);
@@ -90,7 +97,7 @@ function onReset() {
 			width: 800px;
 			max-width: 70vw;
 			background-color: #303841;
-			background-image: linear-gradient(to right, #303841 0%, #596164 100%);
+			background-image: linear-gradient(to bottom, #274046 0%, #bdc3c7 100%);
 			border-radius: 20px;
 		"
 		class="q-pa-lg shadow"
@@ -155,10 +162,7 @@ function onReset() {
 								val => (val && val.length > 0) || '아이디를 입력해주세요.',
 							]"
 						></q-input>
-						<IDChkButton
-							@click="idCheck"
-							class="flex q-pr-lg q-py-sm"
-						></IDChkButton>
+						<IDChkButton @click="idCheck" class="q-pr-lg q-py-sm"></IDChkButton>
 					</div>
 					<q-input
 						name="password"
@@ -176,7 +180,7 @@ function onReset() {
 						]"
 					></q-input>
 					<q-input
-						class="q-pr-lg q-ma-lg"
+						class="q-pr-lg q-mx-lg"
 						rounded
 						outlined
 						type="password"
@@ -193,24 +197,30 @@ function onReset() {
 					></q-input>
 				</div>
 				<div class="col q-ml-sm">
-					<q-input
-						class="q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						name="email"
-						type="email"
-						v-model="email"
-						label="이메일"
-						lazy-rules
-						color="brand"
-						bg-color="white"
-						:rules="[
-							val => (val && val.length > 0) || '이메일을 입력해주세요.',
-							val =>
-								(val && val.includes('@')) ||
-								'이메일 형식이 올바르지 않습니다.',
-						]"
-					></q-input>
+					<div class="q-pr-lg row">
+						<q-input
+							class="q-mx-lg q-mt-lg col-7"
+							rounded
+							outlined
+							name="email"
+							type="email"
+							v-model="email"
+							label="이메일"
+							lazy-rules
+							color="brand"
+							bg-color="white"
+							:rules="[
+								val => (val && val.length > 0) || '이메일을 입력해주세요.',
+								val =>
+									(val && val.includes('@')) ||
+									'이메일 형식이 올바르지 않습니다.',
+							]"
+						></q-input>
+						<EmailChkButton
+							class="col-3 q-pr-lg q-py-sm q-mt-lg"
+							@click="emailCheck"
+						></EmailChkButton>
+					</div>
 					<q-input
 						name="phone"
 						class="q-ma-lg q-pr-lg"
@@ -279,8 +289,8 @@ function onReset() {
 						class="q-ml-sm"
 					></q-btn>
 				</div>
-				<div id="q-app" class="q-mt-lg">
-					<div class="q-pa-md text-white">
+				<div id="q-app" class="q-mt-lg" style="color: #274046">
+					<div class="q-pa-md">
 						<div class="flex justify-center q-mr-md">
 							<q-radio
 								dark

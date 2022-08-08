@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<AtomBasic2Button label="인증하기"></AtomBasic2Button>
+		<AtomBasic2Button label="인증" style="color: white"></AtomBasic2Button>
 	</div>
 </template>
 
