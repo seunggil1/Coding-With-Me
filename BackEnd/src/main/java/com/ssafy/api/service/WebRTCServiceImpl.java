@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service("WebRTCService")
 @Transactional(readOnly = true)
@@ -46,10 +47,11 @@ public class WebRTCServiceImpl implements WebRTCService {
 
 
         // TODO: 2022-08-04 : DB에서 해당 반의 활성화 된 강의가 있는지 찾기. 있으면 ConferenceID를 반환한다.
-        Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(classId).get();
+        Optional<Conference> Oconference = conferenceRepositorySupport.findByClassesClassIdActive(classId);
         Long conferenceId = -1L;
 
-        if (conference != null) {
+        if (Oconference.isPresent()) {
+            Conference conference = Oconference.get();
             conferenceId = conference.getConferenceId();
 
             // openvidu 서버에 해당 수업이 존재하지 않을 경우
@@ -67,10 +69,11 @@ public class WebRTCServiceImpl implements WebRTCService {
         // (웹에서 강제 종료했을경우 DB에 반영되지 않았을 수도 있음.)
         //출입기록 해당 강의 식별자 돌려서 다 endtime 입력 해줘.
 
-        AttendanceRecord attendanceRecord = attendanceRepositorySupport.findByUserIdAndConferenceIdLast(userId, conferenceId).get();
+        Optional<AttendanceRecord> OattendanceRecord = attendanceRepositorySupport.findByUserIdAndConferenceIdLast(userId, conferenceId);
 
-        if(attendanceRecord.getAttEndTime() == null){
+        if(OattendanceRecord.isPresent()){
             Date date = new Date();
+            AttendanceRecord attendanceRecord=OattendanceRecord.get();
             attendanceRecord.setAttEndTime(date);
             attendanceRepository.save(attendanceRecord);
         }

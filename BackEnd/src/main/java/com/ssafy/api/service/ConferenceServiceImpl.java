@@ -49,6 +49,8 @@ public class ConferenceServiceImpl implements ConferenceService{
         conference.setConfStartTime(date);
         conference.setActive(true);
 
+        conference = conferenceRepository.save(conference);
+        conference.setRtc_token(Long.toString(conference.getConferenceId()));
 //        conference.setRtc_token();
         return conferenceRepository.save(conference);
     }
