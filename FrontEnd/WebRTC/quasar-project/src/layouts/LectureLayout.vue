@@ -26,14 +26,14 @@
 
     <!-- 서브캠 + 메인캠 부분 start -->
     <q-page-container>
-      <div v-if="video.subCamsOpen" class="column main-container">
+      <div v-if="video.subCamsOpen && video.state.session" class="column main-container">
         <div class="col-2">
           <div class="col-12 row justify-center items-center" style="border: 1px solid red;">
-            <div class="col-2 sub-cam row justify-center items-center" v-if="pub">
-              <UserVideo class="video" :stream-manager="pub"></UserVideo>
+            <div class="col-2 sub-cam row justify-center items-center" v-if="video.state.publisher">
+              <UserVideo class="video" :stream-manager="video.state.publisher"></UserVideo>
             </div>
-            <template v-if="subs">
-              <div class="col-2 sub-cam row justify-center items-center" v-for="sub in subs" :key="sub">
+            <template v-if="video.state.subscribers">
+              <div class="col-2 sub-cam row justify-center items-center" v-for="sub in video.state.subscribers" :key="sub">
                 <UserVideo class="video" :stream-manager="sub"></UserVideo>
               </div>
             </template>
@@ -153,17 +153,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import { useVideoStore } from 'src/stores/video.js'
 import { useRouter } from 'vue-router';
 
   const router = useRouter();
   const video = useVideoStore(); // store 가져오기
-  const session = video.state.session;
-	const pub = video.state.publisher;
-	const subs = video.state.subscribers;
-	const main = video.state.mainStreamManager;
+
+  onMounted(() => {
+    video.joinSession();
+  });
+
+  watch([() => video.state.session], () => {
+    console.log(video.state.session);
+  });
 
   const splitterModel = ref(50);
   const clickMode = () => {

@@ -1,7 +1,7 @@
 import { OpenVidu } from "openvidu-browser";
 import { defineStore } from "pinia";
 import axios from "axios";
-import { computed, ref } from "vue";
+import { computed, ref, reactive } from "vue";
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -10,7 +10,7 @@ export const useVideoStore = defineStore('video', () => {
   const OPENVIDU_SERVER_URL = "https://" + "localhost:4443"; // 서버 주소
   const OPENVIDU_SERVER_SECRET = "MY_SECRET"; // 비번?
 
-  const state = ref({
+  const state = reactive({
     OV: undefined,
     session: undefined,
     mainStreamManager: undefined,
@@ -26,7 +26,7 @@ export const useVideoStore = defineStore('video', () => {
     // true면 내가 선생.
     isTeacher : false,
     // 웹 IDE 데이터도 여기서 처리함.
-    teacherCode : '',
+    teacherCode : 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
     myCode : ''
   })
 
@@ -53,49 +53,49 @@ export const useVideoStore = defineStore('video', () => {
 
   const isAudio = ref(true); // 자기 비디오 켜져있는지 여부. true면 on
   function muteAudio() {
-    if(state.value.publisher == undefined){
+    if(state.publisher == undefined){
       console.log('session is not connected. muteAudio is canceled.');
       return;
     }
-    state.value.publisher.publishAudio(false);
+    state.publisher.publishAudio(false);
     isAudio.value = !isAudio.value;
   }
 
   function unmuteAudio(){
-    if(state.value.publisher == undefined){
+    if(state.publisher == undefined){
       console.log('session is not connected. umMuteAudio is canceled.');
       return;
     }
-    state.value.publisher.publishAudio(true);
+    state.publisher.publishAudio(true);
     isAudio.value = !isAudio.value;
   }
   const isVideo = ref(true); // 자기 비디오 꺼져있는지 여부. true면 on
   function muteVideo(){
-    if(state.value.publisher == undefined){
+    if(state.publisher == undefined){
       console.log('session is not connected. muteVideo is canceled.');
       return;
     }
-    state.value.publisher.publishVideo(false);
+    state.publisher.publishVideo(false);
     isVideo.value = !isVideo.value;
   }
 
   function unmuteVideo(){
-    if(state.value.publisher == undefined){
+    if(statealue.publisher == undefined){
       console.log('session is not connected. unmutedVideo is canceled.');
       return;
     }
-    state.value.publisher.publishVideo(true);
+    state.publisher.publishVideo(true);
     isVideo.value = !isVideo.value;
   }
 
   const isScreen = ref(false);
   function startScreenShare() {
-    state.value.screenOV = new OpenVidu();
-    state.value.screenSession = state.value.screenOV.initSession();
+    state.screenOV = new OpenVidu();
+    state.screenSession = state.screenOV.initSession();
 
-    getToken(state.value.mySessionId).then(token =>{
-      state.value.screenSession.connect(token, { clientData: state.value.screenShareName }).then(()=>{
-          let publisher = state.value.screenOV.initPublisher("html-element-id", { videoSource: "screen", publishAudio: false });
+    getToken(state.mySessionId).then(token =>{
+      state.screenSession.connect(token, { clientData: state.screenShareName }).then(()=>{
+          let publisher = state.screenOV.initPublisher("html-element-id", { videoSource: "screen", publishAudio: false });
           isScreen.value = !isScreen.value;
           try {
             publisher.once('accessAllowed', () => {
@@ -103,7 +103,7 @@ export const useVideoStore = defineStore('video', () => {
               console.log('User pressed the "Stop sharing" button');
               stopScreenShare();
             });
-              state.value.screenSession.publish(publisher);
+              state.screenSession.publish(publisher);
             });
 
             publisher.once('accessDenied', (event) => {
@@ -116,42 +116,42 @@ export const useVideoStore = defineStore('video', () => {
       })
     }).catch(error => {
       console.error(error);
-      state.value.screenOV = undefined;
-      state.value.screenSession = undefined;
+      state.screenOV = undefined;
+      state.screenSession = undefined;
     })
     // let last = state.value.subscribers[state.value.subscribers.length - 1];
   }
 
   function stopScreenShare() {
-    state.value.screenSession.disconnect();
-    state.value.screenOV = undefined;
-    state.value.screenSession = undefined;
+    state.screenSession.disconnect();
+    state.screenOV = undefined;
+    state.screenSession = undefined;
     isScreen.value = !isScreen.value;
   }
 
   function joinSession() {
-    state.value.OV = new OpenVidu();
-    state.value.session = state.value.OV.initSession();
+    state.OV = new OpenVidu();
+    state.session = state.OV.initSession();
 
-    state.value.session.on('streamCreated', ({ stream }) => {
-      const subscriber = state.value.session.subscribe(stream);
-      state.value.subscribers.push(subscriber);
+    state.session.on('streamCreated', ({ stream }) => {
+      const subscriber = state.session.subscribe(stream);
+      state.subscribers.push(subscriber);
     });
 
-    state.value.session.on('streamDestroyed', ({ stream }) => {
-      const index = state.value.subscribers.indexOf(stream.streamManager, 0);
+    state.session.on('streamDestroyed', ({ stream }) => {
+      const index = state.subscribers.indexOf(stream.streamManager, 0);
       if (index >= 0) {
-        state.value.subscribers.splice(index, 1);
+        state.subscribers.splice(index, 1);
       }
     });
 
-    state.value.session.on('exception', ({ exception }) => {
+    state.session.on('exception', ({ exception }) => {
       console.error(exception);
     });
 
-    state.value.session.on('signal:chat', (event) => {
+    state.session.on('signal:chat', (event) => {
       console.log('received chat : ', event.data);
-      state.value.chatting.push({
+      state.chatting.push({
         sender : event.data.sender,
         message : event.data.message
       });
@@ -160,18 +160,18 @@ export const useVideoStore = defineStore('video', () => {
       console.log(event.type); // The type of message ("my-chat")
     });
 
-    state.value.session.on('signal:code', (event) => {
+    state.session.on('signal:code', (event) => {
       console.log('received code : ', event.data);
-      state.value.teacherCode = event.data.code;
+      state.teacherCode = event.data.code;
     });
 
-    getToken(state.value.mySessionId).then(token => {
-      state.value.session.connect(token, { clientData: state.value.myUserName })
+    getToken(state.mySessionId).then(token => {
+      state.session.connect(token, { clientData: state.myUserName })
         .then(() => {
           
-          state.value.OV.getDevices().then(() =>{
+          state.OV.getDevices().then(() =>{
               // let videoDevices = devices.filter(device => device.kind === 'videoinput');
-              let publisher = state.value.OV.initPublisher(undefined, {
+              let publisher = state.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
@@ -182,11 +182,11 @@ export const useVideoStore = defineStore('video', () => {
                 mirror: true       	// Whether to mirror your local video or not
               });
 
-            state.value.mainStreamManager = publisher;
-            state.value.publisher = publisher;
+            state.mainStreamManager = publisher;
+            state.publisher = publisher;
 
             // --- Publish your stream ---
-            state.value.session.publish(state.value.publisher);
+            state.session.publish(state.publisher);
           })
         })
         .catch(error => {
@@ -198,19 +198,19 @@ export const useVideoStore = defineStore('video', () => {
 
   function leaveSession() {
     // --- Leave the session by calling 'disconnect' method over the Session object ---
-    if (state.value.session) {
-      state.value.session.disconnect();
+    if (state.session) {
+      state.session.disconnect();
     }
-    if (state.value.screenSession) {
-      state.value.screenSession.disconnect();
+    if (state.screenSession) {
+      state.screenSession.disconnect();
     } 
-    state.value.session = undefined;
-    state.value.screenSession = undefined;
-    state.value.mainStreamManager = undefined;
-    state.value.publisher = undefined;
-    state.value.subscribers = [];
-    state.value.OV = undefined;
-    state.value.screenOV = undefined;
+    state.session = undefined;
+    state.screenSession = undefined;
+    state.mainStreamManager = undefined;
+    state.publisher = undefined;
+    state.subscribers = [];
+    state.OV = undefined;
+    state.screenOV = undefined;
 
     // Todo : axios로 api 호출 필요.
     window.removeEventListener('beforeunload', leaveSession);
@@ -268,28 +268,28 @@ export const useVideoStore = defineStore('video', () => {
   // serverSide end.
 
   function updateMainVideoStreamManager(stream) {
-    if (state.value.mainStreamManager === stream) {
+    if (state.mainStreamManager === stream) {
       return;
     }
-    state.value.mainStreamManager = stream;
+    state.mainStreamManager = stream;
   }
 
   function setMyUserName() {
-    state.value.myUserName = 'Participant' + Math.floor(Math.random() * 10) + 1;
+    state.myUserName = 'Participant' + Math.floor(Math.random() * 10) + 1;
   }
 
   function setScreenShareName() {
-    state.value.screenShareName = state.value.myUserName + "'S screen";
+    state.screenShareName = state.myUserName + "'S screen";
   }
 
   function sendMessage(message){
-    if(state.value.session == undefined){
+    if(state.session == undefined){
       console.log('session is not connected. sendMessage is canceled.');
       return;
     }
-    state.value.session.singal({
+    statealue.session.singal({
       data: {
-        sender : state.value.myUserName,
+        sender : state.myUserName,
         message : message
       },  // Any string (optional)
       to: [],         
@@ -304,13 +304,13 @@ export const useVideoStore = defineStore('video', () => {
   }
 
   function sendCode(code){
-    if(state.value.session == undefined){
+    if(state.session == undefined){
       console.log('session is not connected. sendCode is canceled.');
       return;
     }
-    state.value.session.singal({
+    state.session.singal({
       data: {
-        sender : state.value.myUserName,
+        sender : state.myUserName,
         message : code
       },  // Any string (optional)
       to: [],         
