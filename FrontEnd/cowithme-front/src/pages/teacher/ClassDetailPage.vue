@@ -27,6 +27,9 @@
 			</div>
 			<div class=""></div>
 			<div class="box col-5 q-pa-md">
+				<div v-for="test in tests" :key="test.testId">
+					{{ test.testId }}번 {{ test.testName }}
+				</div>
 				시험 목록 및 생성
 				<router-link
 					:to="{
@@ -67,8 +70,8 @@ export default {
 	// },
 	setup() {
 		const students = ref([]);
+		const tests = ref([]);
 		const router = useRouter();
-		// 해당 반의 학생 리스트를 불러옵니다.
 
 		const className = localStorage.getItem('className');
 		const classId = localStorage.getItem('classId');
@@ -84,11 +87,22 @@ export default {
 				console.log(err);
 			});
 
+		// 해당 반의 시험 목록 가져오기
+		api
+			.get(`/tests/${classId}`)
+			.then(res => {
+				tests.value = res.data.testList;
+				// console.log(res.data);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+
 		// 학생을 추가하기
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
-		return { goAddStudent, students, classId, className };
+		return { goAddStudent, students, classId, className, tests };
 	},
 };
 </script>

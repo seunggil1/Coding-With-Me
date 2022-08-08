@@ -229,16 +229,11 @@ function onReset() {
 						type="tel"
 						v-model="phone"
 						label="전화번호"
-						placeholder="010-0000-0000"
+						mask="###-####-####"
+						unmasked-value
 						lazy-rules
 						color="brand"
 						bg-color="white"
-						:rules="[
-							val => (val && val.length > 0) || '전화번호를 입력해주세요.',
-							val =>
-								(val && val.length === 13) ||
-								'전화번호 형식이 올바르지 않습니다.',
-						]"
 					></q-input>
 					<q-input
 						name="nickname"
