@@ -15,14 +15,21 @@
 							:to="{
 								name: 'classDetail',
 								params: {
-									clas: JSON.stringify(clas),
-									classId: Number(clas.classId),
-									className: clas.className,
-									userId: info2.userId,
+									classId: clas.classId,
 								},
 							}"
 							style="text-decoration: none; color: inherit"
-							><q-btn style="background: #00adb5; color: white" push
+							><q-btn
+								@click="
+									goSetClassInfo(
+										clas,
+										clas.classId,
+										clas.className,
+										info2.userId,
+									)
+								"
+								style="background: #00adb5; color: white"
+								push
 								>반 관리하기</q-btn
 							>
 						</router-link>
@@ -80,6 +87,7 @@ import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
+import { useClassStore } from 'src/stores';
 
 export default defineComponent({
 	name: 'IndexPage',
@@ -133,7 +141,7 @@ export default defineComponent({
 
 		if (info2.role == '학생') {
 			api
-				.get(`${baseUrl}/users/${userId}/class`)
+				.get(`/users/${userId}/class`)
 				.then(res => {
 					testTest.value = res.data.result;
 					console.log(res.data);
@@ -146,6 +154,11 @@ export default defineComponent({
 		async function makeClass() {
 			await router.push({ path: '/makeClass' });
 		}
+		const classStore = useClassStore();
+
+		async function goSetClassInfo(classInfo, classId, className, userId) {
+			classStore.setClassInfo(classInfo, classId, className, userId);
+		}
 
 		return {
 			user2,
@@ -153,7 +166,7 @@ export default defineComponent({
 			makeClass,
 			classes,
 			testTest,
-			// goClassDetail,
+			goSetClassInfo,
 		};
 	},
 });

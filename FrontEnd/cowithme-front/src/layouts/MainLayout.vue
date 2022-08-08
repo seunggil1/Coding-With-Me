@@ -4,7 +4,7 @@
 			<q-toolbar style="background-color: #00adb5">
 				<TestComp @click="toggleLeftDrawer" flat></TestComp>
 				<router-link
-					:to="{ name: 'home' }"
+					:to="{ path: '/' }"
 					style="text-decoration: none; color: inherit"
 				>
 					<q-toolbar-title style="font-family: 'OTWelcomeBA'; font-size: 20px">
@@ -54,7 +54,7 @@
 						</div>
 					</div>
 				</div>
-				<div v-if="info2.role == '학생'" class="row">
+				<!-- <div v-if="info2.role == '학생'" class="row">
 					<router-link
 						:to="{ name: 'studyRoom' }"
 						style="text-decoration: none; color: inherit"
@@ -63,7 +63,7 @@
 							style="font-size: 30px"
 						></AtomSearchIconButton>
 					</router-link>
-				</div>
+				</div> -->
 				<div v-if="info2.role == '학생'" class="row">
 					<router-link
 						:to="{ name: 'reportCard', params: { userId: info2.userId } }"
@@ -91,7 +91,7 @@ import { defineComponent, ref } from 'vue';
 import TestComp from 'src/components/TestComp.vue';
 import AtomLogo2 from 'src/components/atoms/AtomLogo2.vue';
 import WelcomeText from 'src/components/molecules/home/WelcomeText.vue';
-import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue';
+// import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue';
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
 import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
@@ -105,7 +105,7 @@ export default defineComponent({
 		TestComp,
 		AtomLogo2,
 		WelcomeText,
-		AtomSearchIconButton,
+		// AtomSearchIconButton,
 		AtomScoreIconButton,
 		AtomMyPageButton,
 		AtomLogoutButton,

@@ -17,8 +17,6 @@
 						params: {
 							classId: classId,
 							className: className,
-							userId: userId,
-							clas: clas,
 						},
 					}"
 				>
@@ -31,7 +29,10 @@
 			<div class="box col-5 q-pa-md">
 				시험 목록 및 생성
 				<router-link
-					:to="{ name: 'makeExam', params: { classId: classId } }"
+					:to="{
+						name: 'makeExam',
+						params: { classId: classId },
+					}"
 					style="text-decoration: none; color: inherit"
 				>
 					<q-btn push>시험 생성</q-btn>
@@ -50,32 +51,30 @@ import { ref } from 'vue';
 
 export default {
 	name: 'ClassDetailPage',
-	props: {
-		classId: {
-			type: Number,
-		},
-		className: {
-			type: String,
-		},
-		userId: {
-			type: String,
-		},
-		clas: {
-			type: String,
-		},
-	},
-	setup(props) {
+	// props: {
+	// 	classId: {
+	// 		type: Number,
+	// 	},
+	// 	className: {
+	// 		type: String,
+	// 	},
+	// 	userId: {
+	// 		type: String,
+	// 	},
+	// 	clas: {
+	// 		type: String,
+	// 	},
+	// },
+	setup() {
 		const students = ref([]);
 		const router = useRouter();
-
-		localStorage.setItem('students', students.value);
-		localStorage.setItem('className', props.className);
-		localStorage.setItem('classId', props.classId);
-		localStorage.setItem('userId', props.userId);
-
 		// 해당 반의 학생 리스트를 불러옵니다.
+
+		const className = localStorage.getItem('className');
+		const classId = localStorage.getItem('classId');
+
 		api
-			.get(`/tutor/1/classes/${props.className}`)
+			.get(`/tutor/1/classes/${className}`)
 			.then(res => {
 				students.value = res.data.students;
 				console.log(res.data);
@@ -87,7 +86,7 @@ export default {
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
-		return { goAddStudent, students };
+		return { goAddStudent, students, classId, className };
 	},
 };
 </script>

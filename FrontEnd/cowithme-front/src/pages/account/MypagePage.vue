@@ -88,7 +88,7 @@
 						color="brand"
 						bg-color="white"
 					></q-input>
-					<q-input
+					<!-- <q-input
 						name="profilePath"
 						class="q-ma-lg q-pr-lg"
 						rounded
@@ -104,7 +104,7 @@
 								file = val[0];
 							}
 						"
-					></q-input>
+					></q-input> -->
 				</div>
 			</div>
 			<div class="flex justify-center">
@@ -142,7 +142,7 @@ const phone = ref(`${info.phone}`);
 const nickname = ref(`${info.nickname}`);
 const birthDt = ref(`${info.birthDt}`);
 const password = ref('');
-const file = ref(null);
+const file = ref('');
 const role = ref(`${info.role}`);
 
 async function goEditInfo() {
