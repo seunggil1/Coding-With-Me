@@ -95,12 +95,15 @@ public class WebRTCServiceImpl implements WebRTCService {
         if (isEmpty) {
             Conference conference = conferenceRepository.findByConferenceId(conferenceID).get();
             conference.setActive(false);
+            Date date = new Date();
+            conference.setConfEndTime(date);
             conferenceRepository.save(conference);
             // TODO: 2022-08-05 : DB에 해당 confernce is_active = false 처리.
         }
     }
 
     @Override
+    @Transactional
     public void forceCloseSession(ForceClosePostReq forceClosePostReq) throws Exception {
 
         Long classId = forceClosePostReq.getClassId();
@@ -112,6 +115,9 @@ public class WebRTCServiceImpl implements WebRTCService {
         if(conference.getOwnerId().equals(ownerId)){
             openViduService.closeSession(conference.getConferenceId());
             conference.setActive(false);
+            Date date = new Date();
+            conference.setConfEndTime(date);
+            conferenceRepository.save(conference);
         }else{
             throw new Exception("잘못된 접근입니다.");
         }
