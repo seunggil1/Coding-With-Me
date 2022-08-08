@@ -3,8 +3,11 @@
 		<q-btn
 			@click="openMakeLecture = true"
 			class="q-mb-md"
+			glossy
+			rounded
+			size="25px"
 			push
-			style="background: #ff5722"
+			style="background: #ff5722; color: white"
 			>{{ className }}의 강의 만들기</q-btn
 		>
 		<q-dialog v-model="openMakeLecture" persistent>
@@ -27,42 +30,50 @@
 		</div>
 		<div class="flex row">
 			<div class="col-6">
-				<div class="box q-px-lg q-mr-md">
-					<h3>{{ className }}의 학생</h3>
-					<div v-for="student in students" :key="student.userId">
-						{{ student.name }}({{ student.nickname }})
+				<div class="row">
+					<div class="col-10">
+						<p style="font-size: 26px">{{ className }}의 학생</p>
+						<div v-for="student in students" :key="student.userId">
+							{{ student.name }}({{ student.nickname }})
+						</div>
 					</div>
-					<router-link
-						:to="{
-							name: 'addStudent',
-							params: {
-								classId: classId,
-								className: className,
-							},
-						}"
-					>
-						<q-btn style="text-decoration: none; color: inherit" push>
-							학생 추가
-						</q-btn>
-					</router-link>
+					<div class="col-2">
+						<router-link
+							:to="{
+								name: 'addStudent',
+								params: {
+									classId: classId,
+									className: className,
+								},
+							}"
+						>
+							<q-icon style="float: right" name="edit" size="26px"></q-icon>
+						</router-link>
+					</div>
 				</div>
+				<div class="box q-px-lg q-py-lg q-mr-md"></div>
 			</div>
 			<div class="col-6">
-				<div class="box q-px-lg q-ml-md">
-					<h3>{{ className }}의 시험</h3>
-					<div v-for="test in tests" :key="test.testId">
-						{{ test.testId }}번 {{ test.testName }}
+				<div class="box q-px-lg q-py-lg q-ml-md">
+					<div class="row">
+						<div class="col-10">
+							<p style="font-size: 26px">{{ className }}의 시험</p>
+							<div v-for="test in tests" :key="test.testId">
+								{{ test.testId }}번 {{ test.testName }}
+							</div>
+						</div>
+						<div class="col-2">
+							<router-link
+								:to="{
+									name: 'makeExam',
+									params: { classId: classId },
+								}"
+								style="text-decoration: none; color: inherit"
+							>
+								<q-icon style="float: right" name="edit" size="26px"></q-icon>
+							</router-link>
+						</div>
 					</div>
-					시험 목록 및 생성
-					<router-link
-						:to="{
-							name: 'makeExam',
-							params: { classId: classId },
-						}"
-						style="text-decoration: none; color: inherit"
-					>
-						<q-btn push>시험 생성</q-btn>
-					</router-link>
 				</div>
 			</div>
 		</div>

@@ -27,7 +27,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.9",
     "@quasar/app-vite": "^1.0.0",
-    "@quasar/quasar-app-extension-qpdfviewer": "v2.0.0-alpha.6",
+    "@quasar/quasar-app-extension-qpdfviewer": "^1.0.0-beta.9",
     "@rushstack/eslint-patch": "^1.1.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "autoprefixer": "^10.4.2",
