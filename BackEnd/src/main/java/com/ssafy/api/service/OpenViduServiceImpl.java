@@ -43,10 +43,11 @@ public class OpenViduServiceImpl implements OpenViduService {
         // OpenViduRole.MODERATOR : PUBLISHER 권한 + 다른 사람 쫓아낼 수 있음
         // OpenViduRole.PUBLISHER : SUBSCRIBER 권한 + 자기 영상 송출 가능
         // OpenViduRole.SUBSCRIBER : 다른 사람 영상을 볼 수 있음.
-
+        System.out.println("=========================test1 ");
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC)
                 .role(OpenViduRole.PUBLISHER).data(serverData).build();
 
+        System.out.println("=========================test2 ");
         // 해당 방이 존재하면 정보 갱신부터.
         if (SessionInfoMap.get(sessionId) != null){
             try {

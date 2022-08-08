@@ -70,16 +70,22 @@ public class TestController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> register(
+    public ResponseEntity<Map<String,Object>> register(
             @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterinfo) {
         //임의로 리턴된 Classes 인스턴스.
 
 
-        testService.createTest(testRegisterinfo);
+        Test test= testService.createTest(testRegisterinfo);
+
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("message","success");
+        map.put("testId",test.getTestId());
 
 
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        return ResponseEntity.status(200).body(map);
     }
 
     @PutMapping

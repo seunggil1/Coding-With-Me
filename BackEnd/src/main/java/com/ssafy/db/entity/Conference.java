@@ -21,6 +21,7 @@ public class Conference {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long conferenceId;
 
+
     @JsonIgnore
     @ManyToOne (fetch = LAZY)
     @JoinColumn(name="class_id")

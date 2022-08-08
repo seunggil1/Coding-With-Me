@@ -21,6 +21,7 @@ public class ConferenceController {
     @Autowired
     ConferenceService conferenceService;
 
+
     @PostMapping
     @ApiOperation(value = "강의실 개설", notes = "<strong>강사가 </strong> 강의실을 개설한다.")
     @ApiResponses({
