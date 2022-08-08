@@ -70,6 +70,7 @@ public class WebRTCController {
     ) throws Exception {
         Map<String, Object> map =new HashMap<>();
         try {
+            webRTCService.removeUserSession(leaveSessionPostReq);
             map.put("message", "Success");
             return ResponseEntity.status(200).body(map);
         }catch (Exception e){
@@ -91,6 +92,7 @@ public class WebRTCController {
 
         Map<String, Object> map =new HashMap<>();
         try {
+            webRTCService.forceCloseSession(forceClosePostReq);
             map.put("message", "Success");
             return ResponseEntity.status(200).body(map);
         }catch (Exception e){
