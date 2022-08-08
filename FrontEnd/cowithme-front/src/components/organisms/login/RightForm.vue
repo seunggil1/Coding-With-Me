@@ -23,7 +23,16 @@ async function onSubmit() {
 <template>
 	<div style="" class="q-pa-lg">
 		<div class="q-ma-lg">
-			<p class="col" style="font-size: 100px; color: white">Login</p>
+			<p
+				class="col"
+				style="
+					font-size: 100px;
+					color: white;
+					font-family: 'Elice Digital Baeum', sans-serif;
+				"
+			>
+				로그인
+			</p>
 		</div>
 		<q-form @submit="onSubmit" class="q-gutter-md signup-form" lazy-validation>
 			<div class="flex row">

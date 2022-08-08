@@ -1,45 +1,56 @@
 <template>
 	<div class="q-pa-md" style="font-family: 'Elice Digital Baeum">
-		<q-btn class="q-mb-md" push style="background: #ff5722"
+		<q-btn
+			class="q-mb-md"
+			push
+			glossy
+			rounded
+			size="25px"
+			style="background: #ff5722; color: white"
 			>{{ className }}의 강의 만들기</q-btn
 		>
 		<div class="box2 q-mb-md">
 			<q-btn push>만들어져 있는 강의들 리스트(아직 연결 안 됨)</q-btn>
 		</div>
 		<div class="flex row">
-			<div class="box q-pa-md col-5">
-				<div v-for="student in students" :key="student.userId">
-					{{ student.name }}({{ student.nickname }})
+			<div class="col-6">
+				<div class="box q-px-lg q-mr-md">
+					<h3>{{ className }}의 학생</h3>
+					<div v-for="student in students" :key="student.userId">
+						{{ student.name }}({{ student.nickname }})
+					</div>
+					<router-link
+						:to="{
+							name: 'addStudent',
+							params: {
+								classId: classId,
+								className: className,
+							},
+						}"
+					>
+						<q-btn style="text-decoration: none; color: inherit" push>
+							학생 추가
+						</q-btn>
+					</router-link>
 				</div>
-				<router-link
-					:to="{
-						name: 'addStudent',
-						params: {
-							classId: classId,
-							className: className,
-						},
-					}"
-				>
-					<q-btn style="text-decoration: none; color: inherit" push>
-						학생 추가
-					</q-btn>
-				</router-link>
 			</div>
-			<div class=""></div>
-			<div class="box col-5 q-pa-md">
-				<div v-for="test in tests" :key="test.testId">
-					{{ test.testId }}번 {{ test.testName }}
+			<div class="col-6">
+				<div class="box q-px-lg q-ml-md">
+					<h3>{{ className }}의 시험</h3>
+					<div v-for="test in tests" :key="test.testId">
+						{{ test.testId }}번 {{ test.testName }}
+					</div>
+					시험 목록 및 생성
+					<router-link
+						:to="{
+							name: 'makeExam',
+							params: { classId: classId },
+						}"
+						style="text-decoration: none; color: inherit"
+					>
+						<q-btn push>시험 생성</q-btn>
+					</router-link>
 				</div>
-				시험 목록 및 생성
-				<router-link
-					:to="{
-						name: 'makeExam',
-						params: { classId: classId },
-					}"
-					style="text-decoration: none; color: inherit"
-				>
-					<q-btn push>시험 생성</q-btn>
-				</router-link>
 			</div>
 		</div>
 	</div>
@@ -111,14 +122,14 @@ export default {
 .box {
 	min-height: 300px;
 	/* width: 100%; */
-	background-color: #eeeeee;
+	background-color: white;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 .box2 {
 	height: 300px;
 	width: 100%;
-	background-color: #eeeeee;
+	background-color: white;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
