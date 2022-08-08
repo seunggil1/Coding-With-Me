@@ -1,8 +1,27 @@
 <template>
 	<div class="q-pa-md" style="font-family: 'Elice Digital Baeum">
-		<q-btn class="q-mb-md" push style="background: #ff5722"
+		<q-btn
+			class="q-mb-md"
+			push
+			style="background: #ff5722"
+			@click="openMakeLecture = true"
 			>{{ className }}의 강의 만들기</q-btn
 		>
+		<q-dialog v-model="openMakeLecture" persistent>
+			<q-card class="q-pa-md" style="min-width: 500px; min-height: 400px">
+				<q-card-section>
+					<div class="text-h6">강의명</div>
+				</q-card-section>
+				<q-card-section class="q-pt-none">
+					<q-input dense v-model="lectureName" autofocus />
+				</q-card-section>
+
+				<q-card-actions align="right" class="text-primary">
+					<q-btn flat label="만들기" @click="makeLecture" v-close-popup />
+					<q-btn flat label="취소" v-close-popup />
+				</q-card-actions>
+			</q-card>
+		</q-dialog>
 		<div class="box2 q-mb-md">
 			<q-btn push>만들어져 있는 강의들 리스트(아직 연결 안 됨)</q-btn>
 		</div>
@@ -68,6 +87,34 @@ export default {
 	setup() {
 		const students = ref([]);
 		const router = useRouter();
+
+		const openMakeLecture = ref(false);
+		const lectureName = ref('');
+		function makeLecture() {
+			if (lectureName.value == '' || lectureName.value == null) {
+				alert('값을 입력해주세요');
+				return;
+			}
+			let id = JSON.parse(localStorage.getItem('user')).id;
+			api
+				.post('/conferences', {
+					classId: parseInt(localStorage.getItem('classId')),
+					conferenceName: lectureName.value,
+					ownerId: id,
+					thumbnailPath: null,
+				})
+				.then(res => {
+					console.log(res);
+					if (res.data.message === 'Success') {
+						alert('강의 개설이 완료되었습니다');
+					} else {
+						alert('다시 시도해주세요');
+					}
+					lectureName.value = '';
+					return;
+				});
+		}
+
 		// 해당 반의 학생 리스트를 불러옵니다.
 
 		const className = localStorage.getItem('className');
@@ -88,7 +135,15 @@ export default {
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
-		return { goAddStudent, students, classId, className };
+		return {
+			goAddStudent,
+			students,
+			classId,
+			className,
+			openMakeLecture,
+			lectureName,
+			makeLecture,
+		};
 	},
 };
 </script>
