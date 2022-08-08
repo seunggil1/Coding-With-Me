@@ -15,6 +15,7 @@
 //     plugins: [new MonacoWebpackPlugin()],
 
 import { ref, onMounted, onUpdated } from "vue";
+import { useVideoStore } from 'src/stores/video.js';
 
 import * as monaco from 'monaco-editor';
 export default {
@@ -28,6 +29,7 @@ export default {
         readOnly : Boolean, // "false"
     },
     setup (props) {
+        const video = useVideoStore(); // store 가져오기
         const editorDiv = ref(undefined);
         let monacoEditor;
 
@@ -57,7 +59,6 @@ export default {
                     fontSize: 12,
                 });
         });
-
         onUpdated(() => {
             updateEditor();
         });
@@ -82,7 +83,16 @@ export default {
                 });
         };
 
+        const saveCode = (isMyEditor) => {
+            if(isMyEditor){
+                video.state.myCode = monacoEditor.getValue();
+            }else{
+                video.state.teacherCode = monacoEditor.getValue();
+            }
+        }
+
         return {
+            video,
             editorDiv,
             monacoEditor,
             editorCode,
@@ -91,7 +101,8 @@ export default {
             
             // Golden Layout에서 화면이 갱신되었을 때,
             // updateEditor를 호출해 IDE를 다시 불러와야 한다.
-            updateEditor
+            updateEditor,
+            saveCode
         };
     }
 }

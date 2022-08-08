@@ -17,7 +17,7 @@ export const useVideoStore = defineStore('video', () => {
     publisher: undefined,
     subscribers: [],
     mySessionId: 'SessionA', // 나중에 처리
-    myUserName: '', // 나중에 처리
+    myUserName: 'user1', // 나중에 처리
     screenOV: undefined,
     screenSession: undefined,
     screenShareName: '',  // 나중에 처리
@@ -27,7 +27,7 @@ export const useVideoStore = defineStore('video', () => {
     isTeacher : false,
     // 웹 IDE 데이터도 여기서 처리함.
     teacherCode : 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
-    myCode : ''
+    myCode : 'import java.util.*;\nimport java.io.*;\n'
   })
 
   const mode = ref(1);
@@ -150,14 +150,12 @@ export const useVideoStore = defineStore('video', () => {
     });
 
     state.session.on('signal:chat', (event) => {
-      console.log('received chat : ', event.data);
+      event = JSON.parse(event.data);
+      console.log('received chat : ', event);
       state.chatting.push({
-        sender : event.data.sender,
-        message : event.data.message
+        sender : event.sender,
+        message : event.message
       });
-      console.log(event.data); // Message
-      console.log(event.from); // Connection object of the sender
-      console.log(event.type); // The type of message ("my-chat")
     });
 
     state.session.on('signal:code', (event) => {
@@ -211,6 +209,13 @@ export const useVideoStore = defineStore('video', () => {
     state.subscribers = [];
     state.OV = undefined;
     state.screenOV = undefined;
+    
+    mode.value = 1;
+    rightDrawerOpen.value = true;
+    subCamsOpen.value = true;
+    isAudio.value = true;
+    isVideo.value = true;
+    isScreen.value = false;
 
     // Todo : axios로 api 호출 필요.
     window.removeEventListener('beforeunload', leaveSession);
@@ -287,11 +292,11 @@ export const useVideoStore = defineStore('video', () => {
       console.log('session is not connected. sendMessage is canceled.');
       return;
     }
-    statealue.session.singal({
-      data: {
+    state.session.signal({
+      data: JSON.stringify({
         sender : state.myUserName,
         message : message
-      },  // Any string (optional)
+      }),  // Any string (optional)
       to: [],         
       type: 'chat'             // The type of message (optional)
     })
@@ -308,11 +313,11 @@ export const useVideoStore = defineStore('video', () => {
       console.log('session is not connected. sendCode is canceled.');
       return;
     }
-    state.session.singal({
-      data: {
+    state.session.signal({
+      data: JSON.stringify({
         sender : state.myUserName,
         message : code
-      },  // Any string (optional)
+      }),  // Any string (optional)
       to: [],         
       type: 'code'             // The type of message (optional)
     })
