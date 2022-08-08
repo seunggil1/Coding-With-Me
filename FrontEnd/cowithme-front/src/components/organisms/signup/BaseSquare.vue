@@ -134,10 +134,10 @@ function onReset() {
 						outlined
 						v-model="name"
 						label="이름"
-						placeholder="국문 5자 이내"
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[val => (val && val.length > 0) || '이름을 입력해주세요.']"
 					></q-input>
 					<div class="row q-pr-lg">
 						<q-input
@@ -151,6 +151,9 @@ function onReset() {
 							lazy-rules
 							color="brand"
 							bg-color="white"
+							:rules="[
+								val => (val && val.length > 0) || '아이디를 입력해주세요.',
+							]"
 						></q-input>
 						<IDChkButton
 							@click="idCheck"
@@ -168,6 +171,9 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						class="q-pr-lg q-ma-lg"
@@ -179,6 +185,11 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+							val =>
+								(val && val === password) || '비밀번호가 일치하지 않습니다.',
+						]"
 					></q-input>
 				</div>
 				<div class="col q-ml-sm">
@@ -193,6 +204,12 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '이메일을 입력해주세요.',
+							val =>
+								(val && val.includes('@')) ||
+								'이메일 형식이 올바르지 않습니다.',
+						]"
 					></q-input>
 					<q-input
 						name="phone"
@@ -206,6 +223,12 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '전화번호를 입력해주세요.',
+							val =>
+								(val && val.length === 13) ||
+								'전화번호 형식이 올바르지 않습니다.',
+						]"
 					></q-input>
 					<q-input
 						name="nickname"
@@ -217,6 +240,9 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '닉네임을 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						name="birthDt"
@@ -228,6 +254,9 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '생년월일을 입력해주세요.',
+						]"
 					></q-input>
 				</div>
 			</div>

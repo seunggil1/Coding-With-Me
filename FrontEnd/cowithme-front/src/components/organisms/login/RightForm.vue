@@ -3,13 +3,6 @@ import { ref } from 'vue';
 import { useAuthStore } from 'src/stores';
 import { useRouter } from 'vue-router';
 
-// import { Form, Field } from 'vee-validate';
-import * as Yup from 'yup';
-
-const schema = Yup.object().shape({
-	id: Yup.string().required('id is required'),
-	password: Yup.string().required('Password is required'),
-});
 const id = ref('');
 const password = ref('');
 
@@ -38,7 +31,6 @@ function onReset() {
 			<p class="col" style="font-size: 100px; color: white">Login</p>
 		</div>
 		<q-form
-			:validation-schema="schema"
 			@submit="onSubmit"
 			@reset="onReset"
 			class="q-gutter-md signup-form"
