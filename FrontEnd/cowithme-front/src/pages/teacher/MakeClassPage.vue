@@ -7,9 +7,8 @@
 		>
 			<div class="q-pa-md" style="max-width: 700px">
 				<h2>새로운 반 만들기</h2>
-				<q-form @submit="goMakeClass" @reset="onReset" class="q-gutter-md">
+				<q-form @submit="goMakeClass" class="q-gutter-md">
 					<q-input
-						filled
 						name="className"
 						rounded
 						outlined
@@ -25,7 +24,6 @@
 					<q-input
 						rounded
 						outlined
-						filled
 						type="text"
 						v-model="classDescription"
 						label="반 설명"
@@ -35,22 +33,13 @@
 							val => (val && val.length > 0) || '반 설명은 필수값입니다.',
 						]"
 					></q-input>
-					<div>
-						<q-btn
-							push
-							label="Submit"
-							type="submit"
-							text-color="white"
-							style="background: #00adb5"
-						></q-btn>
-						<q-btn
-							label="Reset"
-							type="reset"
-							color="red"
-							flat
-							class="q-ml-sm"
-						></q-btn>
-					</div>
+					<q-btn
+						push
+						label="반 만들기"
+						type="submit"
+						text-color="white"
+						style="background: #00adb5"
+					></q-btn>
 				</q-form>
 			</div>
 		</div>

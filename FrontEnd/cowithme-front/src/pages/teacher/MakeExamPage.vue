@@ -30,7 +30,7 @@
 					hint="문제 파일 업로드(pdf)"
 				></q-input>
 			</div>
-			<q-form @submit="onSubmit" @reset="onReset" class="col">
+			<q-form @submit="onSubmit" class="col">
 				<q-card flat bordered class="my-card">
 					<q-card-section>
 						<q-splitter v-model="splitterModel" style="height: 400px">

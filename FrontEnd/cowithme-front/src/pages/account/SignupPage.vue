@@ -1,5 +1,5 @@
 <template>
-	<div class="signup flex">
+	<div class="signup">
 		<div class="signup-box row justify-center">
 			<BaseSquare></BaseSquare>
 		</div>
@@ -24,7 +24,7 @@ export default {
 	background-color: #eeeeee;
 }
 
-.signup-box {
+/* .signup-box {
 	margin: auto;
-}
+} */
 </style>

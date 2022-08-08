@@ -237,7 +237,7 @@ function onReset() {
 					></q-input>
 					<q-input
 						name="nickname"
-						class="q-ma-lg q-pr-lg"
+						class="q-ma-lg q-pr-lg q-pt-md"
 						rounded
 						outlined
 						v-model="nickname"

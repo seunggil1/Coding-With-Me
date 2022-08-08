@@ -5,11 +5,7 @@
 			class="box q-ma-lg q-pa-md q-gutter-md flex row justify-center"
 			style="font-family: 'Elice Digital Baeum'"
 		>
-			<q-form
-				@submit="onSubmit"
-				@reset="onReset"
-				class="q-gutter-md flex row justify-center"
-			>
+			<q-form @submit="onSubmit" class="q-gutter-md flex row justify-center">
 				<q-input
 					filled
 					v-model="studyRoomName"

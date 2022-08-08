@@ -18,11 +18,6 @@ async function onSubmit() {
 	await authStore.login(idpw.id, idpw.pw);
 	await router.push({ path: '/' });
 }
-// form 리셋 함수
-function onReset() {
-	id.value = null;
-	password.value = null;
-}
 </script>
 
 <template>
@@ -30,12 +25,7 @@ function onReset() {
 		<div class="q-ma-lg">
 			<p class="col" style="font-size: 100px; color: white">Login</p>
 		</div>
-		<q-form
-			@submit="onSubmit"
-			@reset="onReset"
-			class="q-gutter-md signup-form"
-			lazy-validation
-		>
+		<q-form @submit="onSubmit" class="q-gutter-md signup-form" lazy-validation>
 			<div class="flex row">
 				<div class="col q-mr-sm">
 					<q-input

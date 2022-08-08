@@ -5,7 +5,6 @@
 	>
 		<q-form
 			@submit="goEditInfo"
-			@reset="onReset"
 			class="q-gutter-md signup-form"
 			lazy-validation
 		>
@@ -45,6 +44,19 @@
 						clearable
 						v-model="email"
 						label="이메일"
+						lazy-rules
+						color="brand"
+						bg-color="white"
+					></q-input>
+					<q-input
+						class="q-ma-lg q-pr-lg"
+						rounded
+						outlined
+						name="password"
+						type="password"
+						clearable
+						v-model="password"
+						label="비밀번호"
 						lazy-rules
 						color="brand"
 						bg-color="white"
@@ -120,7 +132,9 @@
 				</div>
 			</div>
 		</q-form>
-		<q-btn style="background: red" @click="goDelete" push>회원탈퇴</q-btn>
+		<q-btn style="background: red; color: white" @click="goDelete" push>
+			회원탈퇴
+		</q-btn>
 	</div>
 </template>
 
