@@ -18,7 +18,8 @@
 					v-model.number="examInfo.testQno"
 					label="문제 갯수"
 				></q-input>
-				<q-input
+
+				<!-- <q-input
 					@update:model-value="
 						val => {
 							file = val[0];
@@ -28,7 +29,7 @@
 					outlined
 					type="file"
 					hint="문제 파일 업로드(pdf)"
-				></q-input>
+				></q-input> -->
 			</div>
 			<q-form @submit="onSubmit" class="col">
 				<q-card flat bordered class="my-card">
@@ -213,15 +214,15 @@
 <script>
 import { useRouter } from 'vue-router';
 import { reactive, ref, watch } from 'vue';
-import { useExamStore } from 'src/stores';
+// import { useExamStore } from 'src/stores';
 import { api } from 'src/boot/axios';
 // import { api } from 'src/boot/axios';
 export default {
 	name: 'MakeExamPage',
 	setup() {
 		// pdf 제출 관련 메서드
-		const file = ref(null);
-		// const router = useRouter();
+		const files = ref(null);
+		const router = useRouter();
 
 		const classId = localStorage.getItem('classId');
 		// 현재 보여줄 탭. 0은 가이드, 1부터 각각 문제 번호.
@@ -303,14 +304,16 @@ export default {
 
 		// PDF 업로드
 		examInfo['classId'] = classId * 1;
+		console.log(files.value);
 		function onSubmit() {
 			api.post(`/tests`, examInfo).then(res => {
 				console.log(res.data);
 				var testId = res.data.testId;
 				api
-					.post(`/tests/${testId}/upload`, file.value)
+					.post(`/tests/${testId}/upload`, { files: files.value })
 					.then(res => {
 						console.log(res.data);
+						router.push({ path: '/classDetail/' + classId });
 					})
 					.catch(err => {
 						console.log(err);

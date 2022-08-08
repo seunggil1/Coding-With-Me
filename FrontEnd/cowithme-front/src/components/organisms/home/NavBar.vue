@@ -51,7 +51,6 @@ export default {
 		AtomSearchIconButton,
 		AtomScoreIconButton,
 		AtomMyPageButton,
-		// ClassText,
 		WelcomeText,
 		AtomLogoutButton,
 	},

@@ -60,6 +60,10 @@
 							<p style="font-size: 26px">{{ className }}의 시험</p>
 							<div v-for="test in tests" :key="test.testId">
 								{{ test.testId }}번 {{ test.testName }}
+								<q-uploader
+									:url="`http://i7a304.p.ssafy.io:8080/api/v1/files/upload/${test.testId}`"
+									style="max-width: 300px"
+								/>
 							</div>
 						</div>
 						<div class="col-2">
