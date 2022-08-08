@@ -73,6 +73,7 @@ export default {
 		const className = localStorage.getItem('className');
 		const classId = localStorage.getItem('classId');
 
+		// 학생 목록 가져오기
 		api
 			.get(`/tutor/1/classes/${className}`)
 			.then(res => {
@@ -82,7 +83,8 @@ export default {
 			.catch(err => {
 				console.log(err);
 			});
-		console.log(students);
+
+		// 학생을 추가하기
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
