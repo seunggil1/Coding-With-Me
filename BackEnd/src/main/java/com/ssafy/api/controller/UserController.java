@@ -292,7 +292,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/compile")
+    @PostMapping("/compile")
     public ResponseEntity<CompileRes> sourceCompile(SourceCompilePostReq sourceCompilePostReq) {
         RestAPI restAPI = new RestAPI();
         List<InputOutput> ios = new ArrayList<>();
