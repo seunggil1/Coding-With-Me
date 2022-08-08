@@ -1,9 +1,13 @@
 <template>
-	<q-btn dense round icon="menu" aria-label="Menu" />
+	<div></div>
 </template>
 
 <script>
-export default {};
+export default {
+	setup() {
+		return {};
+	},
+};
 </script>
 
 <style lang="scss" scoped></style>

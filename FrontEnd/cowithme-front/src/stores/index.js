@@ -6,6 +6,8 @@ export * from './auth.store';
 export * from './users.store';
 export * from './class.store';
 export * from './exam.store';
+export * from './teacherVideo.js';
+export * from './video.js';
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;

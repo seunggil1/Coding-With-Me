@@ -16,6 +16,7 @@
     "jwt-decode": "^3.1.2",
     "monaco-editor": "^0.33.0",
     "monaco-editor-webpack-plugin": "^7.0.1",
+    "openvidu-browser": "2.22.0",
     "pinia": "^2.0.17",
     "quasar": "^2.6.0",
     "vee-validate": "^4.5.11",
@@ -27,7 +28,6 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.9",
     "@quasar/app-vite": "^1.0.0",
-    "@quasar/quasar-app-extension-qpdfviewer": "^1.0.0-beta.9",
     "@rushstack/eslint-patch": "^1.1.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "autoprefixer": "^10.4.2",
