@@ -18,18 +18,18 @@ public class ClassesRepositorySupport {
     QTest qTest = QTest.test;
 
     //    @Query("select c from Classes c join fetch c.testList where c.classId=:classId")
-    public Optional<Classes> findByClassIdWithTestList(Long classId) {
-        Classes classes = jpaQueryFactory
-                .select(qClasses)
-                .from(qClasses)
-                .leftJoin(qClasses.testList, qTest)
-                .fetchJoin()
-                .distinct()
-                .where(qClasses.classId.eq(classId))
-                .fetchOne();
-        if (classes == null) return Optional.empty();
-        return Optional.ofNullable(classes);
-    }
+//    public Optional<Classes> findByClassIdWithTestList(Long classId) {
+//        Classes classes = jpaQueryFactory
+//                .select(qClasses)
+//                .from(qClasses)
+//                .leftJoin(qClasses.testList, qTest)
+//                .fetchJoin()
+//                .distinct()
+//                .where(qClasses.classId.eq(classId))
+//                .fetchOne();
+//        if (classes == null) return Optional.empty();
+//        return Optional.ofNullable(classes);
+//    }
 
     ;
 }

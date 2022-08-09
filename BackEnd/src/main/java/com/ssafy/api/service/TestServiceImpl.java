@@ -86,9 +86,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<Test> getAllTestInfo(Long classId) {
-
-        Classes classes = classesRepositorySupport.findByClassIdWithTestList(classId).get();
-        List<Test> test = classes.getTestList();
+        List<Test> test = testRepository.findByClassesClassId(classId).get();
         return test;
     }
 
