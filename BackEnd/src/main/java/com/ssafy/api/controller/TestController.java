@@ -74,18 +74,29 @@ public class TestController {
             @RequestBody @ApiParam(value="시험 정보", required = true) TestRegisterPostReq testRegisterinfo) {
         //임의로 리턴된 Classes 인스턴스.
 
+        boolean success =false;
 
-        Test test= testService.createTest(testRegisterinfo);
+        success = testService.checkTestName(testRegisterinfo.getTestName(), testRegisterinfo.getClassId());
 
+        if(success) {
 
-        Map<String,Object> map = new HashMap<>();
-
-        map.put("message","success");
-        map.put("testId",test.getTestId());
-
+            Test test = testService.createTest(testRegisterinfo);
 
 
-        return ResponseEntity.status(200).body(map);
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("message", "success");
+            map.put("testId", test.getTestId());
+
+
+            return ResponseEntity.status(200).body(map);
+        }else{
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("message", "fail");
+
+            return ResponseEntity.status(404).body(map);
+        }
     }
 
     @PutMapping
