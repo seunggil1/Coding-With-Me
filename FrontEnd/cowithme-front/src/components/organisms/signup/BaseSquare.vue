@@ -55,13 +55,6 @@ function idCheck() {
 			openBad('bottom');
 		});
 }
-// 이메일 인증
-// function emailCheck() {
-// 	api.get(`/users/vemail/code`);.then(res=> {console.log(res.data.message)};
-//   )
-//     .catch(err => {console.log(err)});
-// }
-
 // id check dialog
 const dialogGood = ref(false);
 const dialogBad = ref(false);

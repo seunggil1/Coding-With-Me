@@ -8,7 +8,7 @@
 			<div class="column main-container">
 				<div
 					v-if="showSubScribers && teacherVideo.state.session !== undefined"
-					class="col-2 q-pl-md"
+					class="col-2 q-pl-sm"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
@@ -45,7 +45,7 @@
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-pa-md">
+								<div class="q-pa-md flex-height">
 									<div class="flex" style="background-color: white">
 										<user-video
 											:stream-manager="teacherVideo.state.mainStreamManager"

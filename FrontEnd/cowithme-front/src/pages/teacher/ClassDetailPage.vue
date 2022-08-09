@@ -37,8 +37,6 @@
 								{{ className }}의 학생
 							</p>
 							<q-chip
-								removable
-								@remove="deleteStudent"
 								color="primary"
 								text-color="white"
 								icon="face"
