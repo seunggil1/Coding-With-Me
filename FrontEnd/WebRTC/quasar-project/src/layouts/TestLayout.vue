@@ -60,12 +60,16 @@
                             </div>
                             <div class="col-2">
                                 <div class="row justify-center flex">
-                                    <q-toggle
-                                        class="col q-ma-sm"
+                                    <q-btn-toggle
                                         v-model="enableSync"
-                                        color="green"
-                                        label="Sync"
-                                        left-label
+                                        push
+                                        glossy
+                                        toggle-color="primary"
+                                        class="col q-pa-sm"
+                                        :options="[
+                                            {label: 'Sync', value: true},
+                                            {label: 'Off', value: false},
+                                        ]"
                                     />
                                 </div>
                                 
@@ -249,7 +253,17 @@ export default {
         });
 
 
-        let enableSync = ref(true);
+        let enableSync = ref(false);
+
+        watch(enableSync, (val)=>{
+            if(val == undefined)
+                return
+            if(val === true){
+                setInterval(sendCode, 1000);
+            }else{
+                clearInterval(sendCode);
+            }
+        })
 
         let isRunning = ref('false');
         let inputData = ref('');
@@ -260,16 +274,25 @@ export default {
             isRunning.value = true;
             teacherIde.value.saveCode();
             
-            const res = await axios.get('http://i7a304.p.ssafy.io:8080/api/v1/users/compile',{
-                params: {
-                    code : teacherVideo.state.teacherCode,
-                    lang : 'java',
-                    'testcase.input' : inputData.value,
-                    'testcase.output' : '0'
+            const res = await axios.post('http://i7a304.p.ssafy.io:8080/api/v1/users/compile',{
+                code : teacherVideo.state.teacherCode,
+                lang : 'java',
+                testcase : {
+                    input : inputData.value,
+                    output : '0'
                 }
             });
-            console.log(res.data);
+            if(res.data.status === "success"){
+                outputData.value = `Time : ${res.data.result[0].time}ms\n${res.data.result[0].output}`;
+            }else{
+                outputData.value = `서버 오류가 발생했습니다.`;
+            }
             isRunning.value = false;
+        };
+
+        const sendCode = () => {
+            teacherIde.value.saveCode();
+            teacherVideo.sendCode();
         };
 
         onMounted(() => {
@@ -305,6 +328,7 @@ export default {
             inputData,
             outputData,
             runCode,
+            sendCode,
 
             // 시험
             startExam,

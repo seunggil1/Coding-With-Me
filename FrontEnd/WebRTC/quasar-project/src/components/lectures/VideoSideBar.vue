@@ -1,40 +1,39 @@
 <template>
-<div class="q-pa-md column justify-center" style="height: 100vh;">
+<div class="q-pa-md column justify-center" style="height: 95vh;">
     <q-scroll-area 
-        class="col-11"
+        class="col-6"
+        style="width: 100%"
+    >
+        <span>
+            <h2>참가자 목록 보일곳</h2>
+        </span>
+    </q-scroll-area>
+
+    <q-scroll-area 
+        class="col-5"
         style="width: 100%"
     >
         <span 
             v-for="(chat, index) in piniaData.state.chatting"
             :key = "index">
-            <q-chat-message
-                v-if="chat.sender == piniaData.state.myUserName"
-                :name="chat.sender"
-                avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-                :text="[chat.message]"
-                stamp="just second"
-                sent
-                bg-color="amber-7"
-            />
-            <q-chat-message
-                v-else
-                :name="chat.sender"
-                avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-                :text="[chat.message]"
-                stamp="just second"
-                bg-color="amber-7"
-            />
+                <q-chat-message
+                    v-if="chat.sender === piniaData.state.myUserName"
+                    :name="chat.sender"
+                    avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                    :text="[chat.message]"
+                    stamp="just second"
+                    sent
+                    bg-color="amber-7"
+                />
+                <q-chat-message
+                    v-if="chat.sender !== piniaData.state.myUserName"
+                    :name="chat.sender"
+                    avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                    :text="[chat.message]"
+                    stamp="just second"
+                    bg-color="amber-7"
+                />
         </span>
-        <q-chat-message
-            v-for="(chat, index) in piniaData.state.chatting"
-            :key = "index"
-            :name="chat.sender"
-            avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-            :text="[chat.message]"
-            stamp="just second"
-            sent
-            bg-color="amber-7"
-        />
     </q-scroll-area>
 
     <div
