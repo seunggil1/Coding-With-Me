@@ -76,19 +76,6 @@ function openBad(pos) {
 	position.value = pos;
 	dialogBad.value = true;
 }
-
-// form 리셋 함수
-function onReset() {
-	name.value = null;
-	id.value = null;
-	role.value = null;
-	password.value = null;
-	passwordCheck.value = null;
-	email.value = null;
-	phone.value = null;
-	nickname.value = null;
-	birthDt.value = null;
-}
 </script>
 
 <template>
@@ -135,12 +122,7 @@ function onReset() {
 			</p>
 		</div>
 
-		<q-form
-			@submit="onSubmit"
-			@reset="onReset"
-			class="q-gutter-md signup-form"
-			lazy-validation
-		>
+		<q-form @submit="onSubmit" class="q-gutter-md signup-form" lazy-validation>
 			<div class="flex row">
 				<div class="col q-mr-sm">
 					<q-input
@@ -279,17 +261,21 @@ function onReset() {
 						type="submit"
 						text-color="white"
 						class="q-px-md q-mr-sm"
-						style="background: #00adb5"
+						style="background: #ff5722"
 						push
 					></q-btn>
-					<q-btn
-						label="Reset"
-						type="reset"
-						text-color="white"
-						style="background-color: orangered"
-						push
-						class="q-ml-sm"
-					></q-btn>
+					<router-link
+						:to="{ name: 'login' }"
+						style="text-decoration: none; color: inherit"
+					>
+						<q-btn
+							label="로그인하기"
+							text-color="white"
+							style="background-color: #00adb5"
+							push
+							class="q-ml-sm"
+						></q-btn>
+					</router-link>
 				</div>
 				<div id="q-app" class="q-mt-lg" style="color: #274046">
 					<div class="q-pa-md">

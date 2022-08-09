@@ -52,6 +52,7 @@ const routes = [
 	// 로그인/회원가입
 	{
 		path: '/login',
+		name: 'login',
 		component: () => import('pages/account/LoginPage.vue'),
 	},
 	{
