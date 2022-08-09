@@ -1,549 +1,391 @@
 <template>
-	<!-- v-if="session" -->
-	<q-layout view="hHh lpR fFf">
-		<!-- 오른쪽 참여자 + 채팅 부분 start -->
-		<q-drawer
-			show-if-above
-			v-model="video.rightDrawerOpen"
-			side="right"
-			elevated
-		>
-			<div class="column drawer-container">
-				<div
-					class="col-4 column justify-center items-center"
-					style="border: 1px solid blue"
-				>
-					<div class="participant-box">
-						<p>참여자 목록</p>
-						<p>총 인원 (25/25)</p>
-						<p>오프라인</p>
-						<p>온라인</p>
-					</div>
-				</div>
-				<div
-					class="col-8 column justify-center items-center"
-					style="border: 1px solid blue"
-				>
-					<div class="chat-box column">
-						<div class="col-10" style="border: 1px solid blue">
-							<div v-for="chat in video.state.chatting" :key="chat">
-								<span class="text-h6">{{ chat.sender }}: </span>
-								<span class="text-h8">{{ chat.message }}</span>
-							</div>
-						</div>
-						<div class="col-2">
-							<q-input
-								bottom-slots
-								v-model="myChatInput"
-								label="채팅"
-								:dense="true"
-								@keydown.enter.prevent="sendTextMessage"
-							>
-								<template v-slot:before>
-									<q-avatar>
-										<img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-									</q-avatar>
-								</template>
+  <q-layout view="lHr lpr fFf">
 
-								<template v-slot:append>
-									<q-icon
-										v-if="myChatInput !== ''"
-										name="close"
-										@click="myChatInput = ''"
-										class="cursor-pointer"
-									/>
-								</template>
+    <q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
+      <video-side-bar-vue :piniaData="studentVideo">
 
-								<template v-slot:after>
-									<q-btn round dense flat icon="send" />
-								</template>
-							</q-input>
-						</div>
-					</div>
-				</div>
-			</div>
-		</q-drawer>
-		<!-- 오른쪽 참여자 + 채팅 부분 end -->
+      </video-side-bar-vue>
+    </q-drawer>
 
-		<!-- 서브캠 + 메인캠 부분 start -->
-		<q-page-container>
-			<div class="column main-container">
-				<div v-if="video.subCamsOpen && video.state.session" class="col-2">
-					<div
-						class="col-12 row justify-center items-center"
-						style="border: 1px solid red"
-					>
-						<div
-							class="col-2 sub-cam row justify-center items-center"
-							v-if="video.state.publisher"
-						>
-							<UserVideo
-								class="video"
-								:stream-manager="video.state.publisher"
-							></UserVideo>
-						</div>
-						<template v-if="video.state.subscribers">
-							<div
-								class="col-2 sub-cam row justify-center items-center"
-								v-for="sub in video.state.subscribers"
-								:key="sub"
-							>
-								<UserVideo class="video" :stream-manager="sub"></UserVideo>
-							</div>
-						</template>
-					</div>
-				</div>
-				<div
-					:class="
-						(video.subCamsOpen && video.state.session
-							? 'col-10 row'
-							: 'col-12 row') + 'full-width '
-					"
-				>
-					<div>
-						<q-splitter
-							v-if="video.mode === 1"
-							v-model="splitterModel"
-							:limits="[50, 60]"
-							style="height: 78.9vh"
-						>
-							<template v-slot:before>
-								<div class="q-pa-md full-height">
-									<div class="text-h4 q-mb-md">강사 화면 부분</div>
-									<!-- <web-editor code="import java.util.*" language="java" :readOnly="true"></web-editor> -->
-								</div>
-							</template>
-							<template v-slot:after>
-								<div class="q-pa-md full-height">
-									<div class="text-h4 q-mb-md">학생 웹 IDE 부분</div>
+    <q-page-container>
+      <div class="column main-container">
+        <div v-if="showSubScribers && (studentVideo.state.session !== undefined)" class="col-2">
+            
+            <q-scroll-area 
+                style="height: 100%; 
+                max-width: 100vw;"
+            >
+                <div class="row no-wrap">
+                    <div style="width: 150px" class="q-pa-sm">
+                        <user-video 
+                            :stream-manager="studentVideo.state.publisher" 
+                            @click="studentVideo.updateMainVideoStreamManager(studentVideo.state.publisher)"
+                        />
+                    </div>
+                    <div 
+                        style="width: 150px" 
+                        class="q-pa-sm" 
+                        v-for="(sub, idx) in studentVideo.state.subscribers"
+                        :key="idx"
+                    >
+                        <user-video 
+                            :stream-manager="sub"
+                            @click="studentVideo.updateMainVideoStreamManager(sub)"
+                        />
+                    </div>
+                </div>
+            </q-scroll-area>
+        </div>
+        <div :class="((showSubScribers && studentVideo.state.session) ? 'col-10' : 'col-12')">
+          <div>
+            <q-splitter
+              v-model="splitterModel"
+              style="height: 90vh"
+            >
+                <template v-slot:before>
+                <div class="q-pa-md flex-height">
+                    <!-- 모드 1 : 왼쪽은 강사 얼굴, 오른쪽은 학생 IDE -->
+                    <span v-if="mode == 1">
+                        <div class="text-h4 q-mb-md">강사 화면 부분</div>
+                        <div class="flex" style="background-color: white;">
+                            <user-video :stream-manager="studentVideo.state.mainStreamManager"/>
+                        </div>
+                    </span>
+                    
+                    
 
-									<web-editor
-										ref="myIde"
-										:code="video.state.myCode"
-										language="java"
-										:readOnly="false"
-									></web-editor>
-								</div>
-							</template>
-						</q-splitter>
-						<q-splitter
-							v-if="video.mode === 2"
-							v-model="splitterModel"
-							style="height: 78.9vh"
-						>
-							<template v-slot:before>
-								<div class="q-pa-md full-height full-width">
-									<div class="text-h4 q-mb-md">강사 웹 IDE 부분</div>
-									<web-editor
-										ref="teacherIde"
-										:code="video.state.teacherCode"
-										language="java"
-										:readOnly="true"
-									></web-editor>
-								</div>
-							</template>
-							<template v-slot:after>
-								<div class="q-pa-md full-height full-width">
-									<div class="column full-height full-width">
-										<div class="col-8">
-											<div class="text-h4 q-mb-md">학생 웹 IDE 부분</div>
-											<span><q-btn @click="runCode" label="RUN" /></span>
-											<web-editor
-												ref="myIde"
-												:code="video.state.myCode"
-												language="java"
-												:readOnly="false"
-											></web-editor>
-										</div>
-										<div class="col-4 row">
-											<div class="col">
-												<q-card flat bordered class="my-card full-height">
-													<q-card-section>
-														<div class="text-h6">Input</div>
-													</q-card-section>
+                    <!-- 모드 2 : 왼쪽은 강사 IDE, 오른쪽은 학생 IDE  -->
+                    <span v-if="mode == 2">
+                        <div class="q-pa-md flex-height column">
+                            <div class="col-1">
+                                <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">강사 IDE</div>
+                            </div>
+                            <div class="col-10">
+                                <web-editor 
+                                    ref="teacherIde" 
+                                    :code="studentVideo.state.teacherCode" 
+                                    language="java" 
+                                    :readOnly="true"
+                                />
+                            </div>
+                        </div>
+                    </span>
+                    
+                </div>
+                </template>
+                <template v-slot:after>
+                <div class="q-pa-md flex-height column">
+                    <div class="col-1">
+                        <div class="row flex-height">
+                            <div class="col-10" style="background-color: white;">
+                                <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div>
+                            </div>
+                            <div class="col-2 " style="background-color: red;">
+                                <div class="row justify-center flex">
+                                    <q-btn 
+                                        class="col q-ma-sm" 
+                                        color="secondary" 
+                                        icon-right="send" 
+                                        label="Run" 
+                                        @click="runCode"
+                                        :loading="isRunning"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <web-editor 
+                            ref="studentIde" 
+                            :code="studentVideo.state.myCode" 
+                            language="java" 
+                            :readOnly="false"
+                        />
+                    </div>
+                    <div class="col-4 row">
+                        <div class="col" style="background-color: white;">
+                            <q-card flat bordered class="my-card flex-height">
+                                <q-card-section>
+                                    <div class="text-h6">Input</div>
+                                </q-card-section>
+                                <q-separator inset />
+                                <q-card-section>
+                                    <q-input
+                                    type="textarea"
+                                    float-label="Textarea"
+                                    :max-height="40"
+                                    :min-rows="1"
+                                    v-model="inputData"
+                                    />
+                                </q-card-section>
+                            </q-card>
+                        </div>
+                        <div class="col" style="background-color: white;">
+                            <q-card flat bordered class="my-card flex-height">
+                                <q-card-section>
+                                    <div class="text-h6">Result</div>
+                                </q-card-section>
+                                <q-separator
+                                    inset
+                                />
+                                <q-card-section>
+                                    <q-input
+                                    type="textarea"
+                                    float-label="Textarea"
+                                    :max-height="50"
+                                    :min-rows="1"
+                                    v-model = "outputData"
+                                    readonly
+                                    />
+                                </q-card-section>
+                            </q-card>
+                        </div>
+                    </div>
+                </div>
+                
+                </template>
+            </q-splitter>
+          </div>
+        </div>
+      </div>
 
-													<q-card-section class="q-pt-none">
-														<q-input
-															type="textarea"
-															float-label="Textarea"
-															:max-height="50"
-															:min-rows="1"
-															v-model="inputCase"
-														/>
-													</q-card-section>
-												</q-card>
-											</div>
-											<div class="col">
-												<q-card flat bordered class="my-card">
-													<q-card-section>
-														<div class="text-h6">Output</div>
-													</q-card-section>
+    </q-page-container>
 
-													<q-card-section class="q-pt-none">
-														<q-input
-															type="textarea"
-															float-label="Textarea"
-															:max-height="50"
-															:min-rows="1"
-															v-model="outputCase"
-															readonly
-														/>
-													</q-card-section>
-												</q-card>
-											</div>
-										</div>
-									</div>
-								</div>
-							</template>
-						</q-splitter>
-					</div>
-				</div>
-			</div>
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar>
 
-			<!-- <router-view /> -->
-			<!-- 모드에 따라 라우터 뷰로 전환? -->
-		</q-page-container>
-		<!-- 서브캠 + 메인캠 부분 end -->
+        <div class="row full-width">
+            <div class="col-1">
+                <q-avatar>
+                    <img src="src/assets/logo/logo.svg">
+                </q-avatar>
+            </div>
+            <div class="col-10" align="center">
+                <q-btn 
+                    class="micBtn" 
+                    rounded 
+                    push 
+                    :icon="studentVideo.isAudio ? 'mic' : 'mic_off'" 
+                    :label="studentVideo.isAudio ? '음소거' : '음소거 해제'" 
+                    @click="studentVideo.isAudio ? studentVideo.muteAudio() : studentVideo.unmuteAudio()"
+                />
 
-		<!-- 하단바 부분 start -->
-		<q-footer elevated class="bg-grey-8 text-white">
-			<q-toolbar>
-				<div class="col-11" align="center">
-					<q-btn
-						v-if="video.isAudio"
-						class="micBtn"
-						rounded
-						push
-						icon="mic"
-						label="음소거"
-						@click="clickMic"
-					></q-btn>
-					<q-btn
-						v-else
-						class="micBtn"
-						rounded
-						push
-						icon="mic_off"
-						label="음소거 해제"
-						@click="clickMic"
-					></q-btn>
-					<q-btn
-						v-if="video.isVideo"
-						class="camBtn"
-						rounded
-						push
-						icon="videocam"
-						label="카메라 끄기"
-						@click="clickVideo"
-					></q-btn>
-					<q-btn
-						v-else
-						class="camBtn"
-						rounded
-						push
-						icon="videocam_off"
-						label="카메라 켜기"
-						@click="clickVideo"
-					></q-btn>
-					<q-btn
-						v-if="video.isScreen"
-						class="screenBtn"
-						rounded
-						push
-						icon="screen_share"
-						label="화면공유 중지"
-						@click="clickScreenShare"
-					></q-btn>
-					<q-btn
-						v-else
-						class="screenBtn"
-						rounded
-						push
-						icon="screen_share"
-						label="화면공유"
-						@click="clickScreenShare"
-					></q-btn>
-					<q-btn
-						class="examBtn"
-						rounded
-						push
-						icon="quiz"
-						label="시험 시작"
-						@click="startExam"
-					></q-btn>
-					<q-btn
-						class="leaveBtn"
-						rounded
-						push
-						color="red"
-						icon="logout"
-						label="나가기"
-						@click="leaveSession"
-					></q-btn>
-				</div>
-				<div class="col-1" align="end">
-					<q-btn
-						class="modeBtn"
-						flat
-						round
-						icon="swap_horiz"
-						@click="clickMode"
-					></q-btn>
-					<q-btn
-						v-if="video.subCamsOpen"
-						class="subCamBtn"
-						flat
-						round
-						icon="view_agenda"
-						@click="clickSubCams"
-					></q-btn>
-					<q-btn
-						v-else
-						class="subCamBtn"
-						flat
-						round
-						icon="o_view_agenda"
-						@click="clickSubCams"
-					></q-btn>
-					<q-btn
-						v-if="video.rightDrawerOpen"
-						class="drawerBtn"
-						flat
-						@click="clickRightDrawer"
-						round
-						icon="keyboard_double_arrow_right"
-					></q-btn>
-					<q-btn
-						v-else
-						class="drawerBtn"
-						flat
-						@click="clickRightDrawer"
-						round
-						icon="keyboard_double_arrow_left"
-					></q-btn>
-				</div>
-			</q-toolbar>
-		</q-footer>
-		<!-- 하단바 부분 end -->
-	</q-layout>
+                <q-btn 
+                    class="camBtn"
+                    rounded
+                    push
+                    :icon="studentVideo.isVideo ? 'videocam_off' : 'videocam'"
+                    :label="studentVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
+                    @click="studentVideo.isVideo ? studentVideo.muteVideo() : studentVideo.unmuteVideo()"
+                />
+                
+                <q-btn 
+                    class="screenBtn" 
+                    rounded 
+                    push 
+                    icon="screen_share" 
+                    :label="studentVideo.isScreen ? '화면공유 중지' : '화면공유'" 
+                    @click="studentVideo.isScreen ? studentVideo.stopScreenShare() : studentVideo.startScreenShare()"
+                />
+
+                <q-btn 
+                    class="examBtn" 
+                    rounded 
+                    push 
+                    icon="quiz" 
+                    label="시험 입장"
+                    :disable="true" 
+                    @click="startExam"
+                />
+                <q-btn 
+                    class="leaveBtn" 
+                    rounded 
+                    push 
+                    color="red" 
+                    icon="logout" 
+                    label="나가기" 
+                    @click="leaveSession"
+                />
+            </div>
+            <div class="col-1" align="end">
+                <q-btn 
+                    class="modeBtn"
+                    flat 
+                    round
+                    icon="swap_horiz" 
+                    @click="(mode == 1) ? mode = 2 : mode = 1;">
+                </q-btn>
+
+                <q-btn 
+                    class="subCamBtn" 
+                    flat 
+                    round 
+                    :icon="showSubScribers ? 'o_view_agenda' :'view_agenda'" 
+                    @click="showSubScribers = !showSubScribers"
+                />
+                
+                <q-btn 
+                    class="drawerBtn" 
+                    flat 
+                    @click="rightDrawerOpen = !rightDrawerOpen" 
+                    round 
+                    :icon="rightDrawerOpen ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left'"
+                />
+            </div>
+        </div>
+      </q-toolbar>
+    </q-footer>
+
+  </q-layout>
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
-import UserVideo from 'src/components/lectures/UserVideo.vue';
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { studentVideoStore } from 'src/stores/studentVideo.store.js'
 import WebEditor from 'src/components/lectures/WebEditor.vue';
-import { studentVideoStore } from 'src/stores/video.js';
-import { useRouter } from 'vue-router';
+import UserVideo from 'src/components/lectures/UserVideo.vue';
+import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
 import axios from 'axios';
-
 export default {
-	components: {
-		UserVideo,
-		WebEditor,
-	},
-	setup() {
-		const router = useRouter();
-		const studentVideo = studentVideoStore(); // store 가져오기
-		const teacherIde = ref(undefined);
-		const myIde = ref(undefined);
+    components : {
+        WebEditor,
+        UserVideo,
+        VideoSideBarVue
+    },
+    setup () {
+        const studentVideo = studentVideoStore();
+        let showSubScribers = ref(true);
+        let rightDrawerOpen = ref(false);
+        
+        // IDE
+        const teacherIde = ref(undefined);
+        const studentIde = ref(undefined);
 
-		let inputCase = ref('');
-		let outputCase = ref('');
+        const updateEditor = () => {
+            if(teacherIde.value)
+                teacherIde.value.updateEditor();
+            studentIde.value.updateEditor();
+        };
 
-		onMounted(() => {
-			studentVideo.joinSession();
-			console.log(teacherIde);
-		});
+        const getTeacherCode = () => {
+            if(teacherIde.value)
+                teacherIde.value.updateCode(studentVideo.state.teacherCode);
+        }
+        // 모드 변환
+        const mode = ref(1);
 
-		watch([() => studentVideo.state.session], () => {
-			console.log(studentVideo.state.session);
-		});
+        watch(mode, () =>{
+            if(teacherIde.value)
+                teacherIde.value.saveCode();
+            studentIde.value.saveCode(true);
+        });
 
-		watch(teacherIde, () => {
-			if (teacherIde.value) console.log(teacherIde.value.updateEditor);
-		});
+        const splitterModel = ref(50);
+        watch(splitterModel, () =>{
+            updateEditor();
+        }); 
+        watch(rightDrawerOpen, ()=>{
+            updateEditor();
+        });
 
-		const splitterModel = ref(50);
-		const clickMode = () => {
-			if (studentVideo.mode === 1) {
-				splitterModel.value = 50;
-				myIde.value.saveCode(true);
-			} else if (studentVideo.mode === 2) {
-				splitterModel.value = 60;
 
-				teacherIde.value.saveCode(false);
-				myIde.value.saveCode(true);
-			}
-			studentVideo.setMode();
-		};
+        let isRunning = ref('false');
+        let inputData = ref('');
+        let outputData = ref('');
 
-		watch(splitterModel, () => {
-			if (studentVideo.mode === 1) {
-				myIde.value.updateEditor();
-			} else if (studentVideo.mode === 2) {
-				splitterModel.value = 60;
+        const runCode = async () => {
+            isRunning.value = true;
+            studentIde.value.saveCode(true);
+            
+            const res = await axios.post('http://i7a304.p.ssafy.io:8080/api/v1/users/compile',{
+                code : studentVideo.state.myCode,
+                lang : 'java',
+                testcase : {
+                    input : inputData.value,
+                    output : '0'
+                }
+            });
+            if(res.data.status === "success"){
+                outputData.value = `Time : ${res.data.result[0].time}ms\n${res.data.result[0].output}`;
+            }else{
+                outputData.value = `서버 오류가 발생했습니다.`;
+            }
+            isRunning.value = false;
+        };
 
-				teacherIde.value.updateEditor();
-				myIde.value.updateEditor();
-			}
-		});
+        
+        let repeater = undefined;
+        onMounted(() => {
+            studentVideo.joinSession();
+            window.addEventListener('resize', updateEditor);
+            repeater = setInterval(getTeacherCode, 2000);
+        });
 
-		watch(outputCase, newValue => {
-			console.log(newValue);
-		});
+        onBeforeUnmount(()=>{
+            window.removeEventListener('resize', updateEditor);
+            if(repeater){
+                clearInterval(repeater);
+                repeater = undefined;
+            }
+        });
 
-		// 우측 바 펼치기, 접기
-		const clickRightDrawer = () => {
-			studentVideo.setRightDrawer();
-		};
+        // 시험 시작
+        const startExam = () => {
+            router.push('/exam');
+        };
 
-		watch([() => studentVideo.rightDrawerOpen.value], () => {
-			teacherIde.value.updateEditor();
-			myIde.value.updateEditor();
-		});
+        const leaveSession = () => {
+            studentVideo.leaveSession();
+            router.push('/');
+        }
 
-		// 서브캠 펼치기, 접기
-		const clickSubCams = () => {
-			studentVideo.setSubCams();
-		};
-		// 마이크 켜기, 끄기
-		const clickMic = () => {
-			if (studentVideo.isAudio) {
-				studentVideo.muteAudio();
-			} else {
-				studentVideo.unmuteAudio();
-			}
-		};
-		// 카메라 켜기, 끄기
-		const clickVideo = () => {
-			if (studentVideo.isVideo) {
-				studentVideo.muteVideo();
-			} else {
-				studentVideo.unmuteVideo();
-			}
-		};
-		// 화면 공유 켜기, 끄기
-		const clickScreenShare = () => {
-			if (studentVideo.isScreen) {
-				studentVideo.stopScreenShare();
-			} else {
-				studentVideo.startScreenShare();
-			}
-		};
-		// 세션 나가기
-		const leaveSession = () => {
-			studentVideo.leaveSession();
-			router.push('/');
-		};
+        return {
+            studentVideo,
+            showSubScribers,
+            teacherIde,
+            studentIde,
+            rightDrawerOpen,
+            updateEditor,
+            getTeacherCode,
 
-		// 시험 시작
-		const startExam = () => {
-			router.push('/exam');
-		};
+            mode,
 
-		// 코드 실행
-		const runCode = () => {
-			myIde.value.saveCode(true);
-			const requestBody = {
-				code: studentVideo.state.myCode,
-				lang: 'java',
-				testcase: {
-					input: inputCase.value,
-					output: '0',
-				},
-			};
-			axios
-				.post(
-					`http://3.34.42.81:8080/api/v1/users/compile`,
-					JSON.stringify(requestBody),
-				)
-				.then(res => {
-					console.log(res);
-					let result = res.data.result[0];
-					outputCase.value = `(실행시간 : ${result.time}ms)\n${result.output}`;
-				});
-		};
+            // IDE
+            splitterModel,
+            isRunning,
+            inputData,
+            outputData,
+            runCode,
+            repeater,
 
-		// 채팅 기능
-		let myChatInput = ref('');
-		const sendTextMessage = () => {
-			studentVideo.sendMessage(myChatInput.value);
-			myChatInput.value = '';
-		};
-
-		return {
-			router,
-			studentVideo,
-			teacherIde,
-			myIde,
-			splitterModel,
-			inputCase,
-			outputCase,
-
-			clickMode,
-			clickRightDrawer,
-			clickSubCams,
-			clickMic,
-			clickVideo,
-			clickScreenShare,
-			leaveSession,
-			startExam,
-			runCode,
-
-			// 채팅 기능,
-			myChatInput,
-			sendTextMessage,
-		};
-	},
-};
+            // 시험
+            startExam,
+            leaveSession
+        }
+    }
+}
 </script>
 
 <style scoped>
-.q-textarea .q-field__native {
-	font-size: 6px;
+.main-container{
+    height: 100vh; 
+    width: 100vw; 
+    background-color: aquamarine;
 }
 
-div {
-	box-sizing: border-box;
+.flex{
+    width: 100%;
+    height: 100%;
+    
+    background-color: white;
 }
-.sub-container {
-	height: 20vh;
+
+.flex-width{
+    width: 100%
 }
-.drawer-container {
-	height: 94.71vh;
+
+.flex-height{
+    height: 100%
 }
-.main-container {
-	height: 94.71vh;
-}
-.full-main-container {
-	height: 80vh;
-}
-.sub-cam {
-	height: 100%;
-}
-.micBtn,
-.camBtn,
-.screenBtn,
-.leaveBtn,
-.examBtn {
-	margin-left: 20px;
-}
-.subCamBtn,
-.drawerBtn,
-.modeBtn {
-	margin-left: 10px;
-}
-.participant-box,
-.chat-box {
-	width: 95%;
-	height: 95%;
-}
-.textarea {
-	width: 100%;
-	height: 100%;
-	resize: none;
-}
-video {
-	width: 195px;
-}
+
 </style>

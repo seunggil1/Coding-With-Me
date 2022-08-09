@@ -67,12 +67,6 @@ const routes = [
 		name: 'join',
 		component: () => import('pages/account/SignUpPage.vue'),
 	},
-	// home
-	{
-		path: '/homepage',
-		name: 'homepage',
-		component: () => import('pages/StudentHomePage.vue'),
-	},
 	// Always leave this as last one,
 	// but you can also remove it
 	{
