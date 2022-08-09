@@ -36,18 +36,19 @@
 							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 학생
 							</p>
-
-							<q-list>
-								<q-item>
-									<q-item-section>
-										<q-item-label></q-item-label>
-									</q-item-section>
-								</q-item>
-							</q-list>
-
-							<div v-for="student in students" :key="student.userId">
+							<q-chip
+								removable
+								@remove="deleteStudent"
+								color="primary"
+								text-color="white"
+								icon="face"
+								v-for="student in students"
+								:key="student.userId"
+								:ref="skipUnwrap.itemRefs"
+								v-model="skipUnwrap.itemRefs"
+							>
 								{{ student.name }}({{ student.nickname }})
-							</div>
+							</q-chip>
 						</div>
 						<div class="col-2">
 							<router-link
@@ -73,16 +74,31 @@
 							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 시험
 							</p>
-							<div v-for="test in tests" :key="test.testId">
-								{{ test.testId }}번 {{ test.testName }}
-								<q-uploader
-									:url="`http://i7a304.p.ssafy.io:8080/api/v1/files/upload/${test.testId}`"
-									style="max-width: 300px"
-									:additionalFields="additionalFields"
-									id="testFile"
-									field-name="files"
-								></q-uploader>
-							</div>
+							<q-list v-for="test in tests" :key="test.testId">
+								<q-item>
+									<q-item-section>
+										<q-item-label>
+											<q-expansion-item
+												expand-separator
+												icon="quiz"
+												:caption="`${test.testId}번 시험`"
+												:label="`${test.testName}`"
+											>
+												<q-uploader
+													:url="`http://i7a304.p.ssafy.io:8080/api/v1/files/upload/${test.testId}`"
+													style="max-width: 300px; color: #00adb5"
+													id="testFile"
+													color="#00adb5"
+													label="시험 파일(PDF)"
+													field-name="files"
+													class="q-mt-lg"
+												></q-uploader>
+											</q-expansion-item>
+										</q-item-label>
+									</q-item-section>
+								</q-item>
+								<q-separator spaced inset />
+							</q-list>
 						</div>
 						<div class="col-2">
 							<router-link
@@ -112,6 +128,9 @@ import { ref } from 'vue';
 export default {
 	name: 'ClassDetailPage',
 	setup() {
+		const itemRefs = ref([]);
+		const skipUnwrap = { itemRefs };
+
 		const files = ref(null);
 
 		const students = ref([]);
@@ -186,8 +205,9 @@ export default {
 			lectureName,
 			makeLecture,
 			tests,
-			// additionalFields,
 			files,
+			itemRefs,
+			skipUnwrap,
 		};
 	},
 };
@@ -214,5 +234,8 @@ export default {
 	background-color: white;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+}
+.brand {
+	color: #00adb5 !important;
 }
 </style>
