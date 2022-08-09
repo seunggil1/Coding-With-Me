@@ -83,7 +83,7 @@
 												:label="`${test.testName}`"
 											>
 												<q-uploader
-													:url="`http://i7a304.p.ssafy.io:8080/api/v1/files/upload/${test.testId}`"
+													:url="`https://i7a304.p.ssafy.io/api/v1/files/upload/${test.testId}`"
 													style="max-width: 300px; color: #00adb5"
 													id="testFile"
 													color="#00adb5"

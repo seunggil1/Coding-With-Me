@@ -15,7 +15,7 @@ export const studentVideoStore = defineStore('studentVideo', () => {
     mainStreamManager: undefined,
     publisher: undefined,
     subscribers: [],
-    mySessionId: 'algo', // 나중에 처리
+    mySessionId: 'algo5', // 나중에 처리
 		myUserName: '김동욱', // 나중에 처리
 		classId: 1,
 		userId: 2,
