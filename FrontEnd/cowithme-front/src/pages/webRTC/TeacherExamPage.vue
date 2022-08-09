@@ -75,11 +75,11 @@
 <script setup>
 import { ref } from 'vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import { useVideoStore } from 'src/stores/video.js'
+import { teacherVideoStore } from 'src/stores/video.js'
 import { useRouter } from 'vue-router';
 
   const router = useRouter();
-  const video = useVideoStore(); // store 가져오기
+  const studentVideo = teacherVideoStore(); // store 가져오기
   const session = video.state.session;
 	const pub = video.state.publisher;
 	const subs = video.state.subscribers;

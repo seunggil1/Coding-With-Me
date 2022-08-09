@@ -1,8 +1,3 @@
-import VideoLayout from 'layouts/VideoLayout.vue';
-import TeacherLectureLayout from 'src/layouts/TeacherLectureLayout.vue';
-import TeacherExamLayout from 'src/layouts/TeacherExamLayout.vue';
-import StudentExamLayout from 'src/layouts/StudentExamLayout.vue';
-
 const routes = [
 	{
 		path: '/',
@@ -81,28 +76,24 @@ const routes = [
 	// Always leave this as last one,
 	// but you can also remove it
 	{
+		path: '/teacherlecture',
+		component: () => import('pages/webRTC/TeacherLecturePage.vue'),
+	},
+	{
+		path: '/studentlecture',
+		component: () => import('pages/webRTC/StudentLecturePage.vue'),
+	},
+	{
+		path: '/teacherexam',
+		component: () => import('pages/webRTC/TeacherExamPage.vue'),
+	},
+	{
+		path: '/studentexam',
+		component: () => import('pages/webRTC/StudentExamPage.vue'),
+	},
+	{
 		path: '/:catchAll(.*)*',
 		component: () => import('pages/ErrorNotFound.vue'),
-	},
-	{
-		path: '/video',
-		component: VideoLayout,
-	},
-	{
-		path: '/lecture',
-		component: TeacherLectureLayout,
-	},
-	{
-		path: '/exam',
-		component: TeacherExamLayout,
-	},
-	{
-		path: '/exam2',
-		component: StudentExamLayout,
-	},
-	{
-		path: '/layout',
-		component: () => import('layouts/GoldenLayout.vue'),
 	},
 ];
 
