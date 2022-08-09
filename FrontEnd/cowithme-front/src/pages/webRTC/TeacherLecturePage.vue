@@ -46,7 +46,7 @@
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
 								<div class="q-pa-md flex-height">
-									<div class="flex" style="background-color: white">
+									<div class="flex" style="background: none">
 										<user-video
 											:stream-manager="teacherVideo.state.mainStreamManager"
 										/>

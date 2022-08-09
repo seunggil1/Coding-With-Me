@@ -1,5 +1,8 @@
 <template>
-	<div class="q-pa-md column justify-center" style="height: 95vh">
+	<div
+		class="q-pa-md column justify-center"
+		style="height: 95vh; font-family: 'OTWelcomeBA'"
+	>
 		<q-scroll-area class="col-6" style="width: 100%">
 			<span>
 				<h2>참가자 목록 보일곳</h2>
@@ -11,7 +14,6 @@
 				<q-chat-message
 					v-if="chat.sender === piniaData.state.myUserName"
 					:name="chat.sender"
-					avatar="https://cdn.quasar.dev/img/avatar3.jpg"
 					:text="[chat.message]"
 					stamp="just second"
 					sent
@@ -32,18 +34,20 @@
 			<q-input
 				bottom-slots
 				v-model="myChatInput"
-				label="채팅"
+				label="메시지를 입력하세요"
 				:dense="true"
+				color="brand"
+				style="color: #00adb5"
 				@keydown.enter.prevent="
 					piniaData.sendMessage(myChatInput);
 					myChatInput = '';
 				"
 			>
-				<template v-slot:before>
+				<!-- <template v-slot:before>
 					<q-avatar>
 						<img src="https://cdn.quasar.dev/img/avatar5.jpg" />
 					</q-avatar>
-				</template>
+				</template> -->
 
 				<template v-slot:append>
 					<q-icon
@@ -96,4 +100,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@font-face {
+	font-family: 'OTWelcomeBA';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
