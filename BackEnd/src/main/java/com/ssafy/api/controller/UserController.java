@@ -293,7 +293,13 @@ public class UserController {
     }
 
     @PostMapping("/compile")
-    public ResponseEntity<CompileRes> sourceCompile(SourceCompilePostReq sourceCompilePostReq) {
+    @ApiOperation(value = "소스코드 컴파일", notes = "학생의 소스코드 컴파일 결과를 반환한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<CompileRes> sourceCompile(
+            @RequestBody @ApiParam(value = "컴파일 정보", required = true)SourceCompilePostReq sourceCompilePostReq) {
         RestAPI restAPI = new RestAPI();
         List<InputOutput> ios = new ArrayList<>();
         ios.add(sourceCompilePostReq.getTestcase());
