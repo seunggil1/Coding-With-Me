@@ -4,15 +4,15 @@
 			<video-side-bar-vue :piniaData="teacherVideo"> </video-side-bar-vue>
 		</q-drawer>
 
-		<q-page-container>
+		<q-page-container style="font-family: 'OTWelcomeBA'">
 			<div class="column main-container">
 				<div
 					v-if="showSubScribers && teacherVideo.state.session !== undefined"
-					class="col-2"
+					class="col-2 q-pl-md"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
-							<div style="width: 150px" class="q-pa-sm">
+							<div style="width: 11%" class="q-pa-sm">
 								<user-video
 									:stream-manager="teacherVideo.state.publisher"
 									@click="
@@ -23,7 +23,7 @@
 								/>
 							</div>
 							<div
-								style="width: 150px"
+								style="width: 11%"
 								class="q-pa-sm"
 								v-for="(sub, idx) in teacherVideo.state.subscribers"
 								:key="idx"
@@ -43,10 +43,9 @@
 					"
 				>
 					<div>
-						<q-splitter v-model="splitterModel" style="height: 80vh">
+						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-pa-md flex-height">
-									<div class="text-h4 q-mb-md">강사 화면 부분</div>
+								<div class="q-pa-md">
 									<div class="flex" style="background-color: white">
 										<user-video
 											:stream-manager="teacherVideo.state.mainStreamManager"
@@ -58,13 +57,22 @@
 								<div class="q-pa-md flex-height column">
 									<div class="col-1">
 										<div class="row flex-height">
-											<div class="col-8" style="background-color: white">
-												<div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div>
+											<div
+												class="col-8 shadow"
+												style="background-color: #eeeeee"
+											>
+												<q-img
+													style="width: 70px"
+													class="test"
+													src="src/assets/logo/logo.svg"
+												/>
+												<!-- <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div> -->
 											</div>
 											<div class="col-2">
 												<div class="row justify-center flex">
 													<q-btn-toggle
 														v-model="enableSync"
+														style="float: right"
 														push
 														glossy
 														toggle-color="primary"
@@ -79,9 +87,10 @@
 											<div class="col-2" style="background-color: red">
 												<div class="row justify-center flex">
 													<q-btn
-														class="col q-ma-sm"
+														style="max-width: 150px; font-size: 24px"
+														class="col q-ma-sm q-pd-md"
 														color="secondary"
-														icon-right="send"
+														push
 														label="Run"
 														@click="runCode"
 														:loading="isRunning"
@@ -145,12 +154,8 @@
 
 		<q-footer elevated class="bg-grey-8 text-white">
 			<q-toolbar>
-				<div class="row full-width">
-					<div class="col-1">
-						<q-avatar>
-							<img src="src/assets/logo/logo.svg" />
-						</q-avatar>
-					</div>
+				<div class="row full-width q-my-sm">
+					<div class="col-1"></div>
 					<div class="col-10" align="center">
 						<q-btn
 							class="micBtn"
@@ -166,7 +171,7 @@
 						/>
 
 						<q-btn
-							class="camBtn"
+							class="camBtn q-ml-md"
 							rounded
 							push
 							:icon="teacherVideo.isVideo ? 'videocam_off' : 'videocam'"
@@ -179,7 +184,7 @@
 						/>
 
 						<q-btn
-							class="screenBtn"
+							class="screenBtn q-ml-md"
 							rounded
 							push
 							icon="screen_share"
@@ -192,7 +197,7 @@
 						/>
 
 						<q-btn
-							class="examBtn"
+							class="examBtn q-ml-md"
 							rounded
 							push
 							icon="quiz"
@@ -200,7 +205,7 @@
 							@click="startExam"
 						/>
 						<q-btn
-							class="leaveBtn"
+							class="leaveBtn q-ml-md"
 							rounded
 							push
 							color="red"
@@ -352,10 +357,17 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+	font-family: 'OTWelcomeBA';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
 .main-container {
 	height: 100vh;
 	width: 100vw;
-	background-color: aquamarine;
+	background-color: #303841;
 }
 
 .flex {
@@ -374,5 +386,12 @@ export default {
 }
 .scroll::-webkit-scrollbar {
 	display: none; /* for Chrome, Safari, and Opera */
+}
+.scroll {
+	overflow: hidden;
+}
+.test {
+	-webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7));
+	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
 }
 </style>
