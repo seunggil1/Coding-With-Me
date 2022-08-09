@@ -8,7 +8,7 @@
 			<div class="column main-container">
 				<div
 					v-if="showSubScribers && teacherVideo.state.session !== undefined"
-					class="col-2 q-pl-md"
+					class="col-2 q-pl-sm"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
@@ -45,8 +45,8 @@
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-pa-md">
-									<div class="flex" style="background-color: white">
+								<div class="q-pa-md flex-height">
+									<div class="flex" style="background: none">
 										<user-video
 											:stream-manager="teacherVideo.state.mainStreamManager"
 										/>
@@ -55,12 +55,12 @@
 							</template>
 							<template v-slot:after>
 								<div class="q-pa-md flex-height column">
-									<div class="col-1">
-										<div class="row flex-height">
-											<div
-												class="col-8 shadow"
-												style="background-color: #eeeeee"
-											>
+									<div class="col-1" style="background-color: #eeeeee">
+										<div
+											class="row flex-height"
+											style="background-color: #eeeeee"
+										>
+											<div class="col-8 shadow">
 												<q-img
 													style="width: 70px"
 													class="test"
@@ -69,25 +69,43 @@
 												<!-- <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div> -->
 											</div>
 											<div class="col-2">
-												<div class="row justify-center flex">
+												<div
+													class="row justify-center flex"
+													style="background-color: #eeeeee"
+												>
 													<q-btn-toggle
 														v-model="enableSync"
-														style="float: right"
 														push
-														glossy
-														toggle-color="primary"
+														no-caps
+														unelevated
+														color="blue-grey-8"
+														toggle-color="orange-14"
 														class="col q-pa-sm"
 														:options="[
 															{ label: 'Sync', value: true },
 															{ label: 'Off', value: false },
 														]"
 													/>
+													<!-- <q-btn-toggle
+														v-model="enableSync"
+														push
+														rounded
+														toggle-color="primary"
+														class="col q-pa-sm"
+														:options="[
+															{ label: 'Sync', value: true },
+															{ label: 'Off', value: false },
+														]"
+													/> -->
 												</div>
 											</div>
-											<div class="col-2" style="background-color: red">
-												<div class="row justify-center flex">
+											<div class="col-2">
+												<div
+													class="row justify-center flex"
+													style="background-color: #eeeeee"
+												>
 													<q-btn
-														style="max-width: 150px; font-size: 24px"
+														style="max-width: 150px; max-height: 60px font-size: 24px"
 														class="col q-ma-sm q-pd-md"
 														color="secondary"
 														push
@@ -174,7 +192,7 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="teacherVideo.isVideo ? 'videocam_off' : 'videocam'"
+							:icon="teacherVideo.isVideo ? 'videocam' : 'videocam_off'"
 							:label="teacherVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
 							@click="
 								teacherVideo.isVideo

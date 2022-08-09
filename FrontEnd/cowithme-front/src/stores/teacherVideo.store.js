@@ -2,12 +2,10 @@ import { OpenVidu } from 'openvidu-browser';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref, reactive } from 'vue';
-
+import { api } from 'src/boot/axios.js';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const teacherVideoStore = defineStore('teacherVideo', () => {
-	const OPENVIDU_SERVER_URL = 'https://' + 'localhost:4443'; // 서버 주소
-	const OPENVIDU_SERVER_SECRET = 'MY_SECRET'; // 비번?
 
 	const state = reactive({
 		OV: undefined,
@@ -15,8 +13,11 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		mainStreamManager: undefined,
 		publisher: undefined,
 		subscribers: [],
-		mySessionId: 'SessionA', // 나중에 처리
-		myUserName: 'user1', // 나중에 처리
+		mySessionId: '알고리즘 10주차 수업', // 나중에 처리
+		myUserName: '김동욱', // 나중에 처리
+		classId: 1,
+		userId: 2,
+		id: 'goat', // 로그인 할 때 
 		screenOV: undefined,
 		screenSession: undefined,
 		screenShareName: '', // 나중에 처리
@@ -25,6 +26,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		// 웹 IDE 데이터도 여기서 처리함.
 		teacherCode:
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
+
 	});
 
 	const rightDrawerOpen = ref(true); // 참여자 + 채팅창. ture면 on
@@ -155,7 +157,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			});
 		});
 
-		getToken(state.mySessionId).then(token => {
+		getToken().then(token => {
 			state.session
 				.connect(token, { clientData: state.myUserName })
 				.then(() => {
@@ -217,66 +219,40 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 	}
 
 	// serverSide start. Backend가 완성되면 변경 필요.
-	async function getToken(mySessionId) {
-		const id = await createSession(mySessionId);
-		return await createToken(id);
+	async function getToken() {
+		// await createSession();
+		return await createToken();
 	}
 
-	function createToken(sessionId) {
-		return new Promise((resolve, reject) => {
-			axios
-				.post(
-					`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-					{},
-					{
-						auth: {
-							username: 'OPENVIDUAPP',
-							password: `${OPENVIDU_SERVER_SECRET}`,
-						},
-					},
-				)
-				.then(response => response.data)
-				.then(data => resolve(data.token))
-				.catch(error => reject(error.response));
-		});
+	async function createToken() {
+		try {
+			const response = await api.post(`/conference/getToken`, {
+				classId: state.classId,
+				displayName: state.myUserName,
+				id: state.userId,
+			});
+			console.log('토큰발급', response);
+			return response.data.token;
+		} catch (error) {
+			console.log('토큰발급 err', error);
+		}
 	}
 
-	function createSession(sessionId) {
-		return new Promise((resolve, reject) => {
-			axios
-				.post(
-					`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
-					JSON.stringify({
-						customSessionId: sessionId,
-					}),
-					{
-						auth: {
-							username: 'OPENVIDUAPP',
-							password: 'MY_SECRET',
-						},
-					},
-				)
-				.then(response => response.data)
-				.then(data => resolve(data.id))
-				// 접속 못하면 에러 나는 부분
-				.catch(error => {
-					if (error.response.status === 409) {
-						resolve(sessionId);
-					} else {
-						console.warn(
-							`No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`,
-						);
-						if (
-							window.confirm(
-								`No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`,
-							)
-						) {
-							location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
-						}
-						reject(error.response);
-					}
-				});
-		});
+	async function createSession() {
+		try {
+			const response = await api.post(`/conferences`, {
+				classId: state.classId,
+				conferenceName: state.mySessionId,
+				ownerId: state.id,
+			});
+			console.log('강의방 생성', response);
+		} catch (error) {
+			if (error.response.status === 409) {
+				console.log('이미 존재하는 방');
+				return;
+			}
+			console.log('강의방 생성 err', error);
+		}
 	}
 
 	// serverSide end.
