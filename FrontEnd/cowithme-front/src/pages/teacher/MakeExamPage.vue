@@ -1,8 +1,8 @@
 <template>
-	<div class="q-pa-md q-gutter-md" style="font-family: 'Elice Digital Baeum'">
-		<div class="flex row">
+	<div class="q-pa-lg q-gutter-md" style="font-family: 'Elice Digital Baeum'">
+		<div class="flex row q-mt-lg">
 			<div class="q-pa-md col" style="max-width: 400px">
-				<h3>시험 만들기</h3>
+				<h3 style="font-family: 'MICEGothic Bold'">시험 만들기</h3>
 				<q-input
 					rounded
 					outlined
@@ -334,4 +334,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@font-face {
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+</style>

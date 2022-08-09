@@ -9,14 +9,13 @@
 			style="font-family: 'Elice Digital Baeum'"
 		>
 			<div>
-				<p>시험 날짜: {{ record.date }}</p>
-				<p>시험 번호: {{ record.testRecordId }}</p>
-				<p>시험 언어: {{ record.lang }}</p>
+				<h3>{{ record.date }} 시험</h3>
+				<h4>시험 언어: {{ record.lang }}</h4>
 				<q-expansion-item
 					expand-separator
 					label="문제 별 답안 확인하기"
 					icon="code"
-					style="width: 70%"
+					style="width: 70%; font-size: 16px"
 				>
 					<div v-for="code in record.sourceCode.answers" :key="code.qno">
 						<p>{{ code.qno }}</p>

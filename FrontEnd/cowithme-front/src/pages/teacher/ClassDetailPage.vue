@@ -63,7 +63,10 @@
 								<q-uploader
 									:url="`http://i7a304.p.ssafy.io:8080/api/v1/files/upload/${test.testId}`"
 									style="max-width: 300px"
-								/>
+									:additionalFields="additionalFields"
+									id="testFile"
+									field-name="files"
+								></q-uploader>
 							</div>
 						</div>
 						<div class="col-2">
@@ -93,21 +96,9 @@ import { ref } from 'vue';
 
 export default {
 	name: 'ClassDetailPage',
-	// props: {
-	// 	classId: {
-	// 		type: Number,
-	// 	},
-	// 	className: {
-	// 		type: String,
-	// 	},
-	// 	userId: {
-	// 		type: String,
-	// 	},
-	// 	clas: {
-	// 		type: String,
-	// 	},
-	// },
 	setup() {
+		const files = ref(null);
+
 		const students = ref([]);
 		const tests = ref([]);
 		const router = useRouter();
@@ -142,10 +133,11 @@ export default {
 
 		const className = localStorage.getItem('className');
 		const classId = localStorage.getItem('classId');
+		const userId = localStorage.getItem('userId');
 
 		// 학생 목록 가져오기
 		api
-			.get(`/tutor/1/classes/${className}`)
+			.get(`/tutor/${userId}/classes/${className}`)
 			.then(res => {
 				students.value = res.data.students;
 				console.log(res.data);
@@ -169,6 +161,7 @@ export default {
 		async function goAddStudent() {
 			await router.push({ path: '/addStudent' });
 		}
+
 		return {
 			goAddStudent,
 			students,
@@ -178,6 +171,8 @@ export default {
 			lectureName,
 			makeLecture,
 			tests,
+			// additionalFields,
+			files,
 		};
 	},
 };

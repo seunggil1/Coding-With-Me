@@ -62,10 +62,10 @@
 			</div>
 			<!-- <div>{{ classStore.userClass.className }}</div> -->
 			<div class="row">
-				<CalendarInfo style="font-family: 'GmarketSansMedium'"></CalendarInfo>
+				<CalendarInfo style="font-family: 'Elice Digital Baeum'"></CalendarInfo>
 				<div class="col-8">
 					<LectureTimeHistory
-						style="font-family: 'GmarketSansMedium'"
+						style="font-family: 'Elice Digital Baeum'"
 					></LectureTimeHistory>
 				</div>
 			</div>

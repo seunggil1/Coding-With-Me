@@ -97,7 +97,7 @@ function onReset() {
 			width: 800px;
 			max-width: 70vw;
 			background-color: #303841;
-			background-image: linear-gradient(to bottom, #274046 0%, #bdc3c7 100%);
+			background-image: linear-gradient(to right, #274046 0%, #bdc3c7 100%);
 			border-radius: 20px;
 			margin-top: 2%;
 		"
@@ -238,6 +238,9 @@ function onReset() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '전화번호를 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						name="nickname"
