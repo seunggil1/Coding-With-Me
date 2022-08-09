@@ -212,7 +212,7 @@
 <script setup>
 import { ref } from 'vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import { studentVideoStore } from 'src/stores/video.js';
+import { studentVideoStore } from 'src/stores/studentVideo.store.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

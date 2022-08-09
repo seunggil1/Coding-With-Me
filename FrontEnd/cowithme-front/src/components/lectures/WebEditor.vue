@@ -62,7 +62,6 @@ export default {
                 });
         });
         onUpdated(() => {
-            updateEditor();
         });
         
         // Golden Layout에서 화면이 갱신되었을 때,
@@ -93,6 +92,10 @@ export default {
             }
         }
 
+        const updateCode = (code) => {
+            monacoEditor.setValue(code);
+        }
+
         return {
             studentVideo,
             editorDiv,
@@ -104,7 +107,8 @@ export default {
             // Golden Layout에서 화면이 갱신되었을 때,
             // updateEditor를 호출해 IDE를 다시 불러와야 한다.
             updateEditor,
-            saveCode
+            saveCode,
+            updateCode
         };
     }
 }

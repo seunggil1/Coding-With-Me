@@ -318,16 +318,15 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			});
 	}
 
-	function sendCode(code) {
+	function sendCode() {
 		if (state.session == undefined) {
 			console.log('session is not connected. sendCode is canceled.');
 			return;
 		}
-		state.session
-			.signal({
+		state.session.signal({
 				data: JSON.stringify({
 					sender: state.myUserName,
-					message: code,
+					message: state.teacherCode,
 				}), // Any string (optional)
 				to: [],
 				type: 'code', // The type of message (optional)
