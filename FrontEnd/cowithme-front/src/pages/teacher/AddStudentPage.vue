@@ -1,16 +1,32 @@
 <template>
-	<div class="q-pa-md" style="max-width: 800px">
+	<div
+		class="q-pa-lg"
+		style="font-family: 'Elice Digital Baeum', sans-serif; max-width: 800px"
+	>
 		<q-form @submit="goSearchStudent" class="q-gutter-md">
-			<q-input filled v-model="name" label="학생 이름" />
+			<q-input
+				rounded
+				outlined
+				type="text"
+				color="brand"
+				bg-color="white"
+				v-model="name"
+				label="학생 이름"
+			/>
 
 			<div>
-				<q-btn push label="검색하기" type="submit" color="primary" />
+				<q-btn
+					push
+					label="검색하기"
+					type="submit"
+					style="background: #00adb5; color: white; font-size: 16px"
+				></q-btn>
 			</div>
 		</q-form>
-		<div v-for="res in studentResult" :key="res.userId">
-			<q-btn @click="addStudent(res.userId)">
-				{{ res.name }}
-			</q-btn>
+		<div class="q-mt-lg row">
+			<div class="col-2" v-for="res in studentResult" :key="res.userId">
+				<q-btn push @click="addStudent(res.userId)"> + {{ res.name }} </q-btn>
+			</div>
 		</div>
 	</div>
 </template>
@@ -59,7 +75,7 @@ export default {
 					console.log(res.message);
 					console.log(JSON.parse(localStorage.getItem('classId')));
 					router.push({
-						name: 'addStudent',
+						name: '',
 					});
 				});
 		}
