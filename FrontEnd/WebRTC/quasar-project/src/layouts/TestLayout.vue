@@ -2,17 +2,25 @@
   <q-layout view="lHr lpr fFf">
 
     <q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
-      <!-- drawer content -->
+      <video-side-bar-vue :piniaData="teacherVideo">
+
+      </video-side-bar-vue>
     </q-drawer>
 
     <q-page-container>
       <div class="column main-container">
         <div v-if="showSubScribers && (teacherVideo.state.session !== undefined)" class="col-2">
             
-            <q-scroll-area style="height: 100%; max-width: 100vw;">
+            <q-scroll-area 
+                style="height: 100%; 
+                max-width: 100vw;"
+            >
                 <div class="row no-wrap">
                     <div style="width: 150px" class="q-pa-sm">
-                        <user-video :stream-manager="teacherVideo.state.publisher"/>
+                        <user-video 
+                            :stream-manager="teacherVideo.state.publisher" 
+                            @click="teacherVideo.updateMainVideoStreamManager(teacherVideo.state.publisher)"
+                        />
                     </div>
                     <div 
                         style="width: 150px" 
@@ -20,11 +28,13 @@
                         v-for="(sub, idx) in teacherVideo.state.subscribers"
                         :key="idx"
                     >
-                        <user-video :stream-manager="sub"/>
+                        <user-video 
+                            :stream-manager="sub"
+                            @click="teacherVideo.updateMainVideoStreamManager(sub)"
+                        />
                     </div>
                 </div>
             </q-scroll-area>
-
         </div>
         <!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
         <div :class="((showSubScribers && teacherVideo.state.session) ? 'col-10' : 'col-12')">
@@ -35,8 +45,10 @@
             >
               <template v-slot:before>
                 <div class="q-pa-md flex-height">
-                  <div class="text-h4 q-mb-md">강사 화면 부분</div>
-                  <div class="flex" style="background-color: white;"></div>
+                    <div class="text-h4 q-mb-md">강사 화면 부분</div>
+                    <div class="flex" style="background-color: white;">
+                        <user-video :stream-manager="teacherVideo.state.mainStreamManager"/>
+                    </div>
                 </div>
               </template>
               <template v-slot:after>
@@ -60,13 +72,25 @@
                             </div>
                             <div class="col-2 " style="background-color: red;">
                                 <div class="row justify-center flex">
-                                    <q-btn class="col q-ma-sm" color="secondary" icon-right="send" label="Run" />
+                                    <q-btn 
+                                        class="col q-ma-sm" 
+                                        color="secondary" 
+                                        icon-right="send" 
+                                        label="Run" 
+                                        @click="runCode"
+                                        :loading="isRunning"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-7">
-                        <web-editor ref="teacherIde" :code="teacherVideo.state.teacherCode" language="java" :readOnly="false"></web-editor>
+                        <web-editor 
+                            ref="teacherIde" 
+                            :code="teacherVideo.state.teacherCode" 
+                            language="java" 
+                            :readOnly="false"
+                        />
                     </div>
                     <div class="col-4 row">
                         <div class="col" style="background-color: white;">
@@ -197,23 +221,23 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import { teacherVideoStore } from 'src/stores/teacherVideo.js'
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
+import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
+import axios from 'axios';
 export default {
     components : {
         WebEditor,
-        UserVideo
+        UserVideo,
+        VideoSideBarVue
     },
     setup () {
-        
-
         const teacherVideo = teacherVideoStore();
         let showSubScribers = ref(true);
         let rightDrawerOpen = ref(false);
         
-
         // IDE
         const teacherIde = ref(undefined);
         const splitterModel = ref(50);
@@ -227,11 +251,34 @@ export default {
 
         let enableSync = ref(true);
 
+        let isRunning = ref('false');
         let inputData = ref('');
         let outputData = ref('');
 
+        const runCode = async () => {
+            // Todo. 백엔드 수정 후 추가 작업필요.
+            isRunning.value = true;
+            teacherIde.value.saveCode();
+            
+            const res = await axios.get('http://i7a304.p.ssafy.io:8080/api/v1/users/compile',{
+                params: {
+                    code : teacherVideo.state.teacherCode,
+                    lang : 'java',
+                    'testcase.input' : inputData.value,
+                    'testcase.output' : '0'
+                }
+            });
+            console.log(res.data);
+            isRunning.value = false;
+        };
+
         onMounted(() => {
             teacherVideo.joinSession();
+            window.addEventListener('resize', teacherIde.value.updateEditor);
+        });
+
+        onBeforeUnmount(()=>{
+            window.removeEventListener('resize', teacherIde.value.updateEditor);
         });
 
         // 시험 시작
@@ -254,8 +301,10 @@ export default {
             // IDE
             splitterModel,
             enableSync,
+            isRunning,
             inputData,
             outputData,
+            runCode,
 
             // 시험
             startExam,
