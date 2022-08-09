@@ -1,186 +1,182 @@
 <template>
-	<!-- v-if="session" -->
-	<q-layout view="hHh lpR fFf">
-		<!-- 오른쪽 참여자 + 채팅 부분 start -->
-		<q-drawer
-			:width="600"
-			show-if-above
-			v-model="video.rightDrawerOpen"
-			side="right"
-			elevated
-		>
-			<div class="row parti-chat-box">
-				<div class="col-5 column" style="border: 1px solid red">
-					<div class="col-2" style="border: 1px solid red">
-						<p>타이머</p>
-						<p>총 인원 (25/25)</p>
-					</div>
-					<div class="col-5" style="border: 1px solid red">
-						<p>오프라인</p>
-						<p>온라인</p>
-					</div>
-					<div class="col-5" style="border: 1px solid red">
-						<p>제출 완료</p>
-						<p>제출 미완료</p>
-					</div>
-				</div>
-				<div class="col-7 column" style="border: 1px solid red">
-					<div class="col-9" style="border: 1px solid red">
-						<p>채팅 내역</p>
-					</div>
-					<div class="col-1" style="border: 1px solid red">
-						<p>dm 선택</p>
-					</div>
-					<div class="col-2" style="border: 1px solid red">
-						<p>textarea</p>
-					</div>
-				</div>
-			</div>
-		</q-drawer>
-		<!-- 오른쪽 참여자 + 채팅 부분 end -->
+  <!-- v-if="session" -->
+  <q-layout view="lHr lpr fFf">
+    <!-- 오른쪽 참여자 + 채팅 부분 start -->
+    <q-drawer :width="600" show-if-above v-model="rightDrawerOpen" side="right" elevated>
+        <teacher-video-side-bar>
+        </teacher-video-side-bar>
+    </q-drawer>
 
-		<!-- 메인캠 부분 start -->
-		<q-page-container>
-			<div class="row main-container justify-center items-center">
-				<div class="main-cam-box row justify-center items-center">
-					<div v-if="pub">
-						<UserVideo class="video" :stream-manager="pub"></UserVideo>
-					</div>
-					<template v-if="subs">
-						<div v-for="sub in subs" :key="sub">
-							<UserVideo class="video" :stream-manager="sub"></UserVideo>
-						</div>
-					</template>
-				</div>
-			</div>
-		</q-page-container>
-		<!-- 메인캠 부분 end -->
+    <!-- 오른쪽 참여자 + 채팅 부분 end -->
 
-		<!-- 하단바 부분 start -->
-		<q-footer elevated class="bg-grey-8 text-white">
-			<q-toolbar>
-				<div class="col-11" align="center">
-					<q-btn
-						v-if="video.isAudio"
-						class="micBtn"
-						rounded
-						push
-						icon="mic"
-						label="음소거"
-						@click="clickMic"
-					></q-btn>
-					<q-btn
-						v-else
-						class="micBtn"
-						rounded
-						push
-						icon="mic_off"
-						label="음소거 해제"
-						@click="clickMic"
-					></q-btn>
-					<q-btn
-						v-if="video.isVideo"
-						class="camBtn"
-						rounded
-						push
-						icon="videocam"
-						label="카메라 끄기"
-						@click="clickVideo"
-					></q-btn>
-					<q-btn
-						v-else
-						class="camBtn"
-						rounded
-						push
-						icon="videocam_off"
-						label="카메라 켜기"
-						@click="clickVideo"
-					></q-btn>
-					<q-btn
-						class="examBtn"
-						rounded
-						push
-						icon="quiz"
-						label="시험 종료"
-					></q-btn>
-					<q-btn
-						class="leaveBtn"
-						rounded
-						push
-						color="red"
-						icon="logout"
-						label="나가기"
-						@click="leaveSession"
-					></q-btn>
-				</div>
-				<div class="col-1" align="end">
-					<q-btn
-						v-if="!video.rightDrawerOpen"
-						flat
-						@click="clickRightDrawer"
-						round
-						icon="keyboard_double_arrow_left"
-					></q-btn>
-					<q-btn
-						v-else
-						flat
-						@click="clickRightDrawer"
-						round
-						icon="keyboard_double_arrow_right"
-					></q-btn>
-				</div>
-			</q-toolbar>
-		</q-footer>
-		<!-- 하단바 부분 end -->
-	</q-layout>
+    <!-- 메인캠 부분 start -->
+    <q-page-container>
+      <div class="row main-container justify-center items-center">
+        <div class="main-cam-box row justify-center items-center">
+          
+          <div v-if="pub">
+            <UserVideo class="video" :stream-manager="pub"></UserVideo>
+          </div>
+          <template v-if="subs">
+            <div v-for="sub in subs" :key="sub">
+              <UserVideo class="video" :stream-manager="sub"></UserVideo>
+            </div>
+          </template>
+        </div>
+      </div>
+    </q-page-container>
+    <!-- 메인캠 부분 end -->
+
+    <!-- 하단바 부분 start -->
+    <q-footer elevated class="bg-grey-8 text-white">
+        <q-toolbar>
+            <div class="row full-width">
+                <div class="col-1">
+                    <q-avatar>
+                        <img src="src/assets/logo/logo.svg">
+                    </q-avatar>
+                </div>
+                <div class="col-10" align="center">
+                    <q-btn 
+                        class="micBtn" 
+                        rounded 
+                        push 
+                        :icon="teacherVideo.isAudio ? 'mic' : 'mic_off'" 
+                        :label="teacherVideo.isAudio ? '음소거' : '음소거 해제'" 
+                        @click="teacherVideo.isAudio ? teacherVideo.muteAudio() : teacherVideo.unmuteAudio()"
+                    />
+
+                    <q-btn 
+                        class="camBtn"
+                        rounded
+                        push
+                        :icon="teacherVideo.isVideo ? 'videocam_off' : 'videocam'"
+                        :label="teacherVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
+                        @click="teacherVideo.isVideo ? teacherVideo.muteVideo() : teacherVideo.unmuteVideo()"
+                    />
+                    
+                    <q-btn 
+                        class="screenBtn" 
+                        rounded 
+                        push 
+                        icon="screen_share" 
+                        :label="teacherVideo.isScreen ? '화면공유 중지' : '화면공유'" 
+                        @click="teacherVideo.isScreen ? teacherVideo.stopScreenShare() : teacherVideo.startScreenShare()"
+                    />
+
+                    <q-btn 
+                        class="examBtn" 
+                        rounded 
+                        push 
+                        icon="quiz" 
+                        label="시험 종료" 
+                        @click="startExam"
+                    />
+                    <q-btn 
+                        class="leaveBtn" 
+                        rounded 
+                        push 
+                        color="red" 
+                        icon="logout" 
+                        label="나가기" 
+                        @click="leaveSession"
+                    />
+                    <!-- <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        </q-popup-proxy> -->
+                </div>
+                <div class="col-1" align="end">
+                    <q-btn 
+                        class="drawerBtn" 
+                        flat 
+                        @click="rightDrawerOpen = !rightDrawerOpen" 
+                        round 
+                        :icon="rightDrawerOpen ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left'"
+                    />
+                </div>
+            </div>
+        </q-toolbar>
+    </q-footer>
+    <!-- 하단바 부분 end -->
+
+  </q-layout>
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue';
-import UserVideo from 'src/components/lectures/UserVideo.vue';
-import { teacherVideoStore } from 'src/stores/video.js';
+import { teacherVideoStore } from 'src/stores/teacherVideo.store.js'
 import { useRouter } from 'vue-router';
+import TeacherVideoSideBar from 'src/components/lectures/exam/TeacherSideBar.vue';
 
-const router = useRouter();
-const studentVideo = teacherVideoStore(); // store 가져오기
-const session = video.state.session;
-const pub = video.state.publisher;
-const subs = video.state.subscribers;
-const main = video.state.mainStreamManager;
+export default{
+    components:{
+        TeacherVideoSideBar
+    },
+    props:{
 
-// 우측 바 펼치기, 접기
-const clickRightDrawer = () => {
-	video.setRightDrawer();
-};
-// 마이크 켜기, 끄기
-const clickMic = () => {
-	if (video.isAudio) {
-		video.muteAudio();
-	} else {
-		video.unmuteAudio();
-	}
-};
-// 카메라 켜기, 끄기
-const clickVideo = () => {
-	if (video.isVideo) {
-		video.muteVideo();
-	} else {
-		video.unmuteVideo();
-	}
-};
-// 화면 공유 켜기, 끄기
-const clickScreenShare = () => {
-	if (video.isScreen) {
-		video.stopScreenShare();
-	} else {
-		video.startScreenShare();
-	}
-};
-// 세션 나가기
-const leaveSession = () => {
-	video.leaveSession();
-	router.push('/');
-};
+    },
+
+    setup(props){
+        const rightDrawerOpen = ref(true);
+        const router = useRouter();
+        const teacherVideo = teacherVideoStore(); // store 가져오기
+        const session = teacherVideo.state.session;
+        const pub = teacherVideo.state.publisher;
+        const subs = teacherVideo.state.subscribers;
+        const main = teacherVideo.state.mainStreamManager;
+
+        // 우측 바 펼치기, 접기
+        const clickRightDrawer = () => {
+            teacherVideo.setRightDrawer();
+        }
+        // 마이크 켜기, 끄기
+        const clickMic = () => {
+            if(video.isAudio) {
+            teacherVideo.muteAudio();
+            } else {
+            teacherVideo.unmuteAudio();
+            }
+        }
+        // 카메라 켜기, 끄기
+        const clickVideo = () => {
+            if(teacherVideo.isVideo) {
+            teacherVideo.muteVideo();
+            } else {
+            teacherVideo.unmuteVideo();
+            }
+        }
+        // 화면 공유 켜기, 끄기
+        const clickScreenShare = () => {
+            if(teacherVideo.isScreen) {
+            teacherVideo.stopScreenShare();
+            } else {
+            teacherVideo.startScreenShare();
+            }
+        }
+        // 세션 나가기
+        const leaveSession = () => {
+            teacherVideo.leaveSession();
+            router.push('/');
+        }
+
+        return {
+            rightDrawerOpen,
+
+            router,
+            teacherVideo,
+            session,
+            pub,
+            subs,
+            main,
+
+            clickRightDrawer,
+            clickMic,
+            clickVideo,
+            clickScreenShare,
+            leaveSession
+
+        }
+    }
+}
 </script>
 
 <style scoped>

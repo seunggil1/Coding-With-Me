@@ -264,10 +264,6 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		state.mainStreamManager = stream;
 	}
 
-	function setMyUserName() {
-		state.myUserName = 'Participant' + Math.floor(Math.random() * 10) + 1;
-	}
-
 	function setScreenShareName() {
 		state.screenShareName = state.myUserName + "'S screen";
 	}
@@ -338,7 +334,6 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		createSession,
 
 		updateMainVideoStreamManager,
-		setMyUserName,
 		setScreenShareName,
 		sendMessage,
 		sendCode,

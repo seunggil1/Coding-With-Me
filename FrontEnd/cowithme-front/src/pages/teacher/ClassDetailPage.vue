@@ -145,23 +145,27 @@ export default {
 				return;
 			}
 			let id = JSON.parse(localStorage.getItem('user')).id;
-			teacherVideo.setId(id); // 로그인 아이디
+			teacherVideo.state.id = id; // 로그인 아이디
 			let uid = parseInt(localStorage.getItem('userId'));
-			teacherVideo.setUserId(uid); // 유저 고유 아이디
+			teacherVideo.state.userId = uid;
 			let name = JSON.parse(localStorage.getItem('info')).name;
-			teacherVideo.setMyUserName(name); // 강의에서 쓸 이름
+			teacherVideo.state.myUserName = name;
 			let classId = parseInt(localStorage.getItem('classId'));
-			teacherVideo.setClassId(classId); // 반 아이디
-			teacherVideo.setMySessionId(lectureName.value); // 강의명
+			teacherVideo.state.classId = classId;
+			teacherVideo.state.mySessionId = lectureName.value;
+			lectureName.value = '';
 
 			console.log('id', teacherVideo.state.id);
 			console.log('uid', teacherVideo.state.userId);
 			console.log('myUserName', teacherVideo.state.myUserName);
 			console.log('classId', teacherVideo.state.classId);
 			console.log('mySessionId', teacherVideo.state.mySessionId);
-
-			teacherVideo.joinSession();
-			lectureName.value = '';
+			
+			teacherVideo
+				.createSession()
+				.then(()=>{
+					router.push('/teacherlecture');
+				});
 		}
 
 		// 해당 반의 학생 리스트를
