@@ -1,7 +1,7 @@
 <template>
 	<div class="q-pa-md" style="font-family: 'Elice Digital Baeum">
 		<q-btn
-			@click="openMakeLecture = true"
+			@click="openstartLecture = true"
 			class="q-mb-md"
 			glossy
 			rounded
@@ -10,7 +10,7 @@
 			style="background: #ff5722; color: white; font-family: 'MICEGothic Bold'"
 			>{{ className }}의 강의 만들기</q-btn
 		>
-		<q-dialog v-model="openMakeLecture" persistent>
+		<q-dialog v-model="openstartLecture" persistent>
 			<q-card class="q-pa-md" style="min-width: 500px; min-height: 400px">
 				<q-card-section>
 					<div class="text-h6">강의명</div>
@@ -20,7 +20,7 @@
 				</q-card-section>
 
 				<q-card-actions align="right" class="text-primary">
-					<q-btn flat label="만들기" @click="makeLecture" v-close-popup />
+					<q-btn flat label="만들기" @click="startLecture" v-close-popup />
 					<q-btn flat label="취소" v-close-popup />
 				</q-card-actions>
 			</q-card>
@@ -121,6 +121,7 @@
 <script>
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
+import { teacherVideoStore } from 'src/stores/teacherVideo.store';
 // import { onMounted } from 'vue';/
 
 import { ref } from 'vue';
@@ -136,31 +137,34 @@ export default {
 		const students = ref([]);
 		const tests = ref([]);
 		const router = useRouter();
-		const openMakeLecture = ref(false);
+		const openstartLecture = ref(false);
 		const lectureName = ref('');
-		function makeLecture() {
+
+		const teacherVideo = teacherVideoStore();
+
+		function startLecture() {
 			if (lectureName.value == '' || lectureName.value == null) {
 				alert('값을 입력해주세요');
 				return;
 			}
 			let id = JSON.parse(localStorage.getItem('user')).id;
-			api
-				.post('/conferences', {
-					classId: parseInt(localStorage.getItem('classId')),
-					conferenceName: lectureName.value,
-					ownerId: id,
-					thumbnailPath: null,
-				})
-				.then(res => {
-					console.log(res);
-					if (res.data.message === 'Success') {
-						alert('강의 개설이 완료되었습니다');
-					} else {
-						alert('다시 시도해주세요');
-					}
-					lectureName.value = '';
-					return;
-				});
+			teacherVideo.setId(id); // 로그인 아이디
+			let uid = parseInt(localStorage.getItem('userId'));
+			teacherVideo.setUserId(uid); // 유저 고유 아이디
+			let name = JSON.parse(localStorage.getItem('info')).name;
+			teacherVideo.setMyUserName(name); // 강의에서 쓸 이름
+			let classId = parseInt(localStorage.getItem('classId'));
+			teacherVideo.setClassId(classId); // 반 아이디
+			teacherVideo.setMySessionId(lectureName.value); // 강의명
+
+			console.log('id', teacherVideo.state.id);
+			console.log('uid', teacherVideo.state.userId);
+			console.log('myUserName', teacherVideo.state.myUserName);
+			console.log('classId', teacherVideo.state.classId);
+			console.log('mySessionId', teacherVideo.state.mySessionId);
+
+			teacherVideo.joinSession();
+			lectureName.value = '';
 		}
 
 		// 해당 반의 학생 리스트를
@@ -201,9 +205,9 @@ export default {
 			students,
 			classId,
 			className,
-			openMakeLecture,
+			openstartLecture,
 			lectureName,
-			makeLecture,
+			startLecture,
 			tests,
 			files,
 			itemRefs,
