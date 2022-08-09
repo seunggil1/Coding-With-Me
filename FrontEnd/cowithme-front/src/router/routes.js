@@ -34,7 +34,7 @@ const routes = [
 				path: '/classDetail/:classId',
 				name: 'classDetail',
 				// props: true,
-				component: () => import('pages/teacher/classDetailPage.vue'),
+				component: () => import('pages/teacher/ClassDetailPage.vue'),
 			},
 			{
 				path: '/makeExam/:classId',
@@ -72,7 +72,7 @@ const routes = [
 	{
 		path: '/join',
 		name: 'join',
-		component: () => import('pages/account/SignUpPage.vue'),
+		component: () => import('pages/account/SignupPage.vue'),
 	},
 	// Always leave this as last one,
 	// but you can also remove it
