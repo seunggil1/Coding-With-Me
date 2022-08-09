@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<div>{{ records.value }}</div>
-		<div></div>
 		<div
 			v-for="record in records"
 			:key="record.testRecordId"
@@ -9,19 +7,28 @@
 			style="font-family: 'Elice Digital Baeum'"
 		>
 			<div>
-				<h3>{{ record.date }} 시험</h3>
-				<h4>시험 언어: {{ record.lang }}</h4>
+				<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
+					{{ record.date }} 시험
+				</p>
+				<q-chip outline square color="deep-orange" text-color="white">
+					시험 언어: {{ record.lang }}
+				</q-chip>
 				<q-expansion-item
 					expand-separator
 					label="문제 별 답안 확인하기"
 					icon="code"
-					style="width: 70%; font-size: 16px"
+					style="width: 60%; font-size: 16px; margin-top: 5%"
 				>
-					<div v-for="code in record.sourceCode.answers" :key="code.qno">
-						<p>{{ code.qno }}</p>
+					<div
+						class="q-mt-lg"
+						v-for="code in record.sourceCode.answers"
+						:key="code.qno"
+					>
+						<q-badge rounded color="orange" :label="`${code.qno}`" />
+						<div class="q-my-md"></div>
 						<textarea
 							v-model="code.code"
-							style="width: 400px; height: 200px"
+							style="width: 80%; height: 200px"
 							readonly
 						></textarea>
 					</div>
@@ -59,6 +66,13 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
 .box {
 	height: 100%;
 	width: 60%;

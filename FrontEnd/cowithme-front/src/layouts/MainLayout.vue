@@ -39,7 +39,12 @@
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col">
-						<q-badge class="q-mb-sm brand" outline label="강사" />
+						<q-badge
+							v-if="info2.role === '강사'"
+							class="q-mb-sm brand"
+							outline
+							label="강사"
+						/>
 
 						<div class="row">
 							<div style="font-size: 24px; font-family: 'OTWelcomeBA'">
