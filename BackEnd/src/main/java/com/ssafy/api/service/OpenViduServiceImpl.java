@@ -56,10 +56,10 @@ public class OpenViduServiceImpl implements OpenViduService {
                 targetSessionInfo.session.fetch();
 
                 // 방은 존재하는데 아무도 없는 경우
-                if(targetSessionInfo.session.getActiveConnections().size() == 0){
-                    targetSessionInfo.session.close();
-                    SessionInfoMap.remove(sessionId);
-                }
+//                if(targetSessionInfo.session.getActiveConnections().size() == 0){
+//                    targetSessionInfo.session.close();
+//                    SessionInfoMap.remove(sessionId);
+//                }
             } catch(OpenViduHttpException e){
                 // 미디어 서버 오류 or 해당 방이 존재하지 않음.
                 SessionInfoMap.remove(sessionId);

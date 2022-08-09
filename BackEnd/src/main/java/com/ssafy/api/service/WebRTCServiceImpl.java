@@ -55,12 +55,12 @@ public class WebRTCServiceImpl implements WebRTCService {
             conferenceId = conference.getConferenceId();
 
             // openvidu 서버에 해당 수업이 존재하지 않을 경우
-            if (!openViduService.sessionExist(conferenceId)) {
-                // TODO: 2022-08-04 : DB에 is_active = false 처리.
-                conference.setActive(false);
-                conferenceRepository.save(conference);
-                throw new Exception("방이 없서용");
-            }
+//            if (!openViduService.sessionExist(conferenceId)) {
+//                // TODO: 2022-08-04 : DB에 is_active = false 처리.
+//                conference.setActive(false);
+//                conferenceRepository.save(conference);
+//                throw new Exception("방이 없서용");
+//            }
         }
 
         // 원래 방이 살아있었는데 튕겨서 퇴장 기록을 못 찍었어. 여기서 찍어줘
