@@ -3,6 +3,12 @@ const routes = [
 		path: '/',
 		name: 'home',
 		component: () => import('layouts/MainLayout.vue'),
+		// beforeEnter: (to, from, next) => {
+		// 	if (localStorage.getItem('token')) {
+		// 		next('/');
+		// 	}
+		// 	next('/login');
+		// },
 		children: [
 			{
 				path: '/',

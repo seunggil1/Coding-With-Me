@@ -119,7 +119,6 @@
 <script>
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
-// import { onMounted } from 'vue';/
 
 import { ref } from 'vue';
 

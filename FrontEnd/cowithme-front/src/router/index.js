@@ -6,7 +6,7 @@ import {
 	createWebHashHistory,
 } from 'vue-router';
 import routes from './routes';
-import { useAuthStore } from 'src/stores';
+// import { useAuthStore } from 'src/stores';
 
 /*
  * If not building with SSR mode, you can
@@ -34,17 +34,17 @@ export default route(function (/* { store, ssrContext } */) {
 		history: createHistory(process.env.VUE_ROUTER_BASE),
 	});
 	// 로그인 되어있지 않을 시 조치하는 부분
-	Router.beforeEach(async to => {
-		// redirect to login page if not logged in and trying to access a restricted page
-		const publicPages = ['/login', '/join'];
-		const authRequired = !publicPages.includes(to.path);
-		const auth = useAuthStore();
+	// Router.beforeEach(async to => {
+	// 	// redirect to login page if not logged in and trying to access a restricted page
+	// 	const publicPages = ['/login', '/join'];
+	// 	const authRequired = !publicPages.includes(to.path);
+	// 	const auth = useAuthStore();
 
-		if (authRequired && !auth.user) {
-			auth.returnUrl = to.fullPath;
-			return '/join';
-		}
-	});
+	// 	if (authRequired && !auth.user) {
+	// 		auth.returnUrl = to.fullPath;
+	// 		return '/join';
+	// 	}
+	// });
 
 	return Router;
 });

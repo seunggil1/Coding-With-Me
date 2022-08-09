@@ -4,6 +4,10 @@
     "middlewares",
     "OPENVIDU",
     "rtlcss",
+    "studentexam",
+    "studentlecture",
+    "teacherexam",
+    "teacherlecture",
     "testcase",
     "ture",
     "videocam"
