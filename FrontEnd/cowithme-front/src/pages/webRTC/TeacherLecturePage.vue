@@ -1,5 +1,5 @@
 <template>
-	<q-layout view="lHr lpr fFf">
+	<q-layout class="scroll" view="lHr lpr fFf">
 		<q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
 			<video-side-bar-vue :piniaData="teacherVideo"> </video-side-bar-vue>
 		</q-drawer>
@@ -371,5 +371,8 @@ export default {
 
 .flex-height {
 	height: 100%;
+}
+.scroll::-webkit-scrollbar {
+	display: none; /* for Chrome, Safari, and Opera */
 }
 </style>
