@@ -39,14 +39,13 @@
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col">
+						<q-badge class="q-mb-sm brand" outline label="강사" />
+
 						<div class="row">
-							<div
-								class="col-3"
-								style="font-size: 24px; font-family: 'OTWelcomeBA'"
-							>
-								{{ info2.name }}<span v-if="info2.role == '강사'">(강사)</span>
+							<div style="font-size: 24px; font-family: 'OTWelcomeBA'">
+								{{ info2.name }}
 							</div>
-							<div class="col-9">
+							<div>
 								<WelcomeText
 									style="font-size: 24px; font-family: 'OTWelcomeBA'"
 								></WelcomeText>
@@ -152,6 +151,13 @@ export default defineComponent({
 
 <style>
 @font-face {
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
 	font-family: 'OTWelcomeBA';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
 		format('woff2');
@@ -161,5 +167,8 @@ export default defineComponent({
 .test {
 	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
+}
+.brand {
+	color: #00adb5 !important;
 }
 </style>

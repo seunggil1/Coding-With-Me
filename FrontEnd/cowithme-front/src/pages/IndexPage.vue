@@ -9,8 +9,12 @@
 						v-for="clas in classes"
 						:key="clas.classId"
 					>
-						<h3>{{ clas.className }}</h3>
-						<p>{{ clas.classDescription }}</p>
+						<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
+							{{ clas.className }}
+						</p>
+						<div class="class-description q-pa-md">
+							<p style="color: white">{{ clas.classDescription }}</p>
+						</div>
 						<router-link
 							:to="{
 								name: 'classDetail',
@@ -28,7 +32,7 @@
 										info2.userId,
 									)
 								"
-								style="background: #00adb5; color: white"
+								style="background: #00adb5; color: white; font-size: 16px"
 								push
 								>반 관리하기</q-btn
 							>
@@ -174,17 +178,10 @@ export default defineComponent({
 
 <style scoped>
 @font-face {
-	font-family: 'GmarketSansLight';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'GmarketSansLight';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff');
-	font-weight: normal;
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
 	font-style: normal;
 }
 .class-info {
@@ -206,5 +203,11 @@ export default defineComponent({
 	background-color: white;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+}
+.class-description {
+	background-color: #ff5722;
+	width: 60%;
+	border-radius: 10px;
+	box-shadow: 1px 1px 3px 1px #dadce0;
 }
 </style>

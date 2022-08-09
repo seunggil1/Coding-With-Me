@@ -208,7 +208,7 @@ function onReset() {
 				</div>
 				<div class="col q-ml-sm">
 					<q-input
-						class="q-mx-lg q-mt-lg col-7"
+						class="q-mx-lg q-mt-lg col-7 q-pr-lg"
 						rounded
 						outlined
 						name="email"
@@ -244,7 +244,7 @@ function onReset() {
 					></q-input>
 					<q-input
 						name="nickname"
-						class="q-ma-lg q-pr-lg q-pt-md"
+						class="q-mx-lg q-mb-lg q-pr-lg"
 						rounded
 						outlined
 						v-model="nickname"

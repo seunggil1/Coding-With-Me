@@ -7,7 +7,7 @@
 			rounded
 			size="25px"
 			push
-			style="background: #ff5722; color: white"
+			style="background: #ff5722; color: white; font-family: 'MICEGothic Bold'"
 			>{{ className }}의 강의 만들기</q-btn
 		>
 		<q-dialog v-model="openMakeLecture" persistent>
@@ -30,34 +30,49 @@
 		</div>
 		<div class="flex row">
 			<div class="col-6">
-				<div class="row">
-					<div class="col-10">
-						<p style="font-size: 26px">{{ className }}의 학생</p>
-						<div v-for="student in students" :key="student.userId">
-							{{ student.name }}({{ student.nickname }})
+				<div class="box q-px-lg q-py-lg q-mr-md">
+					<div class="row">
+						<div class="col-10">
+							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
+								{{ className }}의 학생
+							</p>
+
+							<q-list>
+								<q-item>
+									<q-item-section>
+										<q-item-label></q-item-label>
+									</q-item-section>
+								</q-item>
+							</q-list>
+
+							<div v-for="student in students" :key="student.userId">
+								{{ student.name }}({{ student.nickname }})
+							</div>
+						</div>
+						<div class="col-2">
+							<router-link
+								:to="{
+									name: 'addStudent',
+									params: {
+										classId: classId,
+										className: className,
+									},
+								}"
+								style="text-decoration: none; color: inherit"
+							>
+								<q-icon style="float: right" name="edit" size="26px"></q-icon>
+							</router-link>
 						</div>
 					</div>
-					<div class="col-2">
-						<router-link
-							:to="{
-								name: 'addStudent',
-								params: {
-									classId: classId,
-									className: className,
-								},
-							}"
-						>
-							<q-icon style="float: right" name="edit" size="26px"></q-icon>
-						</router-link>
-					</div>
 				</div>
-				<div class="box q-px-lg q-py-lg q-mr-md"></div>
 			</div>
 			<div class="col-6">
 				<div class="box q-px-lg q-py-lg q-ml-md">
 					<div class="row">
 						<div class="col-10">
-							<p style="font-size: 26px">{{ className }}의 시험</p>
+							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
+								{{ className }}의 시험
+							</p>
 							<div v-for="test in tests" :key="test.testId">
 								{{ test.testId }}번 {{ test.testName }}
 								<q-uploader
@@ -179,6 +194,13 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
 .box {
 	min-height: 300px;
 	/* width: 100%; */

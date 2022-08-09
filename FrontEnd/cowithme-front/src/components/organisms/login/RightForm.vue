@@ -25,11 +25,7 @@ async function onSubmit() {
 		<div class="q-ma-lg">
 			<p
 				class="col"
-				style="
-					font-size: 100px;
-					color: white;
-					font-family: 'Elice Digital Baeum', sans-serif;
-				"
+				style="font-size: 100px; color: white; font-family: 'MICEGothic Bold'"
 			>
 				로그인
 			</p>
@@ -95,10 +91,10 @@ async function onSubmit() {
 
 <style scoped>
 @font-face {
-	font-family: 'GmarketSansLight';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff');
-	font-weight: normal;
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
 	font-style: normal;
 }
 .text-brand {

@@ -2,12 +2,24 @@
 	<div>
 		<div
 			id="q-app"
-			class="q-pb-md q-pl-md"
+			class="q-pa-lg"
 			style="font-family: 'Elice Digital Baeum', sans-serif"
 		>
 			<div class="q-pa-md" style="max-width: 700px">
-				<h2>새로운 반 만들기</h2>
-				<q-form @submit="goMakeClass" class="q-gutter-md">
+				<p
+					style="
+						font-size: 40px;
+						margin-bottom: 10%;
+						font-family: 'MICEGothic Bold';
+					"
+				>
+					새로운 반 만들기
+				</p>
+				<q-form
+					@submit="goMakeClass"
+					class="q-gutter-md"
+					style="max-width: 70%"
+				>
 					<q-input
 						name="className"
 						rounded
@@ -97,4 +109,12 @@ async function goMakeClass() {
 // }
 </script>
 
-<style scoped></style>
+<style scoped>
+@font-face {
+	font-family: 'MICEGothic Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+</style>
