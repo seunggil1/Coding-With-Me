@@ -16,6 +16,7 @@
 
 import { ref, onMounted, onUpdated } from "vue";
 import { useVideoStore } from 'src/stores/video.js';
+import { teacherVideoStore } from 'src/stores/teacherVideo.js'
 
 import * as monaco from 'monaco-editor';
 export default {
@@ -30,6 +31,7 @@ export default {
     },
     setup (props) {
         const video = useVideoStore(); // store 가져오기
+        const teacherVideo = teacherVideoStore();
         const editorDiv = ref(undefined);
         let monacoEditor;
 
@@ -87,7 +89,7 @@ export default {
             if(isMyEditor){
                 video.state.myCode = monacoEditor.getValue();
             }else{
-                video.state.teacherCode = monacoEditor.getValue();
+                teacherVideo.state.teacherCode = monacoEditor.getValue();
             }
         }
 
