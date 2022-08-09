@@ -197,17 +197,17 @@ export default defineComponent({
 	margin-left: 20px;
 }
 .box {
-	height: 300px;
-	width: 60%;
-	min-width: 700px;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+	height: 300px !important;
+	width: 60% !important;
+	min-width: 700px !important;
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }
 .class-description {
-	background-color: #ff5722;
-	width: 60%;
-	border-radius: 10px;
-	box-shadow: 1px 1px 3px 1px #dadce0;
+	background-color: #ff5722 !important;
+	width: 60% !important;
+	border-radius: 10px !important;
+	box-shadow: 1px 1px 3px 1px #dadce0 !important;
 }
 </style>

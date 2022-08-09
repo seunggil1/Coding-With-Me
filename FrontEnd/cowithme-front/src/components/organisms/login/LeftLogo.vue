@@ -22,6 +22,6 @@ export default {
 
 <style lang="scss" scoped>
 .left {
-	background-color: #303841;
+	background-color: #303841 !important;
 }
 </style>

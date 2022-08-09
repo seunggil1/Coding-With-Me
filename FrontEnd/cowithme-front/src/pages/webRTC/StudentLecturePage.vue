@@ -388,40 +388,40 @@ export default {
 
 <style scoped>
 @font-face {
-	font-family: 'OTWelcomeBA';
+	font-family: 'OTWelcomeBA' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: normal !important;
+	font-style: normal !important;
 }
 .main-container {
-	height: 100vh;
-	width: 100vw;
-	background-color: #303841;
+	height: 100vh !important;
+	width: 100vw !important;
+	background-color: #303841 !important;
 }
 
 .flex {
-	width: 100%;
-	height: 100%;
+	width: 100% !important;
+	height: 100% !important;
 
-	background-color: white;
+	background-color: white !important;
 }
 
 .flex-width {
-	width: 100%;
+	width: 100% !important;
 }
 
 .flex-height {
-	height: 100%;
+	height: 100% !important;
 }
 .scroll::-webkit-scrollbar {
-	display: none; /* for Chrome, Safari, and Opera */
+	display: none !important; /* for Chrome, Safari, and Opera */
 }
 .scroll {
-	overflow: hidden;
+	overflow: hidden !important;
 }
 .test {
-	-webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7));
-	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
+	-webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7)) !important;
+	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 }
 </style>

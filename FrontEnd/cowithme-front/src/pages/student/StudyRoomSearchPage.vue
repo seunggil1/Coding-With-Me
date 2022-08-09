@@ -39,11 +39,11 @@ export default {
 
 <style scoped>
 .box {
-	height: 100%;
-	width: 60%;
-	min-width: 700px;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+	height: 100% !important;
+	width: 60% !important;
+	min-width: 700px !important;
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }
 </style>

@@ -37,10 +37,10 @@ export default {
 	width: 299px;
 }
 @font-face {
-	font-family: 'OTWelcomeBA';
+	font-family: 'OTWelcomeBA' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: normal !important;
+	font-style: normal !important;
 }
 </style>

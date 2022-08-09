@@ -270,39 +270,39 @@ const startExam = () => {
 
 <style scoped>
 div {
-	box-sizing: border-box;
+	box-sizing: border-box !important;
 }
 .drawer-container {
-	height: 94.71vh;
+	height: 94.71vh !important;
 }
 .main-container {
-	height: 94.71vh;
+	height: 94.71vh !important;
 }
 .sub-cam {
-	height: 100%;
+	height: 100% !important;
 }
 .micBtn,
 .camBtn,
 .screenBtn,
 .leaveBtn,
 .examBtn {
-	margin-left: 20px;
+	margin-left: 20px !important;
 }
 .subCamBtn,
 .drawerBtn {
-	margin-left: 10px;
+	margin-left: 10px !important;
 }
 .participant-box,
 .chat-box {
-	width: 95%;
-	height: 95%;
+	width: 95% !important;
+	height: 95% !important;
 }
 .textarea {
-	width: 100%;
-	height: 100%;
-	resize: none;
+	width: 100% !important;
+	height: 100% !important;
+	resize: none !important;
 }
 video {
-	width: 195px;
+	width: 195px !important;
 }
 </style>

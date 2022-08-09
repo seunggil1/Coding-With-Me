@@ -156,22 +156,22 @@ export default defineComponent({
 
 <style>
 @font-face {
-	font-family: 'MICEGothic Bold';
+	font-family: 'MICEGothic Bold' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
-		format('woff2');
-	font-weight: 700;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
 }
 @font-face {
-	font-family: 'OTWelcomeBA';
+	font-family: 'OTWelcomeBA' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: normal !important;
+	font-style: normal !important;
 }
 .test {
-	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
-	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7));
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
+	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 }
 .brand {
 	color: #00adb5 !important;

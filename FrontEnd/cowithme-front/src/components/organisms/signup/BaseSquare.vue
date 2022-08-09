@@ -306,11 +306,11 @@ function openBad(pos) {
 
 <style scoped>
 @font-face {
-	font-family: 'GmarketSansLight';
+	font-family: 'GmarketSansLight' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+		format('woff') !important;
+	font-weight: normal !important;
+	font-style: normal !important;
 }
 .text-brand {
 	color: #00adb5 !important;
@@ -319,14 +319,14 @@ function openBad(pos) {
 	color: #00adb5 !important;
 }
 .signup-form {
-	font-family: 'Elice Digital Baeum', sans-serif;
-	font-size: 18px;
+	font-family: 'Elice Digital Baeum', sans-serif !important;
+	font-size: 18px !important;
 }
 .role {
 	font-size: 16px !important;
 	font-family: 'GmarketSansLight' !important;
 }
 .shadow {
-	box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
+	box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1) !important;
 }
 </style>

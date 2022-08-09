@@ -17,7 +17,7 @@ export default {
 
 <style>
 .calendar {
-	width: 500px;
-	height: 392px;
+	width: 500px !important;
+	height: 392px !important;
 }
 </style>

@@ -111,10 +111,10 @@ async function goMakeClass() {
 
 <style scoped>
 @font-face {
-	font-family: 'MICEGothic Bold';
+	font-family: 'MICEGothic Bold' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
-		format('woff2');
-	font-weight: 700;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
 }
 </style>

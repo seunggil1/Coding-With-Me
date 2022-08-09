@@ -181,46 +181,46 @@ export default{
 
 <style scoped>
 div {
-	box-sizing: border-box;
+	box-sizing: border-box !important;
 }
 .parti-chat-box {
-	height: 94.71vh;
-	border: 1px solid black;
+	height: 94.71vh !important;
+	border: 1px solid black !important;
 }
 .drawer-container,
 .main-container {
-	height: 94.71vh;
+	height: 94.71vh !important;
 }
 .main-cam-box {
-	width: 95%;
-	height: 95%;
-	border: 1px solid red;
+	width: 95% !important;
+	height: 95% !important;
+	border: 1px solid red !important;
 }
 .sub-cams {
-	border: 1px solid red;
-	height: 100%;
+	border: 1px solid red !important;
+	height: 100% !important;
 }
 .sub-cam {
-	height: 100%;
+	height: 100% !important;
 }
 .micBtn,
 .camBtn,
 .screenBtn,
 .leaveBtn,
 .examBtn {
-	margin-left: 20px;
+	margin-left: 20px !important;
 }
 .participant-box,
 .chat-box {
-	width: 95%;
-	height: 95%;
+	width: 95% !important;
+	height: 95% !important;
 }
 .textarea {
-	width: 100%;
-	height: 100%;
-	resize: none;
+	width: 100% !important;
+	height: 100% !important;
+	resize: none !important;
 }
 video {
-	width: 250px;
+	width: 250px !important;
 }
 </style>

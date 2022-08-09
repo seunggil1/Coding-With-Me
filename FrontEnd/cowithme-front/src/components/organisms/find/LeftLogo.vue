@@ -16,8 +16,8 @@ export default {
 
 <style lang="scss" scoped>
 .left {
-	height: 800px;
-	width: 500px;
-	background-color: #303841;
+	height: 800px !important;
+	width: 500px !important;
+	background-color: #303841 !important;
 }
 </style>

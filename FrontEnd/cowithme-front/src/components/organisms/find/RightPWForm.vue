@@ -27,26 +27,26 @@ export default {
 
 <style lang="scss" scoped>
 .right {
-	height: 800px;
-	width: 500px;
-	background-color: white;
+	height: 800px !important;
+	width: 500px !important;
+	background-color: white !important;
 }
 
 .container {
-	margin-top: 100px;
-	margin-left: 50px;
+	margin-top: 100px !important;
+	margin-left: 50px !important;
 }
 
 .form-container {
-	margin-top: 50px;
-	margin-right: 100px;
+	margin-top: 50px !important;
+	margin-right: 100px !important;
 }
 
 .component {
-	margin-bottom: 20px;
+	margin-bottom: 20px !important;
 }
 
 .find {
-	margin-top: 20px;
+	margin-top: 20px !important;
 }
 </style>

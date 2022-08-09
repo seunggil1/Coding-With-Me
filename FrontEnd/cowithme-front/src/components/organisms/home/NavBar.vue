@@ -59,7 +59,7 @@ export default {
 
 <style>
 .navbar {
-	background-color: #eeeeee;
-	height: 100vh;
+	background-color: #eeeeee !important;
+	height: 100vh !important;
 }
 </style>

@@ -19,9 +19,9 @@ export default {
 
 <style>
 .signup {
-	height: 100vh;
-	width: 100vw;
-	background-color: #eeeeee;
+	height: 100vh !important;
+	width: 100vw !important;
+	background-color: #eeeeee !important;
 }
 
 /* .signup-box {

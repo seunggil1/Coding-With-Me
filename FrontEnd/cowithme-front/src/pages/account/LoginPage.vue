@@ -23,6 +23,6 @@ export default {
 
 <style>
 .login {
-	background-color: #eeeeee;
+	background-color: #eeeeee !important;
 }
 </style>

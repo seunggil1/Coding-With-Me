@@ -67,18 +67,18 @@ export default {
 
 <style scoped>
 @font-face {
-	font-family: 'MICEGothic Bold';
+	font-family: 'MICEGothic Bold' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
-		format('woff2');
-	font-weight: 700;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
 }
 .box {
-	height: 100%;
-	width: 60%;
-	min-width: 700px;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+	height: 100% !important;
+	width: 60% !important;
+	min-width: 700px !important;
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }
 </style>

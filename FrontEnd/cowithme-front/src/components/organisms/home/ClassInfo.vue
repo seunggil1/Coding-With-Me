@@ -37,20 +37,20 @@ export default {
 @font-face {
 	font-family: 'GmarketSansLight';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+		format('woff') !important;
+	font-weight: normal !important;
+	font-style: normal !important;
 }
 .class-info {
-	height: 300px;
-	width: 700px;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+	height: 300px !important;
+	width: 700px !important;
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2) !important;
 }
 
 .button {
-	margin-top: 60px;
-	margin-left: 20px;
+	margin-top: 60px !important;
+	margin-left: 20px !important;
 }
 </style>

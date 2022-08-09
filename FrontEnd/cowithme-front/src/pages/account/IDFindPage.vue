@@ -21,12 +21,12 @@ export default {
 
 <style>
 .login {
-	height: 100vh;
-	width: 100vw;
-	background-color: #eeeeee;
+	height: 100vh !important;
+	width: 100vw !important;
+	background-color: #eeeeee !important;
 }
 
 .login-box {
-	margin: auto;
+	margin: auto !important;
 }
 </style>

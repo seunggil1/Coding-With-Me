@@ -93,9 +93,9 @@ async function onSubmit() {
 @font-face {
 	font-family: 'MICEGothic Bold';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
-		format('woff2');
-	font-weight: 700;
-	font-style: normal;
+		format('woff2') !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
 }
 .text-brand {
 	color: #00adb5 !important;
@@ -104,17 +104,17 @@ async function onSubmit() {
 	color: #00adb5 !important;
 }
 .signup-form {
-	font-family: 'Elice Digital Baeum', sans-serif;
-	font-size: 18px;
+	font-family: 'Elice Digital Baeum', sans-serif !important;
+	font-size: 18px !important;
 }
 .role {
 	font-size: 16px !important;
 	font-family: 'GmarketSansLight' !important;
 }
 .shadow {
-	box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
+	box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1) !important;
 }
 .loginInput {
-	width: 50%;
+	width: 50% !important;
 }
 </style>
