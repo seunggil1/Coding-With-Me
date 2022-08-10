@@ -174,7 +174,11 @@ export default {
 			console.log('mySessionId', teacherVideo.state.mySessionId);
 
 			teacherVideo.createSession().then(() => {
-				router.push('/teacherlecture');
+				router.push({ path: '/teacherlecture' }).catch(()=>{
+					router.push({ path: '/teacherlecture' }).catch(()=>{
+						router.push({ path: '/teacherlecture' });
+					});
+				});
 			});
 		}
 
