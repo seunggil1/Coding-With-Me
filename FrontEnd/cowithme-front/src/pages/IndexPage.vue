@@ -55,10 +55,12 @@
 						<div class="col">
 							<p>강의 리스트와 강의 입장 버튼들</p>
 							<AtomBasic1Button
+								v-if="isActiveLecture"
 								class="button"
 								push
 								label="강의 입장"
 								style="font-family: 'Elice Digital Baeum'"
+								@click="enterLecture"
 							></AtomBasic1Button>
 						</div>
 					</div>
@@ -92,6 +94,7 @@ import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
+import { studentVideoStore } from 'src/stores/studentVideo.store';
 
 export default defineComponent({
 	name: 'IndexPage',
@@ -164,7 +167,56 @@ export default defineComponent({
 			classStore.setClassInfo(classInfo, classId, className, userId);
 		}
 
+		console.log('@@@@', localStorage);
+
+		let classId = localStorage.getItem('classId');
+		const studentVideo = studentVideoStore();
+
+		function enterLecture() {
+			if (!activeLecture.value) {
+				console.log('활성화된 강의 없음');
+				return;
+			}
+			let id = JSON.parse(localStorage.getItem('user')).id;
+			studentVideo.state.id = id; // 로그인 아이디
+			let uid = parseInt(localStorage.getItem('userId'));
+			studentVideo.state.userId = uid;
+			let name = JSON.parse(localStorage.getItem('info')).name;
+			studentVideo.state.myUserName = name;
+			let classId = parseInt(localStorage.getItem('classId'));
+			studentVideo.state.classId = classId;
+			studentVideo.state.mySessionId = activeLecture.value.conferenceName;
+
+			console.log('id', studentVideo.state.id);
+			console.log('uid', studentVideo.state.userId);
+			console.log('myUserName', studentVideo.state.myUserName);
+			console.log('classId', studentVideo.state.classId);
+			console.log('mySessionId', studentVideo.state.mySessionId);
+
+			studentVideo.joinSession();
+			router.push('/studentlecture');
+		}
+
+		const activeLecture = ref({});
+		const isActiveLecture = ref(false);
+		const getActiveLecture = async () => {
+			try {
+				const response = await api.get(`/conferences/${classId}/active`);
+				console.log(response.data);
+				activeLecture.value = response.data.conference;
+				isActiveLecture.value = true;
+			} catch (error) {
+				console.log('active 강의 불러오기 에러', error);
+				isActiveLecture.value = false;
+			}
+		};
+		getActiveLecture();
+
 		return {
+			activeLecture,
+			isActiveLecture,
+			getActiveLecture,
+			enterLecture,
 			user2,
 			info2,
 			makeClass,

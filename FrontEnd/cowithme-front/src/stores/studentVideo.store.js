@@ -6,16 +6,13 @@ import { api } from 'src/boot/axios.js';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const studentVideoStore = defineStore('studentVideo', () => {
-	const OPENVIDU_SERVER_URL = 'https://' + 'localhost:4443'; // 서버 주소
-	const OPENVIDU_SERVER_SECRET = 'MY_SECRET'; // 비번?
-
 	const state = reactive({
 		OV: undefined,
 		session: undefined,
 		mainStreamManager: undefined,
 		publisher: undefined,
 		subscribers: [],
-		mySessionId: 'algo5', // 나중에 처리
+		mySessionId: '알고리즘 10주차 수업', // 나중에 처리
 		myUserName: '김동욱', // 나중에 처리
 		classId: 1,
 		userId: 2,
