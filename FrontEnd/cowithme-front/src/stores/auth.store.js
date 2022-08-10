@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import jwt_decode from 'jwt-decode';
 import { fetchWrapper } from 'src/helpers';
 import { useAlertStore } from 'src/stores';
+import router from 'src/router';
 // import { useRouter } from 'vue-router';
 
 const HOST = 'https://i7a304.p.ssafy.io/api/v1';
@@ -35,8 +36,8 @@ export const useAuthStore = defineStore({
 				localStorage.setItem('token', token);
 				localStorage.setItem('user', JSON.stringify(decoded));
 			} catch (error) {
-				const alertStore = useAlertStore();
-				alertStore.error(error);
+				// const router = useRouter();
+				router.push({ path: '/login' });
 			}
 			// 로그인과 동시에 유저 정보 받아오기
 			try {

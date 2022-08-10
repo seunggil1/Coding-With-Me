@@ -1,12 +1,13 @@
 <template>
-	<q-img src="src/assets/picture/profile.jpg" />
+	<q-img :src="profile" />
 </template>
 
 <script>
+import profile from 'src/assets/picture/profile.jpg';
 export default {
 	name: 'AtomProfileImg',
 	setup() {
-		return {};
+		return { profile };
 	},
 };
 </script>

@@ -1,12 +1,13 @@
 <template>
-	<q-img src="src/assets/picture/studentProfile.jpg" />
+	<q-img :src="studentProfile" />
 </template>
 
 <script>
+import studentProfile from 'src/assets/picture/studentProfile.jpg';
 export default {
 	name: 'AtomStudentProfile',
 	setup() {
-		return {};
+		return { studentProfile };
 	},
 };
 </script>

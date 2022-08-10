@@ -1,15 +1,51 @@
 <template>
 	<div class="q-pa-lg q-gutter-md" style="font-family: 'Elice Digital Baeum'">
+		<!-- 중복되지 않은 시험 이름일 때 -->
+		<q-dialog v-model="dialogGood" :position="position">
+			<q-card style="width: 350px; background-color: green">
+				<q-card-section class="row items-center no-wrap">
+					<div style="color: white">사용해도 좋은 시험 이름입니다.</div>
+				</q-card-section>
+			</q-card>
+		</q-dialog>
+		<!-- 중복된 시험 이름일 때 -->
+		<q-dialog v-model="dialogBad" :position="position">
+			<q-card style="width: 350px; background-color: orangered">
+				<q-card-section class="row items-center no-wrap">
+					<div style="color: white">
+						중복된 시험 이름입니다. 다른 시험 이름을 입력해주세요.
+					</div>
+				</q-card-section>
+			</q-card>
+		</q-dialog>
+
 		<div class="flex row q-mt-lg">
 			<div class="q-pa-md col" style="max-width: 400px">
 				<h3 style="font-family: 'MICEGothic Bold'">시험 만들기</h3>
-				<q-input
-					rounded
-					outlined
-					class="q-mb-sm"
-					v-model="examInfo.testName"
-					label="시험 이름"
-				></q-input>
+				<div class="row">
+					<q-input
+						rounded
+						outlined
+						class="q-mb-sm col-8"
+						v-model="examName"
+						label="시험 이름"
+						lazy-rules
+						:rules="[
+							val => (val && val.length > 0) || '시험 이름을 입력해주세요.',
+						]"
+					></q-input>
+					<div class="col-1"></div>
+					<div>
+						<q-btn
+							push
+							@click="checkExamName"
+							label="중복 체크"
+							class="q-mt-md col-3"
+							style="background: #ff5722; color: white; float: right"
+						></q-btn>
+					</div>
+				</div>
+
 				<q-input
 					type="number"
 					rounded
@@ -17,6 +53,7 @@
 					class="q-mb-sm"
 					v-model.number="examInfo.testQno"
 					label="문제 갯수"
+					lazy-rules
 				></q-input>
 
 				<!-- <q-input
@@ -216,11 +253,38 @@ import { useRouter } from 'vue-router';
 import { reactive, ref, watch } from 'vue';
 // import { useExamStore } from 'src/stores';
 import { api } from 'src/boot/axios';
-// import { api } from 'src/boot/axios';
 export default {
 	name: 'MakeExamPage',
 	setup() {
-		// pdf 제출 관련 메서드
+		const examName = ref('');
+
+		// 시험 이름 중복 체크
+		function checkExamName() {
+			api
+				.get(`/tests/idcheck/${examName.value}/${classId}`)
+				.then(res => {
+					console.log(res.data.message);
+					openGood('bottom');
+				})
+				.catch(err => {
+					console.log(err);
+					openBad('bottom');
+				});
+		}
+		const dialogGood = ref(false);
+		const dialogBad = ref(false);
+
+		const position = ref('top');
+
+		function openGood(pos) {
+			position.value = pos;
+			dialogGood.value = true;
+		}
+		function openBad(pos) {
+			position.value = pos;
+			dialogBad.value = true;
+		}
+
 		const files = ref(null);
 		const router = useRouter();
 
@@ -325,10 +389,14 @@ export default {
 			splitterModel,
 			problemTab,
 			examInfo,
-
+			checkExamName,
 			addTestCase,
 			deleteTestCase,
 			onSubmit,
+			examName,
+			classId,
+			openGood,
+			openBad,
 		};
 	},
 };
