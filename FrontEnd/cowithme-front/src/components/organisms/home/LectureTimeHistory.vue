@@ -1,6 +1,7 @@
 <template>
 	<div class="q-pa-md">
 		<q-table
+			style="height: 385px"
 			title="강의 참여 시간"
 			:rows="rows"
 			:columns="columns"

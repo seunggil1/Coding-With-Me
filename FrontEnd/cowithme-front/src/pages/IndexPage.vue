@@ -67,8 +67,50 @@
 				</div>
 			</div>
 			<!-- <div>{{ classStore.userClass.className }}</div> -->
-			<div class="row">
-				<CalendarInfo
+			<div class="q-pt-lg">
+				<q-splitter v-model="splitterModel" style="height: 450px">
+					<template v-slot:before>
+						<div class="q-pa-md">
+							<CalendarInfo
+								class="hvr-grow"
+								v-model="date"
+								:events="events"
+								event-color="orange"
+								style="font-family: 'Elice Digital Baeum'"
+							></CalendarInfo>
+						</div>
+					</template>
+
+					<template v-slot:after>
+						<q-tab-panels
+							v-model="date"
+							animated
+							transition-prev="jump-up"
+							transition-next="jump-up"
+						>
+							<q-tab-panel name="2019/02/01">
+								<!-- <div class="text-h4 q-mb-md">2019/02/01</div> -->
+								<!-- <p>
+									Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
+									praesentium cumque magnam odio iure quidem, quod illum numquam
+									possimus obcaecati commodi minima assumenda consectetur culpa
+									fuga nulla ullam. In, libero.
+								</p>
+								<p>
+									Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
+									praesentium cumque magnam odio iure quidem, quod illum numquam
+									possimus obcaecati commodi minima assumenda consectetur culpa
+									fuga nulla ullam. In, libero.
+								</p> -->
+								<LectureTimeHistory
+									class="hvr-grow"
+									style="font-family: 'Elice Digital Baeum'"
+								></LectureTimeHistory>
+							</q-tab-panel>
+						</q-tab-panels>
+					</template>
+				</q-splitter>
+				<!-- <CalendarInfo
 					class="hvr-grow"
 					style="font-family: 'Elice Digital Baeum'"
 				></CalendarInfo>
@@ -77,7 +119,7 @@
 						class="hvr-grow"
 						style="font-family: 'Elice Digital Baeum'"
 					></LectureTimeHistory>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -217,6 +259,13 @@ export default defineComponent({
 		};
 		getActiveLecture();
 
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+
+		today = yyyy + '/' + mm + '/' + dd;
+
 		return {
 			activeLecture,
 			isActiveLecture,
@@ -228,6 +277,9 @@ export default defineComponent({
 			classes,
 			testTest,
 			goSetClassInfo,
+			splitterModel: ref(39),
+			date: ref('2019/02/01'),
+			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
 		};
 	},
 });
