@@ -190,6 +190,7 @@ svg {
 	width: 700px;
 	animation: floating 5s linear 2s infinite;
 }
+
 @keyframes floating {
 	0% {
 		transform: translateY(0px);

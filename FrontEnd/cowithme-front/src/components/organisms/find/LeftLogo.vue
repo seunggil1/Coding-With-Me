@@ -1,6 +1,6 @@
 <template>
 	<div class="left row justify-center">
-		<AtomLogo></AtomLogo>
+		<AtomLogo class="hvr-grow"></AtomLogo>
 	</div>
 </template>
 
@@ -15,6 +15,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url('src/css/app.css');
+
 .left {
 	height: 800px !important;
 	width: 500px !important;

@@ -5,7 +5,7 @@
 				<AtomPlusButton @click="makeClass" flat></AtomPlusButton>
 				<div class="q-gutter-md q-ml-sm">
 					<div
-						class="flex column justify-between box q-pa-lg"
+						class="flex column justify-between box q-pa-lg hvr-grow"
 						v-for="clas in classes"
 						:key="clas.classId"
 					>
@@ -68,9 +68,13 @@
 			</div>
 			<!-- <div>{{ classStore.userClass.className }}</div> -->
 			<div class="row">
-				<CalendarInfo style="font-family: 'Elice Digital Baeum'"></CalendarInfo>
+				<CalendarInfo
+					class="hvr-grow"
+					style="font-family: 'Elice Digital Baeum'"
+				></CalendarInfo>
 				<div class="col-8">
 					<LectureTimeHistory
+						class="hvr-grow"
 						style="font-family: 'Elice Digital Baeum'"
 					></LectureTimeHistory>
 				</div>
@@ -80,6 +84,7 @@
 </template>
 
 <script>
+// import { app.css}  from './app.css'
 import { api } from 'src/boot/axios.js';
 import { ref } from 'vue';
 // import { onBeforeMount } from 'vue';
@@ -229,6 +234,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+@import url('src/css/app.css');
+
 @font-face {
 	font-family: 'MICEGothic Bold';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')

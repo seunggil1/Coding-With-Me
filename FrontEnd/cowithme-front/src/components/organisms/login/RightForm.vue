@@ -39,6 +39,9 @@ async function onSubmit() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '아이디를 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						name="password"
@@ -51,11 +54,11 @@ async function onSubmit() {
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+						]"
 					></q-input>
-					<div
-						class="q-ma-lg q-pr-lg"
-						style="margin-top: 100px; margin-left: 30px"
-					>
+					<div class="q-pr-lg" style="margin-left: 30px">
 						<q-btn
 							label="로그인"
 							type="submit"

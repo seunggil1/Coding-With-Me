@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style>
+@import url('src/css/app.css');
+
 .signup {
 	height: 100vh !important;
 	width: 100vw !important;

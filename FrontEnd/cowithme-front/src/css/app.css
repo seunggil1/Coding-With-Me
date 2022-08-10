@@ -1,1 +1,16 @@
 /* app global css */
+.hvr-grow {
+	/* vertical-align: middle; */
+	transform: translateZ(0) !important;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0) !important;
+	backface-visibility: hidden !important;
+	-moz-osx-font-smoothing: grayscale !important;
+	transition-duration: 0.3s !important;
+	transition-property: transform !important;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+	transform: scale(1.01) !important;
+}

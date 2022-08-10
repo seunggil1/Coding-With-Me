@@ -76,12 +76,13 @@ function openBad(pos) {
 		style="
 			width: 800px;
 			max-width: 70vw;
+			max-height: 90vh;
 			background-color: #303841;
 			background-image: linear-gradient(to right, #274046 0%, #bdc3c7 100%);
 			border-radius: 20px;
 			margin-top: 2%;
 		"
-		class="q-pa-lg shadow"
+		class="q-pa-lg shadow hvr-grow"
 	>
 		<!-- 중복되지 않은 id일 때 -->
 		<q-dialog v-model="dialogGood" :position="position">
@@ -106,7 +107,7 @@ function openBad(pos) {
 			<p
 				class="col"
 				style="
-					font-size: 100px;
+					font-size: 50px;
 					color: white;
 					font-family: 'Elice Digital Baeum', sans-serif;
 				"
@@ -293,7 +294,10 @@ function openBad(pos) {
 							></q-radio>
 						</div>
 
-						<div class="role flex justify-center">
+						<div
+							style="font-family: 'Elice Digital Baeum'"
+							class="role flex justify-center"
+						>
 							<strong>{{ role }}</strong
 							>(으)로 가입합니다.
 						</div>
@@ -305,13 +309,8 @@ function openBad(pos) {
 </template>
 
 <style scoped>
-@font-face {
-	font-family: 'GmarketSansLight' !important;
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
-		format('woff') !important;
-	font-weight: normal !important;
-	font-style: normal !important;
-}
+@import url('src/css/app.css');
+
 .text-brand {
 	color: #00adb5 !important;
 }
@@ -322,10 +321,7 @@ function openBad(pos) {
 	font-family: 'Elice Digital Baeum', sans-serif !important;
 	font-size: 18px !important;
 }
-.role {
-	font-size: 16px !important;
-	font-family: 'GmarketSansLight' !important;
-}
+
 .shadow {
 	box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1) !important;
 }

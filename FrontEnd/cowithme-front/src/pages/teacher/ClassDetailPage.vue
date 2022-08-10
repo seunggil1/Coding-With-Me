@@ -2,7 +2,7 @@
 	<div class="q-pa-md" style="font-family: 'Elice Digital Baeum">
 		<q-btn
 			@click="openstartLecture = true"
-			class="q-mb-md"
+			class="q-mb-md hvr-grow"
 			glossy
 			rounded
 			size="25px"
@@ -10,7 +10,11 @@
 			style="background: #ff5722; color: white; font-family: 'MICEGothic Bold'"
 			>{{ className }}의 강의 만들기</q-btn
 		>
-		<q-dialog v-model="openstartLecture" persistent>
+		<q-dialog
+			style="font-family: 'Elice Digital Baeum'"
+			v-model="openstartLecture"
+			persistent
+		>
 			<q-card class="q-pa-md" style="min-width: 500px; min-height: 400px">
 				<q-card-section>
 					<div class="text-h6">강의명</div>
@@ -25,18 +29,19 @@
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
-		<div class="box2 q-mb-md">
+		<div class="box2 q-mb-md hvr-grow">
 			<q-btn push>만들어져 있는 강의들 리스트(아직 연결 안 됨)</q-btn>
 		</div>
 		<div class="flex row">
 			<div class="col-6">
-				<div class="box q-px-lg q-py-lg q-mr-md">
+				<div class="box q-px-lg q-py-lg q-mr-md hvr-grow">
 					<div class="row">
 						<div class="col-10">
 							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 학생
 							</p>
 							<q-chip
+								class="hvr-grow"
 								color="primary"
 								text-color="white"
 								icon="face"
@@ -66,7 +71,7 @@
 				</div>
 			</div>
 			<div class="col-6">
-				<div class="box q-px-lg q-py-lg q-ml-md">
+				<div class="box q-px-lg q-py-lg q-ml-md hvr-grow">
 					<div class="row">
 						<div class="col-10">
 							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
@@ -217,6 +222,23 @@ export default {
 </script>
 
 <style scoped>
+@import url('src/css/app.css');
+.hvr-grow {
+	/* vertical-align: middle; */
+	transform: translateZ(0) !important;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0) !important;
+	backface-visibility: hidden !important;
+	-moz-osx-font-smoothing: grayscale !important;
+	transition-duration: 0.3s !important;
+	transition-property: transform !important;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+	transform: scale(1.01) !important;
+}
+
 @font-face {
 	font-family: 'MICEGothic Bold' !important;
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')

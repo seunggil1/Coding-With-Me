@@ -74,7 +74,7 @@
 					<div class="q-py-xs q-gutter-sm">
 						<q-btn
 							size="23px"
-							class="btn-size font-OT"
+							class="btn-size font-OT brand"
 							align="left"
 							flat
 							label="마이페이지"

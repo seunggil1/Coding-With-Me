@@ -3,10 +3,10 @@
 		<div
 			v-for="record in records"
 			:key="record.testRecordId"
-			class="box q-ma-lg q-pa-md q-gutter-md"
+			class="box q-ma-lg q-pa-md q-gutter-md hvr-grow"
 			style="font-family: 'Elice Digital Baeum'"
 		>
-			<div>
+			<div class="">
 				<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
 					{{ record.date }} 시험
 				</p>
@@ -84,5 +84,21 @@ export default {
 	background-color: white !important;
 	border-radius: 10px !important;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
+}
+.hvr-grow {
+	display: inline-block;
+	vertical-align: middle;
+	transform: translateZ(0);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	backface-visibility: hidden;
+	-moz-osx-font-smoothing: grayscale;
+	transition-duration: 0.3s;
+	transition-property: transform;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+	transform: scale(1.01);
 }
 </style>

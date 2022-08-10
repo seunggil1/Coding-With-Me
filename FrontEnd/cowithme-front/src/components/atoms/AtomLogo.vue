@@ -1,5 +1,5 @@
 <template>
-	<q-img src="src/assets/logo/logo.svg"></q-img>
+	<q-img class="hvr-grow" src="src/assets/logo/logo.svg"></q-img>
 </template>
 
 <script>
@@ -10,4 +10,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@import url('src/css/app.css');
+</style>
