@@ -67,8 +67,50 @@
 				</div>
 			</div>
 			<!-- <div>{{ classStore.userClass.className }}</div> -->
-			<div class="row">
-				<CalendarInfo
+			<div class="q-pt-lg">
+				<q-splitter v-model="splitterModel" style="height: 450px">
+					<template v-slot:before>
+						<div class="q-pa-md">
+							<CalendarInfo
+								class="hvr-grow"
+								v-model="date"
+								:events="events"
+								event-color="orange"
+								style="font-family: 'Elice Digital Baeum'"
+							></CalendarInfo>
+						</div>
+					</template>
+
+					<template v-slot:after>
+						<q-tab-panels
+							v-model="date"
+							animated
+							transition-prev="jump-up"
+							transition-next="jump-up"
+						>
+							<q-tab-panel name="2019/02/01">
+								<!-- <div class="text-h4 q-mb-md">2019/02/01</div> -->
+								<!-- <p>
+									Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
+									praesentium cumque magnam odio iure quidem, quod illum numquam
+									possimus obcaecati commodi minima assumenda consectetur culpa
+									fuga nulla ullam. In, libero.
+								</p>
+								<p>
+									Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
+									praesentium cumque magnam odio iure quidem, quod illum numquam
+									possimus obcaecati commodi minima assumenda consectetur culpa
+									fuga nulla ullam. In, libero.
+								</p> -->
+								<LectureTimeHistory
+									class="hvr-grow"
+									style="font-family: 'Elice Digital Baeum'"
+								></LectureTimeHistory>
+							</q-tab-panel>
+						</q-tab-panels>
+					</template>
+				</q-splitter>
+				<!-- <CalendarInfo
 					class="hvr-grow"
 					style="font-family: 'Elice Digital Baeum'"
 				></CalendarInfo>
@@ -77,7 +119,7 @@
 						class="hvr-grow"
 						style="font-family: 'Elice Digital Baeum'"
 					></LectureTimeHistory>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -151,6 +193,7 @@ export default defineComponent({
 			// console.log(classes.value[0]);
 		}
 
+		const isInClass = ref(false);
 		if (info2.role == '학생') {
 			api
 				.get(`/users/${userId}/class`)
@@ -158,6 +201,7 @@ export default defineComponent({
 					testTest.value = res.data.result;
 					console.log(res.data);
 					localStorage.setItem('testTest', JSON.stringify(res.data));
+					isInClass.value = true;
 				})
 				.catch(err => {
 					console.log(err);
@@ -174,21 +218,21 @@ export default defineComponent({
 
 		console.log('@@@@', localStorage);
 
-		let classId = localStorage.getItem('classId');
 		const studentVideo = studentVideoStore();
 
-		function enterLecture() {
+		async function enterLecture() {
 			if (!activeLecture.value) {
 				console.log('활성화된 강의 없음');
 				return;
 			}
+
 			let id = JSON.parse(localStorage.getItem('user')).id;
 			studentVideo.state.id = id; // 로그인 아이디
-			let uid = parseInt(localStorage.getItem('userId'));
+			let uid = JSON.parse(localStorage.getItem('info')).userId;
 			studentVideo.state.userId = uid;
 			let name = JSON.parse(localStorage.getItem('info')).name;
 			studentVideo.state.myUserName = name;
-			let classId = parseInt(localStorage.getItem('classId'));
+			let classId = JSON.parse(localStorage.getItem('testTest')).result.classId;
 			studentVideo.state.classId = classId;
 			studentVideo.state.mySessionId = activeLecture.value.conferenceName;
 
@@ -198,6 +242,16 @@ export default defineComponent({
 			console.log('classId', studentVideo.state.classId);
 			console.log('mySessionId', studentVideo.state.mySessionId);
 
+			try {
+				const response = await api.post(`/records/attendances`, {
+					conferenceId: activeLecture.value.conferenceId,
+					userId: uid,
+				});
+				console.log('출입기록 생성 성공', response.data);
+			} catch (error) {
+				console.log('출입기록 생성 에러', error);
+			}
+
 			studentVideo.joinSession();
 			router.push('/studentlecture');
 		}
@@ -206,16 +260,27 @@ export default defineComponent({
 		const isActiveLecture = ref(false);
 		const getActiveLecture = async () => {
 			try {
+				let classId = JSON.parse(localStorage.getItem('testTest')).result
+					.classId;
 				const response = await api.get(`/conferences/${classId}/active`);
 				console.log(response.data);
 				activeLecture.value = response.data.conference;
 				isActiveLecture.value = true;
 			} catch (error) {
-				console.log('active 강의 불러오기 에러', error);
+				console.log('active 강의 불러오기 에러(active 강의 없음)', error);
 				isActiveLecture.value = false;
 			}
 		};
-		getActiveLecture();
+		if (info2.role == '학생' && isInClass) {
+			getActiveLecture();
+		}
+
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+
+		today = yyyy + '/' + mm + '/' + dd;
 
 		return {
 			activeLecture,
@@ -228,6 +293,9 @@ export default defineComponent({
 			classes,
 			testTest,
 			goSetClassInfo,
+			splitterModel: ref(39),
+			date: ref('2019/02/01'),
+			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
 		};
 	},
 });
