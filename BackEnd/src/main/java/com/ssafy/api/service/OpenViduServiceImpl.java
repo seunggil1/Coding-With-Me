@@ -78,7 +78,6 @@ public class OpenViduServiceImpl implements OpenViduService {
             targetSessionInfo = SessionInfoMap.get(sessionId);
         }else{
             targetSessionInfo = new SessionInfo(makeSession(sessionId));
-            SessionInfoMap.put(sessionId, targetSessionInfo);
         }
 
         Connection connection = targetSessionInfo.session.createConnection(connectionProperties);
@@ -194,6 +193,7 @@ public class OpenViduServiceImpl implements OpenViduService {
 
             // Create a new OpenVidu Session
             Session session = this.openVidu.createSession(sessionProperties);
+            SessionInfoMap.put(sessionId, new SessionInfo(session));
             return session;
         }catch(OpenViduException e){
             throw e;
