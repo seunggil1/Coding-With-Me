@@ -173,8 +173,8 @@ export default {
 			console.log('classId', teacherVideo.state.classId);
 			console.log('mySessionId', teacherVideo.state.mySessionId);
 
-			teacherVideo.createSession().then(() => {
-				router.push('/teacherlecture');
+			teacherVideo.createSession().then(async () => {
+				await router.push({ path: '/teacherlecture' });
 			});
 		}
 
