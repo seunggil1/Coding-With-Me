@@ -82,6 +82,7 @@ const routes = [
 	// but you can also remove it
 	{
 		path: '/teacherlecture',
+		name: 'teacherlecture',
 		component: () => import('pages/webRTC/TeacherLecturePage.vue'),
 	},
 	{

@@ -355,8 +355,12 @@ export default {
 		};
 
 		const leaveSession = () => {
-			studentVideo.leaveSession();
-			router.push('/');
+			studentVideo.leaveSession().catch();
+
+			router.push({path: '/classDetail/' + studentVideo.state.classId}).catch((err)=>{
+				console.error(err);
+				router.push({path: '/classDetail/' + studentVideo.state.classId});
+			});
 		};
 
 		return {

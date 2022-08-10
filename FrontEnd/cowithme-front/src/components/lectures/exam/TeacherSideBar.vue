@@ -3,17 +3,17 @@
 		<div class="col-5" style="border: 1px solid red">
 			<div class="column" style="border: 1px solid red; height: 100%">
 				<div class="col-2" style="border: 1px solid red">
-					<q-input
-						filled
-						v-model="formattedString"
-						mask="time"
-						:rules="['time']"
-						style="height: 100%"
+					<q-banner 
+						dense 
+						inline-actions 
+						class="text-white bg-red"
 					>
-						<template v-slot:append>
+						{{ piniaData.formattedTime }}
+						
+						<template v-slot:action>
 							<q-icon name="access_time" class="cursor-pointer"> </q-icon>
 						</template>
-					</q-input>
+					</q-banner>
 				</div>
 				<div class="col-5" style="border: 1px solid red">
 					<p>오프라인</p>
@@ -45,22 +45,29 @@
 </template>
 
 <script>
-import { date } from 'quasar';
-import { ref } from 'vue-demi';
-
+import { ref, onMounted, computed, onUnmounted } from 'vue';
+import { commonExamData } from 'src/stores/ExamProgress/common.js';
 export default {
 	components: {},
 
 	props: {},
 	setup() {
-		const timeLimit = ref(3600 * 0 + 60 * 7 + 1 * 50);
+		const piniaData = commonExamData();
 
-		// const
-		const formattedString = ref(date.formatDate(timeStamp, 'HH:mm:ss'));
+		let timer;
+		onMounted(() => {
+			timer = setInterval(()=>{
+				if(piniaData.timeLimit > 0)
+					piniaData.timeLimit -= 1;
+			},1000);
+		});
+		onUnmounted(() => {
+			if(timer)
+				clearInterval(timer);
+		});
 
 		return {
-			timeStamp,
-			formattedString,
+			piniaData
 		};
 	},
 };

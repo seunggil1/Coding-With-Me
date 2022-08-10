@@ -220,7 +220,7 @@
 							push
 							icon="quiz"
 							label="시험 시작"
-							@click="startExam"
+							@click="showExamDialog = true;"
 						/>
 						<q-btn
 							class="leaveBtn q-ml-md"
@@ -228,7 +228,7 @@
 							push
 							color="red"
 							icon="logout"
-							label="나가기"
+							label="강의 종료"
 							@click="leaveSession"
 						/>
 					</div>
@@ -257,12 +257,45 @@
 			</q-toolbar>
 		</q-footer>
 	</q-layout>
+
+	<!-- 시험 시작 누를때 뜨는 팝업 -->
+	<q-dialog v-model="showExamDialog">
+		<q-card>
+			<q-card-section class="row items-center q-pb-none">
+				<div class="text-h6">시험 선택</div>
+				<q-space />
+				<q-btn icon="close" flat round dense v-close-popup />
+			</q-card-section>
+
+			<q-card-section>
+				<q-select 
+					filled 
+					v-model="commonExamPinia.testName" 
+					:options="teacherVideo.state.testNameList" 
+					label="시험 선택" 
+				/>
+				<q-input filled v-model="timeWithSeconds" mask="fulltime" :rules="['fulltime']">
+					<template v-slot:append>
+						<q-icon name="access_time" class="cursor-pointer"/>
+					</template>
+				</q-input>
+			</q-card-section>
+
+			<q-card-section>
+				<div class="row items-center justify-end">
+					<q-btn color="primary" label="시험 시작" @click="startExam" />
+				</div>
+			</q-card-section>
+		</q-card>
+	</q-dialog>
+
 </template>
 
 <script>
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
+import { commonExamData } from 'src/stores/ExamProgress/common.js';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
@@ -276,6 +309,7 @@ export default {
 	setup() {
 		const router = useRouter();
 		const teacherVideo = teacherVideoStore();
+		const commonExamPinia = commonExamData();
 		let showSubScribers = ref(true);
 		let rightDrawerOpen = ref(false);
 
@@ -333,6 +367,7 @@ export default {
 
 		onMounted(() => {
 			teacherVideo.joinSession();
+			teacherVideo.getTestList();
 			window.addEventListener('resize', teacherIde.value.updateEditor);
 		});
 
@@ -342,16 +377,45 @@ export default {
 		});
 
 		// 시험 시작
+
+		const showExamDialog = ref(false);
+		const timeWithSeconds = ref('00:50:00');
 		const startExam = () => {
-			router.push('/exam');
+			let data = timeWithSeconds.value.split(':').map((s)=>{
+				return parseInt(s);
+			})
+			const second = 3600 * data[0] + 60 * data[1] + 1 * data[2];
+			for(let testInfo of teacherVideo.state.testList){
+				if(commonExamPinia.testName == testInfo.testName){
+					commonExamPinia.testID = testInfo.testId;
+					commonExamPinia.setTimeLimit(data[0], data[1], data[2]);
+					teacherVideo.sendTestInfo(testInfo.testId, second).then(()=>{
+						router.push({path: '/teacherexam'}).catch(()=>{
+							router.push({path: '/teacherexam'}).catch(()=>{
+								router.push({path: '/teacherexam'})
+							})
+						});
+
+					})
+					break;
+				}
+			}
+			
+			
 		};
 
 		const leaveSession = () => {
-			teacherVideo.leaveSession();
-			router.push('/');
+			teacherVideo.leaveSession().catch();
+
+			router.push({path: '/'}).catch((err)=>{
+				console.error(err);
+				router.push({path: '/'});
+			});
 		};
 
 		return {
+			timeWithSeconds,
+			commonExamPinia,
 			teacherVideo,
 			teacherIde,
 
@@ -367,6 +431,7 @@ export default {
 			runCode,
 
 			// 시험
+			showExamDialog,
 			startExam,
 			leaveSession,
 		};

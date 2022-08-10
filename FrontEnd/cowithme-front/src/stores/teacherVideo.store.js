@@ -14,18 +14,37 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		subscribers: [],
 		mySessionId: '알고리즘 10주차 수업', // 나중에 처리
 		myUserName: '김동욱', // 나중에 처리
-		classId: 1,
-		userId: 2,
-		id: 'goat', // 로그인 할 때
+		classId: 5,
+		userId: 26,
+		id: 'ksgg1', // 로그인 할 때
 		screenOV: undefined,
 		screenSession: undefined,
 		screenShareName: '', // 나중에 처리
 		chatting: [],
-
+		
+		testList : [],
+		testNameList : [],
 		// 웹 IDE 데이터도 여기서 처리함.
 		teacherCode:
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
+		
+		
+		token : ''
 	});
+
+	const getTestList = () => {
+		api.get('/tests/' + state.classId)
+			.then((res)=>{
+				for(let iter of res.data.testList){
+					state.testList.push({
+						"testId": iter.testId,
+						"testName": iter.testName,
+						"testQno": iter.testQno,
+					})
+					state.testNameList.push(iter.testName);
+				}
+			})
+	};
 
 	const rightDrawerOpen = ref(true); // 참여자 + 채팅창. ture면 on
 	function setRightDrawer() {
@@ -156,6 +175,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		});
 
 		getToken().then(token => {
+			state.token = token;
 			state.session
 				.connect(token, { clientData: state.myUserName })
 				.then(() => {
@@ -187,10 +207,18 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 					);
 				});
 		});
+
+		api.get('/conferences/'+ state.classId +'/active').then((res)=>{
+			api.post('/records/attendances',{
+				"conferenceId": res.data.conference.conferenceId,
+				"userId": state.userId
+			});
+		})
+
 		window.addEventListener('beforeunload', leaveSession);
 	}
 
-	function leaveSession() {
+	async function leaveSession() {
 		// --- Leave the session by calling 'disconnect' method over the Session object ---
 		if (state.session) {
 			state.session.disconnect();
@@ -205,14 +233,23 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		state.subscribers = [];
 		state.OV = undefined;
 		state.screenOV = undefined;
-
+		
 		rightDrawerOpen.value = true;
 		subCamsOpen.value = true;
 		isAudio.value = true;
 		isVideo.value = true;
 		isScreen.value = false;
-
-		// Todo : axios로 api 호출 필요.
+		
+		let conferenceID = (await api.get('/conferences/'+ state.classId +'/active')).data.conference.conferenceId;
+		await api.put('/records/attendances',{
+			"conferenceId": conferenceID,
+			"userId": state.userId
+		});
+		await api.post('/conference/leaveSession',{
+			conferenceId : conferenceID,
+			token : state.token
+		});
+		state.token = '';
 		window.removeEventListener('beforeunload', leaveSession);
 	}
 
@@ -310,7 +347,29 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			});
 	}
 
+	 async function sendTestInfo(testId, time){
+		if (state.session == undefined) {
+			console.log('session is not connected. sendCode is canceled.');
+			return;
+		}
+		try{
+			await state.session.signal({
+					data: JSON.stringify({
+						testID: testId,
+						time: time,
+					}), // Any string (optional)
+					to: [],
+					type: 'testInfo', // The type of message (optional)
+			});
+			console.log('Code successfully sent');
+
+		}catch(e){
+			console.error(e);
+		}
+	}
+
 	return {
+		getTestList,
 		state,
 		rightDrawerOpen,
 		setRightDrawer,
@@ -336,5 +395,6 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		setScreenShareName,
 		sendMessage,
 		sendCode,
+		sendTestInfo
 	};
 });

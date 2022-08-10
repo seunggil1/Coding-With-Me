@@ -13,10 +13,10 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		publisher: undefined,
 		subscribers: [],
 		mySessionId: '알고리즘 10주차 수업', // 나중에 처리
-		myUserName: '김동욱', // 나중에 처리
-		classId: 1,
-		userId: 2,
-		id: 'goat', // 로그인 할 때
+		myUserName: '김씨', // 나중에 처리
+		classId: 5,
+		userId: 31,
+		id: 'aaa', // 로그인 할 때
 		screenOV: undefined,
 		screenSession: undefined,
 		screenShareName: '', // 나중에 처리
@@ -28,6 +28,8 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		teacherCode:
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
 		myCode: 'import java.util.*;\nimport java.io.*;\n',
+
+		token : ''
 	});
 
 	const mode = ref(1);
@@ -174,6 +176,7 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		});
 
 		getToken().then(token => {
+			state.token = token;
 			state.session
 				.connect(token, { clientData: state.myUserName })
 				.then(() => {
@@ -205,10 +208,18 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 					);
 				});
 		});
+		api.get('/conferences/'+ state.classId +'/active').then((res)=>{
+			api.post('/records/attendances',{
+				"conferenceId": res.data.conference.conferenceId,
+				"userId": state.userId
+			});
+		})
+
+		
 		window.addEventListener('beforeunload', leaveSession);
 	}
 
-	function leaveSession() {
+	async function leaveSession() {
 		// --- Leave the session by calling 'disconnect' method over the Session object ---
 		if (state.session) {
 			state.session.disconnect();
@@ -230,8 +241,17 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		isAudio.value = true;
 		isVideo.value = true;
 		isScreen.value = false;
-
-		// Todo : axios로 api 호출 필요.
+		
+		let conferenceID = (await api.get('/conferences/'+ state.classId +'/active')).data.conference.conferenceId;
+		await api.put('/records/attendances',{
+			"conferenceId": conferenceID,
+			"userId": state.userId
+		});
+		await api.post('/conference/leaveSession',{
+			conferenceId : conferenceID,
+			token : state.token
+		});
+		state.token = '';
 		window.removeEventListener('beforeunload', leaveSession);
 	}
 

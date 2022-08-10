@@ -96,6 +96,10 @@ export default {
             monacoEditor.setValue(code);
         }
 
+        const getCode = () => {
+            return monacoEditor.getValue();
+        }
+
         return {
             studentVideo,
             editorDiv,
@@ -108,7 +112,8 @@ export default {
             // updateEditor를 호출해 IDE를 다시 불러와야 한다.
             updateEditor,
             saveCode,
-            updateCode
+            updateCode,
+            getCode
         };
     }
 }
