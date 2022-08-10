@@ -1,5 +1,5 @@
 <template>
-	<div class="intro-div flex justify-center items-center">
+	<div class="intro-div flex">
 		<router-link
 			:to="{ name: 'login' }"
 			style="text-decoration: none; color: inherit"
@@ -178,9 +178,8 @@ export default {
 	/* Center and scale the image nicely */
 	background-position: center;
 	background-repeat: no-repeat;
-
 	background-size: cover;
-	background-image: url(https://images.unsplash.com/photo-1630090896228-88e5ea707294?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+	background-image: url(https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80);
 }
 
 svg {

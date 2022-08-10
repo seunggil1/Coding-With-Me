@@ -12,6 +12,7 @@
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.1.0",
     "axios": "^0.27.2",
+    "gsap": "^3.10.4",
     "iconv-lite": "^0.6.3",
     "jwt-decode": "^3.1.2",
     "monaco-editor": "^0.33.0",
