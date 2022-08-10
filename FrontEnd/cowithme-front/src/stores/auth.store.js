@@ -49,9 +49,7 @@ export const useAuthStore = defineStore({
 		},
 		// 로그아웃 함수
 		async logout() {
-			const router = useRouter();
 			await localStorage.clear();
-			await router.push('/login');
 		},
 	},
 });

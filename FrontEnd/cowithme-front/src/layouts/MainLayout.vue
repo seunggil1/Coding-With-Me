@@ -4,7 +4,7 @@
 			<q-toolbar style="background-color: #00adb5">
 				<TestComp @click="toggleLeftDrawer" flat></TestComp>
 				<router-link
-					:to="{ path: '/' }"
+					:to="{ path: '/home' }"
 					style="text-decoration: none; color: inherit"
 				>
 					<q-toolbar-title class="font-OT">
@@ -25,7 +25,7 @@
 					<div class="col"></div>
 					<div class="col-10">
 						<router-link
-							:to="{ path: '/' }"
+							:to="{ path: '/home' }"
 							style="text-decoration: none; color: inherit"
 						>
 							<AtomLogo2 class="test" style="width: 90%"></AtomLogo2>
@@ -153,6 +153,7 @@ export default defineComponent({
 		async function goLogout() {
 			const authStore = useAuthStore();
 			await authStore.logout();
+			await router.push({ path: '/login' });
 		}
 
 		return {

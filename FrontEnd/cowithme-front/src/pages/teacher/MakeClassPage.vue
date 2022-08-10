@@ -84,7 +84,7 @@ async function goMakeClass() {
 
 	try {
 		await classStore.makeClass(classInformation);
-		await router.push({ path: '/' });
+		await router.push({ path: '/home' });
 	} catch (error) {
 		alertStore.error(error);
 	}
