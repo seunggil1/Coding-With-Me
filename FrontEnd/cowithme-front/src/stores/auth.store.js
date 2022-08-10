@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import jwt_decode from 'jwt-decode';
 import { fetchWrapper } from 'src/helpers';
 import { useAlertStore } from 'src/stores';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 
 const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 

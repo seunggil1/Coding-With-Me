@@ -7,7 +7,6 @@
 			flat
 			label="성적 조회"
 			icon="history_edu"
-			style="font-family: 'OTWelcomeBA'"
 		></q-btn>
 	</div>
 </template>
@@ -24,12 +23,5 @@ export default {
 <style>
 .btn-size {
 	width: 299px !important;
-}
-@font-face {
-	font-family: 'OTWelcomeBA' !important;
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
-		format('woff2') !important;
-	font-weight: normal !important;
-	font-style: normal !important;
 }
 </style>
