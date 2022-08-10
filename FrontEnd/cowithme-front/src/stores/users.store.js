@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { fetchWrapper } from 'src/helpers';
 import { useAuthStore } from 'src/stores';
 
-const HOST = 'https://i7a304.p.ssafy.io:8080/api/v1';
+const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 
 const baseUrl = `${HOST}`;
 
