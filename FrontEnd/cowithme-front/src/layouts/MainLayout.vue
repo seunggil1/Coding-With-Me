@@ -8,7 +8,7 @@
 					style="text-decoration: none; color: inherit"
 				>
 					<q-toolbar-title class="font-OT">
-						코딩 수업을 더 쉽게, 코윗미</q-toolbar-title
+						Coding with me</q-toolbar-title
 					></router-link
 				>
 			</q-toolbar>

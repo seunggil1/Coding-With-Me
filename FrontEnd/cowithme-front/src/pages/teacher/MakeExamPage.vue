@@ -4,7 +4,9 @@
 		<q-dialog v-model="dialogGood" :position="position">
 			<q-card style="width: 350px; background-color: green">
 				<q-card-section class="row items-center no-wrap">
-					<div style="color: white">사용해도 좋은 시험 이름입니다.</div>
+					<div style="font-family: 'Elice Digital Baeum'; color: white">
+						사용해도 좋은 시험 이름입니다.
+					</div>
 				</q-card-section>
 			</q-card>
 		</q-dialog>
@@ -12,8 +14,9 @@
 		<q-dialog v-model="dialogBad" :position="position">
 			<q-card style="width: 350px; background-color: orangered">
 				<q-card-section class="row items-center no-wrap">
-					<div style="color: white">
-						중복된 시험 이름입니다. 다른 시험 이름을 입력해주세요.
+					<div style="font-family: 'Elice Digital Baeum'; color: white">
+						<p>중복된 시험 이름입니다.</p>
+						<p>다른 시험 이름을 입력해주세요.</p>
 					</div>
 				</q-card-section>
 			</q-card>

@@ -1,5 +1,10 @@
 <template>
-	<div class="intro-div flex justify-center">
+	<div class="intro-div flex column">
+		<div class="wrapper" style="margin-top: 7%">
+			<div class="typing-demo" style="font-family: 'Elice Digital Baeum'">
+				내 옆의 선생님처럼, Coding with me.
+			</div>
+		</div>
 		<router-link
 			:to="{ name: 'login' }"
 			style="text-decoration: none; color: inherit"
@@ -179,7 +184,8 @@ export default {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-image: url(https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+	// background-image: url(https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+	background-image: linear-gradient(to right, #303841 0%, #596164 100%);
 }
 
 svg {
@@ -238,6 +244,35 @@ svg {
 	100% {
 		opacity: 0;
 		transform: translateX(-50px);
+	}
+}
+.wrapper {
+	/*This part is important for centering*/
+	display: grid;
+	place-items: center;
+	font-family: 'Elice Digital Baeum';
+}
+
+.typing-demo {
+	width: 28ch;
+	animation: typing 2s steps(22), blink 0.5s step-end infinite alternate;
+	white-space: nowrap;
+	overflow: hidden;
+	border-right: 3px solid;
+	font-family: monospace;
+	font-size: 3em;
+	color: #eeeeee;
+}
+
+@keyframes typing {
+	from {
+		width: 0;
+	}
+}
+
+@keyframes blink {
+	50% {
+		border-color: transparent;
 	}
 }
 </style>
