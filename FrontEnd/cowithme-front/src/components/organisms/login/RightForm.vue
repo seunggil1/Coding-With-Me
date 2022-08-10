@@ -16,19 +16,14 @@ async function onSubmit() {
 	// console.log(idpw.id, idpw.pw);
 	const authStore = useAuthStore();
 	await authStore.login(idpw.id, idpw.pw);
-	await router.push({ path: '/' });
+	await router.push({ path: '/home' });
 }
 </script>
 
 <template>
 	<div class="top-right-form q-pa-lg">
 		<div class="q-ma-lg">
-			<p
-				class="col"
-				style="font-size: 100px; color: white; font-family: 'MICEGothic Bold'"
-			>
-				로그인
-			</p>
+			<p class="col login-text">로그인</p>
 		</div>
 		<q-form @submit="onSubmit" class="q-gutter-md signup-form" lazy-validation>
 			<div class="flex row">
@@ -76,7 +71,7 @@ async function onSubmit() {
 							<q-btn
 								label="회원가입"
 								text-color="white"
-								style="background-color: #ff5722"
+								style="background-color: #303841"
 								push
 								class="q-ml-sm"
 							></q-btn
@@ -89,13 +84,6 @@ async function onSubmit() {
 </template>
 
 <style scoped>
-@font-face {
-	font-family: 'MICEGothic Bold';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
-		format('woff2') !important;
-	font-weight: 700 !important;
-	font-style: normal !important;
-}
 .text-brand {
 	color: #00adb5 !important;
 }
@@ -118,5 +106,17 @@ async function onSubmit() {
 }
 .top-right-form {
 	height: 100% !important;
+}
+.login-text {
+	font-size: 100px !important;
+	color: white !important;
+	font-family: 'Elice Digital Baeum', sans-serif !important;
+}
+@font-face {
+	font-family: 'MICEGothic Bold' !important;
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+		format('woff2') !important;
+	font-weight: 700 !important;
+	font-style: normal !important;
 }
 </style>
