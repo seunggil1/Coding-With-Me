@@ -30,11 +30,10 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
 		myCode: 'import java.util.*;\nimport java.io.*;\n',
 
-		token : '',
+		token: '',
 
 		//시험 열려있니
-		openTest : false
-
+		openTest: false,
 	});
 
 	const mode = ref(1);
@@ -187,7 +186,7 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 			testData.timeLimit = event.time;
 
 			state.openTest = true;
-		})
+		});
 
 		getToken().then(token => {
 			state.token = token;
@@ -222,14 +221,7 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 					);
 				});
 		});
-		api.get('/conferences/'+ state.classId +'/active').then((res)=>{
-			api.post('/records/attendances',{
-				"conferenceId": res.data.conference.conferenceId,
-				"userId": state.userId
-			});
-		})
 
-		
 		window.addEventListener('beforeunload', leaveSession);
 	}
 
@@ -255,15 +247,14 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		isAudio.value = true;
 		isVideo.value = true;
 		isScreen.value = false;
-		
-		let conferenceID = (await api.get('/conferences/'+ state.classId +'/active')).data.conference.conferenceId;
-		await api.put('/records/attendances',{
-			"conferenceId": conferenceID,
-			"userId": state.userId
-		});
-		await api.post('/conference/leaveSession',{
-			conferenceId : conferenceID,
-			token : state.token
+
+		let conferenceID = (
+			await api.get('/conferences/' + state.classId + '/active')
+		).data.conference.conferenceId;
+
+		await api.post('/conference/leaveSession', {
+			conferenceId: conferenceID,
+			token: state.token,
 		});
 		state.token = '';
 		window.removeEventListener('beforeunload', leaveSession);

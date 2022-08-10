@@ -36,8 +36,29 @@
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
-		<div class="box2 q-mb-md hvr-grow">
-			<q-btn push>만들어져 있는 강의들 리스트(아직 연결 안 됨)</q-btn>
+		<div class="box2 q-mb-md q-pa-md row items-center justify-around no-wrap">
+			<div v-if="lectures.length != 0">
+				<q-btn flat round color="black" icon="arrow_back_ios_new" />
+				<q-card
+					class="lecture-card"
+					v-for="lecture in lectures.slice().reverse()"
+					:key="lecture"
+				>
+					<q-card-section>
+						<div class="text-h6">{{ lecture.conferenceName }}</div>
+						<div class="text-subtitle2">{{ lecture.date }}</div>
+					</q-card-section>
+					<q-card-section> </q-card-section>
+					<q-separator />
+					<q-card-section>
+						<div>종료된 강의입니다.</div>
+					</q-card-section>
+				</q-card>
+				<q-btn flat round color="black" icon="arrow_forward_ios" />
+			</div>
+			<div v-else>
+				<h4>생성된 강의 이력이 없습니다</h4>
+			</div>
 		</div>
 		<div class="flex row">
 			<div class="col-6">
@@ -174,8 +195,8 @@ export default {
 			console.log('mySessionId', teacherVideo.state.mySessionId);
 
 			teacherVideo.createSession().then(() => {
-				router.push({ path: '/teacherlecture' }).catch(()=>{
-					router.push({ path: '/teacherlecture' }).catch(()=>{
+				router.push({ path: '/teacherlecture' }).catch(() => {
+					router.push({ path: '/teacherlecture' }).catch(() => {
 						router.push({ path: '/teacherlecture' });
 					});
 				});
@@ -215,7 +236,23 @@ export default {
 			await router.push({ path: '/addStudent' });
 		}
 
+		const lectures = ref([]);
+		function getLectures() {
+			api
+				.get(`conferences/${classId}/all`)
+				.then(res => {
+					// console.log(res.data);
+					lectures.value = res.data.conference;
+					console.log('강의 목록 가져오기', lectures.value);
+				})
+				.catch(err => {
+					console.log('강의 목록 없거나 에러', err);
+				});
+		}
+		getLectures();
+
 		return {
+			lectures,
 			goAddStudent,
 			students,
 			classId,
