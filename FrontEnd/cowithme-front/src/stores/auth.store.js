@@ -2,8 +2,9 @@ import { defineStore } from 'pinia';
 import jwt_decode from 'jwt-decode';
 import { fetchWrapper } from 'src/helpers';
 import { useAlertStore } from 'src/stores';
+import { useRouter } from 'vue-router';
 
-const HOST = 'https://150.230.248.208:8080/api/v1';
+const HOST = 'https://i7a304.p.ssafy.io:8080/api/v1';
 
 const baseUrl = `${HOST}`;
 
@@ -47,8 +48,10 @@ export const useAuthStore = defineStore({
 			}
 		},
 		// 로그아웃 함수
-		logout() {
-			localStorage.clear();
+		async logout() {
+			const router = useRouter();
+			await localStorage.clear();
+			await router.push('/login');
 		},
 	},
 });

@@ -13,7 +13,7 @@ async function onSubmit() {
 		id: id.value,
 		pw: password.value,
 	};
-	console.log(idpw.id, idpw.pw);
+	// console.log(idpw.id, idpw.pw);
 	const authStore = useAuthStore();
 	await authStore.login(idpw.id, idpw.pw);
 	await router.push({ path: '/' });

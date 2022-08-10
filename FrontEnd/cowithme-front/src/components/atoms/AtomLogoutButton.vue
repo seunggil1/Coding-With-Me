@@ -19,7 +19,7 @@ import { useAuthStore } from 'src/stores';
 import { useRouter } from 'vue-router';
 
 export default {
-	name: 'AtomButton',
+	name: 'AtomLogoutButton',
 	setup() {
 		const router = useRouter();
 		async function onLogout() {

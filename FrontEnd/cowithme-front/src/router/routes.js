@@ -1,6 +1,11 @@
 const routes = [
 	{
 		path: '/',
+		name: 'intro',
+		component: () => import('src/pages/IntroPage.vue'),
+	},
+	{
+		path: '/home',
 		name: 'home',
 		component: () => import('layouts/MainLayout.vue'),
 		// beforeEnter: (to, from, next) => {
@@ -11,8 +16,7 @@ const routes = [
 		// },
 		children: [
 			{
-				path: '/',
-				name: 'home',
+				path: '/home',
 				component: () => import('pages/IndexPage.vue'),
 				// redirect: '/',
 			},

@@ -13,7 +13,7 @@
 
 <script>
 export default {
-	name: 'AtomButton',
+	name: 'AtomMyPageButton',
 	setup() {
 		return {};
 	},

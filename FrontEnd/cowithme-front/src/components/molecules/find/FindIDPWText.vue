@@ -8,7 +8,7 @@
 
 <script>
 export default {
-	name: 'FindIDPW',
+	name: 'FindIDPWText',
 	setup() {
 		return {};
 	},

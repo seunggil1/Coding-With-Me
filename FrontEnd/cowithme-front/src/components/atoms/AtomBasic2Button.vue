@@ -7,7 +7,7 @@
 
 <script>
 export default {
-	name: 'AtomButton',
+	name: 'AtomButton2',
 	setup() {
 		return {};
 	},

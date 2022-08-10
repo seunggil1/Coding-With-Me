@@ -14,7 +14,7 @@
 
 <script>
 export default {
-	name: 'AtomButton',
+	name: 'AtomScoreIconButton',
 	setup() {
 		return {};
 	},

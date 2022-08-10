@@ -13,7 +13,7 @@
 import { ref } from 'vue';
 
 export default {
-	name: 'AtomButton',
+	name: 'AtomRadio',
 	setup() {
 		return {
 			auth: ref('teacher'),

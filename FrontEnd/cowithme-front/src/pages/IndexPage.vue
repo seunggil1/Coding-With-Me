@@ -109,7 +109,7 @@ export default defineComponent({
 		// const classStore = useClassStore();
 		const classes = ref([]);
 		const testTest = ref([]);
-		const HOST = 'https://150.230.248.208:8080/api/v1';
+		const HOST = 'https://i7a304.p.ssafy.io:8080/api/v1';
 		const baseUrl = `${HOST}`;
 
 		const router = useRouter();
