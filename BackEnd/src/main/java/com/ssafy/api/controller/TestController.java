@@ -55,12 +55,15 @@ public class TestController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getTestInfo(@PathVariable("classId") Long classId,
+    public ResponseEntity<Map<String, Object>> getTestInfo(@PathVariable("classId") Long classId,
                                                                      @PathVariable("testName") String testName){
 
         Test test = testService.getTestInfo(classId,testName);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(test)));
+        Map<String, Object> map = new HashMap<>();
+        map.put("test", test);
+        //return ResponseEntity.status(200).body(BaseResponseBody.of(200, String.valueOf(test)));
+        return ResponseEntity.status(200).body(map);
     }
 
 
