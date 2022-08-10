@@ -257,6 +257,10 @@ export default {
 	name: 'MakeExamPage',
 	setup() {
 		const examName = ref('');
+		const dialogGood = ref(false);
+		const dialogBad = ref(false);
+
+		const position = ref('top');
 
 		// 시험 이름 중복 체크
 		function checkExamName() {
@@ -271,11 +275,6 @@ export default {
 					openBad('bottom');
 				});
 		}
-		const dialogGood = ref(false);
-		const dialogBad = ref(false);
-
-		const position = ref('top');
-
 		function openGood(pos) {
 			position.value = pos;
 			dialogGood.value = true;
@@ -397,6 +396,9 @@ export default {
 			classId,
 			openGood,
 			openBad,
+			position,
+			dialogGood,
+			dialogBad,
 		};
 	},
 };
