@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service("classesService")
 @Transactional(readOnly = true)
@@ -76,8 +77,20 @@ public class ClassesServiceImpl implements ClassesService {
             classes.getUserClassList().add(uc);
 
             userClassRepository.save(uc);
+        }catch (NoSuchElementException e){
+            Classes classes = classesRepository.findByUserUserIdAndClassName(classesAddStudentPostReq.getTutorId(), classesAddStudentPostReq.getClassName()).get();
+            UserClass uc = new UserClass();
+
+            User student = userRepository.findByUserId(classesAddStudentPostReq.getStudentId()).get();
+
+            uc.setClasses(classes);
+            uc.setStudentId(student.getUserId());
+
+            classes.getUserClassList().add(uc);
+
+            userClassRepository.save(uc);
+            return true;
         }catch (Exception e){
-            e.printStackTrace();
             return false;
         }
         return true;
