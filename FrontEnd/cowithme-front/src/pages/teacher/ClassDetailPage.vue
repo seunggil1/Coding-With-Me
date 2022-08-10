@@ -8,9 +8,10 @@
 			size="25px"
 			push
 			style="background: #ff5722; color: white; font-family: 'MICEGothic Bold'"
-			>{{ className }}의 강의 만들기</q-btn
+			>{{ className }}의 강의 시작하기</q-btn
 		>
 		<q-dialog
+			class="brand"
 			style="font-family: 'Elice Digital Baeum'"
 			v-model="openstartLecture"
 			persistent
@@ -20,12 +21,18 @@
 					<div class="text-h6">강의명</div>
 				</q-card-section>
 				<q-card-section class="q-pt-none">
-					<q-input dense v-model="lectureName" autofocus />
+					<q-input class="brand" dense v-model="lectureName" autofocus />
 				</q-card-section>
 
 				<q-card-actions align="right" class="text-primary">
-					<q-btn flat label="만들기" @click="startLecture" v-close-popup />
-					<q-btn flat label="취소" v-close-popup />
+					<q-btn
+						class="brand"
+						flat
+						label="만들기"
+						@click="startLecture"
+						v-close-popup
+					/>
+					<q-btn class="brand" flat label="취소" v-close-popup />
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
@@ -42,7 +49,7 @@
 							</p>
 							<q-chip
 								class="hvr-grow"
-								color="primary"
+								color="grey"
 								text-color="white"
 								icon="face"
 								v-for="student in students"

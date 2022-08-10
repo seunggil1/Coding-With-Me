@@ -21,6 +21,7 @@
 						label="이름"
 						color="brand"
 						bg-color="white"
+						:rules="[val => (val && val.length > 0) || '이름을 입력해주세요.']"
 					></q-input>
 					<q-input
 						type="text"
@@ -34,6 +35,9 @@
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '아이디를 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						class="q-ma-lg q-pr-lg"
@@ -47,6 +51,12 @@
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '이메일을 입력해주세요.',
+							val =>
+								(val && val.includes('@')) ||
+								'이메일 형식이 올바르지 않습니다.',
+						]"
 					></q-input>
 					<q-input
 						class="q-ma-lg q-pr-lg"
@@ -76,6 +86,9 @@
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '전화번호를 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						name="nickname"
@@ -87,6 +100,9 @@
 						lazy-rules
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '닉네임을 입력해주세요.',
+						]"
 					></q-input>
 					<q-input
 						name="birthDt"
@@ -99,8 +115,11 @@
 						clearable
 						color="brand"
 						bg-color="white"
+						:rules="[
+							val => (val && val.length > 0) || '생년월일을 입력해주세요.',
+						]"
 					></q-input>
-					<!-- <q-input
+					<q-input
 						name="profilePath"
 						class="q-ma-lg q-pr-lg"
 						rounded
@@ -116,7 +135,7 @@
 								file = val[0];
 							}
 						"
-					></q-input> -->
+					></q-input>
 				</div>
 			</div>
 			<div class="flex justify-center">
@@ -132,7 +151,7 @@
 				</div>
 			</div>
 		</q-form>
-		<q-btn style="background: red; color: white" @click="goDelete" push>
+		<q-btn style="background: grey; color: white" @click="goDelete" push>
 			회원탈퇴
 		</q-btn>
 	</div>

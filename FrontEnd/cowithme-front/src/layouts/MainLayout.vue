@@ -33,6 +33,22 @@
 					</div>
 					<div class="col"></div>
 				</div>
+				<div
+					v-if="info2.role === '강사'"
+					class="justify-center flex q-mb-lg pic"
+				>
+					<AtomProfileImg
+						style="border-radius: 50%; width: 100px; height: 100px"
+					></AtomProfileImg>
+				</div>
+				<div
+					v-if="info2.role === '학생'"
+					class="justify-center flex q-mb-lg pic"
+				>
+					<AtomStudentProfile
+						style="border-radius: 50%; width: 100px; height: 100px"
+					></AtomStudentProfile>
+				</div>
 				<div class="row">
 					<div class="col-1"></div>
 				</div>
@@ -117,6 +133,8 @@ import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
 import { useRouter } from 'vue-router';
 // import { storeToRefs } from 'pinia';
 import { useAuthStore } from 'src/stores';
+import AtomProfileImg from 'src/components/atoms/AtomProfileImg.vue';
+import AtomStudentProfile from 'src/components/atoms/AtomStudentProfile.vue';
 
 export default defineComponent({
 	name: 'MainLayout',
@@ -126,8 +144,8 @@ export default defineComponent({
 		WelcomeText,
 		// AtomSearchIconButton,
 		AtomScoreIconButton,
-		// AtomMyPageButton,
-		// AtomLogoutButton,
+		AtomProfileImg,
+		AtomStudentProfile,
 	},
 
 	setup() {
@@ -220,4 +238,7 @@ export default defineComponent({
 	transform-origin: left;
 	transform: scaleX(1);
 }
+/* .pic {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+} */
 </style>
