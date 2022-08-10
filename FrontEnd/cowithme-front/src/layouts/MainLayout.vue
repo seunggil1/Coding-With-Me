@@ -46,7 +46,7 @@
 							label="강사"
 						/>
 
-						<div class="row">
+						<div class="row a">
 							<div
 								class="font-OT"
 								style="font-size: 24px; font-family: 'OTWelcomeBA'"
@@ -195,5 +195,29 @@ export default defineComponent({
 .font-OT {
 	font-family: 'MICEGothic Bold' !important;
 	font-size: 24px;
+}
+.a {
+	color: #18272f;
+	position: relative;
+	text-decoration: none;
+}
+
+.a::before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	border-radius: 4px;
+	background-color: #18272f;
+	bottom: 0;
+	left: 0;
+	transform-origin: right;
+	transform: scaleX(0);
+	transition: transform 0.3s ease-in-out;
+}
+
+.a:hover::before {
+	transform-origin: left;
+	transform: scaleX(1);
 }
 </style>

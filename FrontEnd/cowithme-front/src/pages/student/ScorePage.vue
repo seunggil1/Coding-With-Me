@@ -10,12 +10,16 @@
 				<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
 					{{ record.date }} 시험
 				</p>
-				<q-chip outline square color="deep-orange" text-color="white">
+				<q-chip outline square color="grey" text-color="white">
 					시험 언어: {{ record.lang }}
+				</q-chip>
+				<q-chip outline square color="deep-orange" text-color="white">
+					시험 점수: {{ record.correctCount }} /
+					{{ record.sourceCode.answers.length }}
 				</q-chip>
 				<q-expansion-item
 					expand-separator
-					label="문제 별 답안 확인하기"
+					label="문제 별 제출 답안 확인하기"
 					icon="code"
 					style="width: 60%; font-size: 16px; margin-top: 5%"
 				>

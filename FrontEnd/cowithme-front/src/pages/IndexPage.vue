@@ -257,7 +257,7 @@ export default defineComponent({
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }
 .class-description {
-	background-color: #ff5722 !important;
+	background-color: #ff8d29 !important;
 	width: 60% !important;
 	border-radius: 10px !important;
 	box-shadow: 1px 1px 3px 1px #dadce0 !important;
