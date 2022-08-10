@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { fetchWrapper } from 'src/helpers';
 
-const baseUrl = 'https://i7a304.p.ssafy.io/api/v1';
+const baseUrl = 'https://150.230.248.208:8080/api/v1';
 
 export const useClassStore = defineStore({
 	id: 'class',

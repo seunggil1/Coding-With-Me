@@ -313,7 +313,7 @@ export default {
 			teacherIde.value.saveCode();
 
 			const res = await axios.post(
-				'https://i7a304.p.ssafy.io/api/v1/users/compile',
+				'https://150.230.248.208:8080/api/v1/users/compile',
 				{
 					code: teacherVideo.state.teacherCode,
 					lang: 'java',
