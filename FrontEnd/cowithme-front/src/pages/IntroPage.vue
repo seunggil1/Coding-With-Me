@@ -172,16 +172,17 @@ export default {
 
 <style lang="scss" scoped>
 .intro-div {
-	width: 100vw !important;
-	height: 100vh !important;
-	background-image: linear-gradient(
-		to left,
-		#303841 0%,
-		#303841 100%
-	) !important;
-	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	/* Chrome 10-25, Safari 5.1-6 */
+	/* Full height */
+	height: 100vh;
+
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+
+	background-size: cover;
+	background-image: url(https://images.unsplash.com/photo-1630090896228-88e5ea707294?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
 }
+
 svg {
 	-webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7)) !important;
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
