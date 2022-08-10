@@ -6,7 +6,6 @@ import { api } from 'src/boot/axios.js';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const teacherVideoStore = defineStore('teacherVideo', () => {
-
 	const state = reactive({
 		OV: undefined,
 		session: undefined,
@@ -17,7 +16,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		myUserName: '김동욱', // 나중에 처리
 		classId: 1,
 		userId: 2,
-		id: 'goat', // 로그인 할 때 
+		id: 'goat', // 로그인 할 때
 		screenOV: undefined,
 		screenSession: undefined,
 		screenShareName: '', // 나중에 처리
@@ -26,7 +25,6 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		// 웹 IDE 데이터도 여기서 처리함.
 		teacherCode:
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
-
 	});
 
 	const rightDrawerOpen = ref(true); // 참여자 + 채팅창. ture면 on
@@ -295,7 +293,8 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			console.log('session is not connected. sendCode is canceled.');
 			return;
 		}
-		state.session.signal({
+		state.session
+			.signal({
 				data: JSON.stringify({
 					sender: state.myUserName,
 					message: state.teacherCode,

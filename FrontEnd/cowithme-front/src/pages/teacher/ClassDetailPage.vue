@@ -160,12 +160,10 @@ export default {
 			console.log('myUserName', teacherVideo.state.myUserName);
 			console.log('classId', teacherVideo.state.classId);
 			console.log('mySessionId', teacherVideo.state.mySessionId);
-			
-			teacherVideo
-				.createSession()
-				.then(()=>{
-					router.push('/teacherlecture');
-				});
+
+			teacherVideo.createSession().then(() => {
+				router.push('/teacherlecture');
+			});
 		}
 
 		// 해당 반의 학생 리스트를

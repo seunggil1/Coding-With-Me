@@ -92,7 +92,7 @@
 							label="로그아웃"
 							icon="logout"
 							style="font-family: 'OTWelcomeBA'"
-							@click="onLogout"
+							@click="goLogout"
 						>
 						</q-btn>
 					</div>
