@@ -7,7 +7,7 @@
 					:to="{ path: '/' }"
 					style="text-decoration: none; color: inherit"
 				>
-					<q-toolbar-title style="font-family: 'OTWelcomeBA'; font-size: 20px">
+					<q-toolbar-title class="font-OT">
 						코딩 수업을 더 쉽게, 코윗미</q-toolbar-title
 					></router-link
 				>
@@ -47,40 +47,55 @@
 						/>
 
 						<div class="row">
-							<div style="font-size: 24px; font-family: 'OTWelcomeBA'">
+							<div
+								class="font-OT"
+								style="font-size: 24px; font-family: 'OTWelcomeBA'"
+							>
 								{{ info2.name }}
 							</div>
 							<div>
 								<WelcomeText
+									class="font-OT"
 									style="font-size: 24px; font-family: 'OTWelcomeBA'"
 								></WelcomeText>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- <div v-if="info2.role == '학생'" class="row">
-					<router-link
-						:to="{ name: 'studyRoom' }"
-						style="text-decoration: none; color: inherit"
-					>
-						<AtomSearchIconButton
-							style="font-size: 30px"
-						></AtomSearchIconButton>
-					</router-link>
-				</div> -->
 				<div v-if="info2.role == '학생'" class="row">
 					<router-link
 						:to="{ name: 'reportCard', params: { userId: info2.userId } }"
 						style="text-decoration: none; color: inherit"
 					>
-						<AtomScoreIconButton></AtomScoreIconButton>
+						<AtomScoreIconButton class="font-OT"></AtomScoreIconButton>
 					</router-link>
 				</div>
 				<div class="row" @click="goToMypage">
-					<AtomMyPageButton></AtomMyPageButton>
+					<div class="q-py-xs q-gutter-sm">
+						<q-btn
+							size="23px"
+							class="btn-size font-OT"
+							align="left"
+							flat
+							label="마이페이지"
+							icon="account_circle"
+						></q-btn>
+					</div>
 				</div>
 				<div class="row fixed-bottom">
-					<AtomLogoutButton @click="goLogout"></AtomLogoutButton>
+					<div class="q-py-xs q-gutter-sm">
+						<q-btn
+							size="23px"
+							class="btn-size font-OT"
+							align="left"
+							flat
+							label="로그아웃"
+							icon="logout"
+							style="font-family: 'OTWelcomeBA'"
+							@click="onLogout"
+						>
+						</q-btn>
+					</div>
 				</div>
 			</div>
 		</q-drawer>
@@ -97,8 +112,8 @@ import AtomLogo2 from 'src/components/atoms/AtomLogo2.vue';
 import WelcomeText from 'src/components/molecules/home/WelcomeText.vue';
 // import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue';
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
-import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
-import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
+// import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
+// import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
 import { useRouter } from 'vue-router';
 // import { storeToRefs } from 'pinia';
 import { useAuthStore } from 'src/stores';
@@ -111,8 +126,8 @@ export default defineComponent({
 		WelcomeText,
 		// AtomSearchIconButton,
 		AtomScoreIconButton,
-		AtomMyPageButton,
-		AtomLogoutButton,
+		// AtomMyPageButton,
+		// AtomLogoutButton,
 	},
 
 	setup() {
@@ -175,5 +190,9 @@ export default defineComponent({
 }
 .brand {
 	color: #00adb5 !important;
+}
+.font-OT {
+	font-family: 'MICEGothic Bold' !important;
+	font-size: 24px;
 }
 </style>

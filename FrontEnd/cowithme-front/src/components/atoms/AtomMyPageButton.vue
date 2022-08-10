@@ -7,7 +7,6 @@
 			flat
 			label="마이페이지"
 			icon="account_circle"
-			style="font-family: 'OTWelcomeBA'"
 		></q-btn>
 	</div>
 </template>
@@ -23,7 +22,8 @@ export default {
 
 <style>
 .btn-size {
-	width: 299px;
+	width: 299px !important;
+	font-family: 'OTWelcomeBA' !important;
 }
 @font-face {
 	font-family: 'OTWelcomeBA' !important;
