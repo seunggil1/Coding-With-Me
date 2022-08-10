@@ -14,6 +14,6 @@ public interface ConferenceRepository extends JpaRepository<Conference, Long> {
 
     Optional<List<Conference>> findByClassesClassId(Long classId);
 
-    @Query("select c from Conference c where c.isActive = true")
-    Optional<Conference> findByConferenceId(Long conferenceId);
+    @Query("select c from Conference c where c.isActive = true and c.conferenceId = :conferenceId")
+    Optional<Conference> findByConferenceId(@Param("conferenceId") Long conferenceId);
 }
