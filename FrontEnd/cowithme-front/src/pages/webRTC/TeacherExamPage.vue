@@ -16,16 +16,117 @@
 
 		<!-- 메인캠 부분 start -->
 		<q-page-container>
-			<div class="row main-container justify-center items-center">
-				<div class="main-cam-box row justify-center items-center">
-					<div v-if="pub">
-						<UserVideo class="video" :stream-manager="pub"></UserVideo>
-					</div>
-					<template v-if="subs">
-						<div v-for="sub in subs" :key="sub">
-							<UserVideo class="video" :stream-manager="sub"></UserVideo>
+			<div class="column main-container">
+				<div
+					v-if="showSubScribers && teacherVideo.state.session !== undefined"
+					class="col-2 q-pl-sm"
+				>
+					<q-scroll-area style="height: 100%; max-width: 100vw">
+						<div class="row no-wrap">
+							<div style="width: 11%" class="q-pa-sm">
+								<user-video
+									:stream-manager="teacherVideo.state.publisher"
+								/>
+							</div>
+							<div
+								style="width: 11%"
+								class="q-pa-sm"
+								v-for="(sub, idx) in teacherVideo.state.subscribers"
+								:key="idx"
+							>
+								<user-video
+									:stream-manager="sub"
+								/>
+							</div>
 						</div>
-					</template>
+					</q-scroll-area>
+				</div>
+				<!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
+				<div
+					:class="
+						showSubScribers && teacherVideo.state.session ? 'col-10' : 'col-12'
+					"
+				>
+					<div>
+						<q-splitter v-model="splitterModel" style="height: 90vh">
+							<template v-slot:before>
+								<div class="q-pa-md flex-height">
+									<div class="flex" style="background: none">
+										<pdf-viewer source="https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK"></pdf-viewer>
+									</div>
+								</div>
+							</template>
+							<template v-slot:after>
+								<div class="q-pa-md flex-height column">
+									<div class="col-1" style="background-color: #eeeeee">
+										<q-scroll-area style="height: 100%; max-width: 100vw">
+											<div class="row no-wrap">
+												<div
+													style="width: 11%"
+													class="q-pa-sm"
+													v-for="idx in piniaCommonExamData.testQuCnt"
+													:key="idx"
+												>
+													<q-btn color="primary" :label="idx" :disable="selectedProblem == idx"/>
+
+												</div>
+											</div>
+										</q-scroll-area>
+									</div>
+									<div class="col-11">
+										<q-scroll-area style="height: 100%; max-width: 100vw">
+											<div class="column no-wrap">
+												<div class="col" v-for="(tc, idx) in piniaCommonExamData.testCase[selectedProblem-1]" :key="idx">
+													<!-- 각 테스트 케이스 -->
+													<div class="row">
+														<div class="col">
+															<q-card flat bordered class="my-card">
+																<q-card-section>
+																	<div class="text-h6">Input</div>
+																</q-card-section>
+
+																<q-card-section class="q-pt-none">
+																	<q-input
+																		v-model="tc.input"
+																		type="textarea"
+																		float-label="Textarea"
+																		:max-height="50"
+																		:min-rows="5"
+																		disable
+																		placeholder="7 3"
+																	/>
+																</q-card-section>
+															</q-card>
+														</div>
+														<div class="col">
+															<q-card flat bordered class="my-card">
+																<q-card-section>
+																	<div class="text-h6">Output</div>
+																</q-card-section>
+
+																<q-card-section class="q-pt-none">
+																	<q-input
+																		v-model="tc.output"
+																		disable
+																		type="textarea"
+																		float-label="Textarea"
+																		:max-height="50"
+																		:min-rows="5"
+																		placeholder="10"
+																	/>
+																</q-card-section>
+															</q-card>
+														</div>
+													</div>
+												</div>
+											</div>
+										</q-scroll-area>
+										
+									</div>
+								</div>
+							</template>
+						</q-splitter>
+					</div>
 				</div>
 			</div>
 		</q-page-container>
@@ -68,25 +169,12 @@
 						/>
 
 						<q-btn
-							class="screenBtn"
-							rounded
-							push
-							icon="screen_share"
-							:label="teacherVideo.isScreen ? '화면공유 중지' : '화면공유'"
-							@click="
-								teacherVideo.isScreen
-									? teacherVideo.stopScreenShare()
-									: teacherVideo.startScreenShare()
-							"
-						/>
-
-						<q-btn
 							class="examBtn"
 							rounded
 							push
 							icon="quiz"
 							label="시험 종료"
-							@click="startExam"
+							@click="stopExam"
 						/>
 						<q-btn
 							class="leaveBtn"
@@ -121,122 +209,87 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
+import { commonExamData } from 'src/stores/ExamProgress/common.js';
+import { teacherExamData } from 'src/stores/ExamProgress/teacher.js';
 import { useRouter } from 'vue-router';
+import { api } from 'src/boot/axios.js';
+
 import TeacherVideoSideBar from 'src/components/lectures/exam/TeacherSideBar.vue';
+import PdfViewer from 'src/components/PdfViewer.vue';
 
 export default {
 	components: {
 		TeacherVideoSideBar,
+		PdfViewer
 	},
 	props: {},
 
 	setup(props) {
+		let showSubScribers = ref(true);
+		const splitterModel = ref(50);
 		const rightDrawerOpen = ref(true);
 		const router = useRouter();
 		const teacherVideo = teacherVideoStore(); // store 가져오기
-		const session = teacherVideo.state.session;
-		const pub = teacherVideo.state.publisher;
-		const subs = teacherVideo.state.subscribers;
-		const main = teacherVideo.state.mainStreamManager;
+		const piniaCommonExamData = commonExamData();
+		const piniaTeacherExamData = teacherExamData();
 
-		// 우측 바 펼치기, 접기
-		const clickRightDrawer = () => {
-			teacherVideo.setRightDrawer();
-		};
-		// 마이크 켜기, 끄기
-		const clickMic = () => {
-			if (video.isAudio) {
-				teacherVideo.muteAudio();
-			} else {
-				teacherVideo.unmuteAudio();
-			}
-		};
-		// 카메라 켜기, 끄기
-		const clickVideo = () => {
-			if (teacherVideo.isVideo) {
-				teacherVideo.muteVideo();
-			} else {
-				teacherVideo.unmuteVideo();
-			}
-		};
-		// 화면 공유 켜기, 끄기
-		const clickScreenShare = () => {
-			if (teacherVideo.isScreen) {
-				teacherVideo.stopScreenShare();
-			} else {
-				teacherVideo.startScreenShare();
-			}
-		};
+		const selectedProblem = ref(1);
 		// 세션 나가기
 		const leaveSession = () => {
 			teacherVideo.leaveSession();
 			router.push('/');
 		};
 
+		const stopExam = () => {
+
+		};
+
+		onMounted(() => {
+			teacherVideo.joinSession();
+			piniaCommonExamData
+				.getTestInfo(teacherVideo.state.classId, piniaCommonExamData.testName);
+		});
+
 		return {
+			showSubScribers,
+			splitterModel,
 			rightDrawerOpen,
 
 			router,
 			teacherVideo,
-			session,
-			pub,
-			subs,
-			main,
+			piniaCommonExamData,
+			piniaTeacherExamData,
 
-			clickRightDrawer,
-			clickMic,
-			clickVideo,
-			clickScreenShare,
+			selectedProblem,
+
 			leaveSession,
+			stopExam
 		};
 	},
 };
 </script>
 
 <style scoped>
-div {
-	box-sizing: border-box !important;
-}
-.parti-chat-box {
-	height: 94.71vh !important;
-	border: 1px solid black !important;
-}
-.drawer-container,
 .main-container {
-	height: 94.71vh !important;
+	height: 100vh !important;
+	width: 100vw !important;
+	background-color: #303841 !important;
 }
-.main-cam-box {
-	width: 95% !important;
-	height: 95% !important;
-	border: 1px solid red !important;
-}
-.sub-cams {
-	border: 1px solid red !important;
-	height: 100% !important;
-}
-.sub-cam {
-	height: 100% !important;
-}
-.micBtn,
-.camBtn,
-.screenBtn,
-.leaveBtn,
-.examBtn {
-	margin-left: 20px !important;
-}
-.participant-box,
-.chat-box {
-	width: 95% !important;
-	height: 95% !important;
-}
-.textarea {
+
+.flex {
 	width: 100% !important;
 	height: 100% !important;
-	resize: none !important;
+
+	background-color: white !important;
 }
-video {
-	width: 250px !important;
+
+.flex-width {
+	width: 100% !important;
+}
+
+.flex-height {
+	height: 100% !important;
 }
 </style>

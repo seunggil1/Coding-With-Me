@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed, reactive } from 'vue';
+import { api } from 'src/boot/axios.js';
+
 export const commonExamData = defineStore('commonExamData', () => {
 	const testID = ref(1);
     const testName = ref('');
@@ -27,6 +29,18 @@ export const commonExamData = defineStore('commonExamData', () => {
         return `${hour < 10 ? '0' + hour : hour}:${ minute < 10 ? '0' + minute : minute}:${second}`;
     });
 
+    // 시험지 데이터 받아오기
+    const getTestInfo = async (classID, testName) => {
+        let res = (await api.get(`/tests/${classID}/${testName}`)).data;
+        testID.value = res.testList[0].testId;
+        for(let item of res.testList[0].testcase.testcaseList){
+            testCase.push({
+                testcase : item.testcase
+            })
+        }
+        
+    }
+
     return {
         testID,
         testName,
@@ -35,6 +49,8 @@ export const commonExamData = defineStore('commonExamData', () => {
 
         timeLimit,
         setTimeLimit,
-        formattedTime
+        formattedTime,
+
+        getTestInfo,
     }
 });

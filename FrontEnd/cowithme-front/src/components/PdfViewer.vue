@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<vue-pdf-embed :source="source"> </vue-pdf-embed>
+	<div style="width : 100%">
+		<vue-pdf-embed :source="source" width="1000"> </vue-pdf-embed>
 	</div>
 </template>
 
