@@ -21,7 +21,7 @@ async function onSubmit() {
 </script>
 
 <template>
-	<div style="" class="q-pa-lg">
+	<div class="top-right-form q-pa-lg">
 		<div class="q-ma-lg">
 			<p
 				class="col"
@@ -45,7 +45,6 @@ async function onSubmit() {
 						color="brand"
 						bg-color="white"
 					></q-input>
-
 					<q-input
 						name="password"
 						class="loginInput q-ma-lg q-pr-lg"
@@ -116,5 +115,8 @@ async function onSubmit() {
 }
 .loginInput {
 	width: 50% !important;
+}
+.top-right-form {
+	height: 100% !important;
 }
 </style>

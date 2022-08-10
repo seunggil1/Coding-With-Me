@@ -3,7 +3,7 @@
 		<div class="col-6">
 			<LeftLogo></LeftLogo>
 		</div>
-		<div class="col">
+		<div class="col-6">
 			<RightForm></RightForm>
 		</div>
 	</div>
@@ -24,5 +24,8 @@ export default {
 <style>
 .login {
 	background-color: #eeeeee !important;
+	width: 100vw !important;
+	height: 100vh !important;
+	overflow: hidden !important;
 }
 </style>

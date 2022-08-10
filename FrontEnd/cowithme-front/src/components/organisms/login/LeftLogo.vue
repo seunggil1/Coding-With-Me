@@ -4,6 +4,7 @@
 		style="
 			background-color: #303841;
 			background-image: linear-gradient(to right, #303841 0%, #596164 100%);
+			height: 100%;
 		"
 	>
 		<AtomLogo></AtomLogo>
