@@ -209,7 +209,7 @@
 							push
 							icon="quiz"
 							label="시험 입장"
-							:disable="true"
+							:disable="studentVideo.state.openTest"
 							@click="startExam"
 						/>
 						<q-btn
@@ -351,7 +351,8 @@ export default {
 
 		// 시험 시작
 		const startExam = () => {
-			router.push('/exam');
+			studentVideo.state.openTest = false;
+			router.push({path : '/studentexam'});
 		};
 
 		const leaveSession = () => {

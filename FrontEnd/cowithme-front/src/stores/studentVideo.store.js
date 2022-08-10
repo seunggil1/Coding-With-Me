@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref, reactive } from 'vue';
 import { api } from 'src/boot/axios.js';
+import { commonExamData } from 'src/stores/ExamProgress/common.js';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const studentVideoStore = defineStore('studentVideo', () => {
@@ -29,7 +30,11 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
 		myCode: 'import java.util.*;\nimport java.io.*;\n',
 
-		token : ''
+		token : '',
+
+		//시험 열려있니
+		openTest : false
+
 	});
 
 	const mode = ref(1);
@@ -174,6 +179,15 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 			event = JSON.parse(event.data);
 			state.teacherCode = event.message;
 		});
+
+		state.session.on('signal:testInfo', event => {
+			event = JSON.parse(event.data);
+			let testData = commonExamData();
+			testData.testID = event.testID;
+			testData.timeLimit = event.time;
+
+			state.openTest = true;
+		})
 
 		getToken().then(token => {
 			state.token = token;
