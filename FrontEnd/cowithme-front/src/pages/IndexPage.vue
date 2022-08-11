@@ -193,6 +193,7 @@ export default defineComponent({
 			// console.log(classes.value[0]);
 		}
 
+		const isInClass = ref(false);
 		if (info2.role == '학생') {
 			api
 				.get(`/users/${userId}/class`)
@@ -200,6 +201,7 @@ export default defineComponent({
 					testTest.value = res.data.result;
 					console.log(res.data);
 					localStorage.setItem('testTest', JSON.stringify(res.data));
+					isInClass.value = true;
 				})
 				.catch(err => {
 					console.log(err);
@@ -216,21 +218,21 @@ export default defineComponent({
 
 		console.log('@@@@', localStorage);
 
-		let classId = localStorage.getItem('classId');
 		const studentVideo = studentVideoStore();
 
-		function enterLecture() {
+		async function enterLecture() {
 			if (!activeLecture.value) {
 				console.log('활성화된 강의 없음');
 				return;
 			}
+
 			let id = JSON.parse(localStorage.getItem('user')).id;
 			studentVideo.state.id = id; // 로그인 아이디
-			let uid = parseInt(localStorage.getItem('userId'));
+			let uid = JSON.parse(localStorage.getItem('info')).userId;
 			studentVideo.state.userId = uid;
 			let name = JSON.parse(localStorage.getItem('info')).name;
 			studentVideo.state.myUserName = name;
-			let classId = parseInt(localStorage.getItem('classId'));
+			let classId = JSON.parse(localStorage.getItem('testTest')).result.classId;
 			studentVideo.state.classId = classId;
 			studentVideo.state.mySessionId = activeLecture.value.conferenceName;
 
@@ -240,6 +242,16 @@ export default defineComponent({
 			console.log('classId', studentVideo.state.classId);
 			console.log('mySessionId', studentVideo.state.mySessionId);
 
+			try {
+				const response = await api.post(`/records/attendances`, {
+					conferenceId: activeLecture.value.conferenceId,
+					userId: uid,
+				});
+				console.log('출입기록 생성 성공', response.data);
+			} catch (error) {
+				console.log('출입기록 생성 에러', error);
+			}
+
 			studentVideo.joinSession();
 			router.push('/studentlecture');
 		}
@@ -248,16 +260,20 @@ export default defineComponent({
 		const isActiveLecture = ref(false);
 		const getActiveLecture = async () => {
 			try {
+				let classId = JSON.parse(localStorage.getItem('testTest')).result
+					.classId;
 				const response = await api.get(`/conferences/${classId}/active`);
 				console.log(response.data);
 				activeLecture.value = response.data.conference;
 				isActiveLecture.value = true;
 			} catch (error) {
-				console.log('active 강의 불러오기 에러', error);
+				console.log('active 강의 불러오기 에러(active 강의 없음)', error);
 				isActiveLecture.value = false;
 			}
 		};
-		getActiveLecture();
+		if (info2.role == '학생' && isInClass) {
+			getActiveLecture();
+		}
 
 		var today = new Date();
 		var dd = String(today.getDate()).padStart(2, '0');

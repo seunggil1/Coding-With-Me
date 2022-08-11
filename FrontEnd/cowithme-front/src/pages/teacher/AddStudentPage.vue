@@ -53,6 +53,8 @@ export default {
 		},
 	},
 	setup() {
+		console.log('@@@@@', localStorage);
+
 		const router = useRouter();
 
 		const name = ref('');
@@ -69,7 +71,7 @@ export default {
 				.post(`/tutor/classes/student`, {
 					className: localStorage.getItem('className'),
 					studentId: userId,
-					tutorId: 1,
+					tutorId: parseInt(localStorage.getItem('userId')),
 				})
 				.then(res => {
 					console.log(res.message);
