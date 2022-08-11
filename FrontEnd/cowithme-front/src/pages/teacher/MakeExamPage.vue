@@ -30,7 +30,7 @@
 						rounded
 						outlined
 						class="q-mb-sm col-8"
-						v-model="examName"
+						v-model="examInfo.testName"
 						label="시험 이름"
 						lazy-rules
 						:rules="[
@@ -259,7 +259,7 @@ import { api } from 'src/boot/axios';
 export default {
 	name: 'MakeExamPage',
 	setup() {
-		const examName = ref('');
+		// const examName = ref('');
 		const dialogGood = ref(false);
 		const dialogBad = ref(false);
 
@@ -268,7 +268,7 @@ export default {
 		// 시험 이름 중복 체크
 		function checkExamName() {
 			api
-				.get(`/tests/idcheck/${examName.value}/${classId}`)
+				.get(`/tests/idcheck/${examInfo.testName}}/${classId}`)
 				.then(res => {
 					console.log(res.data.message);
 					openGood('bottom');
@@ -287,7 +287,6 @@ export default {
 			dialogBad.value = true;
 		}
 
-		const files = ref(null);
 		const router = useRouter();
 
 		const classId = localStorage.getItem('classId');
@@ -299,7 +298,7 @@ export default {
 
 		// 모든 정보가 여기 다 있다.
 		let examInfo = reactive({
-			testName: 'examName',
+			testName: '',
 			testQno: 1, //문제 갯수
 			testcaseList: [
 				{
@@ -368,23 +367,17 @@ export default {
 		// 	// router.push({ path: '/classDetail/' + classId });
 		// }
 
-		// PDF 업로드
 		examInfo['classId'] = classId * 1;
-		console.log(files.value);
 		function onSubmit() {
-			api.post(`/tests`, examInfo).then(res => {
-				console.log(res.data);
-				var testId = res.data.testId;
-				api
-					.post(`/tests/${testId}/upload`, { files: files.value })
-					.then(res => {
-						console.log(res.data);
-						router.push({ path: '/classDetail/' + classId });
-					})
-					.catch(err => {
-						console.log(err);
-					});
-			});
+			api
+				.post(`/tests`, examInfo)
+				.then(res => {
+					console.log(res.data);
+					router.push({ path: '/classDetail/' + classId });
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		}
 
 		return {
@@ -395,7 +388,7 @@ export default {
 			addTestCase,
 			deleteTestCase,
 			onSubmit,
-			examName,
+			// examName,
 			classId,
 			openGood,
 			openBad,
