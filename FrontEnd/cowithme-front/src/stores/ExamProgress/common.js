@@ -3,7 +3,7 @@ import { ref, computed, reactive } from 'vue';
 import { api } from 'src/boot/axios.js';
 
 export const commonExamData = defineStore('commonExamData', () => {
-	const testID = ref(1);
+	const testID = ref(undefined);
     const testName = ref('');
     const testCase = reactive([]);
     const testQuCnt = computed(()=>{
@@ -31,9 +31,10 @@ export const commonExamData = defineStore('commonExamData', () => {
 
     // 시험지 데이터 받아오기
     const getTestInfo = async (classID, testName) => {
-        let res = (await api.get(`/tests/${classID}/${testName}`)).data;
-        testID.value = res.testList[0].testId;
-        for(let item of res.testList[0].testcase.testcaseList){
+        testCase.value = [];
+        let res = (await api.get(`/tests/${classID}/${testName}`)).data.test;
+        testID.value = res.testId;
+        for(let item of res.testcase.testcaseList){
             testCase.push({
                 testcase : item.testcase
             })

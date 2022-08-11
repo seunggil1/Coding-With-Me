@@ -18,7 +18,7 @@
 		<q-page-container>
 			<div class="column main-container">
 				<div
-					v-if="showSubScribers && teacherVideo.state.session !== undefined"
+					v-if="teacherVideo.state.session !== undefined"
 					class="col-2 q-pl-sm"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
@@ -44,7 +44,7 @@
 				<!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
 				<div
 					:class="
-						showSubScribers && teacherVideo.state.session ? 'col-10' : 'col-12'
+						teacherVideo.state.session ? 'col-10' : 'col-12'
 					"
 				>
 					<div>
@@ -52,7 +52,10 @@
 							<template v-slot:before>
 								<div class="q-pa-md flex-height">
 									<div class="flex" style="background: none">
-										<pdf-viewer source="https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK"></pdf-viewer>
+										<pdf-viewer 
+											v-if="piniaCommonExamData.testID"
+											:source="`${HOST}/files/download/${piniaCommonExamData.testID}`"
+										/>
 									</div>
 								</div>
 							</template>
@@ -67,7 +70,11 @@
 													v-for="idx in piniaCommonExamData.testQuCnt"
 													:key="idx"
 												>
-													<q-btn color="primary" :label="idx" :disable="selectedProblem == idx"/>
+													<q-btn color="primary" 
+														:label="idx"
+														:disable="selectedProblem == idx" 
+														@click="if(selectedProblem != idx) selectedProblem = idx;"
+													/>
 
 												</div>
 											</div>
@@ -76,49 +83,50 @@
 									<div class="col-11">
 										<q-scroll-area style="height: 100%; max-width: 100vw">
 											<div class="column no-wrap">
-												<div class="col" v-for="(tc, idx) in piniaCommonExamData.testCase[selectedProblem-1]" :key="idx">
-													<!-- 각 테스트 케이스 -->
-													<div class="row">
-														<div class="col">
-															<q-card flat bordered class="my-card">
-																<q-card-section>
-																	<div class="text-h6">Input</div>
-																</q-card-section>
+												<span v-if="piniaCommonExamData.testCase[selectedProblem-1]">
+													<div class="col" v-for="(tc, idx) in piniaCommonExamData.testCase[selectedProblem-1].testcase" :key="idx">
+														<div class="row">
+															<div class="col">
+																<q-card flat bordered class="my-card">
+																	<q-card-section>
+																		<div class="text-h6">Input</div>
+																	</q-card-section>
 
-																<q-card-section class="q-pt-none">
-																	<q-input
-																		v-model="tc.input"
-																		type="textarea"
-																		float-label="Textarea"
-																		:max-height="50"
-																		:min-rows="5"
-																		disable
-																		placeholder="7 3"
-																	/>
-																</q-card-section>
-															</q-card>
-														</div>
-														<div class="col">
-															<q-card flat bordered class="my-card">
-																<q-card-section>
-																	<div class="text-h6">Output</div>
-																</q-card-section>
+																	<q-card-section class="q-pt-none">
+																		<q-input
+																			v-model="tc.input"
+																			type="textarea"
+																			float-label="Textarea"
+																			:max-height="50"
+																			:min-rows="5"
+																			disable
+																			placeholder="7 3"
+																		/>
+																	</q-card-section>
+																</q-card>
+															</div>
+															<div class="col">
+																<q-card flat bordered class="my-card">
+																	<q-card-section>
+																		<div class="text-h6">Output</div>
+																	</q-card-section>
 
-																<q-card-section class="q-pt-none">
-																	<q-input
-																		v-model="tc.output"
-																		disable
-																		type="textarea"
-																		float-label="Textarea"
-																		:max-height="50"
-																		:min-rows="5"
-																		placeholder="10"
-																	/>
-																</q-card-section>
-															</q-card>
+																	<q-card-section class="q-pt-none">
+																		<q-input
+																			v-model="tc.output"
+																			disable
+																			type="textarea"
+																			float-label="Textarea"
+																			:max-height="50"
+																			:min-rows="5"
+																			placeholder="10"
+																		/>
+																	</q-card-section>
+																</q-card>
+															</div>
 														</div>
 													</div>
-												</div>
+												</span>
 											</div>
 										</q-scroll-area>
 										
@@ -216,18 +224,20 @@ import { teacherExamData } from 'src/stores/ExamProgress/teacher.js';
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
 
+import UserVideo from 'src/components/lectures/UserVideo.vue';
 import TeacherVideoSideBar from 'src/components/lectures/exam/TeacherSideBar.vue';
 import PdfViewer from 'src/components/PdfViewer.vue';
 
 export default {
 	components: {
+		UserVideo,
 		TeacherVideoSideBar,
 		PdfViewer
 	},
 	props: {},
 
 	setup(props) {
-		let showSubScribers = ref(true);
+		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		const splitterModel = ref(50);
 		const rightDrawerOpen = ref(true);
 		const router = useRouter();
@@ -253,7 +263,7 @@ export default {
 		});
 
 		return {
-			showSubScribers,
+			HOST,
 			splitterModel,
 			rightDrawerOpen,
 

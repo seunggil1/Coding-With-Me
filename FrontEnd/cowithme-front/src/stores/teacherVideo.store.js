@@ -33,6 +33,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 
 	const getTestList = () => {
 		api.get('/tests/' + state.classId).then(res => {
+			state.testNameList.splice(0, state.testNameList.length);
 			for (let iter of res.data.testList) {
 				state.testList.push({
 					testId: iter.testId,
@@ -215,6 +216,30 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 
 		window.addEventListener('beforeunload', leaveSession);
 	}
+	async function leaveSessionWithoutCallApi(){
+		window.removeEventListener('beforeunload', leaveSession);
+		// --- Leave the session by calling 'disconnect' method over the Session object ---
+		if (state.session) {
+			state.session.disconnect();
+		}
+		if (state.screenSession) {
+			state.screenSession.disconnect();
+		}
+		state.session = undefined;
+		state.screenSession = undefined;
+		state.mainStreamManager = undefined;
+		state.publisher = undefined;
+		state.subscribers = [];
+		state.OV = undefined;
+		state.screenOV = undefined;
+
+		rightDrawerOpen.value = true;
+		subCamsOpen.value = true;
+		isAudio.value = true;
+		isVideo.value = true;
+		isScreen.value = false;
+		state.token = '';
+	}
 
 	async function leaveSession() {
 		// --- Leave the session by calling 'disconnect' method over the Session object ---
@@ -381,6 +406,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		stopScreenShare,
 
 		joinSession,
+		leaveSessionWithoutCallApi,
 		leaveSession,
 		getToken,
 		createToken,

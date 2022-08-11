@@ -260,6 +260,34 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		window.removeEventListener('beforeunload', leaveSession);
 	}
 
+	async function leaveSessionWithoutCallApi() {
+		// --- Leave the session by calling 'disconnect' method over the Session object ---
+		if (state.session) {
+			state.session.disconnect();
+		}
+		if (state.screenSession) {
+			state.screenSession.disconnect();
+		}
+		state.session = undefined;
+		state.screenSession = undefined;
+		state.mainStreamManager = undefined;
+		state.publisher = undefined;
+		state.subscribers = [];
+		state.OV = undefined;
+		state.screenOV = undefined;
+
+		mode.value = 1;
+		rightDrawerOpen.value = true;
+		subCamsOpen.value = true;
+		isAudio.value = true;
+		isVideo.value = true;
+		isScreen.value = false;
+
+		state.token = '';
+		window.removeEventListener('beforeunload', leaveSession);
+	}
+
+
 	// serverSide start. Backend가 완성되면 변경 필요.
 	async function getToken() {
 		// await createSession();
@@ -374,6 +402,7 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 
 		joinSession,
 		leaveSession,
+		leaveSessionWithoutCallApi,
 		getToken,
 		createToken,
 		createSession,

@@ -13,7 +13,7 @@
 				height: 100%"
 			>
 				<div 
-					class="col-2" 
+					class="col-1" 
 					style="border: 1px solid red"
 				>
 					<q-banner 
@@ -27,6 +27,14 @@
 							<q-icon name="access_time" class="cursor-pointer"> </q-icon>
 						</template>
 					</q-banner>
+				</div>
+
+				<div
+					class="col-1"
+				>
+					<div class="text-h6">
+						{{ piniaCommonExamData.testName }}
+					</div>
 				</div>
 				<div 
 					class="col-5" 
@@ -85,7 +93,7 @@
 						@keydown.enter.prevent="
 							teacherVideo.sendMessage(myChatInput);
 							myChatInput = '';
-						"
+							"
 					>
 						<!-- <template v-slot:before>
 							<q-avatar>
@@ -130,6 +138,7 @@ export default {
 
 	props: {},
 	setup() {
+		const myChatInput = ref('');
 		const piniaCommonExamData = commonExamData();
 		const teacherVideo = teacherVideoStore();
 
@@ -146,6 +155,7 @@ export default {
 		});
 
 		return {
+			myChatInput,
 			piniaCommonExamData,
 			teacherVideo: teacherVideo
 		};

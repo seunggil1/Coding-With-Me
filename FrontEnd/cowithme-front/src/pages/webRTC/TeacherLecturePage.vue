@@ -365,15 +365,22 @@ export default {
 			isRunning.value = false;
 		};
 
+		const redirectToExam = ref(false);
 		onMounted(() => {
 			teacherVideo.joinSession();
 			teacherVideo.getTestList();
 			window.addEventListener('resize', teacherIde.value.updateEditor);
+			window.addEventListener('beforeunload', teacherVideo.leaveSession);
 		});
 
 		onBeforeUnmount(() => {
 			if (repeater) clearInterval(repeater);
-			window.removeEventListener('resize', teacherIde.value.updateEditor);
+				window.removeEventListener('resize', teacherIde.value.updateEditor);
+
+			if(redirectToExam.value)
+				teacherVideo.leaveSessionWithoutCallApi();
+			else
+				teacherVideo.leaveSession();
 		});
 
 		// 시험 시작
@@ -387,6 +394,7 @@ export default {
 			const second = 3600 * data[0] + 60 * data[1] + 1 * data[2];
 			for(let testInfo of teacherVideo.state.testList){
 				if(commonExamPinia.testName == testInfo.testName){
+					redirectToExam.value = true;
 					commonExamPinia.testID = testInfo.testId;
 					commonExamPinia.setTimeLimit(data[0], data[1], data[2]);
 					teacherVideo.sendTestInfo(testInfo.testId, second).then(()=>{
@@ -405,8 +413,6 @@ export default {
 		};
 
 		const leaveSession = () => {
-			teacherVideo.leaveSession().catch();
-
 			router.push({path: '/'}).catch((err)=>{
 				console.error(err);
 				router.push({path: '/'});
@@ -431,6 +437,7 @@ export default {
 			runCode,
 
 			// 시험
+			redirectToExam,
 			showExamDialog,
 			startExam,
 			leaveSession,
