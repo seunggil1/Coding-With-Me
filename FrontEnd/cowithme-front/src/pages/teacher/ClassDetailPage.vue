@@ -21,7 +21,7 @@
 					<div class="text-h6">강의명</div>
 				</q-card-section>
 				<q-card-section class="q-pt-none">
-					<q-input class="brand" dense v-model="lectureName" autofocus />
+					<q-input color="teal" dense v-model="lectureName" autofocus />
 				</q-card-section>
 
 				<q-card-actions align="right" class="text-primary">
@@ -57,7 +57,7 @@
 				<q-btn flat round color="black" icon="arrow_forward_ios" />
 			</div>
 			<div v-else>
-				<h4>생성된 강의 이력이 없습니다</h4>
+				<h4>생성된 강의 이력이 없습니다.</h4>
 			</div>
 		</div>
 		<div class="flex row">

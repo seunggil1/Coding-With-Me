@@ -1,6 +1,6 @@
 <template>
 	<!-- v-if="session" -->
-	<q-layout view="lHr lpr fFf">
+	<q-layout class="scroll" view="lHr lpr fFf">
 		<!-- 오른쪽 참여자 + 채팅 부분 start -->
 		<q-drawer
 			:width="600"
@@ -21,12 +21,10 @@
 					v-if="teacherVideo.state.session !== undefined"
 					class="col-2 q-pl-sm"
 				>
-					<q-scroll-area style="height: 100%; max-width: 100vw">
+					<q-scroll-area class="type2" style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
 							<div style="width: 11%" class="q-pa-sm">
-								<user-video
-									:stream-manager="teacherVideo.state.publisher"
-								/>
+								<user-video :stream-manager="teacherVideo.state.publisher" />
 							</div>
 							<div
 								style="width: 11%"
@@ -34,25 +32,19 @@
 								v-for="(sub, idx) in teacherVideo.state.subscribers"
 								:key="idx"
 							>
-								<user-video
-									:stream-manager="sub"
-								/>
+								<user-video :stream-manager="sub" />
 							</div>
 						</div>
 					</q-scroll-area>
 				</div>
 				<!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
-				<div
-					:class="
-						teacherVideo.state.session ? 'col-10' : 'col-12'
-					"
-				>
+				<div :class="teacherVideo.state.session ? 'col-10' : 'col-12'">
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
 								<div class="q-pa-md flex-height">
 									<div class="flex" style="background: none">
-										<pdf-viewer 
+										<pdf-viewer
 											v-if="piniaCommonExamData.testID"
 											:source="`${HOST}/files/download/${piniaCommonExamData.testID}`"
 										/>
@@ -60,22 +52,25 @@
 								</div>
 							</template>
 							<template v-slot:after>
-								<div class="q-pa-md flex-height column">
+								<div class="q-pa-md q-mr-lg flex-height column">
 									<div class="col-1" style="background-color: #eeeeee">
 										<q-scroll-area style="height: 100%; max-width: 100vw">
 											<div class="row no-wrap">
 												<div
-													style="width: 11%"
+													style="width: 6%"
 													class="q-pa-sm"
 													v-for="idx in piniaCommonExamData.testQuCnt"
 													:key="idx"
 												>
-													<q-btn color="primary" 
+													<q-btn
+														push
+														color="teal"
 														:label="idx"
-														:disable="selectedProblem == idx" 
-														@click="if(selectedProblem != idx) selectedProblem = idx;"
+														:disable="selectedProblem == idx"
+														@click="
+															if (selectedProblem != idx) selectedProblem = idx;
+														"
 													/>
-
 												</div>
 											</div>
 										</q-scroll-area>
@@ -83,8 +78,18 @@
 									<div class="col-11">
 										<q-scroll-area style="height: 100%; max-width: 100vw">
 											<div class="column no-wrap">
-												<span v-if="piniaCommonExamData.testCase[selectedProblem-1]">
-													<div class="col" v-for="(tc, idx) in piniaCommonExamData.testCase[selectedProblem-1].testcase" :key="idx">
+												<span
+													v-if="
+														piniaCommonExamData.testCase[selectedProblem - 1]
+													"
+												>
+													<div
+														class="col"
+														v-for="(tc, idx) in piniaCommonExamData.testCase[
+															selectedProblem - 1
+														].testcase"
+														:key="idx"
+													>
 														<div class="row">
 															<div class="col">
 																<q-card flat bordered class="my-card">
@@ -129,7 +134,6 @@
 												</span>
 											</div>
 										</q-scroll-area>
-										
 									</div>
 								</div>
 							</template>
@@ -141,17 +145,17 @@
 		<!-- 메인캠 부분 end -->
 
 		<!-- 하단바 부분 start -->
-		<q-footer elevated class="bg-grey-8 text-white">
+		<q-footer
+			style="font-family: 'Elice Digital Baeum', sans-serif"
+			elevated
+			class="bg-grey-8 text-white"
+		>
 			<q-toolbar>
-				<div class="row full-width">
-					<div class="col-1">
-						<q-avatar>
-							<img src="src/assets/logo/logo.svg" />
-						</q-avatar>
-					</div>
+				<div class="q-my-sm row full-width">
+					<div class="col-1"></div>
 					<div class="col-10" align="center">
 						<q-btn
-							class="micBtn"
+							class="micBtn q-ml-md"
 							rounded
 							push
 							:icon="teacherVideo.isAudio ? 'mic' : 'mic_off'"
@@ -164,10 +168,10 @@
 						/>
 
 						<q-btn
-							class="camBtn"
+							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="teacherVideo.isVideo ? 'videocam_off' : 'videocam'"
+							:icon="teacherVideo.isVideo ? 'videocam' : 'videocam_off'"
 							:label="teacherVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
 							@click="
 								teacherVideo.isVideo
@@ -177,7 +181,7 @@
 						/>
 
 						<q-btn
-							class="examBtn"
+							class="examBtn q-ml-md"
 							rounded
 							push
 							icon="quiz"
@@ -185,7 +189,7 @@
 							@click="stopExam"
 						/>
 						<q-btn
-							class="leaveBtn"
+							class="leaveBtn q-ml-md"
 							rounded
 							push
 							color="red"
@@ -222,7 +226,7 @@ import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 import { teacherExamData } from 'src/stores/ExamProgress/teacher.js';
 import { useRouter } from 'vue-router';
-import { api } from 'src/boot/axios.js';
+// import { api } from 'src/boot/axios.js';
 
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import TeacherVideoSideBar from 'src/components/lectures/exam/TeacherSideBar.vue';
@@ -232,11 +236,11 @@ export default {
 	components: {
 		UserVideo,
 		TeacherVideoSideBar,
-		PdfViewer
+		PdfViewer,
 	},
 	props: {},
 
-	setup(props) {
+	setup() {
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		const splitterModel = ref(50);
 		const rightDrawerOpen = ref(true);
@@ -252,14 +256,14 @@ export default {
 			router.push('/');
 		};
 
-		const stopExam = () => {
-
-		};
+		const stopExam = () => {};
 
 		onMounted(() => {
 			teacherVideo.joinSession();
-			piniaCommonExamData
-				.getTestInfo(teacherVideo.state.classId, piniaCommonExamData.testName);
+			piniaCommonExamData.getTestInfo(
+				teacherVideo.state.classId,
+				piniaCommonExamData.testName,
+			);
 		});
 
 		return {
@@ -275,7 +279,7 @@ export default {
 			selectedProblem,
 
 			leaveSession,
-			stopExam
+			stopExam,
 		};
 	},
 };
@@ -301,5 +305,27 @@ export default {
 
 .flex-height {
 	height: 100% !important;
+}
+.scroll::-webkit-scrollbar {
+	display: none !important; /* for Chrome, Safari, and Opera */
+}
+.scroll {
+	overflow: hidden !important;
+}
+/* 스크롤바 설정*/
+.type2::-webkit-scrollbar {
+	width: 6px;
+}
+
+/* 스크롤바 막대 설정*/
+.type2::-webkit-scrollbar-thumb {
+	height: 17%;
+	background-color: rgba(33, 133, 133, 1);
+	border-radius: 10px;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.type2::-webkit-scrollbar-track {
+	background-color: rgba(33, 133, 133, 0.33);
 }
 </style>

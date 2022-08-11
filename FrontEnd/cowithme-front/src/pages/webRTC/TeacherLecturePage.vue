@@ -54,7 +54,10 @@
 								</div>
 							</template>
 							<template v-slot:after>
-								<div class="q-pa-md flex-height column">
+								<div
+									style="font-family: 'Elice Digital Baeum', sans-serif"
+									class="q-pa-md flex-height column"
+								>
 									<div class="col-1" style="background-color: #eeeeee">
 										<div
 											class="row flex-height"
@@ -170,7 +173,11 @@
 			</div>
 		</q-page-container>
 
-		<q-footer elevated class="bg-grey-8 text-white">
+		<q-footer
+			style="font-family: 'Elice Digital Baeum', sans-serif"
+			elevated
+			class="bg-grey-8 text-white"
+		>
 			<q-toolbar>
 				<div class="row full-width q-my-sm">
 					<div class="col-1"></div>
@@ -178,6 +185,7 @@
 						<q-btn
 							class="micBtn"
 							rounded
+							style="font-family: 'Elice Digital Baeum', sans-serif"
 							push
 							:icon="teacherVideo.isAudio ? 'mic' : 'mic_off'"
 							:label="teacherVideo.isAudio ? '음소거' : '음소거 해제'"
@@ -220,7 +228,7 @@
 							push
 							icon="quiz"
 							label="시험 시작"
-							@click="showExamDialog = true;"
+							@click="showExamDialog = true"
 						/>
 						<q-btn
 							class="leaveBtn q-ml-md"
@@ -259,36 +267,52 @@
 	</q-layout>
 
 	<!-- 시험 시작 누를때 뜨는 팝업 -->
-	<q-dialog v-model="showExamDialog">
+	<q-dialog
+		style="font-family: 'Elice Digital Baeum', sans-serif"
+		v-model="showExamDialog"
+	>
 		<q-card>
 			<q-card-section class="row items-center q-pb-none">
-				<div class="text-h6">시험 선택</div>
+				<div
+					style="font-family: 'Elice Digital Baeum', sans-serif"
+					class="text-h6"
+				>
+					시험 선택
+				</div>
 				<q-space />
 				<q-btn icon="close" flat round dense v-close-popup />
 			</q-card-section>
 
 			<q-card-section>
-				<q-select 
-					filled 
-					v-model="commonExamPinia.testName" 
-					:options="teacherVideo.state.testNameList" 
-					label="시험 선택" 
+				<q-select
+					filled
+					color="teal"
+					style="font-family: 'Elice Digital Baeum', sans-serif"
+					v-model="commonExamPinia.testName"
+					:options="teacherVideo.state.testNameList"
+					label="시험 선택"
 				/>
-				<q-input filled v-model="timeWithSeconds" mask="fulltime" :rules="['fulltime']">
+				<q-input
+					filled
+					color="teal"
+					style="font-family: 'Elice Digital Baeum', sans-serif"
+					v-model="timeWithSeconds"
+					mask="fulltime"
+					:rules="['fulltime']"
+				>
 					<template v-slot:append>
-						<q-icon name="access_time" class="cursor-pointer"/>
+						<q-icon name="access_time" class="cursor-pointer" />
 					</template>
 				</q-input>
 			</q-card-section>
 
 			<q-card-section>
 				<div class="row items-center justify-end">
-					<q-btn color="primary" label="시험 시작" @click="startExam" />
+					<q-btn color="teal" push label="시험 시작" @click="startExam" />
 				</div>
 			</q-card-section>
 		</q-card>
 	</q-dialog>
-
 </template>
 
 <script>
@@ -375,12 +399,10 @@ export default {
 
 		onBeforeUnmount(() => {
 			if (repeater) clearInterval(repeater);
-				window.removeEventListener('resize', teacherIde.value.updateEditor);
+			window.removeEventListener('resize', teacherIde.value.updateEditor);
 
-			if(redirectToExam.value)
-				teacherVideo.leaveSessionWithoutCallApi();
-			else
-				teacherVideo.leaveSession();
+			if (redirectToExam.value) teacherVideo.leaveSessionWithoutCallApi();
+			else teacherVideo.leaveSession();
 		});
 
 		// 시험 시작
@@ -388,34 +410,31 @@ export default {
 		const showExamDialog = ref(false);
 		const timeWithSeconds = ref('00:50:00');
 		const startExam = () => {
-			let data = timeWithSeconds.value.split(':').map((s)=>{
+			let data = timeWithSeconds.value.split(':').map(s => {
 				return parseInt(s);
-			})
+			});
 			const second = 3600 * data[0] + 60 * data[1] + 1 * data[2];
-			for(let testInfo of teacherVideo.state.testList){
-				if(commonExamPinia.testName == testInfo.testName){
+			for (let testInfo of teacherVideo.state.testList) {
+				if (commonExamPinia.testName == testInfo.testName) {
 					redirectToExam.value = true;
 					commonExamPinia.testID = testInfo.testId;
 					commonExamPinia.setTimeLimit(data[0], data[1], data[2]);
-					teacherVideo.sendTestInfo(testInfo.testId, second).then(()=>{
-						router.push({path: '/teacherexam'}).catch(()=>{
-							router.push({path: '/teacherexam'}).catch(()=>{
-								router.push({path: '/teacherexam'})
-							})
+					teacherVideo.sendTestInfo(testInfo.testId, second).then(() => {
+						router.push({ path: '/teacherexam' }).catch(() => {
+							router.push({ path: '/teacherexam' }).catch(() => {
+								router.push({ path: '/teacherexam' });
+							});
 						});
-
-					})
+					});
 					break;
 				}
 			}
-			
-			
 		};
 
 		const leaveSession = () => {
-			router.push({path: '/'}).catch((err)=>{
+			router.push({ path: '/' }).catch(err => {
 				console.error(err);
-				router.push({path: '/'});
+				router.push({ path: '/' });
 			});
 		};
 
@@ -463,8 +482,6 @@ export default {
 .flex {
 	width: 100% !important;
 	height: 100% !important;
-
-	background-color: white !important;
 }
 
 .flex-width {
