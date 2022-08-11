@@ -278,7 +278,7 @@ export default defineComponent({
 			testTest,
 			goSetClassInfo,
 			splitterModel: ref(39),
-			date: ref('2019/02/01'),
+			date: ref('today'),
 			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
 		};
 	},
