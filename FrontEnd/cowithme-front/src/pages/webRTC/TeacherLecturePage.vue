@@ -339,7 +339,7 @@ export default {
 
 		// IDE
 		const teacherIde = ref(undefined);
-		const splitterModel = ref(50);
+		const splitterModel = ref(40);
 		watch(splitterModel, () => {
 			teacherIde.value.updateEditor();
 		});

@@ -1,7 +1,7 @@
 <template>
 	<div
 		class="q-pa-md column justify-center"
-		style="height: 95vh; font-family: 'OTWelcomeBA'"
+		style="height: 95vh; font-family: 'Elice Digital Baeum', 'sans-serif'"
 	>
 		<q-scroll-area class="col-6" style="width: 100%">
 			<span>
@@ -36,8 +36,7 @@
 				v-model="myChatInput"
 				label="메시지를 입력하세요"
 				:dense="true"
-				color="brand"
-				style="color: #00adb5"
+				color="teal"
 				@keydown.enter.prevent="
 					piniaData.sendMessage(myChatInput);
 					myChatInput = '';

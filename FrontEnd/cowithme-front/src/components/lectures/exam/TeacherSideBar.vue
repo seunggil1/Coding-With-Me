@@ -54,7 +54,7 @@
 				class="column justify-center"
 				style="height: 95vh; font-family: 'OTWelcomeBA'"
 			>
-				<q-scroll-area class="col-10" style="width: 100%">
+				<q-scroll-area class="col-10 q-pa-xl" style="width: 100%">
 					<span
 						v-for="(chat, index) in teacherVideo.state.chatting"
 						:key="index"

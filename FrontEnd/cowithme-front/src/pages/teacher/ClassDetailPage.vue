@@ -65,12 +65,12 @@
 				<div class="box q-px-lg q-py-lg q-mr-md hvr-grow">
 					<div class="row">
 						<div class="col-10">
-							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
+							<p style="font-size: 18px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 학생
 							</p>
 							<q-chip
 								class="hvr-grow"
-								color="grey"
+								color="teal"
 								text-color="white"
 								icon="face"
 								v-for="student in students"
@@ -102,7 +102,7 @@
 				<div class="box q-px-lg q-py-lg q-ml-md hvr-grow">
 					<div class="row">
 						<div class="col-10">
-							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
+							<p style="font-size: 18px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 시험
 							</p>
 							<q-list v-for="test in tests" :key="test.testId">
@@ -117,9 +117,9 @@
 											>
 												<q-uploader
 													:url="`https://i7a304.p.ssafy.io/api/v1/files/upload/${test.testId}`"
-													style="max-width: 300px; color: #00adb5"
+													style="max-width: 300px"
 													id="testFile"
-													color="#00adb5"
+													color="teal"
 													label="시험 파일(PDF)"
 													field-name="files"
 													class="q-mt-lg"

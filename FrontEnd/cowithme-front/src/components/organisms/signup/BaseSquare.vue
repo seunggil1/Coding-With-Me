@@ -130,7 +130,7 @@ function openBad(pos) {
 						v-model="name"
 						label="이름"
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[val => (val && val.length > 0) || '이름을 입력해주세요.']"
 					></q-input>
@@ -144,7 +144,7 @@ function openBad(pos) {
 							v-model="id"
 							label="아이디"
 							lazy-rules
-							color="brand"
+							color="teal"
 							bg-color="white"
 							:rules="[
 								val => (val && val.length > 0) || '아이디를 입력해주세요.',
@@ -161,7 +161,7 @@ function openBad(pos) {
 						v-model="password"
 						label="비밀번호"
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
@@ -175,7 +175,7 @@ function openBad(pos) {
 						v-model="passwordCheck"
 						label="비밀번호 확인"
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
@@ -194,7 +194,7 @@ function openBad(pos) {
 						v-model="email"
 						label="이메일"
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '이메일을 입력해주세요.',
@@ -214,7 +214,7 @@ function openBad(pos) {
 						mask="###-####-####"
 						unmasked-value
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '전화번호를 입력해주세요.',
@@ -228,7 +228,7 @@ function openBad(pos) {
 						v-model="nickname"
 						label="닉네임"
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '닉네임을 입력해주세요.',
@@ -242,7 +242,7 @@ function openBad(pos) {
 						type="date"
 						v-model="birthDt"
 						lazy-rules
-						color="brand"
+						color="teal"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '생년월일을 입력해주세요.',
@@ -283,7 +283,7 @@ function openBad(pos) {
 								v-model="role"
 								val="강사"
 								label="강사"
-								color="brand"
+								color="teal"
 							></q-radio>
 							<q-radio
 								dark
@@ -292,7 +292,7 @@ function openBad(pos) {
 								v-model="role"
 								val="학생"
 								label="학생"
-								color="brand"
+								color="teal"
 							></q-radio>
 						</div>
 
