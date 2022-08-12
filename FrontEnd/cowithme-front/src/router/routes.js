@@ -1,3 +1,6 @@
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const routes = [
 	{
 		path: '/',
@@ -64,6 +67,12 @@ const routes = [
 		path: '/login',
 		name: 'login',
 		component: () => import('pages/account/LoginPage.vue'),
+		beforeEnter: function (to, from, next) {
+			if (localStorage.getItem('token')) {
+				next('/home');
+			}
+			next();
+		},
 	},
 	{
 		path: '/IDfind',

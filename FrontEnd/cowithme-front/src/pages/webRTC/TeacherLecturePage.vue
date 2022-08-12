@@ -71,7 +71,7 @@
 												/>
 												<!-- <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div> -->
 											</div>
-											<div class="col-2">
+											<div class="col-2 q-pr-sm">
 												<div
 													class="row justify-center flex"
 													style="background-color: #eeeeee"
@@ -89,17 +89,6 @@
 															{ label: 'Off', value: false },
 														]"
 													/>
-													<!-- <q-btn-toggle
-														v-model="enableSync"
-														push
-														rounded
-														toggle-color="primary"
-														class="col q-pa-sm"
-														:options="[
-															{ label: 'Sync', value: true },
-															{ label: 'Off', value: false },
-														]"
-													/> -->
 												</div>
 											</div>
 											<div class="col-2">
