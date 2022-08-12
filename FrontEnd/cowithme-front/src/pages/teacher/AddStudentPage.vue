@@ -3,29 +3,34 @@
 		class="q-pa-lg"
 		style="font-family: 'Elice Digital Baeum', sans-serif; max-width: 800px"
 	>
-		<q-form @submit="goSearchStudent" class="q-gutter-md">
-			<q-input
-				rounded
-				outlined
-				type="text"
-				color="brand"
-				bg-color="white"
-				v-model="name"
-				label="학생 이름"
-			/>
-
-			<div>
-				<q-btn
-					push
-					label="검색하기"
-					type="submit"
-					style="background: #00adb5; color: white; font-size: 16px"
-				></q-btn>
-			</div>
-		</q-form>
-		<div class="q-mt-lg row">
-			<div class="col-2" v-for="res in studentResult" :key="res.userId">
-				<q-btn push @click="addStudent(res.userId)"> + {{ res.name }} </q-btn>
+		<div
+			class="box q-ma-lg q-pa-md q-gutter-md"
+			style="font-family: 'Elice Digital Baeum'"
+		>
+			<q-form @submit="goSearchStudent" class="q-gutter-md row">
+				<q-input
+					class="col-7"
+					rounded
+					outlined
+					type="text"
+					color="teal"
+					bg-color="white"
+					v-model="name"
+					label="학생 이름"
+				/>
+				<div class="col-3 flex items-center">
+					<q-btn
+						push
+						label="검색하기"
+						type="submit"
+						style="background: #00adb5; color: white; font-size: 16px"
+					></q-btn>
+				</div>
+			</q-form>
+			<div class="q-mt-lg row">
+				<div class="col-2" v-for="res in studentResult" :key="res.userId">
+					<q-btn push @click="addStudent(res.userId)"> + {{ res.name }} </q-btn>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -89,7 +94,7 @@ export default {
 <style lang="scss" scoped>
 .box {
 	min-height: 300px !important;
-	background-color: #eeeeee !important;
+	background-color: white !important;
 	border-radius: 10px !important;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }

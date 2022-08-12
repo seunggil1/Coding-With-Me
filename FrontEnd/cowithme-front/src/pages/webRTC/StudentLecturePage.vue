@@ -71,7 +71,10 @@
 								</div>
 							</template>
 							<template v-slot:after>
-								<div class="q-pa-md flex-height column">
+								<div
+									class="q-pa-md flex-height column"
+									style="font-family: 'Elice Digital Baeum', sans-serif"
+								>
 									<div class="col-1" style="background-color: #eeeeee">
 										<div
 											class="row flex-height"
@@ -85,20 +88,27 @@
 												/>
 											</div>
 											<div class="col-2">
-												<div
+												<!-- <div
 													class="row justify-center flex"
 													style="background-color: #eeeeee"
-												>
-													<q-btn
-														style="max-width: 150px; max-height: 60px font-size: 24px"
-														class="col q-ma-sm q-pd-md"
-														color="secondary"
-														push
-														label="Run"
-														@click="runCode"
-														:loading="isRunning"
-													/>
-												</div>
+												> -->
+												<q-btn
+													style="
+                              width: 130px;
+                              max-width: 130px;
+                              min-width: 130px;
+                              max-height: 90%
+                              font-size: 18px;
+                              float: right;
+                            "
+													class="col q-pa-sm q-mt-md q-mr-md"
+													color="secondary"
+													push
+													label="Run"
+													@click="runCode"
+													:loading="isRunning"
+												/>
+												<!-- </div> -->
 											</div>
 										</div>
 									</div>
@@ -155,7 +165,11 @@
 			</div>
 		</q-page-container>
 
-		<q-footer elevated class="bg-grey-8 text-white">
+		<q-footer
+			style="font-family: 'Elice Digital Baeum', sans-serif"
+			elevated
+			class="bg-grey-8 text-white"
+		>
 			<q-toolbar>
 				<div class="row full-width q-my-sm">
 					<div class="col-1">

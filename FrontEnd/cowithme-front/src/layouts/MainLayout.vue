@@ -80,7 +80,7 @@
 				</div>
 				<div class="row">
 					<router-link
-						:to="{ name: 'home' }"
+						:to="{ path: '/home' }"
 						style="text-decoration: none; color: inherit"
 					>
 						<AtomHomeButton class="font-OT"></AtomHomeButton>

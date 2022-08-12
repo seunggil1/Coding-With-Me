@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<div v-if="info2.role == '학생'">
-			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
+			<div class="q-pa-lg" style="font-family: 'Elice Digital Baeum'">
 				<div class="q-gutter-md hvr-grow">
 					<div class="class-info">
 						<div v-if="isInClass">
@@ -79,16 +79,18 @@
 			</div>
 			<!-- <div>{{ classStore.userClass.className }}</div> -->
 			<div class="q-pt-lg">
-				<q-splitter v-model="splitterModel" style="height: 450px">
+				<q-splitter v-model="splitterModel" style="height: 370px">
 					<template v-slot:before>
-						<div class="q-pa-md">
-							<CalendarInfo
-								class="hvr-grow"
+						<div class="q-pa-lg">
+							<q-date
+								class="hvr-grow test"
 								v-model="date"
 								:events="events"
 								event-color="orange"
+								color="grey"
 								style="font-family: 'Elice Digital Baeum'"
-							></CalendarInfo>
+								landscape
+							/>
 						</div>
 					</template>
 
@@ -137,16 +139,12 @@
 </template>
 
 <script>
-// import { app.css}  from './app.css'
 import { api } from 'src/boot/axios.js';
 import { onMounted, ref } from 'vue';
-// import { onBeforeMount } from 'vue';
-// import { fetchWrapper } from 'src/helpers';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-// import { useClassStore } from 'src/stores';
 
-import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
+// import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 // import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
 import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
@@ -157,7 +155,7 @@ import { studentVideoStore } from 'src/stores/studentVideo.store';
 export default defineComponent({
 	name: 'IndexPage',
 	components: {
-		CalendarInfo,
+		// CalendarInfo,
 		// ClassInfo,
 		LectureTimeHistory,
 		AtomPlusButton,
@@ -169,7 +167,6 @@ export default defineComponent({
 		const testTest = ref([]);
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		const baseUrl = `${HOST}`;
-		const date = ref();
 
 		const router = useRouter();
 
@@ -305,8 +302,8 @@ export default defineComponent({
 			classes,
 			testTest,
 			goSetClassInfo,
-			splitterModel: ref(39),
-			date,
+			splitterModel: ref(30),
+			date: ref('2022/08/12'),
 			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
 		};
 	},
@@ -351,5 +348,9 @@ export default defineComponent({
 }
 [v-cloak] {
 	display: none !important;
+}
+.test {
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
+	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 }
 </style>
