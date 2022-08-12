@@ -45,7 +45,7 @@
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-pa-md flex-height">
+								<div class="q-pa-md">
 									<div class="flex" style="background: none">
 										<user-video
 											:stream-manager="teacherVideo.state.mainStreamManager"
@@ -59,55 +59,63 @@
 									class="q-pa-md flex-height column"
 								>
 									<div class="col-1" style="background-color: #eeeeee">
-										<div
-											class="row flex-height"
+										<!-- <div
+											class="row"
+											style="background-color: #eeeeee; width: 400px"
+										> -->
+										<!-- <div class="col-8 shadow"> -->
+										<q-img
+											style="width: 70px"
+											class="test"
+											src="src/assets/logo/logo.svg"
+										/>
+										<!-- <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div> -->
+										<!-- </div> -->
+										<!-- <div class="col-2 q-pr-sm flex justify-end"> -->
+										<!-- <div
+											class="row justify-end flex"
 											style="background-color: #eeeeee"
-										>
-											<div class="col-8 shadow">
-												<q-img
-													style="width: 70px"
-													class="test"
-													src="src/assets/logo/logo.svg"
-												/>
-												<!-- <div class="text-h4 q-pl-sm q-pb-xs q-pt-xs">IDE</div> -->
-											</div>
-											<div class="col-2 q-pr-sm">
-												<div
-													class="row justify-center flex"
-													style="background-color: #eeeeee"
-												>
-													<q-btn-toggle
-														v-model="enableSync"
-														push
-														no-caps
-														unelevated
-														color="blue-grey-8"
-														toggle-color="orange-14"
-														class="col q-pa-sm"
-														:options="[
-															{ label: 'Sync', value: true },
-															{ label: 'Off', value: false },
-														]"
-													/>
-												</div>
-											</div>
-											<div class="col-2">
-												<div
-													class="row justify-center flex"
-													style="background-color: #eeeeee"
-												>
-													<q-btn
-														style="max-width: 150px; max-height: 60px font-size: 24px"
-														class="col q-ma-sm q-pd-md"
-														color="secondary"
-														push
-														label="Run"
-														@click="runCode"
-														:loading="isRunning"
-													/>
-												</div>
-											</div>
-										</div>
+										> -->
+										<q-btn-toggle
+											v-model="enableSync"
+											push
+											no-caps
+											unelevated
+											color="blue-grey-8"
+											toggle-color="orange-14"
+											class="col q-pa-sm"
+											:options="[
+												{ label: 'Sync', value: true },
+												{ label: 'Off', value: false },
+											]"
+										/>
+										<!-- </div> -->
+										<!-- </div> -->
+										<!-- <div class="col-2"> -->
+										<!-- <div
+											class="row justify-end flex"
+											style="background-color: #eeeeee"
+										> -->
+										<q-btn
+											style="
+												width: 130px;
+												max-width: 130px;
+												min-width: 130px;
+                        max-height: 90%
+												font-size: 18px;
+												float: right;
+											"
+											class="col q-pa-sm q-mt-md q-mr-md"
+											color="secondary"
+											push
+											label="코드 실행"
+											@click="runCode"
+											:loading="isRunning"
+										/>
+
+										<!-- </div> -->
+										<!-- </div> -->
+										<!-- </div> -->
 									</div>
 									<div class="col-7">
 										<web-editor
