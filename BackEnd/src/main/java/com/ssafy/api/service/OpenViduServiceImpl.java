@@ -74,11 +74,10 @@ public class OpenViduServiceImpl implements OpenViduService {
 
         // 접속하려는 방이 있으면 받아오고, 없으면 새로 생성한다.
         SessionInfo targetSessionInfo;
-        if (SessionInfoMap.containsKey(sessionId)){
-            targetSessionInfo = SessionInfoMap.get(sessionId);
-        }else{
-            targetSessionInfo = new SessionInfo(makeSession(sessionId));
+        if (!SessionInfoMap.containsKey(sessionId)) {
+            makeSession(sessionId);
         }
+        targetSessionInfo = SessionInfoMap.get(sessionId);
 
         Connection connection = targetSessionInfo.session.createConnection(connectionProperties);
 
@@ -86,7 +85,10 @@ public class OpenViduServiceImpl implements OpenViduService {
         if(targetSessionInfo.connectionIDMap.containsKey(userId)){
             Connection oldConnection = targetSessionInfo.connectionIDMap.get(userId);
             targetSessionInfo.tokenIDMap.remove(oldConnection.getToken());
-            targetSessionInfo.session.forceDisconnect(oldConnection);
+            try{
+                targetSessionInfo.session.forceDisconnect(oldConnection);
+            }catch (Exception e){  }
+
             targetSessionInfo.connectionIDMap.remove(userId);
         }
 

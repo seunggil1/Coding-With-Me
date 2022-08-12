@@ -79,10 +79,7 @@ public class WebRTCServiceImpl implements WebRTCService {
         }
 
         String token = openViduService.getToken(conferenceId, userId, displayName);
-
         return token;
-
-
     }
 
     @Override
