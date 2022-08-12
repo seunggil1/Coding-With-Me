@@ -13,8 +13,8 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		mainStreamManager: undefined,
 		publisher: undefined,
 		subscribers: [],
-		mySessionId: '알고리즘 10주차 수업', // 나중에 처리
-		myUserName: '김씨', // 나중에 처리
+		mySessionId: '162', // 나중에 처리
+		myUserName: 'aaa', // 나중에 처리
 		classId: 5,
 		userId: 31,
 		id: 'aaa', // 로그인 할 때
@@ -28,7 +28,7 @@ export const studentVideoStore = defineStore('studentVideo', () => {
 		// 웹 IDE 데이터도 여기서 처리함.
 		teacherCode:
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
-		myCode: 'import java.util.*;\nimport java.io.*;\n',
+		myCode: "import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}",
 
 		token: '',
 

@@ -209,9 +209,20 @@
 							push
 							icon="quiz"
 							label="시험 입장"
-							:disable="studentVideo.state.openTest"
+							v-if="studentVideo.state.openTest"
 							@click="startExam"
 						/>
+						<q-btn
+							class="examBtn q-ml-md"
+							rounded
+							push
+							icon="quiz"
+							label="시험 입장"
+							v-if="!studentVideo.state.openTest"
+							disable
+							@click="startExam"
+						/>
+
 						<q-btn
 							class="leaveBtn q-ml-md"
 							rounded
@@ -362,8 +373,6 @@ export default {
 		};
 
 		const leaveSession = () => {
-			studentVideo.leaveSession().catch();
-
 			router.push({path: '/classDetail/' + studentVideo.state.classId}).catch((err)=>{
 				console.error(err);
 				router.push({path: '/classDetail/' + studentVideo.state.classId});
