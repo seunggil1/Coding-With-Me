@@ -70,13 +70,15 @@ public class TestRecordServiceImpl implements TestRecordService {
 
             UserClass userClass = userClassRepository.findByStudentId(user.getUserId()).get();
 
-            Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(userClass.getUserClassId()).get();
+//            Conference conference = conferenceRepositorySupport.findByClassesClassIdActive(userClass.getUserClassId()).get();
 
+            Date date =new Date();
 
             testRecord.setUser(user);
             testRecord.setTest(test);
             testRecord.setLang(testRecordRegisterInfo.getLang());
-            testRecord.setDate(conference.getDate());
+//            testRecord.setDate(conference.getDate());
+            testRecord.setDate(date);
         }
 
         System.out.println("test======================="+testRecord.getDate());
