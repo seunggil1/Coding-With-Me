@@ -359,26 +359,25 @@ export default {
 				clearInterval(repeater);
 				repeater = undefined;
 			}
-			if(redirectToExam.value)
-				studentVideo.leaveSessionWithoutCallApi();
-			else
-				studentVideo.leaveSession();
+			if (redirectToExam.value) studentVideo.leaveSessionWithoutCallApi();
+			else studentVideo.leaveSession();
 		});
-		
+
 		// 시험 시작
 		const startExam = () => {
 			studentVideo.state.openTest = false;
 			redirectToExam.value = true;
-			router.push({path : '/studentexam'});
+			router.push({ path: '/studentexam' });
 		};
 
 		const leaveSession = () => {
-			router.push({path: '/classDetail/' + studentVideo.state.classId}).catch((err)=>{
-				console.error(err);
-				router.push({path: '/classDetail/' + studentVideo.state.classId});
-			});
+			router
+				.push({ path: '/classDetail/' + studentVideo.state.classId })
+				.catch(err => {
+					console.error(err);
+					router.push({ path: '/classDetail/' + studentVideo.state.classId });
+				});
 		};
-
 
 		return {
 			studentVideo,

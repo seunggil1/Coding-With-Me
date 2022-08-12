@@ -78,6 +78,14 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<router-link
+						:to="{ name: 'home' }"
+						style="text-decoration: none; color: inherit"
+					>
+						<AtomHomeButton class="font-OT"></AtomHomeButton>
+					</router-link>
+				</div>
 				<div v-if="info2.role == '학생'" class="row">
 					<router-link
 						:to="{ name: 'reportCard', params: { userId: info2.userId } }"
@@ -135,6 +143,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from 'src/stores';
 import AtomProfileImg from 'src/components/atoms/AtomProfileImg.vue';
 import AtomStudentProfile from 'src/components/atoms/AtomStudentProfile.vue';
+import AtomHomeButton from 'src/components/atoms/AtomHomeButton.vue';
 
 export default defineComponent({
 	name: 'MainLayout',
@@ -146,6 +155,7 @@ export default defineComponent({
 		AtomScoreIconButton,
 		AtomProfileImg,
 		AtomStudentProfile,
+		AtomHomeButton,
 	},
 
 	setup() {
