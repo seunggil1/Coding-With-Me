@@ -8,7 +8,7 @@
 			size="25px"
 			push
 			style="background: #ff5722; color: white; font-family: 'MICEGothic Bold'"
-			>{{ className }}의 강의 시작하기</q-btn
+			>{{ className }} 강의 시작하기</q-btn
 		>
 		<q-dialog
 			class="brand"
@@ -28,7 +28,7 @@
 					<q-btn
 						class="brand"
 						flat
-						label="만들기"
+						label="시작하기"
 						@click="startLecture"
 						v-close-popup
 					/>
@@ -36,28 +36,45 @@
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
-		<div class="box2 q-mb-md q-pa-md row items-center justify-around no-wrap">
-			<div v-if="lectures.length != 0">
-				<q-btn flat round color="black" icon="arrow_back_ios_new" />
-				<q-card
-					class="lecture-card"
-					v-for="lecture in lectures.slice().reverse()"
-					:key="lecture"
+		<div class="box2 q-mb-md hvr-grow">
+			<q-carousel
+				v-if="pagingLectures.length != 0"
+				v-model="slide"
+				transition-prev="slide-right"
+				transition-next="slide-left"
+				swipeable
+				animated
+				control-color="black"
+				padding
+				arrows
+				height="300px"
+				class="shadow-1 rounded-borders"
+			>
+				<q-carousel-slide
+					v-for="(lectures, index) in pagingLectures"
+					:key="index"
+					:name="1 + index"
+					class="row no-wrap items-center justify-center"
 				>
-					<q-card-section>
-						<div class="text-h6">{{ lecture.conferenceName }}</div>
-						<div class="text-subtitle2">{{ lecture.date }}</div>
-					</q-card-section>
-					<q-card-section> </q-card-section>
-					<q-separator />
-					<q-card-section>
-						<div>종료된 강의입니다.</div>
-					</q-card-section>
-				</q-card>
-				<q-btn flat round color="black" icon="arrow_forward_ios" />
-			</div>
+					<q-card
+						class="lecture-card q-mx-lg"
+						v-for="lecture in lectures[0]"
+						:key="lecture"
+					>
+						<q-card-section>
+							<div class="text-h6">{{ lecture.conferenceName }}</div>
+							<div class="text-subtitle2">{{ lecture.date }}</div>
+						</q-card-section>
+						<q-card-section> </q-card-section>
+						<q-separator />
+						<q-card-section>
+							<div>종료된 강의입니다.</div>
+						</q-card-section>
+					</q-card>
+				</q-carousel-slide>
+			</q-carousel>
 			<div v-else>
-				<h4>생성된 강의 이력이 없습니다.</h4>
+				<h4>생성된 강의 이력이 없습니다</h4>
 			</div>
 		</div>
 		<div class="flex row">
@@ -65,12 +82,12 @@
 				<div class="box q-px-lg q-py-lg q-mr-md hvr-grow">
 					<div class="row">
 						<div class="col-10">
-							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
+							<p style="font-size: 18px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 학생
 							</p>
 							<q-chip
 								class="hvr-grow"
-								color="grey"
+								color="teal"
 								text-color="white"
 								icon="face"
 								v-for="student in students"
@@ -102,7 +119,7 @@
 				<div class="box q-px-lg q-py-lg q-ml-md hvr-grow">
 					<div class="row">
 						<div class="col-10">
-							<p style="font-size: 26px; font-family: 'MICEGothic Bold'">
+							<p style="font-size: 18px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 시험
 							</p>
 							<q-list v-for="test in tests" :key="test.testId">
@@ -117,9 +134,9 @@
 											>
 												<q-uploader
 													:url="`https://i7a304.p.ssafy.io/api/v1/files/upload/${test.testId}`"
-													style="max-width: 300px; color: #00adb5"
+													style="max-width: 300px"
 													id="testFile"
-													color="#00adb5"
+													color="teal"
 													label="시험 파일(PDF)"
 													field-name="files"
 													class="q-mt-lg"
@@ -236,14 +253,37 @@ export default {
 			await router.push({ path: '/addStudent' });
 		}
 
+		// 페이지네이션 관련
+		const totalPage = ref(0);
+		const totalLecture = ref(0);
+		const pagingLectures = ref([]);
 		const lectures = ref([]);
+
 		function getLectures() {
 			api
-				.get(`conferences/${classId}/all`)
+				.get(`conferences/${classId}/not-active`)
 				.then(res => {
 					// console.log(res.data);
 					lectures.value = res.data.conference;
 					console.log('강의 목록 가져오기', lectures.value);
+					totalLecture.value = lectures.value.length; // 전체 강의 수
+					totalPage.value = Math.ceil(totalLecture.value / 5); // 나오는 페이지 수
+					let max = totalLecture.value - 1;
+					let min = max - 4;
+					if (min < 0) {
+						min = 0;
+					}
+					for (let i = 0; i < totalPage.value; i++) {
+						let temp = [];
+						temp.push(lectures.value.slice(min, max + 1).reverse());
+						pagingLectures.value.push(temp);
+						max -= 5;
+						if (min - 5 < 0) {
+							min = 0;
+						} else {
+							min -= 5;
+						}
+					}
 				})
 				.catch(err => {
 					console.log('강의 목록 없거나 에러', err);
@@ -252,6 +292,9 @@ export default {
 		getLectures();
 
 		return {
+			totalPage,
+			pagingLectures,
+			totalLecture,
 			lectures,
 			goAddStudent,
 			students,
@@ -264,6 +307,7 @@ export default {
 			files,
 			itemRefs,
 			skipUnwrap,
+			slide: ref(1),
 		};
 	},
 };
@@ -310,5 +354,13 @@ export default {
 }
 .brand {
 	color: #00adb5 !important;
+}
+.lecture-card {
+	width: 15% !important;
+	height: 85% !important;
+}
+.box3 {
+	width: 100% !important;
+	height: 300px !important;
 }
 </style>

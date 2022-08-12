@@ -53,12 +53,24 @@
 							</template>
 							<template v-slot:after>
 								<div class="q-pa-md q-mr-lg flex-height column">
-									<div class="col-1" style="background-color: #eeeeee">
+									<div
+										class="col-1"
+										style="background-color: #eeeeee; border-radius: 5px"
+									>
 										<q-scroll-area style="height: 100%; max-width: 100vw">
 											<div class="row no-wrap">
+												<p
+													style="
+														font-family: 'Elice Digital Baeum', sans-serif;
+														font-size: 1.5rem;
+														color: #000000;
+													"
+													class="q-pa-md"
+												>
+													Test Cases /
+												</p>
 												<div
-													style="width: 6%"
-													class="q-pa-sm"
+													class="q-pl-sm q-pt-md"
 													v-for="idx in piniaCommonExamData.testQuCnt"
 													:key="idx"
 												>

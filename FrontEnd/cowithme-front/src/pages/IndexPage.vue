@@ -158,6 +158,7 @@ export default defineComponent({
 		const testTest = ref([]);
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		const baseUrl = `${HOST}`;
+		const date = ref();
 
 		const router = useRouter();
 
@@ -294,7 +295,7 @@ export default defineComponent({
 			testTest,
 			goSetClassInfo,
 			splitterModel: ref(39),
-			date: ref('today'),
+			date,
 			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
 		};
 	},
