@@ -263,7 +263,6 @@ export default defineComponent({
 				console.log('출입기록 생성 에러', error);
 			}
 
-			studentVideo.joinSession();
 			router.push('/studentlecture');
 		}
 

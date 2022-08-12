@@ -14,12 +14,13 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		subscribers: [],
 		mySessionId: '알고리즘 10주차 수업', // 나중에 처리
 		myUserName: '김동욱', // 나중에 처리
+		conferenceKey : '',
 		classId: 5,
 		userId: 26,
 		id: 'ksgg1', // 로그인 할 때
 		screenOV: undefined,
 		screenSession: undefined,
-		screenShareName: '', // 나중에 처리
+		screenShareName: '',
 		chatting: [],
 
 		testList: [],
@@ -29,6 +30,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
 
 		token: '',
+		screenToken : '',
 	});
 
 	const getTestList = () => {
@@ -97,9 +99,11 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 	function startScreenShare() {
 		state.screenOV = new OpenVidu();
 		state.screenSession = state.screenOV.initSession();
+		state.screenShareName = `${ state.myUserName }'s screen`;
 
-		getToken(state.mySessionId)
+		getToken(true)
 			.then(token => {
+				state.screenToken = token;
 				state.screenSession
 					.connect(token, { clientData: state.screenShareName })
 					.then(() => {
@@ -142,6 +146,11 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		state.screenOV = undefined;
 		state.screenSession = undefined;
 		isScreen.value = !isScreen.value;
+
+		api.post('/conference/leaveSession', {
+			conferenceId: state.conferenceKey,
+			token: state.screenToken,
+		});
 	}
 
 	function joinSession() {
@@ -197,6 +206,9 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 						// --- Publish your stream ---
 						state.session.publish(state.publisher);
 					});
+					api.get('/conferences/' + state.classId + '/active').then((res)=>{
+						state.conferenceKey = res.data.conference.conferenceId
+					})
 				})
 				.catch(error => {
 					console.log(
@@ -223,7 +235,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			state.session.disconnect();
 		}
 		if (state.screenSession) {
-			state.screenSession.disconnect();
+			stopScreenShare();
 		}
 		state.session = undefined;
 		state.screenSession = undefined;
@@ -247,7 +259,7 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 			state.session.disconnect();
 		}
 		if (state.screenSession) {
-			state.screenSession.disconnect();
+			stopScreenShare();
 		}
 		state.session = undefined;
 		state.screenSession = undefined;
@@ -263,11 +275,8 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		isVideo.value = true;
 		isScreen.value = false;
 
-		let conferenceID = (
-			await api.get('/conferences/' + state.classId + '/active')
-		).data.conference.conferenceId;
 		await api.post('/conference/leaveSession', {
-			conferenceId: conferenceID,
+			conferenceId: state.conferenceKey,
 			token: state.token,
 		});
 		state.token = '';
@@ -275,17 +284,12 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 	}
 
 	// serverSide start. Backend가 완성되면 변경 필요.
-	async function getToken() {
-		// await createSession();
-		return await createToken();
-	}
-
-	async function createToken() {
+	async function getToken(isScreen = false) {
 		try {
 			const response = await api.post(`/conference/getToken`, {
 				classId: state.classId,
-				displayName: state.myUserName,
-				id: state.userId,
+				displayName: isScreen ? state.screenShareName :state.myUserName,
+				id: isScreen ? state.userId + 2100000 : state.userId,
 			});
 			console.log('토큰발급', response);
 			return response.data.token;
@@ -320,9 +324,6 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		state.mainStreamManager = stream;
 	}
 
-	function setScreenShareName() {
-		state.screenShareName = state.myUserName + "'S screen";
-	}
 
 	function sendMessage(message) {
 		if (state.session == undefined) {
@@ -409,11 +410,9 @@ export const teacherVideoStore = defineStore('teacherVideo', () => {
 		leaveSessionWithoutCallApi,
 		leaveSession,
 		getToken,
-		createToken,
 		createSession,
 
 		updateMainVideoStreamManager,
-		setScreenShareName,
 		sendMessage,
 		sendCode,
 		sendTestInfo,

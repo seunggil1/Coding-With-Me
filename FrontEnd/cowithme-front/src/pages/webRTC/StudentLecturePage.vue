@@ -386,10 +386,10 @@ export default {
 
 		const leaveSession = () => {
 			router
-				.push({ path: '/classDetail/' + studentVideo.state.classId })
+				.push({ path: '/home' })
 				.catch(err => {
 					console.error(err);
-					router.push({ path: '/classDetail/' + studentVideo.state.classId });
+					router.push({ path: '/home' });
 				});
 		};
 
