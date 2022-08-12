@@ -43,25 +43,36 @@
 		</div>
 		<div v-if="info2.role == '학생'">
 			<div class="q-pa-lg" style="font-family: 'Elice Digital Baeum'">
-				<div class="q-gutter-md">
+				<div class="q-gutter-md hvr-grow">
 					<div class="class-info">
-						<div class="col q-ma-lg">
-							<!-- 반, 강의제목, 날짜 -->
-							<div class="info" style="margin-bottom: 20px">
-								<p style="font-size: 40px">{{ testTest.className }} 의 강의</p>
-								<p style="font-size: 18px">교수: {{ testTest.tutorName }}</p>
+						<div v-if="isInClass">
+							<div class="col q-ma-lg">
+								<!-- 반, 강의제목, 날짜 -->
+								<div class="info" style="margin-bottom: 20px">
+									<p style="font-size: 40px">
+										{{ testTest.className }} 의 강의
+									</p>
+									<p style="font-size: 18px">교수: {{ testTest.tutorName }}</p>
+								</div>
+							</div>
+							<div class="col">
+								<p>강의 리스트와 강의 입장 버튼들</p>
+								<AtomBasic1Button
+									v-if="isActiveLecture"
+									class="button"
+									push
+									label="강의 입장"
+									style="font-family: 'Elice Digital Baeum'"
+									@click="enterLecture"
+								></AtomBasic1Button>
 							</div>
 						</div>
-						<div class="col">
-							<p>강의 리스트와 강의 입장 버튼들</p>
-							<AtomBasic1Button
-								v-if="isActiveLecture"
-								class="button"
-								push
-								label="강의 입장"
-								style="font-family: 'Elice Digital Baeum'"
-								@click="enterLecture"
-							></AtomBasic1Button>
+						<div
+							v-else
+							class="row justify-center items-center"
+							style="height: 100%"
+						>
+							<h5>강사님을 통해 반 등록을 먼저 진행해주세요!</h5>
 						</div>
 					</div>
 				</div>
@@ -129,7 +140,7 @@
 
 <script>
 import { api } from 'src/boot/axios.js';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -192,19 +203,21 @@ export default defineComponent({
 		}
 
 		const isInClass = ref(false);
-		if (info2.role == '학생') {
-			api
-				.get(`/users/${userId}/class`)
-				.then(res => {
+		onMounted(async () => {
+			if (info2.role == '학생') {
+				try {
+					const res = await api.get(`/users/${userId}/class`);
 					testTest.value = res.data.result;
 					console.log(res.data);
 					localStorage.setItem('testTest', JSON.stringify(res.data));
 					isInClass.value = true;
-				})
-				.catch(err => {
-					console.log(err);
-				});
-		}
+					getActiveLecture();
+				} catch (error) {
+					console.log('학생인데 반 없음', error);
+				}
+			}
+		});
+
 		async function makeClass() {
 			await router.push({ path: '/makeClass' });
 		}
@@ -269,9 +282,6 @@ export default defineComponent({
 				isActiveLecture.value = false;
 			}
 		};
-		if (info2.role == '학생' && isInClass) {
-			getActiveLecture();
-		}
 
 		var today = new Date();
 		var dd = String(today.getDate()).padStart(2, '0');
@@ -281,6 +291,7 @@ export default defineComponent({
 		today = yyyy + '/' + mm + '/' + dd;
 
 		return {
+			isInClass,
 			activeLecture,
 			isActiveLecture,
 			getActiveLecture,
@@ -310,16 +321,16 @@ export default defineComponent({
 	font-style: normal;
 }
 .class-info {
-	height: 300px;
-	width: 700px;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+	height: 300px !important;
+	width: 700px !important;
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2) !important;
 }
 
 .button {
-	margin-top: 60px;
-	margin-left: 20px;
+	margin-top: 60px !important;
+	margin-left: 20px !important;
 }
 .box {
 	height: 300px !important;
@@ -334,6 +345,9 @@ export default defineComponent({
 	width: 60% !important;
 	border-radius: 10px !important;
 	box-shadow: 1px 1px 3px 1px #dadce0 !important;
+}
+[v-cloak] {
+	display: none !important;
 }
 .test {
 	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
