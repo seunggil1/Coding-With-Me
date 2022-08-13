@@ -21,6 +21,7 @@
 					style="max-width: 70%"
 				>
 					<q-input
+						autofocus
 						name="className"
 						rounded
 						outlined

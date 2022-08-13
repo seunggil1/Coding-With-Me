@@ -122,6 +122,7 @@ function openBad(pos) {
 			<div class="flex row">
 				<div class="col q-mr-sm">
 					<q-input
+						autofocus
 						type="text"
 						name="name"
 						class="q-ma-lg q-pr-lg"

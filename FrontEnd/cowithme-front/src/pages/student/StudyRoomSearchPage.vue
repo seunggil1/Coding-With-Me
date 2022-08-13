@@ -7,6 +7,7 @@
 		>
 			<q-form @submit="onSubmit" class="q-gutter-md flex row justify-center">
 				<q-input
+					autofocus
 					filled
 					v-model="studyRoomName"
 					label="스터디명"

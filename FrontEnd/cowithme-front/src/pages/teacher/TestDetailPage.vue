@@ -4,6 +4,7 @@
 			<div class="q-pa-md col" style="max-width: 400px">
 				<p style="font-size: 26px; font-family: 'MICEGothic Bold'">시험 수정</p>
 				<q-input
+					autofocus
 					type="number"
 					rounded
 					outlined

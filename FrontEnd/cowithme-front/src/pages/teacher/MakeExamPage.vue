@@ -27,6 +27,7 @@
 				<h3 style="font-family: 'MICEGothic Bold'">시험 만들기</h3>
 				<div class="row">
 					<q-input
+						autofocus
 						rounded
 						outlined
 						class="q-mb-sm col-8"

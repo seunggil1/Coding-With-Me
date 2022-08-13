@@ -82,7 +82,7 @@
 
 				<q-card-actions align="right" class="text-primary">
 					<q-btn
-						class="secondary"
+						color="secondary"
 						flat
 						label="수정 완료"
 						@click="editClassInfo"

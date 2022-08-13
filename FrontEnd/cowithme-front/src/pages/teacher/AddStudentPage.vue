@@ -9,6 +9,7 @@
 		>
 			<q-form @submit="goSearchStudent" class="q-gutter-md row">
 				<q-input
+					autofocus
 					class="col-7"
 					rounded
 					outlined

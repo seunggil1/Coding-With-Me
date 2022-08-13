@@ -17,6 +17,7 @@
 						rounded
 						clearable
 						outlined
+						autofocus
 						v-model="name"
 						label="이름"
 						color="secondary"
