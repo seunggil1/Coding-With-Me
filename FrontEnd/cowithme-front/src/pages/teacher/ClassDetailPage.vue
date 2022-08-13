@@ -150,19 +150,20 @@
 												class="gt-xs"
 												size="12px"
 												flat
-												color="secondary"
-												dense
-												round
-												icon="delete"
-											/>
-											<q-btn
-												class="gt-xs"
-												size="12px"
-												flat
-												color="secondary"
+												color="grey"
 												dense
 												round
 												icon="settings"
+											/>
+											<q-btn
+												@click="deleteTest(test.testName)"
+												class="gt-xs"
+												size="12px"
+												flat
+												color="red"
+												dense
+												round
+												icon="delete"
 											/>
 										</div>
 									</q-item-section>
@@ -270,6 +271,28 @@ export default {
 				console.log(err);
 			});
 		// 시험 삭제
+		function deleteTest(testName) {
+			api.get(`tests/${classId}/${testName}`).then(res => {
+				// console.log(testName);
+				console.log(res.data);
+				api
+					.delete(`tests`, {
+						data: {
+							classId: classId,
+							testName: testName,
+							testQno: res.data.test.testQno,
+							testcaseList: res.data.test.testcase.testcaseList,
+						},
+					})
+					.then(res => {
+						console.log(res);
+						window.location.reload();
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			});
+		}
 
 		// 학생을 추가하기
 		async function goAddStudent() {
@@ -327,6 +350,7 @@ export default {
 			lectureName,
 			startLecture,
 			tests,
+			deleteTest,
 			files,
 			itemRefs,
 			skipUnwrap,
