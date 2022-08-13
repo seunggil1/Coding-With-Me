@@ -42,9 +42,12 @@
 			</div>
 		</div>
 		<div v-if="info2.role == '학생'">
-			<div class="q-pa-lg col" style="font-family: 'Elice Digital Baeum'">
-				<div class="q-gutter-md hvr-grow row">
-					<div class="class-info">
+			<div
+				class="q-pa-xl col flex justify-center"
+				style="font-family: 'Elice Digital Baeum'"
+			>
+				<div class="q-gutter-md row">
+					<div class="class-info hvr-grow">
 						<div v-if="isInClass">
 							<div class="col q-ma-lg">
 								<!-- 반, 강의제목, 날짜 -->
@@ -52,11 +55,10 @@
 									<p style="font-size: 40px">
 										{{ testTest.className }} 의 강의
 									</p>
-									<p style="font-size: 18px">교수: {{ testTest.tutorName }}</p>
+									<p style="font-size: 18px">강사: {{ testTest.tutorName }}</p>
 								</div>
 							</div>
 							<div class="col">
-								<p>강의 리스트와 강의 입장 버튼들</p>
 								<AtomBasic1Button
 									v-if="isActiveLecture"
 									class="button"
@@ -82,7 +84,7 @@
 							v-model="date"
 							:events="events"
 							event-color="orange"
-							color="grey"
+							color="orange-14"
 							style="font-family: 'Elice Digital Baeum'"
 							landscape
 						/>
@@ -101,7 +103,7 @@ import { useRouter } from 'vue-router';
 
 // import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 // import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
-import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
+// import LectureTimeHistory from 'src/components/organisms/home/LectureTimeHistory.vue';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
@@ -276,7 +278,7 @@ export default defineComponent({
 }
 .class-info {
 	height: 300px !important;
-	width: 700px !important;
+	min-width: 500px !important;
 	background-color: white !important;
 	border-radius: 10px !important;
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2) !important;

@@ -162,7 +162,6 @@
 													params: {
 														testId: test.testId,
 														testName: test.testName,
-														test: test,
 													},
 												}"
 												style="text-decoration: none; color: inherit"
