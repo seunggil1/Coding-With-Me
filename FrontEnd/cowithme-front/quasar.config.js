@@ -13,7 +13,7 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = configure(function (/* ctx */) {
 	return {
-		plugins: [new MonacoWebpackPlugin()],
+		plugins: [new MonacoWebpackPlugin(), 'Notify'],
 		// https://v2.quasar.dev/quasar-cli/prefetch-feature
 		// preFetch: true,
 

@@ -2,9 +2,11 @@
 import { ref } from 'vue';
 import { useAuthStore } from 'src/stores';
 import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
 const id = ref('');
 const password = ref('');
+const $q = useQuasar();
 
 const router = useRouter();
 
@@ -16,6 +18,15 @@ async function onSubmit() {
 	// console.log(idpw.id, idpw.pw);
 	const authStore = useAuthStore();
 	await authStore.login(idpw.id, idpw.pw);
+	if (authStore.isLoginFail) {
+		$q.notify({
+			type: 'negative',
+			message: '아이디 또는 비밀번호를 확인해주세요',
+		});
+		id.value = '';
+		password.value = '';
+		return;
+	}
 	await router.push({ path: '/home' });
 }
 </script>
