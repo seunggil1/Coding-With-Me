@@ -1,9 +1,8 @@
 <template>
 	<div class="participants">
 		<span>
-            <h2>참가자 목록 보일곳</h2>
-        </span>
-
+			<h2>참가자 목록 보일곳</h2>
+		</span>
 	</div>
 </template>
 
@@ -15,5 +14,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

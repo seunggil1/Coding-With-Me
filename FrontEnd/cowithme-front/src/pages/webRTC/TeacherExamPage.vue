@@ -76,7 +76,7 @@
 												>
 													<q-btn
 														push
-														color="teal"
+														color="secondary"
 														:label="idx"
 														:disable="selectedProblem == idx"
 														@click="

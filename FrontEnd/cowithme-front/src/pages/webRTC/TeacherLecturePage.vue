@@ -283,7 +283,7 @@
 			<q-card-section>
 				<q-select
 					filled
-					color="teal"
+					color="secondary"
 					style="font-family: 'Elice Digital Baeum', sans-serif"
 					v-model="commonExamPinia.testName"
 					:options="teacherVideo.state.testNameList"
@@ -291,7 +291,7 @@
 				/>
 				<q-input
 					filled
-					color="teal"
+					color="secondary"
 					style="font-family: 'Elice Digital Baeum', sans-serif"
 					v-model="timeWithSeconds"
 					mask="fulltime"
@@ -305,7 +305,7 @@
 
 			<q-card-section>
 				<div class="row items-center justify-end">
-					<q-btn color="teal" push label="시험 시작" @click="startExam" />
+					<q-btn color="secondary" push label="시험 시작" @click="startExam" />
 				</div>
 			</q-card-section>
 		</q-card>

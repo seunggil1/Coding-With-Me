@@ -10,7 +10,7 @@
 				<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
 					{{ record.date }} 시험
 				</p>
-				<q-chip outline square color="teal" text-color="white">
+				<q-chip outline square color="secondary" text-color="white">
 					시험 언어: {{ record.lang }}
 				</q-chip>
 				<q-chip outline square color="deep-orange" text-color="white">

@@ -86,7 +86,7 @@
 						v-model="myChatInput"
 						label="메시지를 입력하세요"
 						:dense="true"
-						color="teal"
+						color="secondary"
 						style="font-family: 'Elice Digital Baeum', sans-serif"
 						@keydown.enter.prevent="
 							teacherVideo.sendMessage(myChatInput);

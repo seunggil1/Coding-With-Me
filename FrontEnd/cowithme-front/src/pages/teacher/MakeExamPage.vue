@@ -76,7 +76,7 @@
 					<q-card-section>
 						<q-splitter v-model="splitterModel" style="height: 400px">
 							<template v-slot:before>
-								<q-tabs v-model="problemTab" vertical class="text-teal">
+								<q-tabs v-model="problemTab" vertical class="text-secondary">
 									<q-tab name="0" label="가이드" />
 									<q-tab
 										v-for="(item, index) in examInfo.testcaseList"

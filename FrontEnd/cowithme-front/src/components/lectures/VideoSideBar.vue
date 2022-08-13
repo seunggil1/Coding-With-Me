@@ -36,7 +36,7 @@
 				v-model="myChatInput"
 				label="메시지를 입력하세요"
 				:dense="true"
-				color="teal"
+				color="secondary"
 				@keydown.enter.prevent="
 					piniaData.sendMessage(myChatInput);
 					myChatInput = '';

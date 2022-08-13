@@ -13,7 +13,7 @@
 					rounded
 					outlined
 					type="text"
-					color="teal"
+					color="secondary"
 					bg-color="white"
 					v-model="name"
 					label="학생 이름"

@@ -27,7 +27,7 @@
 						bg-color="white"
 						v-model="className"
 						label="반 이름"
-						color="teal"
+						color="secondary"
 						lazy-rules
 						:rules="[
 							val => (val && val.length > 0) || '반 이름은 필수값입니다.',
@@ -41,7 +41,7 @@
 						v-model="classDescription"
 						label="반 설명"
 						bg-color="white"
-						color="teal"
+						color="secondary"
 						lazy-rules
 						:rules="[
 							val => (val && val.length > 0) || '반 설명은 필수값입니다.',

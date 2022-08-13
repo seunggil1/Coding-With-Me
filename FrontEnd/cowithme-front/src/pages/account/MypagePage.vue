@@ -19,7 +19,7 @@
 						outlined
 						v-model="name"
 						label="이름"
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[val => (val && val.length > 0) || '이름을 입력해주세요.']"
 					></q-input>
@@ -33,7 +33,7 @@
 						v-model="id"
 						label="아이디"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '아이디를 입력해주세요.',
@@ -49,7 +49,7 @@
 						v-model="email"
 						label="이메일"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '이메일을 입력해주세요.',
@@ -68,7 +68,7 @@
 						v-model="password"
 						label="비밀번호"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 					></q-input>
 				</div>
@@ -84,7 +84,7 @@
 						label="전화번호"
 						placeholder="010-0000-0000"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '전화번호를 입력해주세요.',
@@ -98,7 +98,7 @@
 						clearable
 						v-model="nickname"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '닉네임을 입력해주세요.',
@@ -113,7 +113,7 @@
 						v-model="birthDt"
 						lazy-rules
 						clearable
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '생년월일을 입력해주세요.',
@@ -128,7 +128,7 @@
 						type="file"
 						lazy-rules
 						hint="프로필 사진 등록"
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						@update:model-value="
 							val => {

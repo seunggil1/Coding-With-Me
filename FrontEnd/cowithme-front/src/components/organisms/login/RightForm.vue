@@ -37,7 +37,7 @@ async function onSubmit() {
 						v-model="id"
 						label="아이디"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '아이디를 입력해주세요.',
@@ -52,7 +52,7 @@ async function onSubmit() {
 						v-model="password"
 						label="비밀번호"
 						lazy-rules
-						color="teal"
+						color="secondary"
 						bg-color="white"
 						:rules="[
 							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',

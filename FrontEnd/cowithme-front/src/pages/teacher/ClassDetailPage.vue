@@ -21,7 +21,7 @@
 					<div class="text-h6">강의명</div>
 				</q-card-section>
 				<q-card-section class="q-pt-none">
-					<q-input color="teal" dense v-model="lectureName" autofocus />
+					<q-input color="secondary" dense v-model="lectureName" autofocus />
 				</q-card-section>
 
 				<q-card-actions align="right" class="text-primary">
@@ -87,7 +87,7 @@
 							</p>
 							<q-chip
 								class="hvr-grow"
-								color="teal"
+								color="secondary"
 								text-color="white"
 								icon="face"
 								v-for="student in students"
@@ -136,13 +136,35 @@
 													:url="`https://i7a304.p.ssafy.io/api/v1/files/upload/${test.testId}`"
 													style="max-width: 300px"
 													id="testFile"
-													color="teal"
+													color="secondary"
 													label="시험 파일(PDF)"
 													field-name="files"
 													class="q-mt-lg"
 												></q-uploader>
 											</q-expansion-item>
 										</q-item-label>
+									</q-item-section>
+									<q-item-section side>
+										<div class="text-grey-8 q-gutter-xs">
+											<q-btn
+												class="gt-xs"
+												size="12px"
+												flat
+												color="secondary"
+												dense
+												round
+												icon="delete"
+											/>
+											<q-btn
+												class="gt-xs"
+												size="12px"
+												flat
+												color="secondary"
+												dense
+												round
+												icon="settings"
+											/>
+										</div>
 									</q-item-section>
 								</q-item>
 								<q-separator spaced inset />
@@ -247,6 +269,7 @@ export default {
 			.catch(err => {
 				console.log(err);
 			});
+		// 시험 삭제
 
 		// 학생을 추가하기
 		async function goAddStudent() {

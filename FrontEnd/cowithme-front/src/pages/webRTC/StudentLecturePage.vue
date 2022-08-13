@@ -8,11 +8,11 @@
 			<div class="column main-container">
 				<div
 					v-if="showSubScribers && studentVideo.state.session !== undefined"
-					class="col-2 q-pl-sm"
+					class="col-2"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
-							<div style="width: 11%" class="q-pa-sm">
+							<div style="width: 12%" class="q-pt-sm">
 								<user-video
 									:stream-manager="studentVideo.state.publisher"
 									@click="
@@ -23,7 +23,7 @@
 								/>
 							</div>
 							<div
-								style="width: 11%"
+								style="width: 12%"
 								class="q-pa-sm"
 								v-for="(sub, idx) in studentVideo.state.subscribers"
 								:key="idx"
@@ -385,12 +385,10 @@ export default {
 		};
 
 		const leaveSession = () => {
-			router
-				.push({ path: '/home' })
-				.catch(err => {
-					console.error(err);
-					router.push({ path: '/home' });
-				});
+			router.push({ path: '/home' }).catch(err => {
+				console.error(err);
+				router.push({ path: '/home' });
+			});
 		};
 
 		return {
