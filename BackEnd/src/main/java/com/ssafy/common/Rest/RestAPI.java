@@ -21,7 +21,7 @@ public class RestAPI {
 
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectTimeout(10000);
-        factory.setReadTimeout(10000);
+        factory.setReadTimeout(200000);
 
         RestTemplate restTemplate = new RestTemplate(factory);
 
