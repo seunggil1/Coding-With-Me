@@ -1,15 +1,35 @@
 <template>
 	<div class="q-pa-md" style="font-family: 'Elice Digital Baeum">
-		<q-btn
-			@click="openstartLecture = true"
-			class="q-mb-md hvr-grow"
-			glossy
-			rounded
-			size="25px"
-			push
-			style="background: #ff5722; color: white; font-family: 'MICEGothic Bold'"
-			>{{ className }} 강의 시작하기</q-btn
-		>
+		<div class="flex row justify-between">
+			<q-btn
+				@click="openstartLecture = true"
+				class="q-mb-md hvr-grow"
+				glossy
+				rounded
+				size="25px"
+				push
+				style="
+					background: #ff5722;
+					color: white;
+					font-family: 'MICEGothic Bold';
+				"
+				>{{ className }} 강의 시작하기</q-btn
+			>
+			<div class="flex items-center">
+				<q-btn
+					@click="openEditClass = true"
+					class="gt-xs"
+					size="26px"
+					flat
+					color="grey"
+					dense
+					round
+					icon="settings"
+				>
+				</q-btn>
+			</div>
+		</div>
+
 		<q-dialog
 			class="brand"
 			style="font-family: 'Elice Digital Baeum'"
@@ -30,6 +50,42 @@
 						flat
 						label="시작하기"
 						@click="startLecture"
+						v-close-popup
+					/>
+					<q-btn class="brand" flat label="취소" v-close-popup />
+				</q-card-actions>
+			</q-card>
+		</q-dialog>
+		<q-dialog
+			style="font-family: 'Elice Digital Baeum'"
+			v-model="openEditClass"
+			persistent
+		>
+			<q-card class="q-pa-md" style="min-width: 500px; min-height: 400px">
+				<q-card-section>
+					<div class="text-h6">반 이름 수정하기</div>
+				</q-card-section>
+				<q-card-section class="q-pt-none">
+					<q-input color="secondary" dense v-model="newclassName" autofocus />
+				</q-card-section>
+				<q-card-section>
+					<div class="text-h6">반 정보 수정하기</div>
+				</q-card-section>
+				<q-card-section class="q-pt-none">
+					<q-input
+						color="secondary"
+						dense
+						v-model="classDescription"
+						autofocus
+					/>
+				</q-card-section>
+
+				<q-card-actions align="right" class="text-primary">
+					<q-btn
+						class="secondary"
+						flat
+						label="수정 완료"
+						@click="editClassInfo"
 						v-close-popup
 					/>
 					<q-btn class="brand" flat label="취소" v-close-popup />
@@ -372,8 +428,34 @@ export default {
 					console.log(err);
 				});
 		}
+		// 반 정보 수정
+		const classDescription = ref('');
+		const newclassName = ref('');
+		const openEditClass = ref(false);
+		function editClassInfo() {
+			api
+				.put(`tutor/classes`, {
+					classDescription: classDescription.value,
+					className: className,
+					newclassName: newclassName.value,
+					tutorId: userId,
+				})
+				.then(res => {
+					localStorage.setItem('className', newclassName.value);
+					console.log(res);
+				})
+				.catch(err => {
+					console.log(err);
+				})
+				.finally(() => {
+					window.location.reload();
+				});
+		}
 
 		return {
+			classDescription,
+			newclassName,
+			editClassInfo,
 			totalPage,
 			pagingLectures,
 			totalLecture,
@@ -392,6 +474,7 @@ export default {
 			skipUnwrap,
 			slide: ref(1),
 			downloadPDF,
+			openEditClass,
 		};
 	},
 };

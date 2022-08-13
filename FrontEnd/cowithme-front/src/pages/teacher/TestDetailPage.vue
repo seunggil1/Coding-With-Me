@@ -157,7 +157,6 @@
 															<q-card-section>
 																<div class="text-h6">Output</div>
 															</q-card-section>
-
 															<q-card-section class="q-pt-none">
 																<q-input
 																	v-model="eachTestCase.output"
@@ -178,7 +177,6 @@
 						</q-splitter>
 					</q-card-section>
 				</q-card>
-
 				<div>
 					<q-btn
 						push

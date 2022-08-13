@@ -12,8 +12,11 @@
 						<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
 							{{ clas.className }}
 						</p>
-						<div class="class-description q-pa-md">
-							<p style="color: white">{{ clas.classDescription }}</p>
+
+						<div class="class-description">
+							<p style="color: white; margin: 18px">
+								{{ clas.classDescription }}
+							</p>
 						</div>
 						<router-link
 							:to="{
@@ -290,8 +293,8 @@ export default defineComponent({
 }
 .box {
 	height: 300px !important;
-	width: 60% !important;
-	min-width: 700px !important;
+	width: 50% !important;
+	min-width: 500px !important;
 	background-color: white !important;
 	border-radius: 10px !important;
 	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
@@ -299,6 +302,7 @@ export default defineComponent({
 .class-description {
 	background-color: #ff8d29 !important;
 	width: 60% !important;
+	height: 40% !important;
 	border-radius: 10px !important;
 	box-shadow: 1px 1px 3px 1px #dadce0 !important;
 }
