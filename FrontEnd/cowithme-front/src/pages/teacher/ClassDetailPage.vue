@@ -146,18 +146,30 @@
 									</q-item-section>
 									<q-item-section side>
 										<div class="text-grey-8 q-gutter-xs">
-											<q-btn
-												class="gt-xs"
-												size="12px"
-												flat
-												color="grey"
-												dense
-												round
-												icon="settings"
-											/>
+											<router-link
+												:to="{
+													name: 'testDetail',
+													params: {
+														testId: test.testId,
+														testName: test.testName,
+														test: test,
+													},
+												}"
+												style="text-decoration: none; color: inherit"
+											>
+												<q-btn
+													class="gt-xs q-mt-xs"
+													size="12px"
+													flat
+													color="grey"
+													dense
+													round
+													icon="settings"
+												/>
+											</router-link>
 											<q-btn
 												@click="deleteTest(test.testName)"
-												class="gt-xs"
+												class="gt-xs q-pb-sm"
 												size="12px"
 												flat
 												color="negative"

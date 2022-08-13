@@ -1,5 +1,5 @@
 <template>
-	<div style="width : 100%">
+	<div style="width: 100%">
 		<vue-pdf-embed :source="source" :width="width"> </vue-pdf-embed>
 	</div>
 </template>
@@ -19,20 +19,18 @@ export default {
 	setup() {
 		const width = ref(900);
 		const zoomIn = () => {
-			if(width.value <= 1200)
-				width.value += 50;
+			if (width.value <= 1200) width.value += 50;
 		};
 
 		const zoomOut = () => {
-			if(width.value > 50)
-				width.value -= 50;
-		}
+			if (width.value > 50) width.value -= 50;
+		};
 
 		return {
 			width,
 			zoomIn,
 			zoomOut,
-		}
+		};
 	},
 };
 </script>

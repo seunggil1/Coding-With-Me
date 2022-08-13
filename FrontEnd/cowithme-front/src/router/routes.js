@@ -57,6 +57,12 @@ const routes = [
 				name: 'studyRoom',
 				component: () => import('pages/student/StudyRoomSearchPage.vue'),
 			},
+			{
+				path: '/testDetail/:testId',
+				name: 'testDetail',
+				props: true,
+				component: () => import('pages/teacher/TestDetailPage.vue'),
+			},
 		],
 	},
 	// 로그인/회원가입

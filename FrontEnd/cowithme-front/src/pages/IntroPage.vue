@@ -189,8 +189,8 @@ export default {
 }
 
 svg {
-	-webkit-filter: drop-shadow(0px 0px 1px rgba(250, 250, 250, 1)) !important;
-	filter: drop-shadow(0px 0px 1px rgba(250, 250, 250, 1)) !important;
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(250, 250, 250, 1)) !important;
+	filter: drop-shadow(0px 1px 1px rgba(250, 250, 250, 1)) !important;
 	display: block;
 	margin: 0 auto;
 	width: 700px;
