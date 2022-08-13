@@ -203,11 +203,15 @@ export default {
 	name: 'TestDetailPage',
 	props: {
 		testId: String,
-		test: String,
 		testName: String,
 	},
 	setup(props) {
 		const testInfo = ref({});
+		// 모든 정보가 여기 다 있다.
+		let examInfo = reactive({
+			testQno: 0,
+			testcaseList: [],
+		});
 		onBeforeMount(() => {
 			localStorage.setItem('testId', props.testId);
 			localStorage.setItem('testName', props.testName);
@@ -217,6 +221,10 @@ export default {
 				testInfo.value = res.data.test;
 				localStorage.setItem('test', JSON.stringify(res.data.test));
 				console.log(testInfo.value);
+				examInfo.testQno = JSON.parse(localStorage.getItem('test')).testQno; //문제 갯수
+				examInfo.testcaseList = JSON.parse(
+					localStorage.getItem('test'),
+				).testcase.testcaseList; //테스트 케이스 리스트
 			});
 		});
 
@@ -230,13 +238,6 @@ export default {
 
 		// 문제 번호| 테스트 케이스 나누는 간격 (드래그로 조절 가능)
 		let splitterModel = ref(20);
-
-		// 모든 정보가 여기 다 있다.
-		let examInfo = reactive({
-			testQno: JSON.parse(localStorage.getItem('test')).testQno, //문제 갯수
-			testcaseList: JSON.parse(localStorage.getItem('test')).testcase
-				.testcaseList, //테스트 케이스 리스트
-		});
 
 		// examInfo안의 데이터에 대해 반응하려면 이렇게 해야됨.
 		watch([() => examInfo.testQno], () => {
@@ -275,13 +276,11 @@ export default {
 		function editExam() {
 			api
 				.put(`/tests`, {
-					data: {
-						classId: classId * 1,
-						newtestName: props.testName,
-						testName: props.testName,
-						testQno: examInfo.testQno,
-						testcaseList: examInfo.testcaseList,
-					},
+					classId: classId * 1,
+					newtestName: props.testName,
+					testName: props.testName,
+					testQno: examInfo.testQno,
+					testcaseList: examInfo.testcaseList,
 				})
 				.then(res => {
 					console.log(res.data);
