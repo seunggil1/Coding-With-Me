@@ -99,7 +99,7 @@
 														class="col"
 														v-for="(tc, idx) in piniaCommonExamData.testCase[
 															selectedProblem - 1
-														].testcase"
+														]"
 														:key="idx"
 													>
 														<div class="row">

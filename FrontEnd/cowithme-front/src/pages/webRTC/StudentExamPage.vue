@@ -254,7 +254,7 @@
 							color="negative"
 							icon="logout"
 							label="나가기"
-							@click="leaveSession"
+							@click="router.push({ path: '/home' })"
 						/>
 					</div>
 					<div class="col-1" align="end">
