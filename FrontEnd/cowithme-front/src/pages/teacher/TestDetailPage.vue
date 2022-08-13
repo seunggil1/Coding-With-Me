@@ -277,7 +277,7 @@ export default {
 			api
 				.put(`/tests`, {
 					classId: classId * 1,
-					newtestName: 'props.testName',
+					newtestName: props.testName,
 					testName: props.testName,
 					testQno: examInfo.testQno,
 					testcaseList: examInfo.testcaseList,
