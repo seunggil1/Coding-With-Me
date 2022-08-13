@@ -18,6 +18,7 @@ async function onSubmit() {
 	// console.log(idpw.id, idpw.pw);
 	const authStore = useAuthStore();
 	await authStore.login(idpw.id, idpw.pw);
+	console.log(authStore.isLoginFail);
 	if (authStore.isLoginFail) {
 		$q.notify({
 			type: 'negative',

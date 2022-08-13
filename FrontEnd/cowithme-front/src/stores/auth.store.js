@@ -23,6 +23,7 @@ export const useAuthStore = defineStore({
 		async login(id, password) {
 			// 로그인 및 토큰 저장 후 홈 화면으로 이동
 			try {
+				this.isLoginFail = false;
 				const user = await fetchWrapper.post(`${baseUrl}/auth/login`, {
 					id,
 					password,
@@ -38,6 +39,7 @@ export const useAuthStore = defineStore({
 				localStorage.setItem('user', JSON.stringify(decoded));
 			} catch (error) {
 				this.isLoginFail = true;
+				return;
 				// const router = useRouter();
 				// router.push({ path: '/login' });
 			}
