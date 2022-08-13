@@ -204,7 +204,7 @@
 							class="leaveBtn q-ml-md"
 							rounded
 							push
-							color="red"
+							color="negative"
 							icon="logout"
 							label="나가기"
 							@click="leaveSession"

@@ -160,7 +160,7 @@
 												class="gt-xs"
 												size="12px"
 												flat
-												color="red"
+												color="negative"
 												dense
 												round
 												icon="delete"

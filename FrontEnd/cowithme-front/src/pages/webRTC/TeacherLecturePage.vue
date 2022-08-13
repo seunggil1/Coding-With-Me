@@ -231,7 +231,7 @@
 							class="leaveBtn q-ml-md"
 							rounded
 							push
-							color="red"
+							color="negative"
 							icon="logout"
 							label="강의 종료"
 							@click="leaveSession"
