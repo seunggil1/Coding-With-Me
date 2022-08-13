@@ -276,12 +276,11 @@ export default {
 			api
 				.put(`/tests`, {
 					data: {
-						classId: classId,
+						classId: classId * 1,
 						newtestName: props.testName,
 						testName: props.testName,
-						testPath: '',
 						testQno: examInfo.testQno,
-						testcase: examInfo.testcaseList,
+						testcaseList: examInfo.testcaseList,
 					},
 				})
 				.then(res => {

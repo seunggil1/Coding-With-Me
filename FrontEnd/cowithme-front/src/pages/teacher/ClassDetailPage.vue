@@ -145,7 +145,17 @@
 										</q-item-label>
 									</q-item-section>
 									<q-item-section side>
-										<div class="text-grey-8 q-gutter-xs">
+										<div class="text-grey-8">
+											<q-btn
+												@click="downloadPDF(test.testId, test.testName)"
+												class="gt-xs"
+												size="12px"
+												flat
+												color="dark"
+												dense
+												round
+												icon="download"
+											/>
 											<router-link
 												:to="{
 													name: 'testDetail',
@@ -158,7 +168,7 @@
 												style="text-decoration: none; color: inherit"
 											>
 												<q-btn
-													class="gt-xs q-mt-xs"
+													class="gt-xs"
 													size="12px"
 													flat
 													color="grey"
@@ -202,6 +212,7 @@
 </template>
 
 <script>
+import fileDownload from 'js-file-download';
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
 import { teacherVideoStore } from 'src/stores/teacherVideo.store';
@@ -349,6 +360,20 @@ export default {
 		}
 		getLectures();
 
+		function downloadPDF(testId, testName) {
+			api
+				.get(`files/download/${testId}`, {
+					responseType: 'blob', // Important
+				})
+				.then(res => {
+					console.log(res);
+					fileDownload(res.data, `${testName} 시험문제.pdf`);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
+
 		return {
 			totalPage,
 			pagingLectures,
@@ -367,6 +392,7 @@ export default {
 			itemRefs,
 			skipUnwrap,
 			slide: ref(1),
+			downloadPDF,
 		};
 	},
 };
