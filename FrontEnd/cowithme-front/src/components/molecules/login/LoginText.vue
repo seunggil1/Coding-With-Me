@@ -1,5 +1,5 @@
 <template>
-	<p style="font-family: 'Elice Digital Baeum', sans-serif">로그인</p>
+	<p style="font-family: 'Elice Digital Baeum', sans-serif">Login</p>
 </template>
 
 <script>

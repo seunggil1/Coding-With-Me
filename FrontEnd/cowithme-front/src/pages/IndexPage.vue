@@ -42,8 +42,8 @@
 			</div>
 		</div>
 		<div v-if="info2.role == '학생'">
-			<div class="q-pa-lg" style="font-family: 'Elice Digital Baeum'">
-				<div class="q-gutter-md hvr-grow">
+			<div class="q-pa-lg col" style="font-family: 'Elice Digital Baeum'">
+				<div class="q-gutter-md hvr-grow row">
 					<div class="class-info">
 						<div v-if="isInClass">
 							<div class="col q-ma-lg">
@@ -75,64 +75,19 @@
 							<h5>강사님을 통해 반 등록을 먼저 진행해주세요!</h5>
 						</div>
 					</div>
-				</div>
-			</div>
-			<!-- <div>{{ classStore.userClass.className }}</div> -->
-			<div class="q-pt-lg">
-				<q-splitter v-model="splitterModel" style="height: 370px">
-					<template v-slot:before>
-						<div class="q-pa-lg">
-							<q-date
-								class="hvr-grow test"
-								v-model="date"
-								:events="events"
-								event-color="orange"
-								color="grey"
-								style="font-family: 'Elice Digital Baeum'"
-								landscape
-							/>
-						</div>
-					</template>
 
-					<template v-slot:after>
-						<q-tab-panels
+					<div class="row">
+						<q-date
+							class="hvr-grow test"
 							v-model="date"
-							animated
-							transition-prev="jump-up"
-							transition-next="jump-up"
-						>
-							<q-tab-panel name="2019/02/01">
-								<!-- <div class="text-h4 q-mb-md">2019/02/01</div> -->
-								<!-- <p>
-									Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-									praesentium cumque magnam odio iure quidem, quod illum numquam
-									possimus obcaecati commodi minima assumenda consectetur culpa
-									fuga nulla ullam. In, libero.
-								</p>
-								<p>
-									Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-									praesentium cumque magnam odio iure quidem, quod illum numquam
-									possimus obcaecati commodi minima assumenda consectetur culpa
-									fuga nulla ullam. In, libero.
-								</p> -->
-								<LectureTimeHistory
-									class="hvr-grow"
-									style="font-family: 'Elice Digital Baeum'"
-								></LectureTimeHistory>
-							</q-tab-panel>
-						</q-tab-panels>
-					</template>
-				</q-splitter>
-				<!-- <CalendarInfo
-					class="hvr-grow"
-					style="font-family: 'Elice Digital Baeum'"
-				></CalendarInfo>
-				<div class="col-8">
-					<LectureTimeHistory
-						class="hvr-grow"
-						style="font-family: 'Elice Digital Baeum'"
-					></LectureTimeHistory>
-				</div> -->
+							:events="events"
+							event-color="orange"
+							color="grey"
+							style="font-family: 'Elice Digital Baeum'"
+							landscape
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -157,7 +112,7 @@ export default defineComponent({
 	components: {
 		// CalendarInfo,
 		// ClassInfo,
-		LectureTimeHistory,
+		// LectureTimeHistory,
 		AtomPlusButton,
 		AtomBasic1Button,
 	},

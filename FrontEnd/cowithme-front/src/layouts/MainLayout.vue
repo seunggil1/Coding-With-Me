@@ -248,6 +248,7 @@ export default defineComponent({
 	transform-origin: left;
 	transform: scaleX(1);
 }
+
 /* .pic {
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 } */
