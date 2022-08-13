@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -19,7 +20,11 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final ListPath<AttendanceRecord, QAttendanceRecord> attendanceRecords = this.<AttendanceRecord, QAttendanceRecord>createList("attendanceRecords", AttendanceRecord.class, QAttendanceRecord.class, PathInits.DIRECT2);
+
     public final DatePath<java.util.Date> birthDt = createDate("birthDt", java.util.Date.class);
+
+    public final ListPath<Classes, QClasses> classlist = this.<Classes, QClasses>createList("classlist", Classes.class, QClasses.class, PathInits.DIRECT2);
 
     public final StringPath email = createString("email");
 
@@ -36,6 +41,8 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath profilePath = createString("profilePath");
 
     public final StringPath role = createString("role");
+
+    public final ListPath<TestRecord, QTestRecord> testRecords = this.<TestRecord, QTestRecord>createList("testRecords", TestRecord.class, QTestRecord.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 

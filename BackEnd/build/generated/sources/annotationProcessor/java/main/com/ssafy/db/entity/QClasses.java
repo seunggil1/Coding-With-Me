@@ -22,11 +22,19 @@ public class QClasses extends EntityPathBase<Classes> {
 
     public static final QClasses classes = new QClasses("classes");
 
+    public final StringPath classDescription = createString("classDescription");
+
     public final NumberPath<Long> classId = createNumber("classId", Long.class);
 
-    public final NumberPath<Integer> classNo = createNumber("classNo", Integer.class);
+    public final StringPath className = createString("className");
+
+    public final ListPath<Conference, QConference> conferences = this.<Conference, QConference>createList("conferences", Conference.class, QConference.class, PathInits.DIRECT2);
+
+    public final ListPath<Test, QTest> testList = this.<Test, QTest>createList("testList", Test.class, QTest.class, PathInits.DIRECT2);
 
     public final QUser user;
+
+    public final ListPath<UserClass, QUserClass> userClassList = this.<UserClass, QUserClass>createList("userClassList", UserClass.class, QUserClass.class, PathInits.DIRECT2);
 
     public QClasses(String variable) {
         this(Classes.class, forVariable(variable), INITS);
