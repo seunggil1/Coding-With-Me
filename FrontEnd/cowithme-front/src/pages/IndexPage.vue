@@ -84,7 +84,7 @@
 					<div class="row">
 						<q-date
 							class="hvr-grow test"
-							v-model="date"
+							v-model="newCurrentDate"
 							:events="events"
 							event-color="orange"
 							color="orange-14"
@@ -103,6 +103,7 @@ import { api } from 'src/boot/axios.js';
 import { onMounted, ref } from 'vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
+import { date } from 'quasar';
 
 // import CalendarInfo from 'src/components/organisms/home/CalendarInfo.vue';
 // import ClassInfo from 'src/components/organisms/home/ClassInfo.vue';
@@ -123,8 +124,6 @@ export default defineComponent({
 		AtomBasic1Button,
 	},
 	setup() {
-		// console.log(this.$router.options.routes);
-		// const classStore = useClassStore();
 		const classes = ref([]);
 		const testTest = ref([]);
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
@@ -213,9 +212,10 @@ export default defineComponent({
 			piniaCommonVideoData.userInfo.userKey = uid;
 			piniaCommonVideoData.userInfo.userName = name;
 			piniaCommonVideoData.userInfo.classKey = classId;
-			piniaCommonVideoData.userInfo.conferenceName = activeLecture.value.conferenceName;
+			piniaCommonVideoData.userInfo.conferenceName =
+				activeLecture.value.conferenceName;
 			await piniaCommonVideoData.getConferenceKey();
-			
+
 			console.log('id', studentVideo.state.id);
 			console.log('uid', studentVideo.state.userId);
 			console.log('myUserName', studentVideo.state.myUserName);
@@ -245,7 +245,8 @@ export default defineComponent({
 				console.log(response.data);
 				activeLecture.value = response.data.conference;
 				// newCode
-				piniaCommonVideoData.userInfo.conferenceKey = response.data.conference.conferenceId;
+				piniaCommonVideoData.userInfo.conferenceKey =
+					response.data.conference.conferenceId;
 				//
 				isActiveLecture.value = true;
 			} catch (error) {
@@ -254,12 +255,10 @@ export default defineComponent({
 			}
 		};
 
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, '0');
-		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-		var yyyy = today.getFullYear();
-
-		today = yyyy + '/' + mm + '/' + dd;
+		// 달력 관련
+		const currentDate = Date.now();
+		const formattedTime = date.formatDate(currentDate, 'YYYY/MM/DD');
+		const newCurrentDate = ref(formattedTime);
 
 		return {
 			isInClass,
@@ -272,9 +271,9 @@ export default defineComponent({
 			makeClass,
 			classes,
 			testTest,
+			newCurrentDate,
 			goSetClassInfo,
 			splitterModel: ref(30),
-			date: ref('2022/08/12'),
 			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
 		};
 	},
