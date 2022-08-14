@@ -350,24 +350,7 @@ export default {
 		// 몇 번 문제에 몇 번째 testCase 삭제해주세요!
 		const deleteTestCase = (testQno, testCaseNo) => {
 			examInfo.testcaseList[testQno - 1].testcase.splice(testCaseNo, 1);
-			// console.log(examInfo.testcaseList[testQno - 1].testcase);
 		};
-
-		// const onSubmit = async () => {
-		// 	const examStore = useExamStore();
-		// 	examInfo['classId'] = classId * 1;
-		// 	var testId = await examStore.makeExam(examInfo);
-		// 	var res = await examStore.uploadExam(testId, file.value);
-		// 	console.log(res);
-		// };
-		// async function onSubmit() {
-		// 	const examStore = useExamStore();
-		// 	examInfo['classId'] = classId * 1;
-		// 	const res = await examStore.makeExam(examInfo);
-		// 	console.log(res);
-		// 	// router.push({ path: '/classDetail/' + classId });
-		// }
-
 		examInfo['classId'] = classId * 1;
 		function onSubmit() {
 			api

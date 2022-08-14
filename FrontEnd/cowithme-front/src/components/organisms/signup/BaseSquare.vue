@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router';
 import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';
 import { api } from 'src/boot/axios.js';
-// import EmailChkButton from 'src/components/molecules/signup/EmailChkButton.vue';
 
 // 회원가입 정보
 const name = ref('');
@@ -37,8 +36,6 @@ async function onSubmit() {
 	try {
 		await usersStore.register(user);
 		await router.push({ path: '/login' });
-		alertStore.success('Registration successful');
-		console.log('Registration successful');
 	} catch (error) {
 		alertStore.error(error);
 	}

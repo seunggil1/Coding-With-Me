@@ -10,7 +10,10 @@
 		</q-scroll-area>
 
 		<q-scroll-area class="col-5" style="width: 100%">
-			<span v-for="(chat, index) in piniaCommonVideoData.displayInfo.chatting" :key="index">
+			<span
+				v-for="(chat, index) in piniaCommonVideoData.displayInfo.chatting"
+				:key="index"
+			>
 				<q-chat-message
 					v-if="chat.sender === piniaCommonVideoData.userInfo.userName"
 					:name="chat.sender"
@@ -88,7 +91,7 @@ export default {
 
 		watch(
 			() => piniaCommonVideoData.displayInfo.chatting, //props.piniaData.state.chatting,
-			() => console.log(piniaCommonVideoData.displayInfo.chatting)
+			() => console.log(piniaCommonVideoData.displayInfo.chatting),
 		);
 
 		return {

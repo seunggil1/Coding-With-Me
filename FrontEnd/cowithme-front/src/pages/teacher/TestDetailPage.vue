@@ -216,10 +216,8 @@ export default {
 			localStorage.setItem('testName', props.testName);
 			const classId = localStorage.getItem('classId');
 			api.get(`/tests/${classId}/${props.testName}`).then(res => {
-				console.log(res.data.test);
 				testInfo.value = res.data.test;
 				localStorage.setItem('test', JSON.stringify(res.data.test));
-				console.log(testInfo.value);
 				examInfo.testQno = JSON.parse(localStorage.getItem('test')).testQno; //문제 갯수
 				examInfo.testcaseList = JSON.parse(
 					localStorage.getItem('test'),
@@ -281,10 +279,7 @@ export default {
 					testQno: examInfo.testQno,
 					testcaseList: examInfo.testcaseList,
 				})
-				.then(res => {
-					console.log(res.data);
-					router.push({ path: '/classDetail/' + classId });
-				})
+				.then(router.push({ path: '/classDetail/' + classId }))
 				.catch(err => {
 					console.log(err);
 				});

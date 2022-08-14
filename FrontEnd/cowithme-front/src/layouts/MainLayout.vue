@@ -169,8 +169,6 @@ export default defineComponent({
 		if (typeof info !== 'undefined') {
 			info2 = JSON.parse(info);
 		}
-		console.log(user2);
-		console.log(info2);
 
 		const leftDrawerOpen = ref(false);
 		const router = useRouter();

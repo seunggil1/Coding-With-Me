@@ -57,13 +57,8 @@ export default {
 
 		api.get(`/records/${props.userId}/tests`).then(res => {
 			records.value = res.data.records;
-			console.log(records.value);
 			localStorage.setItem('records', JSON.stringify(res.data.records));
-			// console.log(records.value);
 		});
-		console.log(records);
-		console.log(records.value);
-
 		return { records };
 	},
 };

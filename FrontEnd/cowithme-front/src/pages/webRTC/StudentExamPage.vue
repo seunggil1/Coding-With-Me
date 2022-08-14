@@ -1,6 +1,12 @@
 <template>
 	<q-layout class="scroll" view="lHr lpr fFf">
-		<q-drawer :width="600" v-model="rightDrawerOpen" side="right" overlay bordered>
+		<q-drawer
+			:width="600"
+			v-model="rightDrawerOpen"
+			side="right"
+			overlay
+			bordered
+		>
 			<student-side-bar></student-side-bar>
 		</q-drawer>
 
@@ -226,8 +232,14 @@
 							class="micBtn"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
-							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
+							:icon="
+								piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.audioEnable
+									? '음소거'
+									: '음소거 해제'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.audioEnable
 									? piniaCommonVideoData.muteAudio()
@@ -239,8 +251,16 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam_off' : 'videocam'"
-							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
+							:icon="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? 'videocam_off'
+									: 'videocam'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? '카메라 끄기'
+									: '카메라 켜기'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.videoEnable
 									? piniaCommonVideoData.muteVideo()
@@ -278,7 +298,7 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 import {
 	onMounted,
 	// onBeforeUnmount,
@@ -289,7 +309,7 @@ import {
 	computed,
 } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
-import { studentVideoData } from 'src/stores/Video/student.js'
+import { studentVideoData } from 'src/stores/Video/student.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 import { studentExamData } from 'src/stores/ExamProgress/student.js';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
@@ -306,7 +326,7 @@ export default {
 		// UserVideo,
 		// VideoSideBarVue,
 		PdfViewer,
-		StudentSideBar
+		StudentSideBar,
 	},
 	setup() {
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
@@ -385,7 +405,6 @@ export default {
 						`Time : ${item.time}ms\nCorrect : ${item.success}\n${item.output}`,
 					);
 				}
-				console.log(resultList.value);
 			} catch (error) {
 				console.log(error);
 			}
@@ -419,7 +438,10 @@ export default {
 
 		onMounted(() => {
 			piniaCommonExamData
-				.getTestInfo(piniaCommonVideoData.userInfo.classKey, piniaCommonExamData.testName)
+				.getTestInfo(
+					piniaCommonVideoData.userInfo.classKey,
+					piniaCommonExamData.testName,
+				)
 				.then(() => {
 					piniaStudentExamData.initCode();
 					resultList.value = Array.apply(
@@ -435,7 +457,7 @@ export default {
 
 		const leaveSession = async () => {
 			router.push({ path: '/' });
-		}
+		};
 
 		return {
 			HOST,
@@ -470,7 +492,7 @@ export default {
 			selectedLanguageIdx,
 			runCode,
 			submitCode,
-			leaveSession
+			leaveSession,
 		};
 	},
 };

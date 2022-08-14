@@ -201,9 +201,7 @@ async function goEditInfo() {
 }
 onBeforeMount(async () => {
 	myInfo.value.push(info);
-	console.log(myInfo);
 });
-console.log(myInfo.value);
 async function goDelete() {
 	let user = {
 		name: info.name.value,

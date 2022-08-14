@@ -81,7 +81,6 @@ export default {
 				})
 				.then(res => {
 					console.log(res.message);
-					console.log(JSON.parse(localStorage.getItem('classId')));
 					router.push({
 						name: '',
 					});
