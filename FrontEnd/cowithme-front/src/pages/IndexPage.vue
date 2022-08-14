@@ -274,7 +274,7 @@ export default defineComponent({
 			newCurrentDate,
 			goSetClassInfo,
 			splitterModel: ref(30),
-			events: ['2019/02/01', '2019/02/05', '2019/02/06'],
+			events: ['2022/08/01', '2022/08/08', '2022/08/11'],
 		};
 	},
 });
