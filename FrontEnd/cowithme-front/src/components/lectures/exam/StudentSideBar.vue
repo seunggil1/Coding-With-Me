@@ -126,33 +126,43 @@
 
 <script>
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 export default {
-	components: {
-		UserVideo,
-	},
-	setup() {
-		const piniaCommonVideoData = commonVideoData();
-		const piniaCommonExamData = commonExamData();
 
-		onMounted(async () => {
-			await piniaCommonVideoData.joinSession();
-			await piniaCommonVideoData.startScreenShare();
-		});
+    components : {
+        UserVideo
+    },
+    setup () {
+        const myChatInput = ref('');
+        const piniaCommonVideoData = commonVideoData();
+        const piniaCommonExamData = commonExamData();
 
-		onUnmounted(async () => {
-			await piniaCommonVideoData.stopScreenShare();
-			await piniaCommonVideoData.leaveSession();
-		});
 
-		return {
-			piniaCommonVideoData,
-			piniaCommonExamData,
-		};
-	},
-};
+        let timer;
+        onMounted(async () => {
+            await piniaCommonVideoData.joinSession();
+            await piniaCommonVideoData.startScreenShare();
+            timer = setInterval(() => {
+				if (piniaCommonExamData.timeLimit > 0)
+					piniaCommonExamData.timeLimit -= 1;
+			}, 1000);
+        });
+
+        onUnmounted(async () => {
+            await piniaCommonVideoData.stopScreenShare();
+            await piniaCommonVideoData.leaveSession();
+            if (timer) clearInterval(timer);
+        });
+
+        return {
+            myChatInput,
+            piniaCommonVideoData,
+            piniaCommonExamData
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped></style>
