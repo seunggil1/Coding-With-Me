@@ -1,23 +1,26 @@
 <template>
 	<q-layout class="scroll" view="lHr lpr fFf">
 		<q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
-			<video-side-bar-vue :piniaData="teacherVideo"> </video-side-bar-vue>
+			<video-side-bar > </video-side-bar>
 		</q-drawer>
 
 		<q-page-container style="font-family: 'OTWelcomeBA'">
 			<div class="column main-container">
 				<div
-					v-if="showSubScribers && teacherVideo.state.session !== undefined"
+					v-if="showSubScribers 
+						&& piniaCommonVideoData.openvidu.session !== undefined"
 					class="col-2"
 				>
-					<q-scroll-area style="height: 100%; max-width: 100vw">
+					<q-scroll-area 
+						style="height: 100%; max-width: 100vw"
+					>
 						<div class="row no-wrap">
 							<div style="width: 11%" class="q-pa-sm">
 								<user-video
-									:stream-manager="teacherVideo.state.publisher"
+									:stream-manager="piniaCommonVideoData.openvidu.publisher"
 									@click="
-										teacherVideo.updateMainVideoStreamManager(
-											teacherVideo.state.publisher,
+										piniaCommonVideoData.updateMainVideoStreamManager(
+											piniaCommonVideoData.openvidu.publisher,
 										)
 									"
 								/>
@@ -25,12 +28,12 @@
 							<div
 								style="width: 11%"
 								class=""
-								v-for="(sub, idx) in teacherVideo.state.subscribers"
+								v-for="(sub, idx) in piniaCommonVideoData.openvidu.subscribers"
 								:key="idx"
 							>
 								<user-video
 									:stream-manager="sub"
-									@click="teacherVideo.updateMainVideoStreamManager(sub)"
+									@click="piniaCommonVideoData.updateMainVideoStreamManager(sub)"
 								/>
 							</div>
 						</div>
@@ -39,7 +42,7 @@
 				<!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
 				<div
 					:class="
-						showSubScribers && teacherVideo.state.session ? 'col-10' : 'col-12'
+						(showSubScribers && piniaCommonVideoData.openvidu.session) ? 'col-10' : 'col-12'
 					"
 				>
 					<div>
@@ -48,8 +51,8 @@
 								<div class="q-px-sm q-pt-sm">
 									<div class="flex" style="background: none">
 										<user-video 
-											v-if="teacherVideo.state.mainStreamManager"
-											:stream-manager="teacherVideo.state.mainStreamManager"
+											v-if="piniaCommonVideoData.openvidu.mainStreamManager"
+											:stream-manager="piniaCommonVideoData.openvidu.mainStreamManager"
 										/>
 									</div>
 								</div>
@@ -102,7 +105,7 @@
 												width: 130px;
 												max-width: 130px;
 												min-width: 130px;
-                        max-height: 90%
+                        						max-height: 90%
 												font-size: 18px;
 												float: right;
 											"
@@ -121,7 +124,7 @@
 									<div class="col-7">
 										<web-editor
 											ref="teacherIde"
-											:code="teacherVideo.state.teacherCode"
+											:code="piniaCommonVideoData.displayInfo.code"
 											language="java"
 											:readOnly="false"
 										/>
@@ -185,12 +188,12 @@
 							rounded
 							style="font-family: 'Elice Digital Baeum', sans-serif"
 							push
-							:icon="teacherVideo.isAudio ? 'mic' : 'mic_off'"
-							:label="teacherVideo.isAudio ? '음소거' : '음소거 해제'"
+							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
+							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
 							@click="
-								teacherVideo.isAudio
-									? teacherVideo.muteAudio()
-									: teacherVideo.unmuteAudio()
+								piniaCommonVideoData.displayInfo.audioEnable
+									? piniaCommonVideoData.muteAudio()
+									: piniaCommonVideoData.unmuteAudio()
 							"
 						/>
 
@@ -198,12 +201,12 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="teacherVideo.isVideo ? 'videocam' : 'videocam_off'"
-							:label="teacherVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
+							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam' : 'videocam_off'"
+							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
 							@click="
-								teacherVideo.isVideo
-									? teacherVideo.muteVideo()
-									: teacherVideo.unmuteVideo()
+								piniaCommonVideoData.displayInfo.videoEnable
+									? piniaCommonVideoData.muteVideo()
+									: piniaCommonVideoData.unmuteVideo()
 							"
 						/>
 
@@ -212,11 +215,11 @@
 							rounded
 							push
 							icon="screen_share"
-							:label="teacherVideo.isScreen ? '화면공유 중지' : '화면공유'"
+							:label="piniaCommonVideoData.displayInfo.screenShareEnable ? '화면공유 중지' : '화면공유'"
 							@click="
-								teacherVideo.isScreen
-									? teacherVideo.stopScreenShare()
-									: teacherVideo.startScreenShare()
+								piniaCommonVideoData.displayInfo.screenShareEnable
+									? piniaCommonVideoData.stopScreenShare()
+									: piniaCommonVideoData.startScreenShare()
 							"
 						/>
 
@@ -286,8 +289,8 @@
 					filled
 					color="secondary"
 					style="font-family: 'Elice Digital Baeum', sans-serif"
-					v-model="commonExamPinia.testName"
-					:options="teacherVideo.state.testNameList"
+					v-model="piniaCommonExamData.testName"
+					:options="piniaTeacherVideoData.testNameList"
 					label="시험 선택"
 				/>
 				<q-input
@@ -316,22 +319,26 @@
 <script>
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
+import { teacherVideoData } from 'src/stores/Video/teacher.js';
+import { commonVideoData } from 'src/stores/Video/common.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
+import VideoSideBar from 'src/components/lectures/VideoSideBar.vue';
 import axios from 'axios';
 export default {
 	components: {
 		WebEditor,
 		UserVideo,
-		VideoSideBarVue,
+		VideoSideBar,
 	},
 	setup() {
 		const router = useRouter();
-		const teacherVideo = teacherVideoStore();
-		const commonExamPinia = commonExamData();
+
+		const piniaCommonVideoData = commonVideoData();
+		const piniaTeacherVideoData = teacherVideoData();
+		const piniaCommonExamData = commonExamData();
+		
 		let showSubScribers = ref(true);
 		let rightDrawerOpen = ref(false);
 
@@ -351,12 +358,13 @@ export default {
 			if (val == undefined) return;
 			if (val === true) {
 				repeater = setInterval(() => {
-					teacherIde.value.saveCode();
-					teacherVideo.sendCode();
+					teacherIde.value.saveCode(true);
+					piniaTeacherVideoData.sendCode();
 				}, 1000);
 			} else {
 				clearInterval(repeater);
 				repeater = undefined;
+				piniaTeacherVideoData.sendCode(true);
 			}
 		});
 
@@ -366,12 +374,12 @@ export default {
 
 		const runCode = async () => {
 			isRunning.value = true;
-			teacherIde.value.saveCode();
+			teacherIde.value.saveCode(true);
 
 			const res = await axios.post(
 				'https://i7a304.p.ssafy.io/api/v1/users/compile',
 				{
-					code: teacherVideo.state.teacherCode,
+					code: piniaCommonVideoData.displayInfo.code,
 					lang: 'java',
 					testcase: {
 						input: inputData.value,
@@ -387,21 +395,17 @@ export default {
 			isRunning.value = false;
 		};
 
-		const redirectToExam = ref(false);
-		onMounted(() => {
-			teacherVideo.joinSession();
-			teacherVideo.getTestList();
+		onMounted(async () => {
+			await piniaCommonVideoData.joinSession();
+			await piniaTeacherVideoData.addEventListener();
+			await piniaTeacherVideoData.getTestList();
+
 			window.addEventListener('resize', teacherIde.value.updateEditor);
-			window.addEventListener('beforeunload', teacherVideo.leaveSession);
 		});
 
 		onBeforeUnmount(() => {
 			if (repeater) clearInterval(repeater);
-			
 			window.removeEventListener('resize', teacherIde.value.updateEditor);
-
-			if (redirectToExam.value) teacherVideo.leaveSessionWithoutCallApi();
-			else teacherVideo.leaveSession();
 		});
 
 		// 시험 시작
@@ -413,36 +417,31 @@ export default {
 				return parseInt(s);
 			});
 			const second = 3600 * data[0] + 60 * data[1] + 1 * data[2];
-			for (let testInfo of teacherVideo.state.testList) {
-				if (commonExamPinia.testName == testInfo.testName) {
-					redirectToExam.value = true;
-					commonExamPinia.testID = testInfo.testId;
-					commonExamPinia.setTimeLimit(data[0], data[1], data[2]);
-					teacherVideo.sendTestInfo(testInfo.testId, second).then(() => {
-						router.push({ path: '/teacherexam' }).catch(() => {
-							router.push({ path: '/teacherexam' }).catch(() => {
-								router.push({ path: '/teacherexam' });
-							});
-						});
+			for (let testInfo of piniaTeacherVideoData.testList) {
+				if (piniaCommonExamData.testName == testInfo.testName) {
+					piniaCommonExamData.testID = testInfo.testId;
+					piniaCommonExamData.setTimeLimit(data[0], data[1], data[2]);
+					piniaTeacherVideoData.sendTestInfo(testInfo.testId, second).then(() => {
+						router.push({ path: '/teacherexam' });
 					});
 					break;
 				}
 			}
 		};
-		function routeToHome() {
-			router.push({ path: '/' });
-		}
 
 		async function leaveSession() {
-			await teacherVideo.leaveSession();
-			routeToHome();
+			await piniaCommonVideoData.leaveSession();
+			await router.push({ path: '/'});
 		}
 
 
 		return {
 			timeWithSeconds,
-			commonExamPinia,
-			teacherVideo,
+
+			piniaCommonVideoData,
+			piniaCommonExamData,
+			piniaTeacherVideoData,
+
 			teacherIde,
 
 			showSubScribers,
@@ -457,7 +456,6 @@ export default {
 			runCode,
 
 			// 시험
-			redirectToExam,
 			showExamDialog,
 			startExam,
 			leaveSession,

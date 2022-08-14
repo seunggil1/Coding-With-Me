@@ -64,11 +64,11 @@
 			>
 				<q-scroll-area class="col-10 q-pa-xl" style="width: 100%">
 					<span
-						v-for="(chat, index) in teacherVideo.state.chatting"
+						v-for="(chat, index) in piniaCommonVideoData.displayInfo.chatting"
 						:key="index"
 					>
 						<q-chat-message
-							v-if="chat.sender === teacherVideo.state.myUserName"
+							v-if="chat.sender === piniaCommonVideoData.userInfo.userName"
 							:name="chat.sender"
 							:text="[chat.message]"
 							stamp="just second"
@@ -77,7 +77,7 @@
 							style="font-family: 'Elice Digital Baeum', sans-serif"
 						/>
 						<q-chat-message
-							v-if="chat.sender !== teacherVideo.state.myUserName"
+							v-if="chat.sender !== piniaCommonVideoData.userInfo.userName"
 							:name="chat.sender"
 							style="font-family: 'Elice Digital Baeum', sans-serif"
 							avatar="https://cdn.quasar.dev/img/avatar3.jpg"
@@ -97,7 +97,7 @@
 						color="secondary"
 						style="font-family: 'Elice Digital Baeum', sans-serif"
 						@keydown.enter.prevent="
-							teacherVideo.sendMessage(myChatInput);
+							piniaCommonVideoData.sendMessage(myChatInput);
 							myChatInput = '';
 						"
 					>
@@ -123,7 +123,7 @@
 								flat
 								icon="send"
 								@click="
-									teacherVideo.sendMessage(myChatInput);
+									piniaCommonVideoData.sendMessage(myChatInput);
 									myChatInput = '';
 								"
 							/>
@@ -138,7 +138,8 @@
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
-import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
+import { commonVideoData } from 'src/stores/Video/common.js';
+import { teacherVideoData } from 'src/stores/Video/teacher.js';
 export default {
 	components: {},
 
@@ -146,8 +147,10 @@ export default {
 	setup() {
 		const myChatInput = ref('');
 		const piniaCommonExamData = commonExamData();
-		const teacherVideo = teacherVideoStore();
+		const piniaCommonVideoData = commonVideoData();
+		const piniaTeacherVideoData = teacherVideoData();
 
+		
 		let timer;
 		onMounted(() => {
 			timer = setInterval(() => {
@@ -161,8 +164,9 @@ export default {
 
 		return {
 			myChatInput,
+			piniaCommonVideoData,
+			piniaTeacherVideoData,
 			piniaCommonExamData,
-			teacherVideo: teacherVideo,
 		};
 	},
 };

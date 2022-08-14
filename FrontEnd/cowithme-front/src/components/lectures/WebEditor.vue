@@ -14,8 +14,8 @@
 //     plugins: [new MonacoWebpackPlugin()],
 
 import { ref, onMounted, onUpdated } from 'vue';
-import { studentVideoStore } from 'src/stores/studentVideo.store.js';
-import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
+import { commonVideoData } from 'src/stores/Video/common.js';
+import { studentVideoData } from 'src/stores/Video/student.js';
 
 import * as monaco from 'monaco-editor';
 export default {
@@ -29,8 +29,9 @@ export default {
 		readOnly: Boolean, // "false"
 	},
 	setup(props) {
-		const studentVideo = studentVideoStore(); // store 가져오기
-		const teacherVideo = teacherVideoStore();
+		const piniaCommonVideoData = commonVideoData();
+		const piniaStudentVideoData = studentVideoData();
+
 		const editorDiv = ref(undefined);
 		let monacoEditor;
 
@@ -82,11 +83,16 @@ export default {
 			});
 		};
 
+		/**
+		 *  webEditor에 있는 코드를 pinia에 저장하는 코드
+		 * 
+		 *  isMyEditor : true면 내 코드 저장, false면 강사 코드 저장
+		 */
 		const saveCode = isMyEditor => {
 			if (isMyEditor) {
-				studentVideo.state.myCode = monacoEditor.getValue();
+				piniaCommonVideoData.displayInfo.code = monacoEditor.getValue();
 			} else {
-				teacherVideo.state.teacherCode = monacoEditor.getValue();
+				piniaStudentVideoData.teacherCode = monacoEditor.getValue();
 			}
 		};
 
@@ -99,15 +105,16 @@ export default {
 		};
 
 		return {
-			studentVideo,
+			piniaCommonVideoData,
+			piniaStudentVideoData,
+
 			editorDiv,
 			monacoEditor,
+
 			editorCode,
 			editorLanguage,
 			editorReadOnly,
-
-			// Golden Layout에서 화면이 갱신되었을 때,
-			// updateEditor를 호출해 IDE를 다시 불러와야 한다.
+		
 			updateEditor,
 			saveCode,
 			updateCode,

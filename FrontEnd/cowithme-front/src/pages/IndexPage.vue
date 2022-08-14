@@ -116,7 +116,6 @@ import { date } from 'quasar';
 import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
-import { studentVideoStore } from 'src/stores/studentVideo.store';
 import { commonVideoData } from 'src/stores/Video/common.js';
 
 export default defineComponent({
@@ -195,42 +194,26 @@ export default defineComponent({
 
 		console.log('@@@@', localStorage);
 
-		const studentVideo = studentVideoStore();
-
 		async function enterLecture() {
 			if (!activeLecture.value) {
 				console.log('활성화된 강의 없음');
 				return;
 			}
 
-			let id = JSON.parse(localStorage.getItem('user')).id;
-			studentVideo.state.id = id; // 로그인 아이디
-			let uid = JSON.parse(localStorage.getItem('info')).userId;
-			studentVideo.state.userId = uid;
-			let name = JSON.parse(localStorage.getItem('info')).name;
-			studentVideo.state.myUserName = name;
-			let classId = JSON.parse(localStorage.getItem('testTest')).result.classId;
-			studentVideo.state.classId = classId;
-			studentVideo.state.mySessionId = activeLecture.value.conferenceName;
+			piniaCommonVideoData.userInfo.userId = JSON.parse(localStorage.getItem('user')).id;
+			piniaCommonVideoData.userInfo.userKey = JSON.parse(localStorage.getItem('info')).userId;
+			piniaCommonVideoData.userInfo.userName = JSON.parse(localStorage.getItem('info')).name;
+			piniaCommonVideoData.userInfo.classKey = JSON.parse(localStorage.getItem('testTest')).result.classId;
 
-			piniaCommonVideoData.userInfo.userId = id;
-			piniaCommonVideoData.userInfo.userKey = uid;
-			piniaCommonVideoData.userInfo.userName = name;
-			piniaCommonVideoData.userInfo.classKey = classId;
-			piniaCommonVideoData.userInfo.conferenceName =
-				activeLecture.value.conferenceName;
+			piniaCommonVideoData.userInfo.className = testTest.value.className;
+			piniaCommonVideoData.userInfo.conferenceName = activeLecture.value.conferenceName;
 			await piniaCommonVideoData.getConferenceKey();
-
-			console.log('id', studentVideo.state.id);
-			console.log('uid', studentVideo.state.userId);
-			console.log('myUserName', studentVideo.state.myUserName);
-			console.log('classId', studentVideo.state.classId);
-			console.log('mySessionId', studentVideo.state.mySessionId);
-
+			// await piniaCommonVideoData.getStudentList();
+			
 			try {
 				const response = await api.post(`/records/attendances`, {
 					conferenceId: piniaCommonVideoData.userInfo.conferenceKey,
-					userId: uid,
+					userId: piniaCommonVideoData.userInfo.userKey,
 				});
 				console.log('출입기록 생성 성공', response.data);
 			} catch (error) {
@@ -249,10 +232,6 @@ export default defineComponent({
 				const response = await api.get(`/conferences/${classId}/active`);
 				console.log(response.data);
 				activeLecture.value = response.data.conference;
-				// newCode
-				piniaCommonVideoData.userInfo.conferenceKey =
-					response.data.conference.conferenceId;
-				//
 				isActiveLecture.value = true;
 			} catch (error) {
 				console.log('active 강의 불러오기 에러(active 강의 없음)', error);
@@ -269,15 +248,24 @@ export default defineComponent({
 			isInClass,
 			activeLecture,
 			isActiveLecture,
-			getActiveLecture,
-			enterLecture,
-			user2,
-			info2,
-			makeClass,
+
 			classes,
 			testTest,
-			newCurrentDate,
+			HOST,
+			baseUrl,
+			piniaCommonVideoData,
+			router,
+			user2,
+			info2,
+			isInClass,
+
+			makeClass,
+			classStore,
 			goSetClassInfo,
+			enterLecture,
+			getActiveLecture,
+			newCurrentDate,
+			
 			splitterModel: ref(30),
 			events: ['2022/08/01', '2022/08/08', '2022/08/11'],
 		};

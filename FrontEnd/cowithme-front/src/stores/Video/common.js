@@ -10,8 +10,9 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 		conferenceName : '',
 		
 		classKey : 0,
-		userKey : 0,
+		className : '',
 
+		userKey : 0,
 		userId : 'aaa', // 로그인할 때 사용하는 id
 		userName : '내 이름'
 	});
@@ -40,9 +41,10 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 		screenShareEnable : false,
 
 		chatting : [],
-		code : 'testCode',
+		code : 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n    public static void main(String[] args) throws IOException {\n        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));\n       \n        int a = Integer.parseInt(re.readLine());\n        int b = Integer.parseInt(re.readLine());\n\n        System.out.println(a+b);\n        re.close();\n    }\n}',
 
 		studentList : [],
+		studentListIsActive : []
 	})
 
 	const muteAudio = () => {
@@ -69,6 +71,17 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 	const getConferenceKey = async () => { 
 		let res = await api.get(`/conferences/${userInfo.classKey}/active`);
 		userInfo.conferenceKey = res.data.conference.conferenceId;
+	}
+
+	const getStudentList = async () => {
+		let result = api.get(`/tutor/${userInfo.userKey}/classes/${userInfo.className}`);
+
+		displayInfo.studentList.splice(0, displayInfo.studentList.length);
+
+		for(let item of (await result).data.students){
+			displayInfo.studentList.push(item.name);
+		}
+		displayInfo.studentListIsActive = Array.apply(null, Array(displayInfo.studentList.length)).map(() => false);
 	}
 	const joinSession = async () =>{
 		if(openvidu.session)
@@ -226,7 +239,7 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 			if (index >= 0) openvidu.subscribers.splice(index, 1);
 		});
 
-		openvidu.session.on('exception', ({ exception }) => console.error(exception));
+		openvidu.session.on('exception', ( exception ) => console.error(exception));
 
 		openvidu.session.on('signal:chat', event => {
 			event = JSON.parse(event.data);
@@ -274,6 +287,7 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 		unmuteVideo,
 
 		getConferenceKey,
+		getStudentList,
 		joinSession,
 		leaveSession,
 		startScreenShare,

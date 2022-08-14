@@ -1,7 +1,7 @@
 <template>
 	<q-layout class="scroll" view="lHr lpr fFf">
 		<q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
-			<video-side-bar-vue> </video-side-bar-vue>
+			<video-side-bar> </video-side-bar>
 		</q-drawer>
 
 		<q-page-container style="font-family: 'OTWelcomeBA'">
@@ -290,13 +290,13 @@ import { commonVideoData } from 'src/stores/Video/common.js';
 import { studentVideoData } from 'src/stores/Video/student.js';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
+import VideoSideBar from 'src/components/lectures/VideoSideBar.vue';
 import axios from 'axios';
 export default {
 	components: {
 		WebEditor,
 		UserVideo,
-		VideoSideBarVue,
+		VideoSideBar,
 	},
 	setup() {
 		const router = useRouter();
@@ -323,7 +323,7 @@ export default {
 		const mode = ref(1);
 
 		watch(mode, () => {
-			if (teacherIde.value) teacherIde.value.saveCode();
+			if (teacherIde.value) teacherIde.value.saveCode(false);
 			studentIde.value.saveCode(true);
 		});
 

@@ -81,17 +81,15 @@
 import { ref, watch } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 export default {
-	//store 객체를 props로 받음.
 	props: {
-		piniaData: Object,
 	},
-	setup(props) {
+	setup() {
 		let myChatInput = ref('');
 		const piniaCommonVideoData = commonVideoData();
 
 		watch(
-			() => piniaCommonVideoData.displayInfo.chatting, //props.piniaData.state.chatting,
-			() => console.log(piniaCommonVideoData.displayInfo.chatting),
+			() => piniaCommonVideoData.displayInfo.chatting,
+			() => console.log(piniaCommonVideoData.displayInfo.chatting)
 		);
 
 		return {

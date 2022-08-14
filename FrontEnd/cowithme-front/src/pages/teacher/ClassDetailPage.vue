@@ -270,8 +270,8 @@
 import fileDownload from 'js-file-download';
 import { useRouter } from 'vue-router';
 import { api } from 'src/boot/axios.js';
-import { teacherVideoStore } from 'src/stores/teacherVideo.store';
-
+import { commonVideoData } from 'src/stores/Video/common.js';
+import { teacherVideoData } from 'src/stores/Video/teacher.js';
 import { ref } from 'vue';
 
 export default {
@@ -288,36 +288,27 @@ export default {
 		const openstartLecture = ref(false);
 		const lectureName = ref('');
 
-		const teacherVideo = teacherVideoStore();
+		const piniaCommonVideoData = commonVideoData();
+		const piniaTeacherVideoData = teacherVideoData();
 
 		function startLecture() {
 			if (lectureName.value == '' || lectureName.value == null) {
 				alert('값을 입력해주세요');
 				return;
 			}
-			let id = JSON.parse(localStorage.getItem('user')).id;
-			teacherVideo.state.id = id; // 로그인 아이디
-			let uid = parseInt(localStorage.getItem('userId'));
-			teacherVideo.state.userId = uid;
-			let name = JSON.parse(localStorage.getItem('info')).name;
-			teacherVideo.state.myUserName = name;
-			let classId = parseInt(localStorage.getItem('classId'));
-			teacherVideo.state.classId = classId;
-			teacherVideo.state.mySessionId = lectureName.value;
+
+			piniaCommonVideoData.userInfo.userId = JSON.parse(localStorage.getItem('user')).id;
+			piniaCommonVideoData.userInfo.userKey =  parseInt(localStorage.getItem('userId'));
+			piniaCommonVideoData.userInfo.userName = JSON.parse(localStorage.getItem('info')).name;
+			piniaCommonVideoData.userInfo.classKey = parseInt(localStorage.getItem('classId'));
+			piniaCommonVideoData.userInfo.conferenceName = lectureName.value;
+			piniaCommonVideoData.userInfo.className = className;
 			lectureName.value = '';
-
-			console.log('id', teacherVideo.state.id);
-			console.log('uid', teacherVideo.state.userId);
-			console.log('myUserName', teacherVideo.state.myUserName);
-			console.log('classId', teacherVideo.state.classId);
-			console.log('mySessionId', teacherVideo.state.mySessionId);
-
-			teacherVideo.createSession().then(() => {
-				router.push({ path: '/teacherlecture' }).catch(() => {
-					router.push({ path: '/teacherlecture' }).catch(() => {
-						router.push({ path: '/teacherlecture' });
-					});
-				});
+			
+			piniaTeacherVideoData.createSession().then(async () => {
+				await piniaCommonVideoData.getConferenceKey();
+				await piniaCommonVideoData.getStudentList();
+				await router.push({ path: '/teacherlecture' });
 			});
 		}
 

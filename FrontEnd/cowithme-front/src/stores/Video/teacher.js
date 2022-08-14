@@ -27,6 +27,7 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
         }
 	};
 
+
     const addEventListener = async () => {
        
     };
@@ -51,7 +52,7 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
     /**
      * 강사의 코드를 학생에게 전달한다.
      * 
-     * 전송전 webEdtior에서 코드를 받아서 teacherVideoData.teacherCode.value에 해당 코드를 넣어줘야 한다.
+     * 전송전 webEdtior에서 코드를 받아서 teacherVideoData.displayInfo.code에 해당 코드를 넣어줘야 한다.
      * 
      * @argu terminate = true면 빈 값 전송
      * @returns Promise<void>
@@ -65,7 +66,7 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
 			.signal({
 				data: JSON.stringify({
 					sender: piniaCommonVideoData.userInfo.userName,
-					message: terminate ? '' : teacherCode.value,
+					message: terminate ? '' : piniaCommonVideoData.displayInfo.code,
 				}), // Any string (optional)
 				to: [],
 				type: 'code', // The type of message (optional)
@@ -108,6 +109,6 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
         addEventListener,
         createSession,
         sendCode,
-        sendTestInfo
+        sendTestInfo,
 	};
 });

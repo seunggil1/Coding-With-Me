@@ -18,18 +18,18 @@
 		<q-page-container>
 			<div class="column main-container">
 				<div
-					v-if="teacherVideo.state.session !== undefined"
+					v-if="piniaCommonVideoData.openvidu.session !== undefined"
 					class="col-2 q-pl-sm"
 				>
 					<q-scroll-area class="type2" style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
 							<div style="width: 11%" class="q-pa-sm">
-								<user-video :stream-manager="teacherVideo.state.publisher" />
+								<user-video :stream-manager="piniaCommonVideoData.openvidu.publisher" />
 							</div>
 							<div
 								style="width: 11%"
 								class="q-pa-sm"
-								v-for="(sub, idx) in teacherVideo.state.subscribers"
+								v-for="(sub, idx) in piniaCommonVideoData.openvidu.subscribers"
 								:key="idx"
 							>
 								<user-video :stream-manager="sub" />
@@ -37,8 +37,8 @@
 						</div>
 					</q-scroll-area>
 				</div>
-				<!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
-				<div :class="teacherVideo.state.session ? 'col-10' : 'col-12'">
+
+				<div :class="piniaCommonVideoData.openvidu.session ? 'col-10' : 'col-12'">
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
@@ -170,12 +170,12 @@
 							class="micBtn q-ml-md"
 							rounded
 							push
-							:icon="teacherVideo.isAudio ? 'mic' : 'mic_off'"
-							:label="teacherVideo.isAudio ? '음소거' : '음소거 해제'"
+							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
+							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
 							@click="
-								teacherVideo.isAudio
-									? teacherVideo.muteAudio()
-									: teacherVideo.unmuteAudio()
+								piniaCommonVideoData.displayInfo.audioEnable
+									? piniaCommonVideoData.muteAudio()
+									: piniaCommonVideoData.unmuteAudio()
 							"
 						/>
 
@@ -183,12 +183,12 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="teacherVideo.isVideo ? 'videocam' : 'videocam_off'"
-							:label="teacherVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
+							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam' : 'videocam_off'"
+							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
 							@click="
-								teacherVideo.isVideo
-									? teacherVideo.muteVideo()
-									: teacherVideo.unmuteVideo()
+								piniaCommonVideoData.displayInfo.videoEnable
+									? piniaCommonVideoData.muteVideo()
+									: piniaCommonVideoData.unmuteVideo()
 							"
 						/>
 
@@ -234,7 +234,8 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { teacherVideoStore } from 'src/stores/teacherVideo.store.js';
+import { commonVideoData } from 'src/stores/Video/common.js';
+import { teacherVideoData } from 'src/stores/Video/teacher.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 import { teacherExamData } from 'src/stores/ExamProgress/teacher.js';
 import { useRouter } from 'vue-router';
@@ -257,26 +258,30 @@ export default {
 		const splitterModel = ref(50);
 		const rightDrawerOpen = ref(true);
 		const router = useRouter();
-		const teacherVideo = teacherVideoStore(); // store 가져오기
+
+		const piniaCommonVideoData = commonVideoData();
+
+		const piniaTeacherVideoData = teacherVideoData();
 		const piniaCommonExamData = commonExamData();
 		const piniaTeacherExamData = teacherExamData();
 
 		const selectedProblem = ref(1);
+
+		
 		// 세션 나가기
 		const leaveSession = () => {
-			teacherVideo.leaveSession().then(()=>{
-				router.push({ path: '/home' }).catch(()=>{
-					router.push({ path: '/home' });
-				});
+			piniaCommonVideoData.leaveSession().then(()=>{
+				router.push({ path: '/home' });
 			})
 		};
 
 		const stopExam = () => {};
 
-		onMounted(() => {
-			teacherVideo.joinSession();
-			piniaCommonExamData.getTestInfo(
-				teacherVideo.state.classId,
+		onMounted(async () => {
+			piniaTeacherExamData.initSubmitStudentList();
+
+			await piniaCommonExamData.getTestInfo(
+				piniaCommonVideoData.userInfo.classKey,
 				piniaCommonExamData.testName,
 			);
 		});
@@ -287,7 +292,9 @@ export default {
 			rightDrawerOpen,
 
 			router,
-			teacherVideo,
+
+			piniaCommonVideoData,
+			piniaTeacherVideoData,
 			piniaCommonExamData,
 			piniaTeacherExamData,
 
