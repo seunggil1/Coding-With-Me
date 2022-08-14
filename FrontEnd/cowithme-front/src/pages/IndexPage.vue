@@ -122,6 +122,7 @@ export default defineComponent({
 		AtomBasic1Button,
 	},
 	setup() {
+		// console.log(this.$router.options.routes);
 		// const classStore = useClassStore();
 		const classes = ref([]);
 		const testTest = ref([]);

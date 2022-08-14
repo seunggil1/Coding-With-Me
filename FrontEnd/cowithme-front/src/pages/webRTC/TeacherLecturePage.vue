@@ -8,7 +8,7 @@
 			<div class="column main-container">
 				<div
 					v-if="showSubScribers && teacherVideo.state.session !== undefined"
-					class="col-2 q-pl-sm"
+					class="col-2"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
@@ -24,7 +24,7 @@
 							</div>
 							<div
 								style="width: 11%"
-								class="q-pa-sm"
+								class=""
 								v-for="(sub, idx) in teacherVideo.state.subscribers"
 								:key="idx"
 							>
@@ -45,7 +45,7 @@
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-pa-md">
+								<div class="q-px-sm q-pt-sm">
 									<div class="flex" style="background: none">
 										<user-video
 											:stream-manager="teacherVideo.state.mainStreamManager"
@@ -56,7 +56,7 @@
 							<template v-slot:after>
 								<div
 									style="font-family: 'Elice Digital Baeum', sans-serif"
-									class="q-pa-md flex-height column"
+									class="q-pt-sm q-pl-sm q-mr-md flex-height column"
 								>
 									<div class="col-1" style="background-color: #eeeeee">
 										<!-- <div
@@ -427,13 +427,14 @@ export default {
 				}
 			}
 		};
+		function routeToHome() {
+			router.push({ path: '/' });
+		}
 
-		const leaveSession = () => {
-			router.push({ path: '/' }).catch(err => {
-				console.error(err);
-				router.push({ path: '/' });
-			});
-		};
+		async function leaveSession() {
+			await teacherVideo.leaveSession();
+			await routeToHome();
+		}
 
 		return {
 			timeWithSeconds,
@@ -496,6 +497,6 @@ export default {
 }
 .test {
 	-webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7)) !important;
-	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
+	filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7)) !important;
 }
 </style>

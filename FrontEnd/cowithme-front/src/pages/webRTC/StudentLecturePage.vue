@@ -44,7 +44,7 @@
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-pa-md flex-height">
+								<div class="q-px-sm q-pt-md flex-height">
 									<!-- 모드 1 : 왼쪽은 강사 얼굴, 오른쪽은 학생 IDE -->
 									<span v-if="mode == 1">
 										<div class="flex" style="background: none">
@@ -56,7 +56,7 @@
 
 									<!-- 모드 2 : 왼쪽은 강사 IDE, 오른쪽은 학생 IDE  -->
 									<span v-if="mode == 2">
-										<div class="q-pa-md flex-height column">
+										<div class="q-px-sm flex-height column">
 											<div class="col-1"></div>
 											<div class="col-10">
 												<web-editor
