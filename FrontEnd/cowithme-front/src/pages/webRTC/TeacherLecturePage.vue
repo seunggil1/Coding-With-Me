@@ -47,7 +47,8 @@
 							<template v-slot:before>
 								<div class="q-px-sm q-pt-sm">
 									<div class="flex" style="background: none">
-										<user-video
+										<user-video 
+											v-if="teacherVideo.state.mainStreamManager"
 											:stream-manager="teacherVideo.state.mainStreamManager"
 										/>
 									</div>
@@ -396,6 +397,7 @@ export default {
 
 		onBeforeUnmount(() => {
 			if (repeater) clearInterval(repeater);
+			
 			window.removeEventListener('resize', teacherIde.value.updateEditor);
 
 			if (redirectToExam.value) teacherVideo.leaveSessionWithoutCallApi();
@@ -433,8 +435,9 @@ export default {
 
 		async function leaveSession() {
 			await teacherVideo.leaveSession();
-			await routeToHome();
+			routeToHome();
 		}
+
 
 		return {
 			timeWithSeconds,
