@@ -57,6 +57,10 @@ public class TestServiceImpl implements TestService {
         test.setTestName(testModifyPostReq.getNewtestName());
         test.setTestQno(testModifyPostReq.getTestQno());
 
+        TestCase tc = test.getTestcase();
+        tc.setTestcaseList(testModifyPostReq.getTestcaseList());
+        test.setTestcase(tc);
+
         return testRepository.save(test);
     }
 
