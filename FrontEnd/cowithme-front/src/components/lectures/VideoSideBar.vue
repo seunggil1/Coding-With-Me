@@ -25,7 +25,6 @@
 				<q-chat-message
 					v-if="chat.sender !== piniaCommonVideoData.userInfo.userName"
 					:name="chat.sender"
-					avatar="https://cdn.quasar.dev/img/avatar3.jpg"
 					:text="[chat.message]"
 					stamp="just second"
 					bg-color="amber-7"
@@ -45,12 +44,6 @@
 					myChatInput = '';
 				"
 			>
-				<!-- <template v-slot:before>
-					<q-avatar>
-						<img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-					</q-avatar>
-				</template> -->
-
 				<template v-slot:append>
 					<q-icon
 						v-if="myChatInput !== ''"
@@ -81,15 +74,14 @@
 import { ref, watch } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 export default {
-	props: {
-	},
+	props: {},
 	setup() {
 		let myChatInput = ref('');
 		const piniaCommonVideoData = commonVideoData();
 
 		watch(
 			() => piniaCommonVideoData.displayInfo.chatting,
-			() => console.log(piniaCommonVideoData.displayInfo.chatting)
+			() => console.log(piniaCommonVideoData.displayInfo.chatting),
 		);
 
 		return {

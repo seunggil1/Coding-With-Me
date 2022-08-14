@@ -1,5 +1,5 @@
 <template>
-    <div
+	<div
 		class="row parti-chat-box"
 		style="height: 95vh; font-family: 'Elice Digital Baeum', sans-serif"
 	>
@@ -33,10 +33,16 @@
 					</div>
 				</div>
 				<div class="q-pa-sm col-5" style="border: 1px solid red">
-					<user-video v-if="piniaCommonVideoData.openvidu.publisher" :stream-manager="piniaCommonVideoData.openvidu.publisher" />
+					<user-video
+						v-if="piniaCommonVideoData.openvidu.publisher"
+						:stream-manager="piniaCommonVideoData.openvidu.publisher"
+					/>
 				</div>
 				<div class="q-pa-sm col-5" style="border: 1px solid red">
-					<user-video v-if="piniaCommonVideoData.openvidu.screenPublisher" :stream-manager="piniaCommonVideoData.openvidu.screenPublisher" />
+					<user-video
+						v-if="piniaCommonVideoData.openvidu.screenPublisher"
+						:stream-manager="piniaCommonVideoData.openvidu.screenPublisher"
+					/>
 				</div>
 			</div>
 		</div>
@@ -70,7 +76,6 @@
 							v-if="chat.sender !== piniaCommonVideoData.userInfo.userName"
 							:name="chat.sender"
 							style="font-family: 'Elice Digital Baeum', sans-serif"
-							avatar="https://cdn.quasar.dev/img/avatar3.jpg"
 							:text="[chat.message]"
 							stamp="just second"
 							bg-color="amber-7"
@@ -91,12 +96,6 @@
 							myChatInput = '';
 						"
 					>
-						<!-- <template v-slot:before>
-							<q-avatar>
-								<img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-							</q-avatar>
-						</template> -->
-
 						<template v-slot:append>
 							<q-icon
 								v-if="myChatInput !== ''"
@@ -127,35 +126,33 @@
 
 <script>
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 export default {
-    components : {
-        UserVideo
-    },
-    setup () {
-        const piniaCommonVideoData = commonVideoData();
-        const piniaCommonExamData = commonExamData();
+	components: {
+		UserVideo,
+	},
+	setup() {
+		const piniaCommonVideoData = commonVideoData();
+		const piniaCommonExamData = commonExamData();
 
-        onMounted(async () => {
-            await piniaCommonVideoData.joinSession();
-            await piniaCommonVideoData.startScreenShare();
-        });
+		onMounted(async () => {
+			await piniaCommonVideoData.joinSession();
+			await piniaCommonVideoData.startScreenShare();
+		});
 
-        onUnmounted(async () => {
-            await piniaCommonVideoData.stopScreenShare();
-            await piniaCommonVideoData.leaveSession();
-        });
+		onUnmounted(async () => {
+			await piniaCommonVideoData.stopScreenShare();
+			await piniaCommonVideoData.leaveSession();
+		});
 
-        return {
-            piniaCommonVideoData,
-            piniaCommonExamData
-        }
-    }
-}
+		return {
+			piniaCommonVideoData,
+			piniaCommonExamData,
+		};
+	},
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

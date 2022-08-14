@@ -222,11 +222,7 @@
 		<q-footer elevated class="bg-grey-8 text-white">
 			<q-toolbar>
 				<div class="row full-width q-my-sm">
-					<div class="col-1">
-						<q-avatar>
-							<img src="src/assets/logo/logo.svg" />
-						</q-avatar>
-					</div>
+					<div class="col-1"></div>
 					<div class="col-10" align="center">
 						<q-btn
 							class="micBtn"

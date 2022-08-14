@@ -80,7 +80,6 @@
 							v-if="chat.sender !== piniaCommonVideoData.userInfo.userName"
 							:name="chat.sender"
 							style="font-family: 'Elice Digital Baeum', sans-serif"
-							avatar="https://cdn.quasar.dev/img/avatar3.jpg"
 							:text="[chat.message]"
 							stamp="just second"
 							bg-color="amber-7"
@@ -101,12 +100,6 @@
 							myChatInput = '';
 						"
 					>
-						<!-- <template v-slot:before>
-							<q-avatar>
-								<img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-							</q-avatar>
-						</template> -->
-
 						<template v-slot:append>
 							<q-icon
 								v-if="myChatInput !== ''"
@@ -150,7 +143,6 @@ export default {
 		const piniaCommonVideoData = commonVideoData();
 		const piniaTeacherVideoData = teacherVideoData();
 
-		
 		let timer;
 		onMounted(() => {
 			timer = setInterval(() => {

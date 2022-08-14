@@ -7,7 +7,10 @@
 		<q-page-container style="font-family: 'OTWelcomeBA'">
 			<div class="column main-container">
 				<div
-					v-if="showSubScribers && piniaCommonVideoData.openvidu.session !== undefined"
+					v-if="
+						showSubScribers &&
+						piniaCommonVideoData.openvidu.session !== undefined
+					"
 					class="col-2"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
@@ -30,7 +33,9 @@
 							>
 								<user-video
 									:stream-manager="sub"
-									@click="piniaCommonVideoData.updateMainVideoStreamManager(sub)"
+									@click="
+										piniaCommonVideoData.updateMainVideoStreamManager(sub)
+									"
 								/>
 							</div>
 						</div>
@@ -38,7 +43,9 @@
 				</div>
 				<div
 					:class="
-						showSubScribers && piniaCommonVideoData.openvidu.session ? 'col-10' : 'col-12'
+						showSubScribers && piniaCommonVideoData.openvidu.session
+							? 'col-10'
+							: 'col-12'
 					"
 				>
 					<div>
@@ -49,7 +56,9 @@
 									<span v-if="mode == 1">
 										<div class="flex" style="background: none">
 											<user-video
-												:stream-manager="piniaCommonVideoData.openvidu.mainStreamManager"
+												:stream-manager="
+													piniaCommonVideoData.openvidu.mainStreamManager
+												"
 											/>
 										</div>
 									</span>
@@ -172,18 +181,20 @@
 		>
 			<q-toolbar>
 				<div class="row full-width q-my-sm">
-					<div class="col-1">
-						<q-avatar>
-							<img src="src/assets/logo/logo.svg" />
-						</q-avatar>
-					</div>
+					<div class="col-1"></div>
 					<div class="col-10" align="center">
 						<q-btn
 							class="micBtn"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
-							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
+							:icon="
+								piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.audioEnable
+									? '음소거'
+									: '음소거 해제'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.audioEnable
 									? piniaCommonVideoData.muteAudio()
@@ -195,8 +206,16 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam' : 'videocam_off'"
-							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
+							:icon="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? 'videocam'
+									: 'videocam_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? '카메라 끄기'
+									: '카메라 켜기'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.videoEnable
 									? piniaCommonVideoData.muteVideo()
@@ -209,7 +228,11 @@
 							rounded
 							push
 							icon="screen_share"
-							:label="piniaCommonVideoData.displayInfo.screenShareEnable ? '화면공유 중지' : '화면공유'"
+							:label="
+								piniaCommonVideoData.displayInfo.screenShareEnable
+									? '화면공유 중지'
+									: '화면공유'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.screenShareEnable
 									? piniaCommonVideoData.stopScreenShare()
@@ -388,12 +411,12 @@ export default {
 
 		const leaveSession = async () => {
 			piniaCommonVideoData.leaveSession();
-			router.push({ path: '/'});
+			router.push({ path: '/' });
 		};
 
 		const comebackToHome = () => {
-			router.push({ path: '/'});
-		}
+			router.push({ path: '/' });
+		};
 
 		return {
 			piniaCommonVideoData,
