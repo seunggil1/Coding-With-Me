@@ -3,53 +3,60 @@
 		class="row parti-chat-box"
 		style="height: 95vh; font-family: 'Elice Digital Baeum', sans-serif"
 	>
-		<div class="col-5" style="border: 1px solid #ff5722">
-			<div class="column" style="border: 1px solid #ff5722; height: 100%">
+		<!-- 시험 정보 -->
+		<div class="col-5" style="box-shadow: 2px 0px 3px #ff5722">
+			<div class="column" style="height: 100%">
+				<!-- 시간 표시 -->
 				<div class="col-1">
 					<q-banner
 						dense
 						inline-actions
 						class="text-white q-pa-md"
 						style="
-							border: 1px solid #ff5722;
 							background-color: #ff5722;
 							font-family: 'Elice Digital Baeum', sans-serif;
 						"
 					>
-						{{ piniaCommonExamData.formattedTime }}
+						<div class="flex items-center">
+							<div>{{ piniaCommonExamData.formattedTime }}</div>
+						</div>
 
 						<template v-slot:action>
 							<q-icon name="access_time" class="cursor-pointer"> </q-icon>
 						</template>
 					</q-banner>
 				</div>
-
+				<!-- 시험 제목 -->
 				<div class="col-1">
 					<div
-						class="q-pa-sm text-h6"
-						style="font-family: 'Elice Digital Baeum', sans-serif"
+						class="q-pa-md text-h6"
+						style="
+							font-family: 'Elice Digital Baeum', sans-serif;
+							border-bottom: 2px solid #ff5722;
+						"
 					>
 						{{ piniaCommonExamData.testName }}
 					</div>
 				</div>
-				<div class="q-pa-sm col-5" style="border: 1px solid red">
-					<p>오프라인</p>
-					<p>온라인</p>
+				<!-- 오프라인, 온라인 인원 -->
+				<div class="q-pa-md col-5" style="border-bottom: 2px solid #ff5722">
+					<q-chip outline color="positive" text-color="white"> 온라인 </q-chip>
+					<q-chip outline color="negative" text-color="white">
+						오프라인
+					</q-chip>
 				</div>
-				<div class="q-pa-sm col-5" style="border: 1px solid red">
-					<p>제출 완료</p>
-					<p>제출 미완료</p>
+				<!-- 제출, 미제출 인원 -->
+				<div class="q-pa-md col-5">
+					<q-chip outline color="positive" text-color="white">
+						제출 완료
+					</q-chip>
+					<q-chip outline color="negative" text-color="white"> 미제출 </q-chip>
 				</div>
 			</div>
 		</div>
 
-		<div
-			class="col-7"
-			style="
-				font-family: 'Elice Digital Baeum', sans-serif;
-				border: 1px solid red;
-			"
-		>
+		<!-- 채팅 -->
+		<div class="col-7" style="font-family: 'Elice Digital Baeum', sans-serif">
 			<div
 				class="column justify-center"
 				style="height: 95vh; font-family: 'OTWelcomeBA'"
