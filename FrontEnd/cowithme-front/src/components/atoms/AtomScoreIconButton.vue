@@ -6,7 +6,7 @@
 			align="left"
 			flat
 			label="성적 조회"
-			icon="history_edu"
+			icon="school"
 		></q-btn>
 	</div>
 </template>

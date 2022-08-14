@@ -57,7 +57,8 @@
 					<div class="col">
 						<q-badge
 							v-if="info2.role === '강사'"
-							class="q-mb-sm brand"
+							class="q-mb-sm"
+							color="teal"
 							outline
 							label="강사"
 						/>
@@ -98,7 +99,7 @@
 					<div class="q-py-xs q-gutter-sm">
 						<q-btn
 							size="23px"
-							class="btn-size font-OT brand"
+							class="btn-size font-OT"
 							align="left"
 							flat
 							label="마이페이지"
@@ -111,11 +112,11 @@
 						<q-btn
 							size="23px"
 							class="btn-size font-OT"
+							color="grey"
 							align="left"
 							flat
 							label="로그아웃"
 							icon="logout"
-							style="font-family: 'OTWelcomeBA'"
 							@click="goLogout"
 						>
 						</q-btn>
@@ -215,12 +216,12 @@ export default defineComponent({
 	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 }
-.brand {
-	color: #00adb5 !important;
-}
 .font-OT {
 	font-family: 'MICEGothic Bold' !important;
 	font-size: 24px;
+}
+.font-MICE {
+	font-family: 'MICEGothic Bold' !important;
 }
 .a {
 	color: #18272f;

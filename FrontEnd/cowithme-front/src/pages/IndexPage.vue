@@ -44,7 +44,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="info2.role == '학생'">
+		<div v-if="info2.role == '학생'" style="height: 100vh">
 			<div
 				class="q-pa-xl col flex justify-center"
 				style="font-family: 'Elice Digital Baeum'"

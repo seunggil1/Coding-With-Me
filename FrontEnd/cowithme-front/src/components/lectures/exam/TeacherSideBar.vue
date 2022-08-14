@@ -29,13 +29,14 @@
 				<!-- 시험 제목 -->
 				<div class="col-1">
 					<div
-						class="q-pa-md text-h6"
+						class="q-px-md q-pb-md text-h6"
 						style="
 							font-family: 'Elice Digital Baeum', sans-serif;
 							border-bottom: 2px solid #ff5722;
+							font-weight: bold;
 						"
 					>
-						{{ piniaCommonExamData.testName }}
+						시험: {{ piniaCommonExamData.testName }}
 					</div>
 				</div>
 				<!-- 오프라인, 온라인 인원 -->

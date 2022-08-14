@@ -2,7 +2,7 @@
 	<div>
 		<div
 			id="q-app"
-			class="q-pa-lg"
+			class="box q-pa-lg q-ma-xl"
 			style="font-family: 'Elice Digital Baeum', sans-serif"
 		>
 			<div class="q-pa-md" style="max-width: 700px">
@@ -119,5 +119,13 @@ async function goMakeClass() {
 		format('woff2') !important;
 	font-weight: 700 !important;
 	font-style: normal !important;
+}
+.box {
+	height: 100% !important;
+	width: 60% !important;
+	min-width: 700px !important;
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }
 </style>

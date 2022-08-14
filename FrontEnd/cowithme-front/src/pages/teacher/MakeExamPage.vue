@@ -54,9 +54,10 @@
 					type="number"
 					rounded
 					outlined
+					color="teal"
 					class="q-mb-sm"
 					v-model.number="examInfo.testQno"
-					label="문제 갯수"
+					label="문제 개수"
 					lazy-rules
 				></q-input>
 
@@ -98,7 +99,9 @@
 									transition-next="jump-up"
 								>
 									<q-tab-panel name="0">
-										<div class="text-h4 q-mb-md">Test Cases</div>
+										<div class="text-h4 q-mb-md" style="font-weight: bold">
+											Test Cases
+										</div>
 										<p>
 											왼쪽 탭은 문제 번호를 나타내고, 여기는 각 문제 마다 테스트
 											케이스를 작성하는 공간입니다.

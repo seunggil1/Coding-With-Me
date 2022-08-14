@@ -8,9 +8,10 @@
 					type="number"
 					rounded
 					outlined
+					color="teal"
 					class="q-mb-sm"
 					v-model.number="examInfo.testQno"
-					label="문제 갯수"
+					label="문제 개수"
 					lazy-rules
 				></q-input>
 			</div>
