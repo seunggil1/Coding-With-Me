@@ -10,9 +10,9 @@
 		</q-scroll-area>
 
 		<q-scroll-area class="col-5" style="width: 100%">
-			<span v-for="(chat, index) in piniaData.state.chatting" :key="index">
+			<span v-for="(chat, index) in piniaCommonVideoData.displayInfo.chatting" :key="index">
 				<q-chat-message
-					v-if="chat.sender === piniaData.state.myUserName"
+					v-if="chat.sender === piniaCommonVideoData.userInfo.userName"
 					:name="chat.sender"
 					:text="[chat.message]"
 					stamp="just second"
@@ -20,7 +20,7 @@
 					bg-color="amber-7"
 				/>
 				<q-chat-message
-					v-if="chat.sender !== piniaData.state.myUserName"
+					v-if="chat.sender !== piniaCommonVideoData.userInfo.userName"
 					:name="chat.sender"
 					avatar="https://cdn.quasar.dev/img/avatar3.jpg"
 					:text="[chat.message]"
@@ -38,7 +38,7 @@
 				:dense="true"
 				color="secondary"
 				@keydown.enter.prevent="
-					piniaData.sendMessage(myChatInput);
+					piniaCommonVideoData.sendMessage(myChatInput);
 					myChatInput = '';
 				"
 			>
@@ -64,7 +64,7 @@
 						flat
 						icon="send"
 						@click="
-							piniaData.sendMessage(myChatInput);
+							piniaCommonVideoData.sendMessage(myChatInput);
 							myChatInput = '';
 						"
 					/>
@@ -76,7 +76,7 @@
 
 <script>
 import { ref, watch } from 'vue';
-
+import { commonVideoData } from 'src/stores/Video/common.js';
 export default {
 	//store 객체를 props로 받음.
 	props: {
@@ -84,16 +84,16 @@ export default {
 	},
 	setup(props) {
 		let myChatInput = ref('');
+		const piniaCommonVideoData = commonVideoData();
 
 		watch(
-			() => props.piniaData.state.chatting,
-			() => {
-				console.log(props.piniaData.state.chatting);
-			},
+			() => piniaCommonVideoData.displayInfo.chatting, //props.piniaData.state.chatting,
+			() => console.log(piniaCommonVideoData.displayInfo.chatting)
 		);
 
 		return {
 			myChatInput,
+			piniaCommonVideoData,
 		};
 	},
 };

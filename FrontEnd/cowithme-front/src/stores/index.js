@@ -11,6 +11,9 @@ export * from './studentVideo.store.js';
 export * from './ExamProgress/common.js';
 export * from './ExamProgress/student.js';
 export * from './ExamProgress/teacher.js';
+export * from './Video/common.js';
+export * from './Video/student.js';
+export * from './Video/teacher.js';
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;

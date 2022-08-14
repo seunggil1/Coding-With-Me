@@ -1,23 +1,23 @@
 <template>
 	<q-layout class="scroll" view="lHr lpr fFf">
 		<q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
-			<video-side-bar-vue :piniaData="studentVideo"> </video-side-bar-vue>
+			<video-side-bar-vue> </video-side-bar-vue>
 		</q-drawer>
 
 		<q-page-container style="font-family: 'OTWelcomeBA'">
 			<div class="column main-container">
 				<div
-					v-if="showSubScribers && studentVideo.state.session !== undefined"
+					v-if="showSubScribers && piniaCommonVideoData.openvidu.session !== undefined"
 					class="col-2"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
 							<div style="width: 12%" class="q-pt-sm">
 								<user-video
-									:stream-manager="studentVideo.state.publisher"
+									:stream-manager="piniaCommonVideoData.openvidu.publisher"
 									@click="
-										studentVideo.updateMainVideoStreamManager(
-											studentVideo.state.publisher,
+										piniaCommonVideoData.updateMainVideoStreamManager(
+											piniaCommonVideoData.openvidu.publisher,
 										)
 									"
 								/>
@@ -25,12 +25,12 @@
 							<div
 								style="width: 12%"
 								class="q-pa-sm"
-								v-for="(sub, idx) in studentVideo.state.subscribers"
+								v-for="(sub, idx) in piniaCommonVideoData.openvidu.subscribers"
 								:key="idx"
 							>
 								<user-video
 									:stream-manager="sub"
-									@click="studentVideo.updateMainVideoStreamManager(sub)"
+									@click="piniaCommonVideoData.updateMainVideoStreamManager(sub)"
 								/>
 							</div>
 						</div>
@@ -38,7 +38,7 @@
 				</div>
 				<div
 					:class="
-						showSubScribers && studentVideo.state.session ? 'col-10' : 'col-12'
+						showSubScribers && piniaCommonVideoData.openvidu.session ? 'col-10' : 'col-12'
 					"
 				>
 					<div>
@@ -49,7 +49,7 @@
 									<span v-if="mode == 1">
 										<div class="flex" style="background: none">
 											<user-video
-												:stream-manager="studentVideo.state.mainStreamManager"
+												:stream-manager="piniaCommonVideoData.openvidu.mainStreamManager"
 											/>
 										</div>
 									</span>
@@ -61,7 +61,7 @@
 											<div class="col-10">
 												<web-editor
 													ref="teacherIde"
-													:code="studentVideo.state.teacherCode"
+													:code="piniaStudentVideoData.teacherCode"
 													language="java"
 													:readOnly="true"
 												/>
@@ -94,13 +94,13 @@
 												> -->
 												<q-btn
 													style="
-                              width: 130px;
-                              max-width: 130px;
-                              min-width: 130px;
-                              max-height: 90%
-                              font-size: 18px;
-                              float: right;
-                            "
+													width: 130px;
+													max-width: 130px;
+													min-width: 130px;
+													max-height: 90%
+													font-size: 18px;
+													float: right;
+													"
 													class="col q-pa-sm q-mt-md q-mr-md"
 													color="secondary"
 													push
@@ -115,7 +115,7 @@
 									<div class="col-7">
 										<web-editor
 											ref="studentIde"
-											:code="studentVideo.state.myCode"
+											:code="piniaCommonVideoData.displayInfo.code"
 											language="java"
 											:readOnly="false"
 										/>
@@ -182,12 +182,12 @@
 							class="micBtn"
 							rounded
 							push
-							:icon="studentVideo.isAudio ? 'mic' : 'mic_off'"
-							:label="studentVideo.isAudio ? '음소거' : '음소거 해제'"
+							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
+							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
 							@click="
-								studentVideo.isAudio
-									? studentVideo.muteAudio()
-									: studentVideo.unmuteAudio()
+								piniaCommonVideoData.displayInfo.audioEnable
+									? piniaCommonVideoData.muteAudio()
+									: piniaCommonVideoData.unmuteAudio()
 							"
 						/>
 
@@ -195,12 +195,12 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="studentVideo.isVideo ? 'videocam_off' : 'videocam'"
-							:label="studentVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
+							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam' : 'videocam_off'"
+							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
 							@click="
-								studentVideo.isVideo
-									? studentVideo.muteVideo()
-									: studentVideo.unmuteVideo()
+								piniaCommonVideoData.displayInfo.videoEnable
+									? piniaCommonVideoData.muteVideo()
+									: piniaCommonVideoData.unmuteVideo()
 							"
 						/>
 
@@ -209,11 +209,11 @@
 							rounded
 							push
 							icon="screen_share"
-							:label="studentVideo.isScreen ? '화면공유 중지' : '화면공유'"
+							:label="piniaCommonVideoData.displayInfo.screenShareEnable ? '화면공유 중지' : '화면공유'"
 							@click="
-								studentVideo.isScreen
-									? studentVideo.stopScreenShare()
-									: studentVideo.startScreenShare()
+								piniaCommonVideoData.displayInfo.screenShareEnable
+									? piniaCommonVideoData.stopScreenShare()
+									: piniaCommonVideoData.startScreenShare()
 							"
 						/>
 
@@ -223,7 +223,7 @@
 							push
 							icon="quiz"
 							label="시험 입장"
-							v-if="studentVideo.state.openTest"
+							v-if="piniaStudentVideoData.enableTest"
 							@click="startExam"
 						/>
 						<q-btn
@@ -232,7 +232,7 @@
 							push
 							icon="quiz"
 							label="시험 입장"
-							v-if="!studentVideo.state.openTest"
+							v-if="!piniaStudentVideoData.enableTest"
 							disable
 							@click="startExam"
 						/>
@@ -286,7 +286,8 @@
 <script>
 import { useRouter } from 'vue-router';
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
-import { studentVideoStore } from 'src/stores/studentVideo.store.js';
+import { commonVideoData } from 'src/stores/Video/common.js';
+import { studentVideoData } from 'src/stores/Video/student.js';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
@@ -299,7 +300,9 @@ export default {
 	},
 	setup() {
 		const router = useRouter();
-		const studentVideo = studentVideoStore();
+		const piniaCommonVideoData = commonVideoData();
+		const piniaStudentVideoData = studentVideoData();
+
 		let showSubScribers = ref(true);
 		let rightDrawerOpen = ref(false);
 
@@ -314,7 +317,7 @@ export default {
 
 		const getTeacherCode = () => {
 			if (teacherIde.value)
-				teacherIde.value.updateCode(studentVideo.state.teacherCode);
+				teacherIde.value.updateCode(piniaStudentVideoData.teacherCode);
 		};
 		// 모드 변환
 		const mode = ref(1);
@@ -343,7 +346,7 @@ export default {
 			const res = await axios.post(
 				'https://i7a304.p.ssafy.io/api/v1/users/compile',
 				{
-					code: studentVideo.state.myCode,
+					code: piniaCommonVideoData.displayInfo.code,
 					lang: 'java',
 					testcase: {
 						input: inputData.value,
@@ -361,8 +364,9 @@ export default {
 
 		let repeater = undefined;
 		const redirectToExam = ref(false);
-		onMounted(() => {
-			studentVideo.joinSession();
+		onMounted(async () => {
+			await piniaCommonVideoData.joinSession();
+			await piniaStudentVideoData.addEventListener();
 			window.addEventListener('resize', updateEditor);
 			repeater = setInterval(getTeacherCode, 2000);
 		});
@@ -373,26 +377,27 @@ export default {
 				clearInterval(repeater);
 				repeater = undefined;
 			}
-			if (redirectToExam.value) studentVideo.leaveSessionWithoutCallApi();
-			else studentVideo.leaveSession();
 		});
 
 		// 시험 시작
 		const startExam = () => {
-			studentVideo.state.openTest = false;
+			piniaStudentVideoData.enableTest = false;
 			redirectToExam.value = true;
 			router.push({ path: '/studentexam' });
 		};
 
-		const leaveSession = () => {
-			router.push({ path: '/home' }).catch(err => {
-				console.error(err);
-				router.push({ path: '/home' });
-			});
+		const leaveSession = async () => {
+			piniaCommonVideoData.leaveSession();
+			router.push({ path: '/'});
 		};
 
+		const comebackToHome = () => {
+			router.push({ path: '/'});
+		}
+
 		return {
-			studentVideo,
+			piniaCommonVideoData,
+			piniaStudentVideoData,
 			showSubScribers,
 			teacherIde,
 			studentIde,
@@ -413,6 +418,7 @@ export default {
 			// 시험
 			startExam,
 			leaveSession,
+			comebackToHome,
 		};
 	},
 };

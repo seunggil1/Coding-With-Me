@@ -37,7 +37,8 @@ export default {
 
 		onUpdated(() => {
 			console.log('onUpdated: ', videoStream.value);
-			props.streamManager.addVideoElement(videoStream.value);
+			if (videoStream.value && props.streamManager)
+				props.streamManager.addVideoElement(videoStream.value);
 		});
 
 		return {

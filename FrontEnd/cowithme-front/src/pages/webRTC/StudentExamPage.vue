@@ -1,6 +1,7 @@
 <template>
 	<q-layout class="scroll" view="lHr lpr fFf">
-		<q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
+		<q-drawer :width="600" v-model="rightDrawerOpen" side="right" overlay bordered>
+			<student-side-bar></student-side-bar>
 		</q-drawer>
 
 		<q-page-container style="font-family: 'OTWelcomeBA'">
@@ -225,12 +226,12 @@
 							class="micBtn"
 							rounded
 							push
-							:icon="studentVideo.isAudio ? 'mic' : 'mic_off'"
-							:label="studentVideo.isAudio ? '음소거' : '음소거 해제'"
+							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
+							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
 							@click="
-								studentVideo.isAudio
-									? studentVideo.muteAudio()
-									: studentVideo.unmuteAudio()
+								piniaCommonVideoData.displayInfo.audioEnable
+									? piniaCommonVideoData.muteAudio()
+									: piniaCommonVideoData.unmuteAudio()
 							"
 						/>
 
@@ -238,12 +239,12 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="studentVideo.isVideo ? 'videocam_off' : 'videocam'"
-							:label="studentVideo.isVideo ? '카메라 끄기' : '카메라 켜기'"
+							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam_off' : 'videocam'"
+							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
 							@click="
-								studentVideo.isVideo
-									? studentVideo.muteVideo()
-									: studentVideo.unmuteVideo()
+								piniaCommonVideoData.displayInfo.videoEnable
+									? piniaCommonVideoData.muteVideo()
+									: piniaCommonVideoData.unmuteVideo()
 							"
 						/>
 
@@ -254,7 +255,7 @@
 							color="negative"
 							icon="logout"
 							label="나가기"
-							@click="router.push({ path: '/home' })"
+							@click="leaveSession"
 						/>
 					</div>
 					<div class="col-1" align="end">
@@ -277,7 +278,7 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 import {
 	onMounted,
 	// onBeforeUnmount,
@@ -287,10 +288,12 @@ import {
 	reactive,
 	computed,
 } from 'vue';
-import { studentVideoStore } from 'src/stores/studentVideo.store.js';
+import { commonVideoData } from 'src/stores/Video/common.js';
+import { studentVideoData } from 'src/stores/Video/student.js'
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 import { studentExamData } from 'src/stores/ExamProgress/student.js';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
+import StudentSideBar from 'src/components/lectures/exam/StudentSideBar.vue';
 // import UserVideo from 'src/components/lectures/UserVideo.vue';
 // import VideoSideBarVue from 'src/components/lectures/VideoSideBar.vue';
 import PdfViewer from 'src/components/PdfViewer.vue';
@@ -303,13 +306,15 @@ export default {
 		// UserVideo,
 		// VideoSideBarVue,
 		PdfViewer,
+		StudentSideBar
 	},
 	setup() {
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		// router
 		const router = useRouter();
 		// pinia
-		const studentVideo = studentVideoStore();
+		const piniaCommonVideoData = commonVideoData();
+		const piniaStudentVideoData = studentVideoData();
 		const piniaCommonExamData = commonExamData();
 		const piniaStudentExamData = studentExamData();
 
@@ -391,11 +396,11 @@ export default {
 				studentIde.value.getCode();
 			isSubmitting.value = true;
 			let request = {
-				classId: studentVideo.state.classId,
+				classId: piniaCommonVideoData.userInfo.classKey,
 				lang: compileLang.find(item => item.name == selectedLanguage.value)
 					.language,
 				testName: piniaCommonExamData.testName,
-				userId: studentVideo.state.userId,
+				userId: piniaCommonVideoData.userInfo.userKey,
 				answers: [],
 			};
 
@@ -414,7 +419,7 @@ export default {
 
 		onMounted(() => {
 			piniaCommonExamData
-				.getTestInfo(studentVideo.state.classId, piniaCommonExamData.testName)
+				.getTestInfo(piniaCommonVideoData.userInfo.classKey, piniaCommonExamData.testName)
 				.then(() => {
 					piniaStudentExamData.initCode();
 					resultList.value = Array.apply(
@@ -428,13 +433,18 @@ export default {
 
 		onUnmounted(() => {});
 
+		const leaveSession = async () => {
+			router.push({ path: '/' });
+		}
+
 		return {
 			HOST,
 			// router
 			router,
 
 			// pinia
-			studentVideo,
+			piniaCommonVideoData,
+			piniaStudentVideoData,
 			piniaCommonExamData,
 			piniaStudentExamData,
 
@@ -460,6 +470,7 @@ export default {
 			selectedLanguageIdx,
 			runCode,
 			submitCode,
+			leaveSession
 		};
 	},
 };

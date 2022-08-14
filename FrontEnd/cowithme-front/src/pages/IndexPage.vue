@@ -111,6 +111,7 @@ import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
 import { studentVideoStore } from 'src/stores/studentVideo.store';
+import { commonVideoData } from 'src/stores/Video/common.js';
 
 export default defineComponent({
 	name: 'IndexPage',
@@ -128,7 +129,7 @@ export default defineComponent({
 		const testTest = ref([]);
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		const baseUrl = `${HOST}`;
-
+		const piniaCommonVideoData = commonVideoData();
 		const router = useRouter();
 
 		var user2 = null;
@@ -208,6 +209,13 @@ export default defineComponent({
 			studentVideo.state.classId = classId;
 			studentVideo.state.mySessionId = activeLecture.value.conferenceName;
 
+			piniaCommonVideoData.userInfo.userId = id;
+			piniaCommonVideoData.userInfo.userKey = uid;
+			piniaCommonVideoData.userInfo.userName = name;
+			piniaCommonVideoData.userInfo.classKey = classId;
+			piniaCommonVideoData.userInfo.conferenceName = activeLecture.value.conferenceName;
+			await piniaCommonVideoData.getConferenceKey();
+			
 			console.log('id', studentVideo.state.id);
 			console.log('uid', studentVideo.state.userId);
 			console.log('myUserName', studentVideo.state.myUserName);
@@ -216,7 +224,7 @@ export default defineComponent({
 
 			try {
 				const response = await api.post(`/records/attendances`, {
-					conferenceId: activeLecture.value.conferenceId,
+					conferenceId: piniaCommonVideoData.userInfo.conferenceKey,
 					userId: uid,
 				});
 				console.log('출입기록 생성 성공', response.data);
@@ -236,6 +244,9 @@ export default defineComponent({
 				const response = await api.get(`/conferences/${classId}/active`);
 				console.log(response.data);
 				activeLecture.value = response.data.conference;
+				// newCode
+				piniaCommonVideoData.userInfo.conferenceKey = response.data.conference.conferenceId;
+				//
 				isActiveLecture.value = true;
 			} catch (error) {
 				console.log('active 강의 불러오기 에러(active 강의 없음)', error);

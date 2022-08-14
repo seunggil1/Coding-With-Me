@@ -264,8 +264,11 @@ export default {
 		const selectedProblem = ref(1);
 		// 세션 나가기
 		const leaveSession = () => {
-			teacherVideo.leaveSession();
-			router.push('/');
+			teacherVideo.leaveSession().then(()=>{
+				router.push({ path: '/home' }).catch(()=>{
+					router.push({ path: '/home' });
+				});
+			})
 		};
 
 		const stopExam = () => {};
