@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="flex justify-center items-center">
 		<div
 			v-for="record in records"
 			:key="record.testRecordId"

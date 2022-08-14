@@ -55,8 +55,12 @@
 							<div class="col q-ma-lg">
 								<!-- 반, 강의제목, 날짜 -->
 								<div class="info" style="margin-bottom: 20px">
-									<p style="font-size: 40px">
-										{{ testTest.className }} 의 강의
+									<p style="font-size: 40px; font-weight: bold">
+										<span class="highlight-container"
+											><span class="highlight">
+												{{ testTest.className }}
+											</span></span
+										>의 강의
 									</p>
 									<p style="font-size: 18px">강사: {{ testTest.tutorName }}</p>
 								</div>
@@ -94,6 +98,7 @@
 					</div>
 				</div>
 			</div>
+			<div></div>
 		</div>
 	</div>
 </template>
@@ -323,5 +328,28 @@ export default defineComponent({
 .test {
 	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
+}
+.highlight-container,
+.highlight {
+	position: relative;
+}
+
+.highlight-container {
+	display: inline-block;
+}
+.highlight-container:before {
+	content: ' ';
+	display: block;
+	height: 90%;
+	width: 100%;
+	margin-left: -3px;
+	margin-right: -3px;
+	position: absolute;
+	background: #ffd500;
+	transform: rotate(2deg);
+	top: -1px;
+	left: -1px;
+	border-radius: 20% 25% 20% 24%;
+	padding: 10px 3px 3px 10px;
 }
 </style>
