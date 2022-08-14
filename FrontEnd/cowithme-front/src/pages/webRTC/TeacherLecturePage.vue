@@ -109,7 +109,7 @@
 											class="col q-pa-sm q-mt-md q-mr-md"
 											color="secondary"
 											push
-											label="코드 실행"
+											label="코드 실행하기"
 											@click="runCode"
 											:loading="isRunning"
 										/>
@@ -499,7 +499,7 @@ export default {
 	overflow: hidden !important;
 }
 .test {
-	-webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7)) !important;
-	filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.7)) !important;
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
+	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 }
 </style>

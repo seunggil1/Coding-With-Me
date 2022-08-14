@@ -67,7 +67,7 @@
 													"
 													class="q-pa-md"
 												>
-													Test Cases /
+													Test Cases
 												</p>
 												<div
 													class="q-pl-sm q-pt-md"
