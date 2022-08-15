@@ -16,6 +16,8 @@ public interface ClassesRepository extends JpaRepository <Classes, Long>{
 //    @Query("select c from Classes c join fetch c.testList where c.classId=:classId")
 //    Optional<Classes> findByClassId(@Param("classId")Long classId);
     Optional<Classes> findByClassId(Long classId);
+
+
     Optional<List<Classes>> findByUserUserId(Long user);
     @Query("select c from Classes c where c.className=:className and c.user.userId = :userId")
     Optional<Classes> findByUserUserIdAndClassName(@Param("userId")Long userId, @Param("className")String className);

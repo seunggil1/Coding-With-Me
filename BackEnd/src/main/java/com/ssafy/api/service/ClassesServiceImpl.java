@@ -143,11 +143,22 @@ public class ClassesServiceImpl implements ClassesService {
     @Override
     @Transactional
     public List<UserClass> getClassesInfo(Long userid, String classname) {
+
         Classes classes = classesRepository.findFetchJoin(userid,classname).get();
 
         //classes-UserClass
         List<UserClass> uc =classes.getUserClassList();
 
+        return uc;
+    }
+
+    @Override
+    public List<UserClass> getClassInfo(Long userid) {
+        //Classes classes =classesRepository.findByClassId(classId).get();
+        UserClass classes = userClassRepository.findByStudentId(userid).get();
+
+
+        List<UserClass> uc = classes.getClasses().getUserClassList();
         return uc;
     }
 

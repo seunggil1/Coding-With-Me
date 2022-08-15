@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service("conferenceService")
 @Transactional(readOnly = true)
@@ -36,6 +37,17 @@ public class ConferenceServiceImpl implements ConferenceService{
     @Override
     @Transactional
     public Conference createConference(ConferenceRegisterPostReq conferenceRegisterPostReq) {
+
+        Optional<Conference> Oconference = conferenceRepositorySupport.findByClassesClassIdActive(conferenceRegisterPostReq.getClassId());
+        if(Oconference.isPresent()){
+            Conference conference = Oconference.get();
+            if(conference.isActive()){
+                conference.setActive(false);
+                Date date = new Date();
+                conference.setConfEndTime(date);
+            }
+        }
+
         Conference conference =new Conference();
         Classes classes = classesRepository.findByClassId(conferenceRegisterPostReq.getClassId()).get();
         conference.setClasses(classes);
