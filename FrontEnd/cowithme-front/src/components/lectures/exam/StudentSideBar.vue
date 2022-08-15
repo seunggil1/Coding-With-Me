@@ -3,15 +3,13 @@
 		class="row parti-chat-box"
 		style="height: 95vh; font-family: 'Elice Digital Baeum', sans-serif"
 	>
-		<div class="col-5" style="border: 1px solid #ff5722">
-			<div class="column" style="border: 1px solid #ff5722; height: 100%">
+		<div class="col-5" style="box-shadow: 2px 0px 3px #ff5722">
+			<div class="column" style="height: 100%">
 				<div class="col-1">
 					<q-banner
-						dense
 						inline-actions
-						class="text-white q-pa-md"
+						class="text-white q-pa-md text-h6"
 						style="
-							border: 1px solid #ff5722;
 							background-color: #ff5722;
 							font-family: 'Elice Digital Baeum', sans-serif;
 						"
@@ -26,19 +24,27 @@
 
 				<div class="col-1">
 					<div
-						class="q-pa-sm text-h6"
-						style="font-family: 'Elice Digital Baeum', sans-serif"
+						class="q-px-md q-pb-md text-h6"
+						style="
+							font-family: 'Elice Digital Baeum', sans-serif;
+							border-bottom: 2px solid #ff5722;
+							font-weight: bold;
+						"
 					>
-						{{ piniaCommonExamData.testName }}
+						시험: {{ piniaCommonExamData.testName }}
 					</div>
 				</div>
-				<div class="q-pa-sm col-5" style="border: 1px solid red">
+				<div class="q-pa-md col-5" style="border-bottom: 2px solid #ff5722">
 					<user-video
 						v-if="piniaCommonVideoData.openvidu.publisher"
 						:stream-manager="piniaCommonVideoData.openvidu.publisher"
 					/>
+					<q-chip outline color="positive" text-color="white"> 온라인 </q-chip>
+					<q-chip outline color="negative" text-color="white">
+						오프라인
+					</q-chip>
 				</div>
-				<div class="q-pa-sm col-5" style="border: 1px solid red">
+				<div class="q-pa-sm col-5" style="border-bottom: 2px solid #ff5722">
 					<user-video
 						v-if="piniaCommonVideoData.openvidu.screenPublisher"
 						:stream-manager="piniaCommonVideoData.openvidu.screenPublisher"
@@ -78,7 +84,7 @@
 							style="font-family: 'Elice Digital Baeum', sans-serif"
 							:text="[chat.message]"
 							stamp="just second"
-							bg-color="amber-7"
+							bg-color="amber-9"
 						/>
 					</span>
 				</q-scroll-area>
@@ -130,39 +136,37 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 export default {
+	components: {
+		UserVideo,
+	},
+	setup() {
+		const myChatInput = ref('');
+		const piniaCommonVideoData = commonVideoData();
+		const piniaCommonExamData = commonExamData();
 
-    components : {
-        UserVideo
-    },
-    setup () {
-        const myChatInput = ref('');
-        const piniaCommonVideoData = commonVideoData();
-        const piniaCommonExamData = commonExamData();
-
-
-        let timer;
-        onMounted(async () => {
-            await piniaCommonVideoData.joinSession();
-            await piniaCommonVideoData.startScreenShare();
-            timer = setInterval(() => {
+		let timer;
+		onMounted(async () => {
+			await piniaCommonVideoData.joinSession();
+			await piniaCommonVideoData.startScreenShare();
+			timer = setInterval(() => {
 				if (piniaCommonExamData.timeLimit > 0)
 					piniaCommonExamData.timeLimit -= 1;
 			}, 1000);
-        });
+		});
 
-        onUnmounted(async () => {
-            await piniaCommonVideoData.stopScreenShare();
-            await piniaCommonVideoData.leaveSession();
-            if (timer) clearInterval(timer);
-        });
+		onUnmounted(async () => {
+			await piniaCommonVideoData.stopScreenShare();
+			await piniaCommonVideoData.leaveSession();
+			if (timer) clearInterval(timer);
+		});
 
-        return {
-            myChatInput,
-            piniaCommonVideoData,
-            piniaCommonExamData
-        }
-    }
-}
+		return {
+			myChatInput,
+			piniaCommonVideoData,
+			piniaCommonExamData,
+		};
+	},
+};
 </script>
 
 <style lang="scss" scoped></style>

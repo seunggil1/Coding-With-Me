@@ -1,5 +1,9 @@
 <template>
-	<q-layout class="scroll" view="lHr lpr fFf">
+	<q-layout
+		class="scroll"
+		style="font-family: 'Elice Digital Baeum'"
+		view="lHr lpr fFf"
+	>
 		<q-drawer
 			:width="600"
 			v-model="rightDrawerOpen"
@@ -10,7 +14,7 @@
 			<student-side-bar></student-side-bar>
 		</q-drawer>
 
-		<q-page-container style="font-family: 'OTWelcomeBA'">
+		<q-page-container>
 			<div class="column main-container">
 				<q-splitter v-model="splitterModel" style="height: 92vh">
 					<template v-slot:before>
@@ -18,14 +22,21 @@
 							<div class="column flex-height">
 								<div class="col-1">
 									<q-card class="my-card bg-secondary text-white flex-height">
-										<q-card-section>
-											<span class="text-h6"> 시험 문제 </span>
-											<q-btn class="flex-height" @click="zoomOut">
-												<span class="text-h4"> - </span>
-											</q-btn>
-											<q-btn class="flex-height" @click="zoomIn">
-												<span class="text-h4"> + </span>
-											</q-btn>
+										<q-card-section class="q-pr-md" style="width: 900px">
+											<div class="">
+												<span
+													class="text-h6"
+													style="font-family: 'Elice Digital Baeum'"
+												>
+													시험 문제
+												</span>
+												<q-btn class="q-ml-md q-mb-md" @click="zoomOut">
+													<span class="text-h4"> - </span>
+												</q-btn>
+												<q-btn class="q-mb-md" @click="zoomIn">
+													<span class="text-h4"> + </span>
+												</q-btn>
+											</div>
 										</q-card-section>
 									</q-card>
 								</div>
@@ -44,16 +55,17 @@
 							<div class="col-2" style="background-color: #eeeeee">
 								<div class="row" style="background-color: #eeeeee">
 									<div class="col-2">
-										<div class="column">
-											<q-img
+										<div class="column q-px-sm q-pt-lg">
+											<!-- <q-img
 												style="width: 70px"
 												class="test col"
 												src="src/assets/logo/logo.svg"
-											/>
+											/> -->
 											<q-select
 												v-model="selectedLanguage"
 												:options="languageList"
 												label="Editor 언어"
+												color="teal"
 											/>
 										</div>
 									</div>
@@ -68,8 +80,8 @@
 													<q-scroll-area style="height: 50px; max-width: 100vw">
 														<div class="row no-wrap">
 															<div
-																style="height: 40px"
-																class="q-pa-sm"
+																style="height: 30px"
+																class="q-px-sm"
 																v-for="idx in piniaCommonExamData.testQuCnt"
 																:key="idx"
 															>
@@ -100,9 +112,9 @@
 											<q-card-section>
 												<q-btn
 													style="max-width: 150px; max-height: 50px font-size: 24px"
-													color="secondary"
+													color="orange-9"
 													push
-													label="Submit"
+													label="제출하기"
 													@click="submitCode"
 													:loading="isSubmitting"
 												/>
@@ -110,10 +122,10 @@
 											<q-separator inset />
 											<q-card-section>
 												<q-btn
-													style="max-width: 150px; max-height: 50px font-size: 24px"
+													style="font-family: 'Elice Digital Baeum'; max-width: 150px; max-height: 50px font-size: 24px"
 													color="secondary"
 													push
-													label="Run"
+													label="코드 실행하기"
 													@click="runCode"
 													:loading="isRunning"
 												/>
@@ -249,8 +261,8 @@
 							push
 							:icon="
 								piniaCommonVideoData.displayInfo.videoEnable
-									? 'videocam_off'
-									: 'videocam'
+									? 'videocam'
+									: 'videocam_off'
 							"
 							:label="
 								piniaCommonVideoData.displayInfo.videoEnable
@@ -338,7 +350,7 @@ export default {
 		const rightDrawerOpen = ref(false);
 
 		// layout
-		const splitterModel = ref(50);
+		const splitterModel = ref(47);
 		const selectedProblem = ref(1);
 		watch(
 			[splitterModel, selectedProblem],
@@ -501,6 +513,10 @@ export default {
 		format('woff2') !important;
 	font-weight: normal !important;
 	font-style: normal !important;
+}
+.font-OT {
+	font-family: 'OTWelcomeBA' !important;
+	font-size: 24px;
 }
 .main-container {
 	height: 100vh !important;

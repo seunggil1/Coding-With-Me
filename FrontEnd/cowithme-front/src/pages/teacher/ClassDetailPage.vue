@@ -297,14 +297,22 @@ export default {
 				return;
 			}
 
-			piniaCommonVideoData.userInfo.userId = JSON.parse(localStorage.getItem('user')).id;
-			piniaCommonVideoData.userInfo.userKey =  parseInt(localStorage.getItem('userId'));
-			piniaCommonVideoData.userInfo.userName = JSON.parse(localStorage.getItem('info')).name;
-			piniaCommonVideoData.userInfo.classKey = parseInt(localStorage.getItem('classId'));
+			piniaCommonVideoData.userInfo.userId = JSON.parse(
+				localStorage.getItem('user'),
+			).id;
+			piniaCommonVideoData.userInfo.userKey = parseInt(
+				localStorage.getItem('userId'),
+			);
+			piniaCommonVideoData.userInfo.userName = JSON.parse(
+				localStorage.getItem('info'),
+			).name;
+			piniaCommonVideoData.userInfo.classKey = parseInt(
+				localStorage.getItem('classId'),
+			);
 			piniaCommonVideoData.userInfo.conferenceName = lectureName.value;
 			piniaCommonVideoData.userInfo.className = className;
 			lectureName.value = '';
-			
+
 			piniaTeacherVideoData.createSession().then(async () => {
 				await piniaCommonVideoData.getConferenceKey();
 				await piniaCommonVideoData.getStudentList();

@@ -217,7 +217,7 @@ export default defineComponent({
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 }
 .font-OT {
-	font-family: 'MICEGothic Bold' !important;
+	font-family: 'OTWelcomeBA' !important;
 	font-size: 24px;
 }
 .font-MICE {

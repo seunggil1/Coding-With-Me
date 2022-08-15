@@ -27,7 +27,7 @@
 					:name="chat.sender"
 					:text="[chat.message]"
 					stamp="just second"
-					bg-color="amber-7"
+					bg-color="amber-9"
 				/>
 			</span>
 		</q-scroll-area>

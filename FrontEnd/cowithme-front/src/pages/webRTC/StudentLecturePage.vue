@@ -113,7 +113,7 @@
 													class="col q-pa-sm q-mt-md q-mr-md"
 													color="secondary"
 													push
-													label="Run"
+													label="코드 실행하기"
 													@click="runCode"
 													:loading="isRunning"
 												/>

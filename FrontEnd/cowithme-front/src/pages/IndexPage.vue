@@ -200,16 +200,25 @@ export default defineComponent({
 				return;
 			}
 
-			piniaCommonVideoData.userInfo.userId = JSON.parse(localStorage.getItem('user')).id;
-			piniaCommonVideoData.userInfo.userKey = JSON.parse(localStorage.getItem('info')).userId;
-			piniaCommonVideoData.userInfo.userName = JSON.parse(localStorage.getItem('info')).name;
-			piniaCommonVideoData.userInfo.classKey = JSON.parse(localStorage.getItem('testTest')).result.classId;
+			piniaCommonVideoData.userInfo.userId = JSON.parse(
+				localStorage.getItem('user'),
+			).id;
+			piniaCommonVideoData.userInfo.userKey = JSON.parse(
+				localStorage.getItem('info'),
+			).userId;
+			piniaCommonVideoData.userInfo.userName = JSON.parse(
+				localStorage.getItem('info'),
+			).name;
+			piniaCommonVideoData.userInfo.classKey = JSON.parse(
+				localStorage.getItem('testTest'),
+			).result.classId;
 
 			piniaCommonVideoData.userInfo.className = testTest.value.className;
-			piniaCommonVideoData.userInfo.conferenceName = activeLecture.value.conferenceName;
+			piniaCommonVideoData.userInfo.conferenceName =
+				activeLecture.value.conferenceName;
 			await piniaCommonVideoData.getConferenceKey();
 			// await piniaCommonVideoData.getStudentList();
-			
+
 			try {
 				const response = await api.post(`/records/attendances`, {
 					conferenceId: piniaCommonVideoData.userInfo.conferenceKey,
@@ -265,7 +274,7 @@ export default defineComponent({
 			enterLecture,
 			getActiveLecture,
 			newCurrentDate,
-			
+
 			splitterModel: ref(30),
 			events: ['2022/08/01', '2022/08/08', '2022/08/11'],
 		};
