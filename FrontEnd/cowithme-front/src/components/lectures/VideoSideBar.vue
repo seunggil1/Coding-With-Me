@@ -18,7 +18,6 @@
 					v-if="chat.sender === piniaCommonVideoData.userInfo.userName"
 					:name="chat.sender"
 					:text="[chat.message]"
-					stamp="just second"
 					sent
 					bg-color="amber-7"
 				/>
@@ -26,7 +25,6 @@
 					v-if="chat.sender !== piniaCommonVideoData.userInfo.userName"
 					:name="chat.sender"
 					:text="[chat.message]"
-					stamp="just second"
 					bg-color="amber-9"
 				/>
 			</span>
