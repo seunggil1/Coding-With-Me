@@ -43,7 +43,7 @@
 <script>
 import { api } from 'src/boot/axios';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
 export default {
 	name: 'AddStudentPage',
@@ -64,8 +64,6 @@ export default {
 	setup() {
 		console.log('@@@@@', localStorage);
 
-		const router = useRouter();
-
 		const name = ref('');
 		const studentResult = ref([]);
 
@@ -75,6 +73,7 @@ export default {
 			});
 		}
 
+		const $q = useQuasar();
 		function addStudent(userId) {
 			api
 				.post(`/tutor/classes/student`, {
@@ -83,9 +82,20 @@ export default {
 					tutorId: parseInt(localStorage.getItem('userId')),
 				})
 				.then(res => {
-					console.log(res.message);
-					router.push({
-						name: '',
+					console.log(res);
+					$q.notify({
+						type: 'positive',
+						message: '반에 추가 되었습니다.',
+					});
+					// router.push({
+					// 	name: '',
+					// });
+				})
+				.catch(err => {
+					console.log(err);
+					$q.notify({
+						type: 'negative',
+						message: '이미 반에 속한 학생입니다.',
 					});
 				});
 		}
