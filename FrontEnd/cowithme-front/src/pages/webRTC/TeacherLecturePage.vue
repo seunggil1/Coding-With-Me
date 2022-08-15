@@ -437,7 +437,7 @@ export default {
 		const showExamDialog = ref(false);
 		const timeWithSeconds = ref('00:50:00');
 		const startExam = () => {
-			if(piniaCommonExamData.testID == 0)
+			if(piniaCommonExamData.testName == '시험을 선택해주세요')
 				return;
 			let data = timeWithSeconds.value.split(':').map(s => {
 				return parseInt(s);

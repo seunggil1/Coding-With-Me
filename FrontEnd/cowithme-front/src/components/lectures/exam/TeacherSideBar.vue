@@ -41,10 +41,20 @@
 				</div>
 				<!-- 오프라인, 온라인 인원 -->
 				<div class="q-pa-md col-5" style="border-bottom: 2px solid #ff5722">
-					<q-chip outline color="positive" text-color="white"> 온라인 </q-chip>
-					<q-chip outline color="negative" text-color="white">
+					<q-chip outline color="positive" text-color="white" :clickable="showOnline === false" @click="showOnline = true"> 
+						온라인
+					</q-chip>
+					<q-chip outline color="negative" text-color="white" :clickable="showOnline === true" @click="showOnline = false">
 						오프라인
 					</q-chip>
+
+					<q-scroll-area style="height: 40vh">
+						<div v-for="(student, index) in piniaCommonVideoData.displayInfo.studentList" :key="index">
+							<span v-if="piniaCommonVideoData.displayInfo.studentListIsActive[index] === showOnline">
+								{{ student }}
+							</span>
+						</div>
+					</q-scroll-area>
 				</div>
 				<!-- 제출, 미제출 인원 -->
 				<div class="q-pa-md col-5">
@@ -140,6 +150,7 @@ export default {
 		const piniaCommonExamData = commonExamData();
 		const piniaCommonVideoData = commonVideoData();
 		const piniaTeacherVideoData = teacherVideoData();
+		const showOnline = ref(true);
 
 		let timer;
 		onMounted(() => {
@@ -157,6 +168,7 @@ export default {
 			piniaCommonVideoData,
 			piniaTeacherVideoData,
 			piniaCommonExamData,
+			showOnline
 		};
 	},
 };

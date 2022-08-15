@@ -38,6 +38,11 @@ export const studentVideoData = defineStore('studentVideoData', () => {
 			piniaCommonVideoData.displayInfo.studentList.push(item.name);
 		}
 		piniaCommonVideoData.displayInfo.studentListIsActive = Array.apply(null, Array(piniaCommonVideoData.displayInfo.studentList.length)).map(() => false);
+
+		let myIdx = piniaCommonVideoData.displayInfo.studentList.indexOf(piniaCommonVideoData.userInfo.userName);
+		if(myIdx !== -1){
+			piniaCommonVideoData.displayInfo.studentListIsActive[myIdx] = true;
+		}
 	}
 	return {
 		teacherCode,

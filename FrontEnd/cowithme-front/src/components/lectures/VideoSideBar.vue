@@ -4,9 +4,21 @@
 		style="height: 95vh; font-family: 'Elice Digital Baeum', 'sans-serif'"
 	>
 		<q-scroll-area class="col-6" style="width: 100%">
-			<span>
-				<h2>참가자 목록 보일곳</h2>
-			</span>
+			<q-chip outline color="positive" text-color="white" :clickable="showOnline === false" @click="showOnline = true"> 
+				온라인
+			</q-chip>
+			<q-chip outline color="negative" text-color="white" :clickable="showOnline === true" @click="showOnline = false">
+				오프라인
+			</q-chip>
+
+			<q-scroll-area style="height: 40vh">
+				<div v-for="(student, index) in piniaCommonVideoData.displayInfo.studentList" :key="index">
+					<span v-if="piniaCommonVideoData.displayInfo.studentListIsActive[index] === showOnline">
+						{{ student }}
+					</span>
+				</div>
+			</q-scroll-area>
+			
 		</q-scroll-area>
 
 		<q-scroll-area class="col-5" style="width: 100%">
@@ -76,7 +88,8 @@ export default {
 	setup() {
 		let myChatInput = ref('');
 		const piniaCommonVideoData = commonVideoData();
-
+		const showOnline = ref(true);
+		
 		watch(
 			() => piniaCommonVideoData.displayInfo.chatting,
 			() => console.log(piniaCommonVideoData.displayInfo.chatting),
@@ -85,6 +98,7 @@ export default {
 		return {
 			myChatInput,
 			piniaCommonVideoData,
+			showOnline,
 		};
 	},
 };

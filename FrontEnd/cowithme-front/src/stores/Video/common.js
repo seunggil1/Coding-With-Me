@@ -222,11 +222,25 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 		openvidu.session.on('streamCreated', ({ stream }) => {
 			const subscriber = openvidu.session.subscribe(stream);
 			openvidu.subscribers.push(subscriber);
+
+			let name = JSON.parse(stream.connection.data.split("%/%")[0]).clientData;
+			let index = displayInfo.studentList.indexOf(name);
+
+			if(index != -1){
+				displayInfo.studentListIsActive[index] = true;
+			}
 		});
 
 		openvidu.session.on('streamDestroyed', ({ stream }) => {
 			const index = openvidu.subscribers.indexOf(stream.streamManager, 0);
 			if (index >= 0) openvidu.subscribers.splice(index, 1);
+
+			let name = JSON.parse(stream.connection.data.split("%/%")[0]).clientData;
+			let nameIndex = displayInfo.studentList.indexOf(name);
+
+			if(nameIndex != -1){
+				displayInfo.studentListIsActive[nameIndex] = false;
+			}
 		});
 
 		openvidu.session.on('exception', ( exception ) => console.error(exception));
