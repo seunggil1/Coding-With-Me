@@ -279,6 +279,7 @@ export default {
 
 		onMounted(async () => {
 			piniaTeacherExamData.initSubmitStudentList();
+			piniaTeacherExamData.addEventListener();
 
 			await piniaCommonExamData.getTestInfo(
 				piniaCommonVideoData.userInfo.classKey,

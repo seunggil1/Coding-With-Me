@@ -43,10 +43,6 @@
 						v-if="piniaCommonVideoData.openvidu.publisher"
 						:stream-manager="piniaCommonVideoData.openvidu.publisher"
 					/>
-					<q-chip outline color="positive" text-color="white"> 온라인 </q-chip>
-					<q-chip outline color="negative" text-color="white">
-						오프라인
-					</q-chip>
 				</div>
 				<div class="q-pa-sm col-5" style="border-bottom: 2px solid #ff5722">
 					<user-video

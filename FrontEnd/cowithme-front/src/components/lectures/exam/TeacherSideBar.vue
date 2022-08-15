@@ -41,10 +41,19 @@
 				</div>
 				<!-- 오프라인, 온라인 인원 -->
 				<div class="q-pa-md col-5" style="border-bottom: 2px solid #ff5722">
-					<q-chip outline color="positive" text-color="white" :clickable="showOnline === false" @click="showOnline = true"> 
+					<q-chip 
+						outline color="positive" text-color="white" 
+						:clickable="showOnline === false" 
+						@click="showOnline = true"
+					> 
 						온라인
 					</q-chip>
-					<q-chip outline color="negative" text-color="white" :clickable="showOnline === true" @click="showOnline = false">
+					<q-chip 
+						outline color="negative" 
+						text-color="white" 
+						:clickable="showOnline === true" 
+						@click="showOnline = false"
+					>
 						오프라인
 					</q-chip>
 
@@ -58,10 +67,30 @@
 				</div>
 				<!-- 제출, 미제출 인원 -->
 				<div class="q-pa-md col-5">
-					<q-chip outline color="positive" text-color="white">
+					<q-chip 
+						outline color="positive" 
+						text-color="white" 
+						:clickable="showSubmit === false" 
+						@click="showSubmit = true"
+					>
 						제출 완료
 					</q-chip>
-					<q-chip outline color="negative" text-color="white"> 미제출 </q-chip>
+					<q-chip 
+						outline color="negative" 
+						text-color="white" 
+						:clickable="showSubmit === true" 
+						@click="showSubmit = false"
+					> 
+						미제출 
+					</q-chip>
+
+					<q-scroll-area style="height: 40vh">
+						<div v-for="(student, index) in piniaCommonVideoData.displayInfo.studentList" :key="index">
+							<span v-if="piniaTeacherExamData.submitStudentList[index] === showSubmit">
+								{{ student }}
+							</span>
+						</div>
+					</q-scroll-area>
 				</div>
 			</div>
 		</div>
@@ -139,6 +168,7 @@
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
+import { teacherExamData } from 'src/stores/ExamProgress/teacher.js';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { teacherVideoData } from 'src/stores/Video/teacher.js';
 export default {
@@ -148,9 +178,12 @@ export default {
 	setup() {
 		const myChatInput = ref('');
 		const piniaCommonExamData = commonExamData();
+		const piniaTeacherExamData = teacherExamData();
 		const piniaCommonVideoData = commonVideoData();
 		const piniaTeacherVideoData = teacherVideoData();
 		const showOnline = ref(true);
+		const showSubmit = ref(true);
+
 
 		let timer;
 		onMounted(() => {
@@ -166,9 +199,11 @@ export default {
 		return {
 			myChatInput,
 			piniaCommonVideoData,
+			piniaTeacherExamData,
 			piniaTeacherVideoData,
 			piniaCommonExamData,
-			showOnline
+			showOnline,
+			showSubmit
 		};
 	},
 };

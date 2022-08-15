@@ -44,6 +44,7 @@ export const studentVideoData = defineStore('studentVideoData', () => {
 			piniaCommonVideoData.displayInfo.studentListIsActive[myIdx] = true;
 		}
 	}
+
 	return {
 		teacherCode,
 		enableTest,

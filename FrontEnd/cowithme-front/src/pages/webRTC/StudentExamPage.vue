@@ -454,6 +454,7 @@ export default {
 			try {
 				let response = await api.post('/records/tests', request);
 			} catch (error) {}
+			await piniaStudentExamData.submit();
 			isSubmitting.value = false;
 		};
 

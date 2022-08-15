@@ -7,6 +7,11 @@ export const teacherExamData = defineStore('teacherExamData', () => {
      * 시험에서 제출 여부를 표시하는 boolean 배열
      */
     const submitStudentList = ref([]);
+
+    /**
+     * addEventListener를 호출했는지 여부
+     */
+    const initEventLister = ref(false);
     
     /**
      * 학생 데이터에 맞춰서 제출 여부를 표시하는 배열 생성.
@@ -19,8 +24,23 @@ export const teacherExamData = defineStore('teacherExamData', () => {
         ).map(() => false);
     };
 
+    const addEventListener = () => {
+        if(initEventLister.value)
+            return;
+        piniaCommonVideoData.openvidu.session.on('signal:submit', event => {
+            const index = piniaCommonVideoData.displayInfo.studentList.indexOf(event.data);
+            
+            if(index !== -1){
+                submitStudentList.value[index] = true;
+            }
+		});
+
+        initEventLister.value = true;
+    }
+
     return {
         submitStudentList,
-        initSubmitStudentList
+        initSubmitStudentList,
+        addEventListener,
     }
 });
