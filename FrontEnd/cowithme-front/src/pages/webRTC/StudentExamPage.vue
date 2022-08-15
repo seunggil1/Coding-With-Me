@@ -58,26 +58,24 @@
 							<div class="col-2" style="background-color: #eeeeee">
 								<div class="row" style="background-color: #eeeeee">
 									<div class="col-2">
-										<div class="column q-px-sm q-pt-lg">
-											<!-- <q-img
-												style="width: 70px"
-												class="test col"
-												src="src/assets/logo/logo.svg"
-											/> -->
+										<div class="column q-px-md q-pt-lg">
 											<q-select
 												v-model="selectedLanguage"
 												:options="languageList"
-												label="Editor 언어"
+												label="에디터 언어"
 												color="teal"
 											/>
 										</div>
 									</div>
 									<div class="col-7">
 										<q-card flat bordered class="my-card full width">
-											<q-card-section>
-												<div class="text-h6">문제 번호</div>
-											</q-card-section>
-											<q-separator inset />
+											<div
+												class="q-mx-lg q-mt-md"
+												style="font-size: 18px; font-weight: bold"
+											>
+												<p>문제 번호</p>
+											</div>
+
 											<q-card-section>
 												<div style="background-color: #eeeeee">
 													<q-scroll-area style="height: 50px; max-width: 100vw">
@@ -122,7 +120,6 @@
 													:loading="isSubmitting"
 												/>
 											</q-card-section>
-											<q-separator inset />
 											<q-card-section>
 												<q-btn
 													style="font-family: 'Elice Digital Baeum'; max-width: 150px; max-height: 50px font-size: 24px"
