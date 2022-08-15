@@ -22,14 +22,17 @@
 			</q-card>
 		</q-dialog>
 
-		<div class="flex row q-mt-lg">
-			<div class="q-pa-md col" style="max-width: 400px">
-				<h3 style="font-family: 'MICEGothic Bold'">시험 만들기</h3>
+		<div class="flex row q-mt-lg box">
+			<div class="q-pa-lg col" style="max-width: 400px">
+				<p style="font-family: 'MICEGothic Bold'; font-size: 34px">
+					시험 만들기
+				</p>
 				<div class="row">
 					<q-input
 						autofocus
 						rounded
 						outlined
+						color="teal"
 						class="q-mb-sm col-8"
 						v-model="examInfo.testName"
 						label="시험 이름"
@@ -73,7 +76,7 @@
 					hint="문제 파일 업로드(pdf)"
 				></q-input> -->
 			</div>
-			<q-form @submit="onSubmit" class="col">
+			<q-form @submit="onSubmit" class="col q-pa-md">
 				<q-card flat bordered class="my-card">
 					<q-card-section>
 						<q-splitter v-model="splitterModel" style="height: 400px">
@@ -186,8 +189,11 @@
 													{{ testCaseIndex + 1 }}번째 테스트 케이스
 													<q-btn
 														push
-														color="brown-5"
+														class="q-ml-md"
+														color="negative"
 														label="삭제"
+														flat
+														dense
 														@click="
 															deleteTestCase(problemTab * 1, testCaseIndex)
 														"
@@ -244,7 +250,7 @@
 				<div>
 					<q-btn
 						push
-						label="시험 저장하기"
+						label="시험 만들기"
 						type="submit"
 						class="q-mt-md"
 						style="background: #00adb5; color: white; float: right"
@@ -394,5 +400,12 @@ export default {
 		format('woff2') !important;
 	font-weight: 700 !important;
 	font-style: normal !important;
+}
+.box {
+	min-height: 300px;
+	/* width: 100%; */
+	background-color: white !important;
+	border-radius: 10px !important;
+	box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2) !important;
 }
 </style>

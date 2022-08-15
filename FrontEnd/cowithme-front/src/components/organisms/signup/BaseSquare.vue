@@ -111,7 +111,7 @@ function openBad(pos) {
 					font-family: 'Elice Digital Baeum', sans-serif;
 				"
 			>
-				회원가입
+				Sign In
 			</p>
 		</div>
 

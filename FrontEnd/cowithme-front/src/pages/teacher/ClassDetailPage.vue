@@ -129,8 +129,8 @@
 					</q-card>
 				</q-carousel-slide>
 			</q-carousel>
-			<div v-else>
-				<h4>생성된 강의 이력이 없습니다</h4>
+			<div v-else class="q-pa-lg">
+				<p style="font-size: 34px">생성된 강의 이력이 없습니다</p>
 			</div>
 		</div>
 		<div class="flex row">
@@ -146,6 +146,7 @@
 								color="secondary"
 								text-color="white"
 								icon="face"
+								removable
 								v-for="student in students"
 								:key="student.userId"
 								:ref="skipUnwrap.itemRefs"
@@ -165,7 +166,12 @@
 								}"
 								style="text-decoration: none; color: inherit"
 							>
-								<q-icon style="float: right" name="edit" size="26px"></q-icon>
+								<q-icon
+									style="float: right"
+									color="grey"
+									name="edit"
+									size="26px"
+								></q-icon>
 							</router-link>
 						</div>
 					</div>
@@ -256,7 +262,12 @@
 								}"
 								style="text-decoration: none; color: inherit"
 							>
-								<q-icon style="float: right" name="edit" size="26px"></q-icon>
+								<q-icon
+									style="float: right"
+									color="grey"
+									name="edit"
+									size="26px"
+								></q-icon>
 							</router-link>
 						</div>
 					</div>

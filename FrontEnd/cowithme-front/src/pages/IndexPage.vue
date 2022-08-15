@@ -101,7 +101,7 @@
 							v-model="newCurrentDate"
 							:events="events"
 							event-color="orange"
-							color="orange-14"
+							color="teal"
 							style="font-family: 'Elice Digital Baeum'"
 							landscape
 						/>

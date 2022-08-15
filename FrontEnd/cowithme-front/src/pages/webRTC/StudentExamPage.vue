@@ -8,15 +8,18 @@
 			:width="600"
 			v-model="rightDrawerOpen"
 			side="right"
-			overlay
 			bordered
+			show-if-above
 		>
 			<student-side-bar></student-side-bar>
 		</q-drawer>
 
 		<q-page-container>
 			<div class="column main-container">
-				<q-splitter v-model="splitterModel" style="height: 92vh">
+				<q-splitter
+					v-model="splitterModel"
+					style="height: 92vh; overflow-y: hidden"
+				>
 					<template v-slot:before>
 						<div class="q-pa-md flex-height">
 							<div class="column flex-height">

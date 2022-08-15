@@ -7,7 +7,10 @@
 			class="box q-ma-lg q-pa-md q-gutter-md"
 			style="font-family: 'Elice Digital Baeum'"
 		>
-			<q-form @submit="goSearchStudent" class="q-gutter-md row">
+			<p style="font-family: 'MICEGothic Bold'; font-size: 34px">
+				학생 추가하기
+			</p>
+			<q-form @submit="goSearchStudent" class="row">
 				<q-input
 					autofocus
 					class="col-7"
@@ -19,7 +22,7 @@
 					v-model="name"
 					label="학생 이름"
 				/>
-				<div class="col-3 flex items-center">
+				<div class="col-3 q-ml-md flex items-center">
 					<q-btn
 						push
 						label="검색하기"

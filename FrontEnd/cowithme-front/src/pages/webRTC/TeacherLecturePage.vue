@@ -27,7 +27,7 @@
 							</div>
 							<div
 								style="width: 11%"
-								class=""
+								class="q-pr-sm q-py-sm"
 								v-for="(sub, idx) in piniaCommonVideoData.openvidu.subscribers"
 								:key="idx"
 							>

@@ -1,7 +1,11 @@
 <template>
 	<div
 		class="row parti-chat-box"
-		style="height: 95vh; font-family: 'Elice Digital Baeum', sans-serif"
+		style="
+			height: 95vh;
+			font-family: 'Elice Digital Baeum', sans-serif;
+			overflow-y: hidden;
+		"
 	>
 		<div class="col-5" style="box-shadow: 2px 0px 3px #ff5722">
 			<div class="column" style="height: 100%">
