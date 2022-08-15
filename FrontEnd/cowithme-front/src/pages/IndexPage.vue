@@ -4,42 +4,52 @@
 			<div class="q-pa-md" style="font-family: 'Elice Digital Baeum'">
 				<AtomPlusButton @click="makeClass" flat></AtomPlusButton>
 				<div class="q-gutter-md q-ml-sm">
-					<div
-						class="flex column justify-between box q-pa-lg hvr-grow"
-						v-for="clas in classes"
-						:key="clas.classId"
-					>
-						<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
-							{{ clas.className }}
-						</p>
-
-						<div class="class-description">
-							<p style="color: white; margin: 18px">
-								{{ clas.classDescription }}
+					<template v-if="classes.length != 0 && !isLoading">
+						<div
+							class="flex column justify-between box q-pa-lg hvr-grow"
+							v-for="clas in classes"
+							:key="clas.classId"
+						>
+							<p style="font-size: 40px; font-family: 'MICEGothic Bold'">
+								{{ clas.className }}
 							</p>
+
+							<div class="class-description">
+								<p style="color: white; margin: 18px">
+									{{ clas.classDescription }}
+								</p>
+							</div>
+							<router-link
+								:to="{
+									name: 'classDetail',
+									params: {
+										classId: clas.classId,
+									},
+								}"
+								style="text-decoration: none; color: inherit"
+								><q-btn
+									@click="
+										goSetClassInfo(
+											clas,
+											clas.classId,
+											clas.className,
+											info2.userId,
+										)
+									"
+									style="background: #00adb5; color: white; font-size: 16px"
+									push
+									>반 관리하기</q-btn
+								>
+							</router-link>
 						</div>
-						<router-link
-							:to="{
-								name: 'classDetail',
-								params: {
-									classId: clas.classId,
-								},
-							}"
-							style="text-decoration: none; color: inherit"
-							><q-btn
-								@click="
-									goSetClassInfo(
-										clas,
-										clas.classId,
-										clas.className,
-										info2.userId,
-									)
-								"
-								style="background: #00adb5; color: white; font-size: 16px"
-								push
-								>반 관리하기</q-btn
-							>
-						</router-link>
+					</template>
+					<div
+						v-else-if="classes.length == 0 && !isLoading"
+						class="flex column justify-center items-center box q-pa-lg hvr-grow"
+					>
+						<p style="font-size: 24px; font-family: 'MICEGothic Bold'">
+							위의 버튼을 눌러 반을 생성 해주세요!
+						</p>
 					</div>
 				</div>
 			</div>
@@ -51,7 +61,7 @@
 			>
 				<div class="q-gutter-md row">
 					<div class="class-info hvr-grow">
-						<div v-if="isInClass">
+						<div v-if="isInClass && !isLoading">
 							<div class="col q-ma-lg">
 								<!-- 반, 강의제목, 날짜 -->
 								<div class="info" style="margin-bottom: 20px">
@@ -77,7 +87,7 @@
 							</div>
 						</div>
 						<div
-							v-else
+							v-else-if="!isInClass && !isLoading"
 							class="row justify-center items-center"
 							style="height: 100%"
 						>
@@ -148,8 +158,10 @@ export default defineComponent({
 
 		const userId = info2.userId;
 		console.log(userId);
+		const isLoading = ref(true);
 		if (info2.role == '강사') {
 			// 강사일 경우 반 정보를 불러옴
+			isLoading.value = true;
 			api
 				.get(`${baseUrl}/tutor/${userId}/classes`)
 				.then(res => {
@@ -157,9 +169,11 @@ export default defineComponent({
 					console.log(res.data);
 					classes.value = res.data.classes;
 					localStorage.setItem('classes', JSON.stringify(res.data.classes));
+					isLoading.value = false;
 				})
 				.catch(err => {
 					console.log(err);
+					isLoading.value = false;
 				});
 			// classes.value.push(...temp.classes);
 			// console.log(temp.classes);
@@ -170,15 +184,18 @@ export default defineComponent({
 		const isInClass = ref(false);
 		onMounted(async () => {
 			if (info2.role == '학생') {
+				isLoading.value = true;
 				try {
 					const res = await api.get(`/users/${userId}/class`);
 					testTest.value = res.data.result;
 					console.log(res.data);
 					localStorage.setItem('testTest', JSON.stringify(res.data));
 					isInClass.value = true;
+					isLoading.value = false;
 					getActiveLecture();
 				} catch (error) {
 					console.log('학생인데 반 없음', error);
+					isLoading.value = false;
 				}
 			}
 		});
@@ -257,6 +274,7 @@ export default defineComponent({
 			isInClass,
 			activeLecture,
 			isActiveLecture,
+			isLoading,
 
 			classes,
 			testTest,
@@ -266,7 +284,6 @@ export default defineComponent({
 			router,
 			user2,
 			info2,
-			isInClass,
 
 			makeClass,
 			classStore,
