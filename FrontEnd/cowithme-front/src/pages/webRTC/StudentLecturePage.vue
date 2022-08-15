@@ -14,8 +14,8 @@
 					class="col-2"
 				>
 					<q-scroll-area style="height: 100%; max-width: 100vw">
-						<div class="row no-wrap">
-							<div style="width: 12%" class="q-pt-sm">
+						<div class="row no-wrap q-ml-sm">
+							<div style="width: 12%" class="q-pa-sm">
 								<user-video
 									:stream-manager="piniaCommonVideoData.openvidu.publisher"
 									@click="
@@ -85,7 +85,7 @@
 							</template>
 							<template v-slot:after>
 								<div
-									class="q-pa-md flex-height column"
+									class="q-pt-sm q-pl-sm q-mr-md flex-height column"
 									style="font-family: 'Elice Digital Baeum', sans-serif"
 								>
 									<div class="col-1" style="background-color: #eeeeee">

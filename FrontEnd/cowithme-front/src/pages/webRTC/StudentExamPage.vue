@@ -21,20 +21,23 @@
 						<div class="q-pa-md flex-height">
 							<div class="column flex-height">
 								<div class="col-1">
-									<q-card class="my-card bg-secondary text-white flex-height">
-										<q-card-section class="q-pr-md" style="width: 900px">
-											<div class="">
+									<q-card
+										class="my-card bg-secondary text-white"
+										style="height: 70px"
+									>
+										<q-card-section style="width: 900px; height: 70px">
+											<div style="height: 100%">
 												<span
-													class="text-h6"
+													class="text-h6 q-ml-sm"
 													style="font-family: 'Elice Digital Baeum'"
 												>
 													시험 문제
 												</span>
-												<q-btn class="q-ml-md q-mb-md" @click="zoomOut">
-													<span class="text-h4"> - </span>
+												<q-btn class="q-mb-md" @click="zoomOut">
+													<span style="font-size: "> - </span>
 												</q-btn>
 												<q-btn class="q-mb-md" @click="zoomIn">
-													<span class="text-h4"> + </span>
+													<span class=""> + </span>
 												</q-btn>
 											</div>
 										</q-card-section>
