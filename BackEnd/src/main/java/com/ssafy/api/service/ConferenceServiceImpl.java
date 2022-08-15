@@ -36,6 +36,13 @@ public class ConferenceServiceImpl implements ConferenceService{
     @Override
     @Transactional
     public Conference createConference(ConferenceRegisterPostReq conferenceRegisterPostReq) {
+
+        Conference conferenceActive = conferenceRepositorySupport.findByClassesClassIdActive(conferenceRegisterPostReq.getClassId()).get();
+
+        if(conferenceActive.isActive()){
+            conferenceActive.setActive(false);
+        }
+
         Conference conference =new Conference();
         Classes classes = classesRepository.findByClassId(conferenceRegisterPostReq.getClassId()).get();
         conference.setClasses(classes);
