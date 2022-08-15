@@ -437,6 +437,8 @@ export default {
 		const showExamDialog = ref(false);
 		const timeWithSeconds = ref('00:50:00');
 		const startExam = () => {
+			if(piniaCommonExamData.testID == 0)
+				return;
 			let data = timeWithSeconds.value.split(':').map(s => {
 				return parseInt(s);
 			});
@@ -445,11 +447,9 @@ export default {
 				if (piniaCommonExamData.testName == testInfo.testName) {
 					piniaCommonExamData.testID = testInfo.testId;
 					piniaCommonExamData.setTimeLimit(data[0], data[1], data[2]);
-					piniaTeacherVideoData
-						.sendTestInfo(testInfo.testId, second)
-						.then(() => {
-							router.push({ path: '/teacherexam' });
-						});
+					piniaTeacherVideoData.sendTestInfo(testInfo.testId, testInfo.testName, second).then(() => {
+						router.push({ path: '/teacherexam' });
+					});
 					break;
 				}
 			}

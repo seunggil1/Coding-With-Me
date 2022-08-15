@@ -73,16 +73,6 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 		userInfo.conferenceKey = res.data.conference.conferenceId;
 	}
 
-	const getStudentList = async () => {
-		let result = api.get(`/tutor/${userInfo.userKey}/classes/${userInfo.className}`);
-
-		displayInfo.studentList.splice(0, displayInfo.studentList.length);
-
-		for(let item of (await result).data.students){
-			displayInfo.studentList.push(item.name);
-		}
-		displayInfo.studentListIsActive = Array.apply(null, Array(displayInfo.studentList.length)).map(() => false);
-	}
 	const joinSession = async () =>{
 		if(openvidu.session)
 			return;
@@ -287,7 +277,6 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 		unmuteVideo,
 
 		getConferenceKey,
-		getStudentList,
 		joinSession,
 		leaveSession,
 		startScreenShare,

@@ -3,8 +3,8 @@ import { ref, computed } from 'vue';
 import { api } from 'src/boot/axios.js';
 
 export const commonExamData = defineStore('commonExamData', () => {
-	const testID = ref(3);
-	const testName = ref('백준 골드1~플래4 문제들');
+	const testID = ref(0);
+	const testName = ref('시험을 선택해주세요');
 	const testCase = ref([
 		[
 			{

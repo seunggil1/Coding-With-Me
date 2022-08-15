@@ -127,6 +127,7 @@ import AtomPlusButton from 'src/components/atoms/AtomPlusButton.vue';
 import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
 import { commonVideoData } from 'src/stores/Video/common.js';
+import { studentVideoData } from 'src/stores/Video/student.js';
 
 export default defineComponent({
 	name: 'IndexPage',
@@ -143,6 +144,7 @@ export default defineComponent({
 		const HOST = 'https://i7a304.p.ssafy.io/api/v1';
 		const baseUrl = `${HOST}`;
 		const piniaCommonVideoData = commonVideoData();
+		const piniaStudentVideoData = studentVideoData();
 		const router = useRouter();
 
 		var user2 = null;
@@ -234,7 +236,7 @@ export default defineComponent({
 			piniaCommonVideoData.userInfo.conferenceName =
 				activeLecture.value.conferenceName;
 			await piniaCommonVideoData.getConferenceKey();
-			// await piniaCommonVideoData.getStudentList();
+			await piniaStudentVideoData.getStudentList();
 
 			try {
 				const response = await api.post(`/records/attendances`, {
@@ -281,6 +283,7 @@ export default defineComponent({
 			HOST,
 			baseUrl,
 			piniaCommonVideoData,
+			piniaStudentVideoData,
 			router,
 			user2,
 			info2,

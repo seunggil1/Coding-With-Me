@@ -280,6 +280,16 @@
 						/>
 
 						<q-btn
+							v-if="!piniaCommonVideoData.displayInfo.screenShareEnable"
+							class="screenBtn q-ml-md"
+							rounded
+							push
+							icon="screen_share"
+							label="화면공유"
+							@click="piniaCommonVideoData.startScreenShare()"
+						/>
+
+						<q-btn
 							class="leaveBtn q-ml-md"
 							rounded
 							push

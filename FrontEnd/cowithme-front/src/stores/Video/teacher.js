@@ -27,6 +27,16 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
         }
 	};
 
+	const getStudentList = async () => {
+		let result = api.get(`/tutor/${piniaCommonVideoData.userInfo.userKey}/classes/${piniaCommonVideoData.userInfo.className}`);
+
+		piniaCommonVideoData.displayInfo.studentList.splice(0, piniaCommonVideoData.displayInfo.studentList.length);
+
+		for(let item of (await result).data.students){
+			piniaCommonVideoData.displayInfo.studentList.push(item.name);
+		}
+		piniaCommonVideoData.displayInfo.studentListIsActive = Array.apply(null, Array(piniaCommonVideoData.displayInfo.studentList.length)).map(() => false);
+	}
 
     const addEventListener = async () => {
        
@@ -79,7 +89,7 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
 			});
 	};
 
-	const sendTestInfo = async (testId, time) => {
+	const sendTestInfo = async (testID, testName, time) => {
 		if (piniaCommonVideoData.openvidu.session == undefined) {
 			console.log('session is not connected. sendCode is canceled.');
 			return;
@@ -87,7 +97,8 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
 		try {
 			await piniaCommonVideoData.openvidu.session.signal({
 				data: JSON.stringify({
-					testID: testId,
+					testID : testID,
+					testName: testName,
 					time: time,
 				}), // Any string (optional)
 				to: [],
@@ -106,6 +117,7 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
         enableTest,
 
         getTestList,
+		getStudentList,
         addEventListener,
         createSession,
         sendCode,

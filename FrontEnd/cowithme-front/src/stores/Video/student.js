@@ -22,15 +22,28 @@ export const studentVideoData = defineStore('studentVideoData', () => {
 			event = JSON.parse(event.data);
 			let testData = commonExamData();
 			testData.testID = event.testID;
+			testData.testName = event.testName;
 			testData.timeLimit = event.time;
 
 			enableTest.value = true;
 		});
     };
+
+	const getStudentList = async () => {
+		let result = await api.get(`/student/${piniaCommonVideoData.userInfo.userKey}/classes`);
+
+		piniaCommonVideoData.displayInfo.studentList.splice(0, piniaCommonVideoData.displayInfo.studentList.length);
+
+		for(let item of result.data.students){
+			piniaCommonVideoData.displayInfo.studentList.push(item.name);
+		}
+		piniaCommonVideoData.displayInfo.studentListIsActive = Array.apply(null, Array(piniaCommonVideoData.displayInfo.studentList.length)).map(() => false);
+	}
 	return {
 		teacherCode,
 		enableTest,
 
-		addEventListener
+		addEventListener,
+		getStudentList
 	};
 });

@@ -326,7 +326,7 @@ export default {
 
 			piniaTeacherVideoData.createSession().then(async () => {
 				await piniaCommonVideoData.getConferenceKey();
-				await piniaCommonVideoData.getStudentList();
+				await piniaTeacherVideoData.getStudentList();
 				await router.push({ path: '/teacherlecture' });
 			});
 		}
