@@ -4,21 +4,40 @@
 		style="height: 95vh; font-family: 'Elice Digital Baeum', 'sans-serif'"
 	>
 		<q-scroll-area class="col-6" style="width: 100%">
-			<q-chip outline color="positive" text-color="white" :clickable="showOnline === false" @click="showOnline = true"> 
-				온라인
-			</q-chip>
-			<q-chip outline color="negative" text-color="white" :clickable="showOnline === true" @click="showOnline = false">
-				오프라인
-			</q-chip>
+			<q-btn-toggle
+				v-model="showOnline"
+				push
+				no-caps
+				unelevated
+				color="grey-5"
+				toggle-color="teal"
+				class="col q-pa-sm"
+				:options="[
+					{ label: '온라인', value: true },
+					{ label: '오프라인', value: false },
+				]"
+			/>
 
-			<q-scroll-area style="height: 40vh">
-				<div v-for="(student, index) in piniaCommonVideoData.displayInfo.studentList" :key="index">
-					<span v-if="piniaCommonVideoData.displayInfo.studentListIsActive[index] === showOnline">
+			<q-scroll-area
+				style="height: 30vh; border-bottom: 1px solid grey"
+				class="q-pa-sm"
+			>
+				<div
+					v-for="(student, index) in piniaCommonVideoData.displayInfo
+						.studentList"
+					:key="index"
+				>
+					<span
+						v-if="
+							piniaCommonVideoData.displayInfo.studentListIsActive[index] ===
+							showOnline
+						"
+						style="font-size: 18px"
+					>
 						{{ student }}
 					</span>
 				</div>
 			</q-scroll-area>
-			
 		</q-scroll-area>
 
 		<q-scroll-area class="col-5" style="width: 100%">
@@ -89,7 +108,7 @@ export default {
 		let myChatInput = ref('');
 		const piniaCommonVideoData = commonVideoData();
 		const showOnline = ref(true);
-		
+
 		watch(
 			() => piniaCommonVideoData.displayInfo.chatting,
 			() => console.log(piniaCommonVideoData.displayInfo.chatting),
