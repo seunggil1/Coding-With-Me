@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service("classesService")
 @Transactional(readOnly = true)
@@ -65,6 +67,12 @@ public class ClassesServiceImpl implements ClassesService {
     @Transactional
     public boolean addStudent(ClassesAddStudentPostReq classesAddStudentPostReq) {
         try{
+            Optional<UserClass> OuserClass = userClassRepository.findByStudentId(classesAddStudentPostReq.getStudentId());
+
+            if(OuserClass.isPresent()){
+                return false;
+            }
+
             Classes classes = classesRepository.findFetchJoin(classesAddStudentPostReq.getTutorId(), classesAddStudentPostReq.getClassName()).get();
 
             UserClass uc = new UserClass();
@@ -78,6 +86,11 @@ public class ClassesServiceImpl implements ClassesService {
 
             userClassRepository.save(uc);
         }catch (NoSuchElementException e){
+            Optional<UserClass> OuserClass = userClassRepository.findByStudentId(classesAddStudentPostReq.getStudentId());
+
+            if(OuserClass.isPresent()){
+                return false;
+            }
             Classes classes = classesRepository.findByUserUserIdAndClassName(classesAddStudentPostReq.getTutorId(), classesAddStudentPostReq.getClassName()).get();
             UserClass uc = new UserClass();
 
@@ -122,6 +135,7 @@ public class ClassesServiceImpl implements ClassesService {
 //            userClassRepository.delete(uc);
             //classes-UserClass
             classes.getUserClassList().remove(uc);
+            userClassRepository.delete(uc);
             success = true;
         }catch (Exception e){
             success = false;
