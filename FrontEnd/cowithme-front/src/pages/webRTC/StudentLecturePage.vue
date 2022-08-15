@@ -51,11 +51,15 @@
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
-								<div class="q-px-sm q-pt-md flex-height">
+								<div
+									class="q-px-sm q-pt-md flex-height"
+									style="background-color: #303841"
+								>
 									<!-- 모드 1 : 왼쪽은 강사 얼굴, 오른쪽은 학생 IDE -->
 									<span v-if="mode == 1">
-										<div class="flex" style="background: none">
+										<div class="flex" style="background-color: #303841">
 											<user-video
+												style="background-color: #303841"
 												:stream-manager="
 													piniaCommonVideoData.openvidu.mainStreamManager
 												"

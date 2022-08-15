@@ -1,19 +1,19 @@
 <template>
 	<q-layout class="scroll" view="lHr lpr fFf">
 		<q-drawer v-model="rightDrawerOpen" side="right" overlay bordered>
-			<video-side-bar > </video-side-bar>
+			<video-side-bar> </video-side-bar>
 		</q-drawer>
 
 		<q-page-container style="font-family: 'OTWelcomeBA'">
 			<div class="column main-container">
 				<div
-					v-if="showSubScribers 
-						&& piniaCommonVideoData.openvidu.session !== undefined"
+					v-if="
+						showSubScribers &&
+						piniaCommonVideoData.openvidu.session !== undefined
+					"
 					class="col-2"
 				>
-					<q-scroll-area 
-						style="height: 100%; max-width: 100vw"
-					>
+					<q-scroll-area style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
 							<div style="width: 11%" class="q-pa-sm">
 								<user-video
@@ -33,7 +33,9 @@
 							>
 								<user-video
 									:stream-manager="sub"
-									@click="piniaCommonVideoData.updateMainVideoStreamManager(sub)"
+									@click="
+										piniaCommonVideoData.updateMainVideoStreamManager(sub)
+									"
 								/>
 							</div>
 						</div>
@@ -42,7 +44,9 @@
 				<!-- teacherVideo.subCamsOpen && teacherVideo.state.session -->
 				<div
 					:class="
-						(showSubScribers && piniaCommonVideoData.openvidu.session) ? 'col-10' : 'col-12'
+						showSubScribers && piniaCommonVideoData.openvidu.session
+							? 'col-10'
+							: 'col-12'
 					"
 				>
 					<div>
@@ -50,9 +54,11 @@
 							<template v-slot:before>
 								<div class="q-px-sm q-pt-sm">
 									<div class="flex" style="background: none">
-										<user-video 
+										<user-video
 											v-if="piniaCommonVideoData.openvidu.mainStreamManager"
-											:stream-manager="piniaCommonVideoData.openvidu.mainStreamManager"
+											:stream-manager="
+												piniaCommonVideoData.openvidu.mainStreamManager
+											"
 										/>
 									</div>
 								</div>
@@ -105,7 +111,7 @@
 												width: 130px;
 												max-width: 130px;
 												min-width: 130px;
-                        						max-height: 90%
+                        max-height: 90%
 												font-size: 18px;
 												float: right;
 											"
@@ -188,8 +194,14 @@
 							rounded
 							style="font-family: 'Elice Digital Baeum', sans-serif"
 							push
-							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
-							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
+							:icon="
+								piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.audioEnable
+									? '음소거'
+									: '음소거 해제'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.audioEnable
 									? piniaCommonVideoData.muteAudio()
@@ -201,8 +213,16 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam' : 'videocam_off'"
-							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
+							:icon="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? 'videocam'
+									: 'videocam_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? '카메라 끄기'
+									: '카메라 켜기'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.videoEnable
 									? piniaCommonVideoData.muteVideo()
@@ -215,7 +235,11 @@
 							rounded
 							push
 							icon="screen_share"
-							:label="piniaCommonVideoData.displayInfo.screenShareEnable ? '화면공유 중지' : '화면공유'"
+							:label="
+								piniaCommonVideoData.displayInfo.screenShareEnable
+									? '화면공유 중지'
+									: '화면공유'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.screenShareEnable
 									? piniaCommonVideoData.stopScreenShare()
@@ -338,7 +362,7 @@ export default {
 		const piniaCommonVideoData = commonVideoData();
 		const piniaTeacherVideoData = teacherVideoData();
 		const piniaCommonExamData = commonExamData();
-		
+
 		let showSubScribers = ref(true);
 		let rightDrawerOpen = ref(false);
 
@@ -421,9 +445,11 @@ export default {
 				if (piniaCommonExamData.testName == testInfo.testName) {
 					piniaCommonExamData.testID = testInfo.testId;
 					piniaCommonExamData.setTimeLimit(data[0], data[1], data[2]);
-					piniaTeacherVideoData.sendTestInfo(testInfo.testId, second).then(() => {
-						router.push({ path: '/teacherexam' });
-					});
+					piniaTeacherVideoData
+						.sendTestInfo(testInfo.testId, second)
+						.then(() => {
+							router.push({ path: '/teacherexam' });
+						});
 					break;
 				}
 			}
@@ -431,9 +457,8 @@ export default {
 
 		async function leaveSession() {
 			await piniaCommonVideoData.leaveSession();
-			await router.push({ path: '/'});
+			await router.push({ path: '/' });
 		}
-
 
 		return {
 			timeWithSeconds,

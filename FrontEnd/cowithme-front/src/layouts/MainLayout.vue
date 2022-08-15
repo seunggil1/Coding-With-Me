@@ -7,7 +7,7 @@
 					:to="{ path: '/home' }"
 					style="text-decoration: none; color: inherit"
 				>
-					<q-toolbar-title class="font-OT">
+					<q-toolbar-title class="font-MICE">
 						Coding with me</q-toolbar-title
 					></router-link
 				>
@@ -65,14 +65,14 @@
 
 						<div class="row a">
 							<div
-								class="font-OT"
+								class="font-MICE"
 								style="font-size: 24px; font-family: 'OTWelcomeBA'"
 							>
 								{{ info2.name }}
 							</div>
 							<div>
 								<WelcomeText
-									class="font-OT"
+									class="font-MICE"
 									style="font-size: 24px; font-family: 'OTWelcomeBA'"
 								></WelcomeText>
 							</div>
@@ -84,7 +84,7 @@
 						:to="{ path: '/home' }"
 						style="text-decoration: none; color: inherit"
 					>
-						<AtomHomeButton class="font-OT"></AtomHomeButton>
+						<AtomHomeButton class="font-MICE"></AtomHomeButton>
 					</router-link>
 				</div>
 				<div v-if="info2.role == '학생'" class="row">
@@ -92,14 +92,14 @@
 						:to="{ name: 'reportCard', params: { userId: info2.userId } }"
 						style="text-decoration: none; color: inherit"
 					>
-						<AtomScoreIconButton class="font-OT"></AtomScoreIconButton>
+						<AtomScoreIconButton class="font-MICE"></AtomScoreIconButton>
 					</router-link>
 				</div>
 				<div class="row" @click="goToMypage">
 					<div class="q-py-xs q-gutter-sm">
 						<q-btn
 							size="23px"
-							class="btn-size font-OT"
+							class="btn-size font-MICE"
 							align="left"
 							flat
 							label="마이페이지"
@@ -108,10 +108,10 @@
 					</div>
 				</div>
 				<div class="row fixed-bottom">
-					<div class="q-py-xs q-gutter-sm">
+					<div class="q-py-xs q-gutter-sm font-MICE">
 						<q-btn
 							size="23px"
-							class="btn-size font-OT"
+							class="btn-size"
 							color="grey"
 							align="left"
 							flat
@@ -135,12 +135,8 @@ import { defineComponent, ref } from 'vue';
 import TestComp from 'src/components/TestComp.vue';
 import AtomLogo2 from 'src/components/atoms/AtomLogo2.vue';
 import WelcomeText from 'src/components/molecules/home/WelcomeText.vue';
-// import AtomSearchIconButton from 'src/components/atoms/AtomSearchIconButton.vue';
 import AtomScoreIconButton from 'src/components/atoms/AtomScoreIconButton.vue';
-// import AtomMyPageButton from 'src/components/atoms/AtomMyPageButton.vue';
-// import AtomLogoutButton from 'src/components/atoms/AtomLogoutButton.vue';
 import { useRouter } from 'vue-router';
-// import { storeToRefs } from 'pinia';
 import { useAuthStore } from 'src/stores';
 import AtomProfileImg from 'src/components/atoms/AtomProfileImg.vue';
 import AtomStudentProfile from 'src/components/atoms/AtomStudentProfile.vue';
@@ -205,20 +201,9 @@ export default defineComponent({
 	font-weight: 700 !important;
 	font-style: normal !important;
 }
-@font-face {
-	font-family: 'OTWelcomeBA' !important;
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeBA.woff2')
-		format('woff2') !important;
-	font-weight: normal !important;
-	font-style: normal !important;
-}
 .test {
 	-webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
 	filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.7)) !important;
-}
-.font-OT {
-	font-family: 'OTWelcomeBA' !important;
-	font-size: 24px;
 }
 .font-MICE {
 	font-family: 'MICEGothic Bold' !important;
