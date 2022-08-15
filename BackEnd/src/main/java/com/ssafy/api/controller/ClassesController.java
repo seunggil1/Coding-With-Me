@@ -28,14 +28,14 @@ import java.util.Map;
  */
 @Api(value = "반 API", tags = {"Classes"})
 @RestController
-@RequestMapping("/api/v1/tutor")
+@RequestMapping("/api/v1")
 public class ClassesController {
     @Autowired
     ClassesService classesService;
 
     @Autowired
     UserRepository userRepository;
-    @PostMapping("/classes")
+    @PostMapping("/tutor/classes")
     @ApiOperation(value = "반 개설", notes = "<strong>반 이름과 설명을 입력하여</strong> 반을 개설한다..")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -50,7 +50,7 @@ public class ClassesController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @PutMapping("/classes")
+    @PutMapping("/tutor/classes")
     @ApiOperation(value = "반 정보 수정", notes = "반 정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -64,7 +64,7 @@ public class ClassesController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @DeleteMapping("/classes")
+    @DeleteMapping("/tutor/classes")
     @ApiOperation(value = "반 삭제", notes = "반을 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -83,7 +83,7 @@ public class ClassesController {
 
     }
 
-    @PostMapping("/classes/student")
+    @PostMapping("/tutor/classes/student")
     @ApiOperation(value = "반 학생 추가", notes = "반에 학생을 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -103,7 +103,7 @@ public class ClassesController {
 
         }
     }
-    @DeleteMapping("/classes/student")
+    @DeleteMapping("/tutor/classes/student")
     @ApiOperation(value = "반 학생 삭제", notes = "반에 학생을 삭제시킨다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -122,7 +122,7 @@ public class ClassesController {
 
     }
 
-    @GetMapping("/{user_id}/classes")
+    @GetMapping("/tutor/{user_id}/classes")
     @ApiOperation(value = "전체 반 조회", notes = "사용자가 개설한 반(방)을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -137,8 +137,8 @@ public class ClassesController {
         return ResponseEntity.status(200).body(map);
     }
 
-    @GetMapping("/{userId}/classes/{className}")
-    @ApiOperation(value = "반 정보 조회", notes = "반에 있는 학생들을 조회한다.")
+    @GetMapping("/tutor/{userId}/classes/{className}")
+    @ApiOperation(value = "반 정보 조회(강사)", notes = "반에 있는 학생들을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
@@ -160,5 +160,26 @@ public class ClassesController {
         return ResponseEntity.status(200).body(map);
     }
 
+    @GetMapping("/student/{userId}/classes")
+    @ApiOperation(value = "반 정보 조회(학생)", notes = "반에 있는 학생들을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Map<String,Object>> getstudent(
+            @PathVariable("userId") Long userId){
+
+        List<User> userList =  new ArrayList<>();
+
+        List<UserClass> userClasses = classesService.getClassInfo(userId);
+        for (UserClass userClass : userClasses) {
+            User user = userRepository.findByUserId(userClass.getStudentId()).get();
+            userList.add(user);
+        }
+
+        Map<String,Object> map =new HashMap<>();
+        map.put("students",userList);
+        return ResponseEntity.status(200).body(map);
+    }
 
 }

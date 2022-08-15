@@ -20,13 +20,13 @@ public class AttendanceRepositorySupport {
 
     QAttendanceRecord qAttendanceRecord = QAttendanceRecord.attendanceRecord;
 
-    public Optional<AttendanceRecord> findByUserIdAndConferenceIdLast(Long userId,Long conferenceId){
-        AttendanceRecord attendanceRecord = jpaQueryFactory
+    public Optional<List<AttendanceRecord>> findByUserIdAndConferenceIdLast(Long userId,Long conferenceId){
+        List<AttendanceRecord> attendanceRecord = jpaQueryFactory
                 .select(qAttendanceRecord)
                 .from(qAttendanceRecord)
                 .where(qAttendanceRecord.attEndTime.isNull())
                 .where(qAttendanceRecord.conference.conferenceId.eq(conferenceId))
-                .where(qAttendanceRecord.user.userId.eq(userId)).fetchOne();
+                .where(qAttendanceRecord.user.userId.eq(userId)).fetch();
         if(attendanceRecord == null) return Optional.empty();
         return Optional.ofNullable(attendanceRecord);
     };

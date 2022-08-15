@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service("WebRTCService")
@@ -69,13 +70,16 @@ public class WebRTCServiceImpl implements WebRTCService {
         // (웹에서 강제 종료했을경우 DB에 반영되지 않았을 수도 있음.)
         //출입기록 해당 강의 식별자 돌려서 다 endtime 입력 해줘.
 
-        Optional<AttendanceRecord> OattendanceRecord = attendanceRepositorySupport.findByUserIdAndConferenceIdLast(userId, conferenceId);
+        Optional<List<AttendanceRecord>> OattendanceRecord = attendanceRepositorySupport.findByUserIdAndConferenceIdLast(userId, conferenceId);
 
         if(OattendanceRecord.isPresent()){
             Date date = new Date();
-            AttendanceRecord attendanceRecord=OattendanceRecord.get();
-            attendanceRecord.setAttEndTime(date);
-            attendanceRepository.save(attendanceRecord);
+            List<AttendanceRecord> attendanceRecord=OattendanceRecord.get();
+            for (AttendanceRecord record : attendanceRecord) {
+                record.setAttEndTime(date);
+                attendanceRepository.save(record);
+            }
+
         }
 
         String token = openViduService.getToken(conferenceId, userId, displayName);

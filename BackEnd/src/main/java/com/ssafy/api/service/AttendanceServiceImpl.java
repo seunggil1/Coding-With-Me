@@ -62,11 +62,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceRecord updateAttendance(AttendanceRegisterPostReq attendanceRegisterPostReq) {
         Long userId = attendanceRegisterPostReq.getUserId();
         Long conferenceId = attendanceRegisterPostReq.getConferenceId();
-        AttendanceRecord attendanceRecord = attendanceRepositorySupport.findByUserIdAndConferenceIdLast(userId, conferenceId).get();
+        List<AttendanceRecord> attendanceRecord = attendanceRepositorySupport.findByUserIdAndConferenceIdLast(userId, conferenceId).get();
         Date date = new Date();
-        attendanceRecord.setAttEndTime(date);
+        attendanceRecord.get(0).setAttEndTime(date);
 
-        return attendanceRepository.save(attendanceRecord);
+        return attendanceRepository.save(attendanceRecord.get(0));
     }
 
     @Override
