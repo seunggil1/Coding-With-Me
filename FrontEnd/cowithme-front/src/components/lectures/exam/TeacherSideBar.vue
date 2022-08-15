@@ -41,25 +41,34 @@
 				</div>
 				<!-- 오프라인, 온라인 인원 -->
 				<div class="q-pa-md col-5" style="border-bottom: 2px solid #ff5722">
-					<q-chip 
-						outline color="positive" text-color="white" 
-						:clickable="showOnline === false" 
-						@click="showOnline = true"
-					> 
-						온라인
-					</q-chip>
-					<q-chip 
-						outline color="negative" 
-						text-color="white" 
-						:clickable="showOnline === true" 
-						@click="showOnline = false"
-					>
-						오프라인
-					</q-chip>
+					<q-btn-toggle
+						v-model="showOnline"
+						push
+						no-caps
+						unelevated
+						color="grey-5"
+						toggle-color="teal"
+						class="col q-px-sm"
+						:options="[
+							{ label: '온라인', value: true },
+							{ label: '오프라인', value: false },
+						]"
+					/>
 
-					<q-scroll-area style="height: 40vh">
-						<div v-for="(student, index) in piniaCommonVideoData.displayInfo.studentList" :key="index">
-							<span v-if="piniaCommonVideoData.displayInfo.studentListIsActive[index] === showOnline">
+					<q-scroll-area style="height: 30vh" class="q-pa-sm">
+						<div
+							v-for="(student, index) in piniaCommonVideoData.displayInfo
+								.studentList"
+							:key="index"
+						>
+							<span
+								style="font-size: 18px"
+								v-if="
+									piniaCommonVideoData.displayInfo.studentListIsActive[
+										index
+									] === showOnline
+								"
+							>
 								{{ student }}
 							</span>
 						</div>
@@ -67,26 +76,32 @@
 				</div>
 				<!-- 제출, 미제출 인원 -->
 				<div class="q-pa-md col-5">
-					<q-chip 
-						outline color="positive" 
-						text-color="white" 
-						:clickable="showSubmit === false" 
-						@click="showSubmit = true"
-					>
-						제출 완료
-					</q-chip>
-					<q-chip 
-						outline color="negative" 
-						text-color="white" 
-						:clickable="showSubmit === true" 
-						@click="showSubmit = false"
-					> 
-						미제출 
-					</q-chip>
+					<q-btn-toggle
+						v-model="showSubmit"
+						push
+						no-caps
+						unelevated
+						color="grey-5"
+						toggle-color="teal"
+						class="col q-px-sm"
+						:options="[
+							{ label: '제출', value: true },
+							{ label: '미제출', value: false },
+						]"
+					/>
 
-					<q-scroll-area style="height: 40vh">
-						<div v-for="(student, index) in piniaCommonVideoData.displayInfo.studentList" :key="index">
-							<span v-if="piniaTeacherExamData.submitStudentList[index] === showSubmit">
+					<q-scroll-area style="height: 40vh" class="q-pa-sm">
+						<div
+							v-for="(student, index) in piniaCommonVideoData.displayInfo
+								.studentList"
+							:key="index"
+						>
+							<span
+								style="font-size: 18px"
+								v-if="
+									piniaTeacherExamData.submitStudentList[index] === showSubmit
+								"
+							>
 								{{ student }}
 							</span>
 						</div>
@@ -184,7 +199,6 @@ export default {
 		const showOnline = ref(true);
 		const showSubmit = ref(true);
 
-
 		let timer;
 		onMounted(() => {
 			timer = setInterval(() => {
@@ -203,7 +217,7 @@ export default {
 			piniaTeacherVideoData,
 			piniaCommonExamData,
 			showOnline,
-			showSubmit
+			showSubmit,
 		};
 	},
 };
