@@ -147,10 +147,9 @@
 								text-color="white"
 								icon="face"
 								removable
-								v-for="student in students"
+								v-for="(student, index) in students"
 								:key="student.userId"
-								:ref="skipUnwrap.itemRefs"
-								v-model="skipUnwrap.itemRefs"
+								@remove="deleteStudent(student.userId, index)"
 							>
 								{{ student.name }}({{ student.nickname }})
 							</q-chip>
@@ -288,8 +287,7 @@ import { ref } from 'vue';
 export default {
 	name: 'ClassDetailPage',
 	setup() {
-		const itemRefs = ref([]);
-		const skipUnwrap = { itemRefs };
+		console.log('@@@@', localStorage.getItem('classInfo'));
 
 		const files = ref(null);
 
@@ -387,6 +385,23 @@ export default {
 			await router.push({ path: '/addStudent' });
 		}
 
+		// 학생 삭제하기
+		async function deleteStudent(studentId, index) {
+			try {
+				await api.delete(`tutor/classes/student`, {
+					data: {
+						className: localStorage.getItem('className'),
+						studentId: studentId,
+						tutorId: localStorage.getItem('userId'),
+					},
+				});
+				console.log(students.value);
+				students.value.splice(index, 1);
+			} catch (error) {
+				console.log('반 학생 삭제 에러', error);
+			}
+		}
+
 		// 페이지네이션 관련
 		const totalPage = ref(0);
 		const totalLecture = ref(0);
@@ -463,6 +478,7 @@ export default {
 		}
 
 		return {
+			deleteStudent,
 			classDescription,
 			newclassName,
 			editClassInfo,
@@ -480,8 +496,6 @@ export default {
 			tests,
 			deleteTest,
 			files,
-			itemRefs,
-			skipUnwrap,
 			slide: ref(1),
 			downloadPDF,
 			openEditClass,
