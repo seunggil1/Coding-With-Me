@@ -110,6 +110,30 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
 		}
 	};
 
+	/**
+	 * 학생들에게 페이지 이동을 지시하는 문.
+	 * 
+	 * 
+	 * @param { String } msg lecture, exam, leave
+	 * @returns 
+	 */
+	const sendRedirectInfo = async (msg) => {
+		if (piniaCommonVideoData.openvidu.session == undefined) {
+			console.log('session is not connected. sendCode is canceled.');
+			return;
+		}
+		try {
+			await piniaCommonVideoData.openvidu.session.signal({
+				data: msg, // Any string (optional)
+				to: [],
+				type: 'move', // The type of message (optional)
+			});
+			console.log('Code successfully sent');
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
 	return {
         testList,
         testNameList,
@@ -122,5 +146,6 @@ export const teacherVideoData = defineStore('teacherVideoData', () => {
         createSession,
         sendCode,
         sendTestInfo,
+		sendRedirectInfo,
 	};
 });

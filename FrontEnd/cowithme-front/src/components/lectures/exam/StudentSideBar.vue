@@ -154,7 +154,6 @@ export default {
 
 		onUnmounted(async () => {
 			await piniaCommonVideoData.stopScreenShare();
-			await piniaCommonVideoData.leaveSession();
 			if (timer) clearInterval(timer);
 		});
 

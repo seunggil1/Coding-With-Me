@@ -269,13 +269,17 @@ export default {
 
 		
 		// 세션 나가기
-		const leaveSession = () => {
-			piniaCommonVideoData.leaveSession().then(()=>{
-				router.push({ path: '/home' });
-			})
+		const leaveSession = async () => {
+			await piniaTeacherVideoData.sendRedirectInfo("leave");
+			await piniaCommonVideoData.leaveSession();
+			await router.push({ path: '/home' });
+
 		};
 
-		const stopExam = () => {};
+		const stopExam = async () => {
+			await piniaTeacherVideoData.sendRedirectInfo("lecture");
+			await router.push({ path: '/teacherlecture' });
+		};
 
 		onMounted(async () => {
 			piniaTeacherExamData.initSubmitStudentList();

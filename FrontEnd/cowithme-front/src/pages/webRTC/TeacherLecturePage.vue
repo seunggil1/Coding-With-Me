@@ -447,8 +447,9 @@ export default {
 				if (piniaCommonExamData.testName == testInfo.testName) {
 					piniaCommonExamData.testID = testInfo.testId;
 					piniaCommonExamData.setTimeLimit(data[0], data[1], data[2]);
-					piniaTeacherVideoData.sendTestInfo(testInfo.testId, testInfo.testName, second).then(() => {
-						router.push({ path: '/teacherexam' });
+					piniaTeacherVideoData.sendTestInfo(testInfo.testId, testInfo.testName, second).then(async () => {
+						await piniaTeacherVideoData.sendRedirectInfo("exam");
+						await router.push({ path: '/teacherexam' });
 					});
 					break;
 				}
@@ -456,6 +457,7 @@ export default {
 		};
 
 		async function leaveSession() {
+			await piniaTeacherVideoData.sendRedirectInfo("leave");
 			await piniaCommonVideoData.leaveSession();
 			await router.push({ path: '/' });
 		}

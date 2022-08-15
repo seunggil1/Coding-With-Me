@@ -38,9 +38,16 @@ export const teacherExamData = defineStore('teacherExamData', () => {
         initEventLister.value = true;
     }
 
+    const dataReset = () => {
+        initEventLister.value = false;
+    }
+
+
+
     return {
         submitStudentList,
         initSubmitStudentList,
         addEventListener,
+        dataReset,
     }
 });

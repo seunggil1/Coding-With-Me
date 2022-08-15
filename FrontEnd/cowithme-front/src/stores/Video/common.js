@@ -2,6 +2,9 @@ import { defineStore } from 'pinia';
 import { reactive, computed } from 'vue';
 import { api } from 'src/boot/axios.js';
 import { OpenVidu } from 'openvidu-browser';
+import { commonExamData } from 'src/stores/ExamProgress/common.js';
+import { teacherExamData } from 'src/stores/ExamProgress/teacher.js';
+import { studentExamData } from 'src/stores/ExamProgress/student.js';
 api.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const commonVideoData = defineStore('commonVideoData', () => {
@@ -131,6 +134,14 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 			conferenceId: userInfo.conferenceKey,
 			token: openvidu.token,
 		});
+
+		const piniaCommonExamData = commonExamData();
+		const piniaTeacherExamData = teacherExamData();
+		const piniaStudentExamData = studentExamData();
+
+		piniaCommonExamData.dataReset();
+		piniaTeacherExamData.dataReset();
+		piniaStudentExamData.dataReset();
 	}
 
 	const startScreenShare = async () => {

@@ -69,6 +69,39 @@ export const commonExamData = defineStore('commonExamData', () => {
 		}
 	};
 
+	const dataReset = () => {
+		testID.value = 0;
+		testName.value = '시험을 선택해주세요';
+		testCase.value = [
+			[
+				{
+					input: '5\n1 1 Y\n1 -1 Y\n0 0 N\n-1 -1 Y\n-1 1 Y',
+					output: '4\n-1 -1\n1 -1\n1 1\n-1 1',
+				},
+			],
+			[
+				{
+					input: '1 7\nf0.F..1',
+					output: '7',
+				},
+				{
+					input: '5 5\n....1\n#1###\n.1.#0\n....A\n.1.#.',
+					output: '-1',
+				},
+				{
+					input: '7 8\na#c#eF.1\n.#.#.#..',
+					output: '55',
+				},
+			],
+			[
+				{
+					input: '5\n 5 1 2 3 4\n3\n2 4 1\n6 6 6\n1 5 2',
+					output: '2\n0\n3',
+				},
+			],
+		];
+	}
+
 	return {
 		testID,
 		testName,
@@ -80,5 +113,6 @@ export const commonExamData = defineStore('commonExamData', () => {
 		formattedTime,
 
 		getTestInfo,
+		dataReset,
 	};
 });

@@ -35,11 +35,19 @@ export const studentExamData = defineStore('studentExamData', () => {
 				console.error(error);
 			});
 	};
-    
+
+    const dataReset = () => {
+        language.value = 'java';
+        code.value = [
+            'import java.util.*;\nimport java.io.*;\n'
+        ];
+    }
+
     return {
         language,
         code,
         initCode,
-        submit
+        submit,
+        dataReset
     }
 });
