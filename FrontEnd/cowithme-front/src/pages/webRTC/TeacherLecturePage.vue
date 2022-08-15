@@ -95,8 +95,8 @@
 											toggle-color="orange-14"
 											class="col q-pa-sm"
 											:options="[
-												{ label: 'Sync', value: true },
-												{ label: 'Off', value: false },
+												{ label: '코드 보내기', value: true },
+												{ label: '보내기 중단', value: false },
 											]"
 										/>
 										<!-- </div> -->
@@ -437,8 +437,7 @@ export default {
 		const showExamDialog = ref(false);
 		const timeWithSeconds = ref('00:50:00');
 		const startExam = () => {
-			if(piniaCommonExamData.testName == '시험을 선택해주세요')
-				return;
+			if (piniaCommonExamData.testName == '시험을 선택해주세요') return;
 			let data = timeWithSeconds.value.split(':').map(s => {
 				return parseInt(s);
 			});
