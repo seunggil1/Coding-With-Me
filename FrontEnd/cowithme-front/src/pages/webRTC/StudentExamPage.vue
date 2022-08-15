@@ -85,12 +85,13 @@
 														<div class="row no-wrap">
 															<div
 																style="height: 30px"
-																class="q-px-sm"
+																class="q-px-sm q-pt-sm"
 																v-for="idx in piniaCommonExamData.testQuCnt"
 																:key="idx"
 															>
 																<q-btn
-																	color="primary"
+																	push
+																	color="teal"
 																	v-if="selectedProblem != idx"
 																	:label="idx"
 																	@click="
@@ -99,7 +100,8 @@
 																	"
 																/>
 																<q-btn
-																	color="primary"
+																	push
+																	color="teal"
 																	v-if="selectedProblem == idx"
 																	:label="idx"
 																	disable
