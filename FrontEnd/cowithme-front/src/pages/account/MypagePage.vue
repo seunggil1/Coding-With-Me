@@ -74,6 +74,9 @@
 							lazy-rules
 							color="secondary"
 							bg-color="white"
+							:rules="[
+								val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+							]"
 						></q-input>
 					</div>
 					<div class="col q-ml-sm">
