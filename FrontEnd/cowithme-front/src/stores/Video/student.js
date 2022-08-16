@@ -13,6 +13,7 @@ export const studentVideoData = defineStore('studentVideoData', () => {
     const enableTest = ref(false);
 
     const piniaCommonVideoData = commonVideoData();
+	const piniaCommonExamData = commonExamData();
 
     const addEventListener = async () => {
         piniaCommonVideoData.openvidu.session.on('signal:code', event => {
@@ -34,15 +35,18 @@ export const studentVideoData = defineStore('studentVideoData', () => {
 		piniaCommonVideoData.openvidu.session.on('signal:move', async (event) => {
 			switch (event.data) {
 				case "lecture":
+					api.post('/tests/compile/test',{
+						"testId": piniaCommonExamData.testID,
+  						"userId": piniaCommonVideoData.userInfo.userKey
+					});
 					await router.push({ path: '/studentlecture' });
 					break;
 				case "exam":
 					await router.push({ path: '/studentexam' });
 					break;
 				case "leave":
-					await piniaCommonVideoData.leaveSession().then(async ()=>{
-						await router.push({ path: '/home' });
-					})
+					await piniaCommonVideoData.leaveSession();
+					await router.push({ path: '/home' });
 					break;
 				default:
 					console.error("unknown move message");
