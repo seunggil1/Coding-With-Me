@@ -40,7 +40,7 @@
 			</q-scroll-area>
 		</q-scroll-area>
 
-		<q-scroll-area class="col-5" style="width: 100%">
+		<q-scroll-area ref="chatting" class="col-5" style="width: 100%">
 			<span
 				v-for="(chat, index) in piniaCommonVideoData.displayInfo.chatting"
 				:key="index"
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref, watch, onUpdated, onMounted } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 export default {
 	props: {},
@@ -109,15 +109,24 @@ export default {
 		const piniaCommonVideoData = commonVideoData();
 		const showOnline = ref(true);
 
-		watch(
-			() => piniaCommonVideoData.displayInfo.chatting,
-			() => console.log(piniaCommonVideoData.displayInfo.chatting),
-		);
+		const chatting = ref(undefined);
+		watch(piniaCommonVideoData.displayInfo.chatting, () => {
+			setTimeout(() => {
+				chatting.value.setScrollPercentage("vertical", 1)
+			}, 300);
+		});		
+
+		// onUpdated(() => {
+		// 	
+		// 	console.log("change Length");
+		// });
 
 		return {
 			myChatInput,
 			piniaCommonVideoData,
 			showOnline,
+
+			chatting,
 		};
 	},
 };

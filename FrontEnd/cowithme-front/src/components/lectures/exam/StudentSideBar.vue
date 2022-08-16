@@ -64,10 +64,11 @@
 				class="column justify-center"
 				style="height: 95vh; font-family: 'OTWelcomeBA'"
 			>
-				<q-scroll-area class="col-10 q-pa-xl" style="width: 100%">
+				<q-scroll-area ref="chatting" class="col-10 q-pa-xl" style="width: 100%">
 					<span
 						v-for="(chat, index) in piniaCommonVideoData.displayInfo.chatting"
 						:key="index"
+						style="width: 100%"
 					>
 						<q-chat-message
 							v-if="chat.sender === piniaCommonVideoData.userInfo.userName"
@@ -130,7 +131,7 @@
 
 <script>
 import UserVideo from 'src/components/lectures/UserVideo.vue';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
 export default {
@@ -157,10 +158,18 @@ export default {
 			if (timer) clearInterval(timer);
 		});
 
+		const chatting = ref(undefined);
+		watch(piniaCommonVideoData.displayInfo.chatting, () => {
+			setTimeout(() => {
+				chatting.value.setScrollPercentage("vertical", 1.0);
+			}, 500);
+		});
+
 		return {
 			myChatInput,
 			piniaCommonVideoData,
 			piniaCommonExamData,
+			chatting
 		};
 	},
 };
