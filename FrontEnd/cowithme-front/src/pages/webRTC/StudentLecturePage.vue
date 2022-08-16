@@ -70,7 +70,15 @@
 									<!-- 모드 2 : 왼쪽은 강사 IDE, 오른쪽은 학생 IDE  -->
 									<span v-if="mode == 2">
 										<div class="q-px-sm flex-height column">
-											<div class="col-1"></div>
+											<div
+												class="col-1"
+												style="
+													background-color: #eeeeee;
+													font-family: 'Elice Digital Baeum', sans-serif;
+												"
+											>
+												<p class="q-pa-md" style="font-size: 26px">강사 IDE</p>
+											</div>
 											<div class="col-10">
 												<web-editor
 													ref="teacherIde"
@@ -85,7 +93,7 @@
 							</template>
 							<template v-slot:after>
 								<div
-									class="q-pt-sm q-pl-sm q-mr-md flex-height column"
+									class="q-pt-md q-pl-sm q-mr-md flex-height column"
 									style="font-family: 'Elice Digital Baeum', sans-serif"
 								>
 									<div class="col-1" style="background-color: #eeeeee">
@@ -464,18 +472,14 @@ export default {
 	width: 100vw !important;
 	background-color: #303841 !important;
 }
-
 .flex {
 	width: 100% !important;
 	height: 100% !important;
-
 	background-color: white !important;
 }
-
 .flex-width {
 	width: 100% !important;
 }
-
 .flex-height {
 	height: 100% !important;
 }
