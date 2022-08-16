@@ -1,67 +1,83 @@
+import IntroPage from '../pages/IntroPage.vue';
+import MainLayout from '../layouts/MainLayout.vue';
+import IndexPage from '../pages/IndexPage.vue';
+import MakeClassPage from '../pages/teacher/MakeClassPage.vue';
+import MypagePage from '../pages/account/MypagePage.vue';
+import AddStudentPage from '../pages/teacher/AddStudentPage.vue';
+import ClassDetailPage from '../pages/teacher/ClassDetailPage.vue';
+import MakeExamPage from '../pages/teacher/MakeExamPage.vue';
+import ScorePage from '../pages/student/ScorePage.vue';
+import StudyRoomSearchPage from '../pages/student/StudyRoomSearchPage.vue';
+import TestDetailPage from '../pages/teacher/TestDetailPage.vue';
+import LoginPage from '../pages/account/LoginPage.vue';
+import IDfindPage from '../pages/account/IDfindPage.vue';
+import PWFindPage from '../pages/account/PWFindPage.vue';
+import SignupPage from '../pages/account/SignupPage.vue';
+import LoadingPage from '../pages/webRTC/LoadingPage.vue';
+import TeacherLecturePage from '../pages/webRTC/TeacherLecturePage.vue';
+import StudentLecturePage from '../pages/webRTC/StudentLecturePage.vue';
+import TeacherExamPage from '../pages/webRTC/TeacherExamPage.vue';
+import StudentExamPage from '../pages/webRTC/StudentExamPage.vue';
+import ErrorNotFound from '../pages/ErrorNotFound.vue';
+
 const routes = [
 	{
 		path: '/',
 		name: 'intro',
-		component: () => import('src/pages/IntroPage.vue'),
+		component: IntroPage,
 	},
 	{
 		path: '/home',
 		name: 'home',
-		component: () => import('layouts/MainLayout.vue'),
-		// beforeEnter: (to, from, next) => {
-		// 	if (localStorage.getItem('token')) {
-		// 		next('/');
-		// 	}
-		// 	next('/login');
-		// },
+		component: MainLayout,
 		children: [
 			{
 				path: '/home',
-				component: () => import('pages/IndexPage.vue'),
+				component: IndexPage,
 				// redirect: '/',
 			},
 			{
 				path: '/makeClass',
-				component: () => import('pages/teacher/MakeClassPage.vue'),
+				component: MakeClassPage,
 			},
 			{
 				path: '/mypage',
-				component: () => import('pages/account/MypagePage.vue'),
+				component: MypagePage,
 			},
 			{
 				path: '/addStudent',
 				name: 'addStudent',
 				props: true,
-				component: () => import('pages/teacher/AddStudentPage.vue'),
+				component: AddStudentPage,
 			},
 			{
 				path: '/classDetail/:classId',
 				name: 'classDetail',
 				// props: true,
-				component: () => import('pages/teacher/ClassDetailPage.vue'),
+				component: ClassDetailPage,
 			},
 			{
 				path: '/makeExam/:classId',
 				name: 'makeExam',
 				props: true,
-				component: () => import('pages/teacher/MakeExamPage.vue'),
+				component: MakeExamPage,
 			},
 			{
 				path: '/reportCard/:userId',
 				name: 'reportCard',
 				props: true,
-				component: () => import('pages/student/ScorePage.vue'),
+				component: ScorePage,
 			},
 			{
 				path: '/studyRooms',
 				name: 'studyRoom',
-				component: () => import('pages/student/StudyRoomSearchPage.vue'),
+				component: StudyRoomSearchPage,
 			},
 			{
 				path: '/testDetail/:testId',
 				name: 'testDetail',
 				props: true,
-				component: () => import('pages/teacher/TestDetailPage.vue'),
+				component: TestDetailPage,
 			},
 		],
 	},
@@ -69,7 +85,7 @@ const routes = [
 	{
 		path: '/login',
 		name: 'login',
-		component: () => import('pages/account/LoginPage.vue'),
+		component: LoginPage,
 		beforeEnter: function (to, from, next) {
 			if (localStorage.getItem('token')) {
 				next('/home');
@@ -79,43 +95,43 @@ const routes = [
 	},
 	{
 		path: '/IDfind',
-		component: () => import('pages/account/IDFindPage.vue'),
+		component: IDfindPage,
 	},
 	{
 		path: '/PWfind',
-		component: () => import('pages/account/PWFindPage.vue'),
+		component: PWFindPage,
 	},
 	{
 		path: '/join',
 		name: 'join',
-		component: () => import('pages/account/SignupPage.vue'),
+		component: SignupPage,
 	},
 	// Always leave this as last one,
 	// but you can also remove it
 	{
 		path: '/loading',
-		component: () => import('pages/webRTC/LoadingPage.vue'),
+		component: LoadingPage,
 	},
 	{
 		path: '/teacherlecture',
 		name: 'teacherlecture',
-		component: () => import('pages/webRTC/TeacherLecturePage.vue'),
+		component: TeacherLecturePage,
 	},
 	{
 		path: '/studentlecture',
-		component: () => import('pages/webRTC/StudentLecturePage.vue'),
+		component: StudentLecturePage,
 	},
 	{
 		path: '/teacherexam',
-		component: () => import('pages/webRTC/TeacherExamPage.vue'),
+		component: TeacherExamPage,
 	},
 	{
 		path: '/studentexam',
-		component: () => import('pages/webRTC/StudentExamPage.vue'),
+		component: StudentExamPage,
 	},
 	{
 		path: '/:catchAll(.*)*',
-		component: () => import('pages/ErrorNotFound.vue'),
+		component: ErrorNotFound,
 	},
 ];
 
