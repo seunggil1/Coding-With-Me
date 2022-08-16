@@ -34,67 +34,73 @@ async function onSubmit() {
 
 <template>
 	<div class="top-right-form q-pa-lg">
-		<div class="q-ma-lg">
-			<p class="col login-text">Login</p>
-		</div>
-		<q-form @submit="onSubmit" class="q-gutter-md signup-form" lazy-validation>
-			<div class="flex row">
-				<div class="col q-mr-sm">
-					<q-input
-						name="password"
-						class="loginInput q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						type="text"
-						v-model="id"
-						label="아이디"
-						lazy-rules
-						color="secondary"
-						bg-color="white"
-						:rules="[
-							val => (val && val.length > 0) || '아이디를 입력해주세요.',
-						]"
-					></q-input>
-					<q-input
-						name="password"
-						class="loginInput q-ma-lg q-pr-lg"
-						rounded
-						outlined
-						type="password"
-						v-model="password"
-						label="비밀번호"
-						lazy-rules
-						color="secondary"
-						bg-color="white"
-						:rules="[
-							val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
-						]"
-					></q-input>
-					<div class="q-pr-lg" style="margin-left: 30px">
-						<q-btn
-							label="로그인"
-							type="submit"
-							text-color="white"
-							class=""
-							style="background: #00adb5"
-							push
-						></q-btn>
-						<router-link
-							:to="{ name: 'join' }"
-							style="text-decoration: none; color: inherit"
-						>
+		<div style="margin-top: 25%">
+			<div class="q-ma-lg">
+				<p class="col login-text">Login</p>
+			</div>
+			<q-form
+				@submit="onSubmit"
+				class="q-gutter-md signup-form"
+				lazy-validation
+			>
+				<div class="flex row">
+					<div class="col q-mr-sm">
+						<q-input
+							name="password"
+							class="loginInput q-ma-lg q-pr-lg"
+							rounded
+							outlined
+							type="text"
+							v-model="id"
+							label="아이디"
+							lazy-rules
+							color="secondary"
+							bg-color="white"
+							:rules="[
+								val => (val && val.length > 0) || '아이디를 입력해주세요.',
+							]"
+						></q-input>
+						<q-input
+							name="password"
+							class="loginInput q-ma-lg q-pr-lg"
+							rounded
+							outlined
+							type="password"
+							v-model="password"
+							label="비밀번호"
+							lazy-rules
+							color="secondary"
+							bg-color="white"
+							:rules="[
+								val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+							]"
+						></q-input>
+						<div class="q-pr-lg" style="margin-left: 30px">
 							<q-btn
-								label="회원가입"
+								label="로그인"
+								type="submit"
 								text-color="white"
-								style="background-color: #303841"
+								class=""
+								style="background: #00adb5"
 								push
-								class="q-ml-sm"
-							></q-btn
-						></router-link>
+							></q-btn>
+							<router-link
+								:to="{ name: 'join' }"
+								style="text-decoration: none; color: inherit"
+							>
+								<q-btn
+									label="회원가입"
+									text-color="white"
+									style="background-color: #303841"
+									push
+									class="q-ml-sm"
+								></q-btn
+							></router-link>
+						</div>
 					</div>
 				</div>
-			</div>
-		</q-form>
+			</q-form>
+		</div>
 	</div>
 </template>
 
