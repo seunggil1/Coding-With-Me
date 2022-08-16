@@ -93,6 +93,10 @@ const routes = [
 	// Always leave this as last one,
 	// but you can also remove it
 	{
+		path: '/loading',
+		component: () => import('pages/webRTC/LoadingPage.vue'),
+	},
+	{
 		path: '/teacherlecture',
 		name: 'teacherlecture',
 		component: () => import('pages/webRTC/TeacherLecturePage.vue'),

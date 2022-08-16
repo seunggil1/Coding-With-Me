@@ -25,6 +25,7 @@
     "vue": "^3.0.0",
     "vue-pdf-embed": "^1.1.4",
     "vue-router": "^4.0.13",
+    "vue3-lottie": "^2.2.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

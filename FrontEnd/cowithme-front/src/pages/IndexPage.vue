@@ -60,9 +60,18 @@
 				style="font-family: 'Elice Digital Baeum'"
 			>
 				<div class="q-gutter-md row">
-					<div class="class-info hvr-grow">
+					<div class="class-info hvr-grow relative-position">
 						<div v-if="isInClass && !isLoading">
-							<div class="col q-ma-lg">
+							<q-btn
+								class="absolute-top-right q-ma-md"
+								round
+								icon="refresh"
+								size="13px"
+								flat
+								:loading="loading"
+								@click="refreshActiveLecture"
+							/>
+							<div class="col q-ma-lg q-pt-lg">
 								<!-- 반, 강의제목, 날짜 -->
 								<div class="info" style="margin-bottom: 20px">
 									<p style="font-size: 40px; font-weight: bold">
@@ -235,6 +244,7 @@ export default defineComponent({
 			piniaCommonVideoData.userInfo.className = testTest.value.className;
 			piniaCommonVideoData.userInfo.conferenceName =
 				activeLecture.value.conferenceName;
+			await router.push({ path: '/loading' });
 			await piniaCommonVideoData.getConferenceKey();
 			await piniaStudentVideoData.getStudentList();
 
@@ -247,8 +257,10 @@ export default defineComponent({
 			} catch (error) {
 				console.log('출입기록 생성 에러', error);
 			}
-
-			router.push('/studentlecture');
+			setTimeout(() => {
+				router.push('/studentlecture');
+			}, 1500);
+			// router.push('/studentlecture');
 		}
 
 		const activeLecture = ref({});
@@ -267,12 +279,42 @@ export default defineComponent({
 			}
 		};
 
+		// 새로고침
+		const loading = ref(false);
+		async function refreshActiveLecture() {
+			// we set loading state
+			loading.value = true;
+			try {
+				let classId = JSON.parse(localStorage.getItem('testTest')).result
+					.classId;
+				const response = await api.get(`/conferences/${classId}/active`);
+				console.log(response.data);
+				activeLecture.value = response.data.conference;
+				// simulate a delay
+				setTimeout(() => {
+					// we're done, we reset loading state
+					loading.value = false;
+					isActiveLecture.value = true;
+				}, 1000);
+			} catch (error) {
+				console.log('active 강의 불러오기 에러(active 강의 없음)', error);
+				// simulate a delay
+				setTimeout(() => {
+					// we're done, we reset loading state
+					loading.value = false;
+					isActiveLecture.value = false;
+				}, 1000);
+			}
+		}
+
 		// 달력 관련
 		const currentDate = Date.now();
 		const formattedTime = date.formatDate(currentDate, 'YYYY/MM/DD');
 		const newCurrentDate = ref(formattedTime);
 
 		return {
+			loading,
+			refreshActiveLecture,
 			isInClass,
 			activeLecture,
 			isActiveLecture,
