@@ -164,6 +164,7 @@ public class UserServiceImpl implements UserService {
     Environment env;
 
     @Override
+    @Transactional
     public boolean sendPasswordMail(UserIdEmailReq userIE) {
         String sendTo = userIE.getMail();
         String tempPwd = getTempPassword();
