@@ -101,7 +101,7 @@
 											class="row flex-height"
 											style="background-color: #eeeeee"
 										>
-											<div class="col-10">
+											<div class="col-8">
 												<q-img
 													style="width: 70px"
 													class="test"
@@ -113,23 +113,40 @@
 													class="row justify-center flex"
 													style="background-color: #eeeeee"
 												> -->
+												<q-select
+													style="
+														width: 130px;
+														max-width: 130px;
+														min-width: 130px;
+														max-height: 90%
+														font-size: 18px;
+														float: right;
+													"
+													class="q-pa-sm"
+													v-model="selectedLanguage"
+													:options="languageList"
+													label="에디터 언어"
+													color="teal"
+												/>
+												<!-- </div> -->
+											</div>
+											<div class="col-2">
 												<q-btn
 													style="
-													width: 130px;
-													max-width: 130px;
-													min-width: 130px;
-													max-height: 90%
-													font-size: 18px;
-													float: right;
+														width: 130px;
+														max-width: 130px;
+														min-width: 130px;
+														max-height: 90%
+														font-size: 18px;
+														float: right;
 													"
-													class="col q-pa-sm q-mt-md q-mr-md"
+													class="q-pa-sm q-mt-md q-mr-md"
 													color="secondary"
 													push
 													label="코드 실행하기"
 													@click="runCode"
 													:loading="isRunning"
 												/>
-												<!-- </div> -->
 											</div>
 										</div>
 									</div>
@@ -320,9 +337,10 @@
 
 <script>
 import { useRouter } from 'vue-router';
-import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
+import { onMounted, onBeforeUnmount, ref, watch, computed, reactive } from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { studentVideoData } from 'src/stores/Video/student.js';
+import { compileLang } from 'src/components/lectures/WebEditorAsset';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import VideoSideBar from 'src/components/lectures/VideoSideBar.vue';
@@ -354,6 +372,18 @@ export default {
 			if (teacherIde.value)
 				teacherIde.value.updateCode(piniaStudentVideoData.teacherCode);
 		};
+
+		const selectedLanguage = ref('java');
+		const selectedLanguageIdx = computed(() => {
+			return compileLang.findIndex(val => val.name === selectedLanguage.value);
+		});
+
+		watch(selectedLanguageIdx, () => {
+			studentIde.value.updateCode(compileLang[selectedLanguageIdx.value].code);
+		});
+		const languageList = reactive(compileLang.map(val => val.name));
+
+
 		// 모드 변환
 		const mode = ref(1);
 
@@ -382,7 +412,8 @@ export default {
 				'https://i7a304.p.ssafy.io/api/v1/users/compile',
 				{
 					code: piniaCommonVideoData.displayInfo.code,
-					lang: 'java',
+					lang: compileLang.find(item => item.name == selectedLanguage.value)
+						.language,
 					testcase: {
 						input: inputData.value,
 						output: '0',
@@ -423,26 +454,28 @@ export default {
 
 		const leaveSession = async () => {
 			piniaCommonVideoData.leaveSession();
-			router.push({ path: '/' });
-		};
-
-		const comebackToHome = () => {
-			router.push({ path: '/' });
+			router.push({ path: '/home' });
 		};
 
 		return {
+			router,
 			piniaCommonVideoData,
 			piniaStudentVideoData,
 			showSubScribers,
-			teacherIde,
-			studentIde,
 			rightDrawerOpen,
-			updateEditor,
-			getTeacherCode,
 
-			mode,
 
 			// IDE
+			teacherIde,
+			studentIde,
+			updateEditor,
+			getTeacherCode,
+			selectedLanguage,
+			selectedLanguageIdx,
+			languageList,
+
+			// 모드 변환
+			mode,
 			splitterModel,
 			isRunning,
 			inputData,
@@ -453,7 +486,6 @@ export default {
 			// 시험
 			startExam,
 			leaveSession,
-			comebackToHome,
 		};
 	},
 };

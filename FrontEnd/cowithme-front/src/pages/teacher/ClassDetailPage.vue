@@ -129,7 +129,11 @@
 					</q-card>
 				</q-carousel-slide>
 			</q-carousel>
-			<div v-else class="q-pa-lg">
+			<div
+				v-else
+				class="q-pa-lg row justify-center items-center"
+				style="height: 100%"
+			>
 				<p style="font-size: 34px">생성된 강의 이력이 없습니다</p>
 			</div>
 		</div>
@@ -322,9 +326,13 @@ export default {
 			lectureName.value = '';
 
 			piniaTeacherVideoData.createSession().then(async () => {
+				await router.push({ path: '/loading' });
 				await piniaCommonVideoData.getConferenceKey();
 				await piniaTeacherVideoData.getStudentList();
-				await router.push({ path: '/teacherlecture' });
+				setTimeout(() => {
+					router.push({ path: '/teacherlecture' });
+				}, 1500);
+				// router.push({ path: '/teacherlecture' });
 			});
 		}
 
