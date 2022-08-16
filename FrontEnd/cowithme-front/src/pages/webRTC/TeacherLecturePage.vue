@@ -493,7 +493,7 @@ export default {
 		async function leaveSession() {
 			await piniaTeacherVideoData.sendRedirectInfo("leave");
 			await piniaCommonVideoData.leaveSession();
-			await router.push({ path: '/' });
+			await router.push({ path: `/classDetail/${piniaCommonVideoData.userInfo.classKey}` });
 		}
 
 		return {
