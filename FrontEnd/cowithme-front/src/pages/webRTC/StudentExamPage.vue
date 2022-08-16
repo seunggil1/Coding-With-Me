@@ -120,7 +120,7 @@
 													style="max-width: 150px; max-height: 50px font-size: 24px"
 													color="orange-9"
 													push
-													label="제출하기"
+													label="이 문제 답안 제출"
 													@click="submitCode"
 													:loading="isSubmitting"
 												/>

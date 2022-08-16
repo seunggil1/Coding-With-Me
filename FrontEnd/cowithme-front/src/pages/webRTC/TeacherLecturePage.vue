@@ -107,7 +107,7 @@
 											class="row justify-end flex"
 											style="background-color: #eeeeee"
 										> -->
-										
+
 										<q-btn
 											style="
 												width: 130px;
@@ -359,7 +359,14 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, watch, computed, reactive } from 'vue';
+import {
+	onMounted,
+	onBeforeUnmount,
+	ref,
+	watch,
+	computed,
+	reactive,
+} from 'vue';
 import { useRouter } from 'vue-router';
 import { teacherVideoData } from 'src/stores/Video/teacher.js';
 import { commonVideoData } from 'src/stores/Video/common.js';
@@ -414,15 +421,15 @@ export default {
 					teacherIde.value.saveCode(true);
 					piniaTeacherVideoData.sendCode();
 				}, 1000);
-			} else if(val === 1) {
+			} else if (val === 1) {
 				clearInterval(repeater);
 				repeater = undefined;
-			} else if(val == 2){
-				if(repeater) clearInterval(repeater);
+			} else if (val == 2) {
+				if (repeater) clearInterval(repeater);
 				repeater = undefined;
 				piniaTeacherVideoData.sendCode(true);
-			}else{
-				console.error("unknown mode");
+			} else {
+				console.error('unknown mode');
 			}
 		});
 
@@ -481,19 +488,23 @@ export default {
 				if (piniaCommonExamData.testName == testInfo.testName) {
 					piniaCommonExamData.testID = testInfo.testId;
 					piniaCommonExamData.setTimeLimit(data[0], data[1], data[2]);
-					piniaTeacherVideoData.sendTestInfo(testInfo.testId, testInfo.testName, second).then(async () => {
-						await piniaTeacherVideoData.sendRedirectInfo("exam");
-						await router.push({ path: '/teacherexam' });
-					});
+					piniaTeacherVideoData
+						.sendTestInfo(testInfo.testId, testInfo.testName, second)
+						.then(async () => {
+							await piniaTeacherVideoData.sendRedirectInfo('exam');
+							await router.push({ path: '/teacherexam' });
+						});
 					break;
 				}
 			}
 		};
 
 		async function leaveSession() {
-			await piniaTeacherVideoData.sendRedirectInfo("leave");
+			await piniaTeacherVideoData.sendRedirectInfo('leave');
 			await piniaCommonVideoData.leaveSession();
-			await router.push({ path: `/classDetail/${piniaCommonVideoData.userInfo.classKey}` });
+			await router.push({
+				path: `/classDetail/${piniaCommonVideoData.userInfo.classKey}`,
+			});
 		}
 
 		return {

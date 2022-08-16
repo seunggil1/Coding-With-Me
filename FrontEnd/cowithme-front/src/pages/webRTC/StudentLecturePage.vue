@@ -269,7 +269,7 @@
 							"
 						/>
 
-						<q-btn
+						<!-- <q-btn
 							class="examBtn q-ml-md"
 							rounded
 							push
@@ -277,7 +277,7 @@
 							label="시험 입장"
 							v-if="piniaStudentVideoData.enableTest"
 							@click="startExam"
-						/>
+						/> -->
 						<q-btn
 							class="examBtn q-ml-md"
 							rounded
@@ -337,7 +337,14 @@
 
 <script>
 import { useRouter } from 'vue-router';
-import { onMounted, onBeforeUnmount, ref, watch, computed, reactive } from 'vue';
+import {
+	onMounted,
+	onBeforeUnmount,
+	ref,
+	watch,
+	computed,
+	reactive,
+} from 'vue';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { studentVideoData } from 'src/stores/Video/student.js';
 import { compileLang } from 'src/components/lectures/WebEditorAsset';
@@ -382,7 +389,6 @@ export default {
 			studentIde.value.updateCode(compileLang[selectedLanguageIdx.value].code);
 		});
 		const languageList = reactive(compileLang.map(val => val.name));
-
 
 		// 모드 변환
 		const mode = ref(1);
@@ -463,7 +469,6 @@ export default {
 			piniaStudentVideoData,
 			showSubScribers,
 			rightDrawerOpen,
-
 
 			// IDE
 			teacherIde,
