@@ -489,8 +489,11 @@ export default {
 		onUnmounted(() => {});
 
 		const leaveSession = async () => {
+			await piniaCommonVideoData.leaveSession();
 			router.push({ path: '/home' });
 		};
+
+
 
 		return {
 			HOST,

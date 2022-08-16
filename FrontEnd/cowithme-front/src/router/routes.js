@@ -10,7 +10,7 @@ import ScorePage from '../pages/student/ScorePage.vue';
 import StudyRoomSearchPage from '../pages/student/StudyRoomSearchPage.vue';
 import TestDetailPage from '../pages/teacher/TestDetailPage.vue';
 import LoginPage from '../pages/account/LoginPage.vue';
-import IDfindPage from '../pages/account/IDfindPage.vue';
+import IDfindPage from '../pages/account/IDFindPage.vue';
 import PWFindPage from '../pages/account/PWFindPage.vue';
 import SignupPage from '../pages/account/SignupPage.vue';
 import LoadingPage from '../pages/webRTC/LoadingPage.vue';
