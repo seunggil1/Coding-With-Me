@@ -137,6 +137,7 @@ import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { studentVideoData } from 'src/stores/Video/student.js';
+import { assertTSExternalModuleReference } from '@babel/types';
 
 export default defineComponent({
 	name: 'IndexPage',
@@ -155,6 +156,7 @@ export default defineComponent({
 		const piniaCommonVideoData = commonVideoData();
 		const piniaStudentVideoData = studentVideoData();
 		const router = useRouter();
+		const events = ref([]);
 
 		var user2 = null;
 		var info2 = null;
@@ -312,6 +314,35 @@ export default defineComponent({
 		const formattedTime = date.formatDate(currentDate, 'YYYY/MM/DD');
 		const newCurrentDate = ref(formattedTime);
 
+		// get current year and month
+		onMounted(async () => {
+			var now = new Date();
+			const currentYear = now.getFullYear();
+			const currentMonth = now.getMonth();
+			api
+				.get(`records/attendances/${userId}/${currentYear}/${currentMonth + 1}`)
+				.then(res => {
+					console.log(res.data.attInfos);
+					var attendances = res.data.attInfos;
+					for (var i = 0; i < attendances.length; i++) {
+						var attendance = attendances[i];
+						var date = new Date(attendance.date);
+						var formattedDate =
+							date.getFullYear() +
+							'/' +
+							('0' + (date.getMonth() + 1)).slice(-2) +
+							'/' +
+							('0' + (date.getDate() + 1)).slice(-2);
+						attendance.date = formattedDate;
+						if (attendance.attendance == 'Yes') {
+							events.value.push(attendance.date);
+							console.log(events.value);
+						}
+					}
+					// setAttendance(response.data);
+				});
+		});
+
 		return {
 			loading,
 			refreshActiveLecture,
@@ -338,7 +369,9 @@ export default defineComponent({
 			newCurrentDate,
 
 			splitterModel: ref(30),
-			events: ['2022/08/01', '2022/08/08', '2022/08/11'],
+			events,
+			// currentYear,
+			// currentMonth,
 		};
 	},
 });
