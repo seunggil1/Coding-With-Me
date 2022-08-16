@@ -480,7 +480,7 @@ export default {
 		onUnmounted(() => {});
 
 		const leaveSession = async () => {
-			router.push({ path: '/' });
+			router.push({ path: '/home' });
 		};
 
 		return {

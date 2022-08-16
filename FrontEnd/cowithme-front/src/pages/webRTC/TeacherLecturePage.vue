@@ -95,8 +95,9 @@
 											toggle-color="orange-14"
 											class="col q-pa-sm"
 											:options="[
-												{ label: '코드 보내기', value: true },
-												{ label: '보내기 중단', value: false },
+												{ label: '코드 보내기', value: 0 },
+												{ label: '보내기 중단', value: 1 },
+												{ label: '보낸 코드 삭제', value: 2 },
 											]"
 										/>
 										<!-- </div> -->
@@ -106,12 +107,13 @@
 											class="row justify-end flex"
 											style="background-color: #eeeeee"
 										> -->
+										
 										<q-btn
 											style="
 												width: 130px;
 												max-width: 130px;
 												min-width: 130px;
-                        max-height: 90%
+                        						max-height: 90%
 												font-size: 18px;
 												float: right;
 											"
@@ -121,6 +123,22 @@
 											label="코드 실행하기"
 											@click="runCode"
 											:loading="isRunning"
+										/>
+
+										<q-select
+											style="
+												width: 130px;
+												max-width: 130px;
+												min-width: 130px;
+                        						max-height: 90%
+												font-size: 18px;
+												float: right;
+											"
+											class="col q-pa-sm"
+											v-model="selectedLanguage"
+											:options="languageList"
+											label="에디터 언어"
+											color="teal"
 										/>
 
 										<!-- </div> -->
@@ -341,11 +359,12 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
+import { onMounted, onBeforeUnmount, ref, watch, computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { teacherVideoData } from 'src/stores/Video/teacher.js';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { commonExamData } from 'src/stores/ExamProgress/common.js';
+import { compileLang } from 'src/components/lectures/WebEditorAsset';
 import WebEditor from 'src/components/lectures/WebEditor.vue';
 import UserVideo from 'src/components/lectures/UserVideo.vue';
 import VideoSideBar from 'src/components/lectures/VideoSideBar.vue';
@@ -376,19 +395,34 @@ export default {
 			teacherIde.value.updateEditor();
 		});
 
-		let enableSync = ref(false);
+		const selectedLanguage = ref('java');
+		const selectedLanguageIdx = computed(() => {
+			return compileLang.findIndex(val => val.name === selectedLanguage.value);
+		});
+
+		watch(selectedLanguageIdx, () => {
+			teacherIde.value.updateCode(compileLang[selectedLanguageIdx.value].code);
+		});
+		const languageList = reactive(compileLang.map(val => val.name));
+
+		let enableSync = ref(1);
 		let repeater;
 		watch(enableSync, val => {
 			if (val == undefined) return;
-			if (val === true) {
+			if (val === 0) {
 				repeater = setInterval(() => {
 					teacherIde.value.saveCode(true);
 					piniaTeacherVideoData.sendCode();
 				}, 1000);
-			} else {
+			} else if(val === 1) {
 				clearInterval(repeater);
 				repeater = undefined;
+			} else if(val == 2){
+				if(repeater) clearInterval(repeater);
+				repeater = undefined;
 				piniaTeacherVideoData.sendCode(true);
+			}else{
+				console.error("unknown mode");
 			}
 		});
 
@@ -404,7 +438,8 @@ export default {
 				'https://i7a304.p.ssafy.io/api/v1/users/compile',
 				{
 					code: piniaCommonVideoData.displayInfo.code,
-					lang: 'java',
+					lang: compileLang.find(item => item.name == selectedLanguage.value)
+						.language,
 					testcase: {
 						input: inputData.value,
 						output: '0',
@@ -475,6 +510,10 @@ export default {
 
 			// IDE
 			splitterModel,
+			selectedLanguage,
+			selectedLanguageIdx,
+			languageList,
+
 			enableSync,
 			isRunning,
 			inputData,
