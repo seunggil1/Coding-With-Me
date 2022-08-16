@@ -422,9 +422,9 @@ export default {
 			};
 			try {
 				resultList.value[selectedProblem.value - 1] = [];
-				for (let [item] of (
+				for (let item of (
 					await api.post('/tests/compile', request)
-				).data.result.entries()) {
+				).data.result) {
 					resultList.value[selectedProblem.value - 1].push(
 						`Time : ${item.time}ms\nCorrect : ${item.success}\n${item.output}`,
 					);
