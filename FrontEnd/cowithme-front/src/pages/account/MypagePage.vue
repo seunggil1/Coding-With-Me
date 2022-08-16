@@ -198,7 +198,7 @@ async function goEditInfo() {
 	const usersStore = useUsersStore();
 	try {
 		await usersStore.update(params);
-		router.push('/join');
+		router.push('/mypage');
 	} catch (error) {
 		console.log(error);
 	}
