@@ -190,7 +190,6 @@
 											<q-expansion-item
 												expand-separator
 												icon="quiz"
-												:caption="`${test.testId}번 시험`"
 												:label="`${test.testName}`"
 											>
 												<q-uploader
@@ -364,7 +363,7 @@ export default {
 				api
 					.delete(`tests`, {
 						data: {
-							classId: classId,
+							classId: classId * 1,
 							testName: testName,
 							testQno: res.data.test.testQno,
 							testcaseList: res.data.test.testcase.testcaseList,
