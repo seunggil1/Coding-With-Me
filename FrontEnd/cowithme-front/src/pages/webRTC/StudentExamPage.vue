@@ -342,6 +342,7 @@ import StudentSideBar from 'src/components/lectures/exam/StudentSideBar.vue';
 import PdfViewer from 'src/components/PdfViewer.vue';
 import { compileLang } from 'src/components/lectures/WebEditorAsset';
 import { api } from 'src/boot/axios.js';
+import { useQuasar } from 'quasar';
 
 export default {
 	components: {
@@ -421,7 +422,7 @@ export default {
 			};
 			try {
 				resultList.value[selectedProblem.value - 1] = [];
-				for (let [index, item] of (
+				for (let [item] of (
 					await api.post('/tests/compile', request)
 				).data.result.entries()) {
 					resultList.value[selectedProblem.value - 1].push(
@@ -433,6 +434,8 @@ export default {
 			}
 			isRunning.value = false;
 		};
+
+		const $q = useQuasar();
 		const submitCode = async () => {
 			piniaStudentExamData.code[selectedProblem.value - 1] =
 				studentIde.value.getCode();
@@ -454,10 +457,16 @@ export default {
 			}
 
 			try {
-				let response = await api.post('/records/tests', request);
-			} catch (error) {}
+				await api.post('/records/tests', request);
+			} catch (error) {
+				console.log(error);
+			}
 			await piniaStudentExamData.submit();
 			isSubmitting.value = false;
+			$q.notify({
+				type: 'positive',
+				message: '제출 되었습니다!',
+			});
 		};
 
 		onMounted(() => {
