@@ -137,7 +137,6 @@ import AtomBasic1Button from 'src/components/atoms/AtomBasic1Button.vue';
 import { useClassStore } from 'src/stores';
 import { commonVideoData } from 'src/stores/Video/common.js';
 import { studentVideoData } from 'src/stores/Video/student.js';
-import { assertTSExternalModuleReference } from '@babel/types';
 
 export default defineComponent({
 	name: 'IndexPage',

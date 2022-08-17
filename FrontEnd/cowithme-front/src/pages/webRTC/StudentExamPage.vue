@@ -312,7 +312,18 @@
 									? 'keyboard_double_arrow_right'
 									: 'keyboard_double_arrow_left'
 							"
-						/>
+						>
+							<q-tooltip
+								class="text-body3"
+								anchor="top middle"
+								self="bottom middle"
+								:offset="[10, 10]"
+								transition-show="scale"
+								transition-hide="scale"
+							>
+								사이드바 보이기/숨기기
+							</q-tooltip>
+						</q-btn>
 					</div>
 				</div>
 			</q-toolbar>
