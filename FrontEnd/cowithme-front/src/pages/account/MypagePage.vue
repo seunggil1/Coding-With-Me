@@ -18,7 +18,6 @@
 							rounded
 							clearable
 							outlined
-							autofocus
 							v-model="name"
 							label="이름"
 							color="secondary"
@@ -73,6 +72,7 @@
 							label="비밀번호"
 							lazy-rules
 							color="secondary"
+							autofocus
 							bg-color="white"
 							:rules="[
 								val => (val && val.length > 0) || '비밀번호를 입력해주세요.',

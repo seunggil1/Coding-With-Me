@@ -15,7 +15,7 @@
 		</q-drawer>
 
 		<q-page-container>
-			<div class="column main-container">
+			<div class="column no-wrap main-container">
 				<q-splitter
 					v-model="splitterModel"
 					style="height: 92vh; overflow-y: hidden"
@@ -422,9 +422,8 @@ export default {
 			};
 			try {
 				resultList.value[selectedProblem.value - 1] = [];
-				for (let item of (
-					await api.post('/tests/compile', request)
-				).data.result) {
+				for (let item of (await api.post('/tests/compile', request)).data
+					.result) {
 					resultList.value[selectedProblem.value - 1].push(
 						`Time : ${item.time}ms\nCorrect : ${item.success}\n${item.output}`,
 					);
@@ -492,8 +491,6 @@ export default {
 			await piniaCommonVideoData.leaveSession();
 			router.push({ path: '/home' });
 		};
-
-
 
 		return {
 			HOST,
