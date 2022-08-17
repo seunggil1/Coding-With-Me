@@ -170,6 +170,7 @@ import { useRouter } from 'vue-router';
 import { useUsersStore } from 'src/stores';
 import { onBeforeMount } from 'vue';
 import { ref } from 'vue';
+import { useQuasar } from 'quasar';
 // import { api } from 'src/boot/axios.js';
 const router = useRouter();
 
@@ -186,6 +187,8 @@ const password = ref('');
 const file = ref('');
 const role = ref(`${info.role}`);
 
+const $q = useQuasar();
+
 async function goEditInfo() {
 	let params = {
 		name: name.value,
@@ -201,6 +204,10 @@ async function goEditInfo() {
 	const usersStore = useUsersStore();
 	try {
 		await usersStore.update(params);
+		$q.notify({
+			type: 'positive',
+			message: '수정 되었습니다.',
+		});
 		router.push('/mypage');
 	} catch (error) {
 		console.log(error);
@@ -210,19 +217,41 @@ onBeforeMount(async () => {
 	myInfo.value.push(info);
 });
 async function goDelete() {
-	let user = {
-		name: info.name.value,
-		email: info.email,
-		password: info.password,
-		role: info.role,
-		id: info.id,
-		birthDt: info.birthDt,
-		phone: info.phone,
-		nickname: info.nickname,
-	};
-	const usersStore = useUsersStore();
-	await usersStore.delete(user);
-	await router.push({ path: '/join' });
+	if (password.value == '' || password.value == null) {
+		$q.notify({
+			type: 'warning',
+			message: '탈퇴하시려면 비밀번호를 입력해주세요!',
+		});
+		return;
+	}
+	$q.dialog({
+		title: '확인',
+		message: '정말 탈퇴 하시겠습니까?',
+		cancel: true,
+		persistent: true,
+	})
+		.onOk(() => {
+			let user = {
+				name: info.name,
+				email: info.email,
+				password: password.value,
+				role: info.role,
+				id: info.id,
+				birthDt: info.birthDt,
+				phone: info.phone,
+				nickname: info.nickname,
+			};
+			const usersStore = useUsersStore();
+			usersStore.delete(user);
+			$q.notify({
+				type: 'positive',
+				message: '탈퇴 되었습니다.',
+			});
+			router.push({ path: '/' });
+		})
+		.onCancel(() => {
+			// console.log('>>>> Cancel')
+		});
 }
 </script>
 

@@ -45,19 +45,20 @@ export const useUsersStore = defineStore({
 			// update auth user in pinia state
 			authStore.user = user;
 		},
-	},
-	async delete(userInput) {
-		// add isDeleting prop to user being deleted
-		// this.users.find(x => x.id === id).isDeleting = true;
-		await fetchWrapper.delete(`${baseUrl}/users`, userInput);
+		async delete(userInput) {
+			try {
+				// add isDeleting prop to user being deleted
+				// this.users.find(x => x.id === id).isDeleting = true;
+				await fetchWrapper.delete(`${baseUrl}/users`, userInput);
 
-		// remove user from list after deleted
-		// this.users = this.users.filter(x => x.id !== id);
+				// remove user from list after deleted
+				// this.users = this.users.filter(x => x.id !== id);
 
-		// auto logout if the logged in user deleted their own record
-		const authStore = useAuthStore();
-		if (userInput === authStore.user) {
-			authStore.logout();
-		}
+				// auto logout if the logged in user deleted their own record
+				localStorage.clear();
+			} catch (error) {
+				console.log('회원 삭제 에러', error);
+			}
+		},
 	},
 });
