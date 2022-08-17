@@ -24,7 +24,9 @@
 					<q-scroll-area class="type2" style="height: 100%; max-width: 100vw">
 						<div class="row no-wrap">
 							<div style="width: 11%" class="q-pa-sm">
-								<user-video :stream-manager="piniaCommonVideoData.openvidu.publisher" />
+								<user-video
+									:stream-manager="piniaCommonVideoData.openvidu.publisher"
+								/>
 							</div>
 							<div
 								style="width: 11%"
@@ -38,7 +40,9 @@
 					</q-scroll-area>
 				</div>
 
-				<div :class="piniaCommonVideoData.openvidu.session ? 'col-10' : 'col-12'">
+				<div
+					:class="piniaCommonVideoData.openvidu.session ? 'col-10' : 'col-12'"
+				>
 					<div>
 						<q-splitter v-model="splitterModel" style="height: 90vh">
 							<template v-slot:before>
@@ -170,8 +174,14 @@
 							class="micBtn q-ml-md"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'"
-							:label="piniaCommonVideoData.displayInfo.audioEnable ? '음소거' : '음소거 해제'"
+							:icon="
+								piniaCommonVideoData.displayInfo.audioEnable ? 'mic' : 'mic_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.audioEnable
+									? '음소거'
+									: '음소거 해제'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.audioEnable
 									? piniaCommonVideoData.muteAudio()
@@ -183,8 +193,16 @@
 							class="camBtn q-ml-md"
 							rounded
 							push
-							:icon="piniaCommonVideoData.displayInfo.videoEnable ? 'videocam' : 'videocam_off'"
-							:label="piniaCommonVideoData.displayInfo.videoEnable ? '카메라 끄기' : '카메라 켜기'"
+							:icon="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? 'videocam'
+									: 'videocam_off'
+							"
+							:label="
+								piniaCommonVideoData.displayInfo.videoEnable
+									? '카메라 끄기'
+									: '카메라 켜기'
+							"
 							@click="
 								piniaCommonVideoData.displayInfo.videoEnable
 									? piniaCommonVideoData.muteVideo()
@@ -223,7 +241,18 @@
 									? 'keyboard_double_arrow_right'
 									: 'keyboard_double_arrow_left'
 							"
-						/>
+						>
+							<q-tooltip
+								class="text-body3"
+								anchor="top middle"
+								self="bottom middle"
+								:offset="[10, 10]"
+								transition-show="scale"
+								transition-hide="scale"
+							>
+								사이드바 보이기/숨기기
+							</q-tooltip>
+						</q-btn>
 					</div>
 				</div>
 			</q-toolbar>
@@ -267,17 +296,17 @@ export default {
 
 		const selectedProblem = ref(1);
 
-		
 		// 세션 나가기
 		const leaveSession = async () => {
-			await piniaTeacherVideoData.sendRedirectInfo("leave");
+			await piniaTeacherVideoData.sendRedirectInfo('leave');
 			await piniaCommonVideoData.leaveSession();
-			await router.push({ path: `/classDetail/${piniaCommonVideoData.userInfo.classKey}` });
-
+			await router.push({
+				path: `/classDetail/${piniaCommonVideoData.userInfo.classKey}`,
+			});
 		};
 
 		const stopExam = async () => {
-			await piniaTeacherVideoData.sendRedirectInfo("lecture");
+			await piniaTeacherVideoData.sendRedirectInfo('lecture');
 			await router.push({ path: '/teacherlecture' });
 		};
 

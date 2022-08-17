@@ -312,7 +312,18 @@
 									? 'keyboard_double_arrow_right'
 									: 'keyboard_double_arrow_left'
 							"
-						/>
+						>
+							<q-tooltip
+								class="text-body3"
+								anchor="top middle"
+								self="bottom middle"
+								:offset="[10, 10]"
+								transition-show="scale"
+								transition-hide="scale"
+							>
+								사이드바 보이기/숨기기
+							</q-tooltip>
+						</q-btn>
 					</div>
 				</div>
 			</q-toolbar>
@@ -422,9 +433,8 @@ export default {
 			};
 			try {
 				resultList.value[selectedProblem.value - 1] = [];
-				for (let item of (
-					await api.post('/tests/compile', request)
-				).data.result) {
+				for (let item of (await api.post('/tests/compile', request)).data
+					.result) {
 					resultList.value[selectedProblem.value - 1].push(
 						`Time : ${item.time}ms\nCorrect : ${item.success}\n${item.output}`,
 					);
@@ -492,8 +502,6 @@ export default {
 			await piniaCommonVideoData.leaveSession();
 			router.push({ path: '/home' });
 		};
-
-
 
 		return {
 			HOST,

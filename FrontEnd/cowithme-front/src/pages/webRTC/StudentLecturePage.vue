@@ -307,6 +307,16 @@
 							icon="swap_horiz"
 							@click="mode == 1 ? (mode = 2) : (mode = 1)"
 						>
+							<q-tooltip
+								class="text-body3"
+								anchor="top middle"
+								self="bottom middle"
+								:offset="[10, 10]"
+								transition-show="scale"
+								transition-hide="scale"
+							>
+								강사님 IDE 보이기/숨기기
+							</q-tooltip>
 						</q-btn>
 
 						<q-btn
@@ -315,7 +325,18 @@
 							round
 							:icon="showSubScribers ? 'o_view_agenda' : 'view_agenda'"
 							@click="showSubScribers = !showSubScribers"
-						/>
+						>
+							<q-tooltip
+								class="text-body3"
+								anchor="top middle"
+								self="bottom middle"
+								:offset="[10, 10]"
+								transition-show="scale"
+								transition-hide="scale"
+							>
+								참가자 영상 보이기/숨기기
+							</q-tooltip></q-btn
+						>
 
 						<q-btn
 							class="drawerBtn"
@@ -327,7 +348,18 @@
 									? 'keyboard_double_arrow_right'
 									: 'keyboard_double_arrow_left'
 							"
-						/>
+						>
+							<q-tooltip
+								class="text-body3"
+								anchor="top middle"
+								self="bottom middle"
+								:offset="[10, 10]"
+								transition-show="scale"
+								transition-hide="scale"
+							>
+								사이드바 보이기/숨기기
+							</q-tooltip>
+						</q-btn>
 					</div>
 				</div>
 			</q-toolbar>
