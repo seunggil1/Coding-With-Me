@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 import { useUsersStore, useAlertStore } from 'src/stores';
 import IDChkButton from 'src/components/molecules/signup/IDChkButton.vue';
 import { api } from 'src/boot/axios.js';
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
 
 // 회원가입 정보
 const name = ref('');
@@ -35,6 +38,10 @@ async function onSubmit() {
 	const alertStore = useAlertStore();
 	try {
 		await usersStore.register(user);
+		$q.notify({
+			type: 'positive',
+			message: '회원가입이 완료 되었습니다.',
+		});
 		await router.push({ path: '/login' });
 	} catch (error) {
 		alertStore.error(error);

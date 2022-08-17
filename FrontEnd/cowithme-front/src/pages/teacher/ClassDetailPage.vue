@@ -139,24 +139,31 @@
 		</div>
 		<div class="flex row">
 			<div class="col-6">
-				<div class="box q-px-lg q-py-lg q-mr-md hvr-grow">
+				<div class="box q-px-lg q-py-lg q-mr-md hvr-grow relative-position">
 					<div class="row">
 						<div class="col-10">
 							<p style="font-size: 18px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 학생
 							</p>
-							<q-chip
-								class="hvr-grow"
-								color="secondary"
-								text-color="white"
-								icon="face"
-								removable
-								v-for="(student, index) in students"
-								:key="student.userId"
-								@remove="deleteStudent(student.userId, index)"
-							>
-								{{ student.name }}({{ student.nickname }})
-							</q-chip>
+							<template v-if="students.length != 0">
+								<q-chip
+									class="hvr-grow"
+									color="secondary"
+									text-color="white"
+									icon="face"
+									removable
+									v-for="(student, index) in students"
+									:key="student.userId"
+									@remove="deleteStudent(student.userId, index)"
+								>
+									{{ student.name }}({{ student.nickname }})
+								</q-chip>
+							</template>
+							<template v-else>
+								<div class="absolute-center">
+									<p style="font-size: 24px">아직 추가된 학생이 없습니다</p>
+								</div>
+							</template>
 						</div>
 						<div class="col-2">
 							<router-link
@@ -181,80 +188,87 @@
 				</div>
 			</div>
 			<div class="col-6">
-				<div class="box q-px-lg q-py-lg q-ml-md hvr-grow">
+				<div class="box q-px-lg q-py-lg q-ml-md hvr-grow relative-position">
 					<div class="row">
 						<div class="col-10">
 							<p style="font-size: 18px; font-family: 'MICEGothic Bold'">
 								{{ className }}의 시험
 							</p>
-							<q-list v-for="test in tests" :key="test.testId">
-								<q-item>
-									<q-item-section>
-										<q-item-label>
-											<q-expansion-item
-												expand-separator
-												icon="quiz"
-												:label="`${test.testName}`"
-											>
-												<q-uploader
-													:url="`https://i7a304.p.ssafy.io/api/v1/files/upload/${test.testId}`"
-													style="max-width: 300px"
-													id="testFile"
-													color="secondary"
-													label="시험 파일(PDF)"
-													field-name="files"
-													class="q-mt-lg"
-												></q-uploader>
-											</q-expansion-item>
-										</q-item-label>
-									</q-item-section>
-									<q-item-section side>
-										<div class="text-grey-8">
-											<q-btn
-												@click="downloadPDF(test.testId, test.testName)"
-												class="gt-xs"
-												size="12px"
-												flat
-												color="dark"
-												dense
-												round
-												icon="download"
-											/>
-											<router-link
-												:to="{
-													name: 'testDetail',
-													params: {
-														testId: test.testId,
-														testName: test.testName,
-													},
-												}"
-												style="text-decoration: none; color: inherit"
-											>
+							<template v-if="tests.length != 0">
+								<q-list v-for="test in tests" :key="test.testId">
+									<q-item>
+										<q-item-section>
+											<q-item-label>
+												<q-expansion-item
+													expand-separator
+													icon="quiz"
+													:label="`${test.testName}`"
+												>
+													<q-uploader
+														:url="`https://i7a304.p.ssafy.io/api/v1/files/upload/${test.testId}`"
+														style="max-width: 300px"
+														id="testFile"
+														color="secondary"
+														label="시험 파일(PDF)"
+														field-name="files"
+														class="q-mt-lg"
+													></q-uploader>
+												</q-expansion-item>
+											</q-item-label>
+										</q-item-section>
+										<q-item-section side>
+											<div class="text-grey-8">
 												<q-btn
+													@click="downloadPDF(test.testId, test.testName)"
 													class="gt-xs"
 													size="12px"
 													flat
-													color="grey"
+													color="dark"
 													dense
 													round
-													icon="settings"
+													icon="download"
 												/>
-											</router-link>
-											<q-btn
-												@click="deleteTest(test.testName)"
-												class="gt-xs q-pb-sm"
-												size="12px"
-												flat
-												color="negative"
-												dense
-												round
-												icon="delete"
-											/>
-										</div>
-									</q-item-section>
-								</q-item>
-								<q-separator spaced inset />
-							</q-list>
+												<router-link
+													:to="{
+														name: 'testDetail',
+														params: {
+															testId: test.testId,
+															testName: test.testName,
+														},
+													}"
+													style="text-decoration: none; color: inherit"
+												>
+													<q-btn
+														class="gt-xs"
+														size="12px"
+														flat
+														color="grey"
+														dense
+														round
+														icon="settings"
+													/>
+												</router-link>
+												<q-btn
+													@click="deleteTest(test.testName)"
+													class="gt-xs q-pb-sm"
+													size="12px"
+													flat
+													color="negative"
+													dense
+													round
+													icon="delete"
+												/>
+											</div>
+										</q-item-section>
+									</q-item>
+									<q-separator spaced inset />
+								</q-list>
+							</template>
+							<template v-else>
+								<div class="absolute-center">
+									<p style="font-size: 24px">아직 추가된 시험이 없습니다</p>
+								</div>
+							</template>
 						</div>
 						<div class="col-2">
 							<router-link
@@ -290,7 +304,7 @@ import { ref } from 'vue';
 export default {
 	name: 'ClassDetailPage',
 	setup() {
-		console.log('@@@@', localStorage.getItem('classInfo'));
+		// console.log('@@@@', localStorage.getItem('classInfo'));
 
 		const files = ref(null);
 
@@ -347,7 +361,7 @@ export default {
 			.get(`/tutor/${userId}/classes/${className}`)
 			.then(res => {
 				students.value = res.data.students;
-				console.log(res.data);
+				// console.log(res.data);
 			})
 			.catch(err => {
 				console.log(err);

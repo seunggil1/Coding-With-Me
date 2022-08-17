@@ -204,6 +204,10 @@ async function goEditInfo() {
 	const usersStore = useUsersStore();
 	try {
 		await usersStore.update(params);
+		$q.notify({
+			type: 'positive',
+			message: '수정 되었습니다.',
+		});
 		router.push('/mypage');
 	} catch (error) {
 		console.log(error);
