@@ -37,8 +37,8 @@ public class FilesServiceImpl implements FileService{
 
         File destinationFile;
         String destinationFileName;
-        String fileUrl="/home/ubuntu/upload/";
-        //String fileUrl="C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
+        //String fileUrl="/home/ubuntu/upload/";
+        String fileUrl="C:\\Program Files (x86)\\saffy\\common-pjt-back\\S07P12A304\\BackEnd\\src\\main\\resources\\dist\\tests";
 
         do{
             destinationFileName = RandomStringUtils.randomAlphanumeric(32)+"."+sourceFileNameExtension;

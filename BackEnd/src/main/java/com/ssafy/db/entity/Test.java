@@ -43,7 +43,7 @@ public class Test {
     @OneToMany(mappedBy = "test")
     private List<TestRecord> testRecords = new ArrayList<>();
 
-    @OneToOne(mappedBy = "test")
+    @OneToOne(mappedBy = "test", cascade = CascadeType.ALL)
     Files files;
 
     public void addTestRecord(TestRecord record){
