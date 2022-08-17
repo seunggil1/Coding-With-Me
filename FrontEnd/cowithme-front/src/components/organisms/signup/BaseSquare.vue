@@ -24,6 +24,13 @@ const router = useRouter();
 
 // 회원가입하러 가자
 async function onSubmit() {
+	if (role.value == '' || role.value == null) {
+		$q.notify({
+			type: 'negative',
+			message: '강사 또는 학생을 선택해주세요',
+		});
+		return;
+	}
 	let user = {
 		name: name.value,
 		id: id.value,
