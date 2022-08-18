@@ -40,7 +40,7 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 
 	const displayInfo = reactive({
 		videoEnable : true,
-		audioEnable : false,
+		audioEnable : true,
 		screenShareEnable : false,
 
 		chatting : [],
