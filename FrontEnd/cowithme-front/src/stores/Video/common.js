@@ -57,7 +57,7 @@ export const commonVideoData = defineStore('commonVideoData', () => {
 	};
 	const unmuteAudio = () => {
 		if (openvidu.publisher == undefined) return;
-		openvidu.publisher.publishAudio(false);
+		openvidu.publisher.publishAudio(true);
 		displayInfo.audioEnable = true;
 	};
 	const muteVideo = () => {
