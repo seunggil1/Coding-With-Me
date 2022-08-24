@@ -121,6 +121,12 @@ https://docs.google.com/spreadsheets/d/1hJ3F-pyaeCHFWGd1NqcsIKce6SUxkpg3S4VU9M1s
 
 
 
+## 기획 자료(figma)
+
+https://www.figma.com/file/xYiCDWV2GYnX3pQCz61hbz/%EC%BD%94%EC%9C%97%EB%AF%B8-%EA%B8%B0%ED%9A%8D-by-A304?node-id=0%3A1
+
+
+
 ## 🖋️git commit message convention
 
 #### 참고
